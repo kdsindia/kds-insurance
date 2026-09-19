@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="hi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KDS LIC - Insurance Portal & Official Plan Calculator</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- html2pdf.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans Devanagari', 'sans-serif'],
+          },
+          colors: {
+            lic: {
+              blue: '#002B49',
+              lightBlue: '#00558F',
+              accent: '#0284c7',
+              gold: '#FFAE00',
+              deepGold: '#E69500',
+              cream: '#FFF9E6',
+              bgLight: '#F4F7FB'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .pdf-page-container {
+      background: #ffffff;
+      color: #1e293b;
+      font-family: 'Inter', 'Noto Sans Devanagari', sans-serif;
+      line-height: 1.4;
+    }
+    @media print {
+      body * { visibility: hidden; }
+      #quotationPrintableTarget, #quotationPrintableTarget * { visibility: visible; }
+      #quotationPrintableTarget {
+        position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 10px; background: white !important;
+      }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+
+<body class="bg-lic-bgLight text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- Top Advisor Hotline Bar -->
+  <div class="bg-lic-blue text-white text-xs py-2 px-4 border-b border-lic-lightBlue">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+      <div class="flex items-center gap-2">
+        <span class="bg-lic-gold text-lic-blue font-black px-2 py-0.5 rounded text-[10px] tracking-wider uppercase">Official Advisor</span>
+        <span class="text-slate-200"><i class="fa-solid fa-user-shield text-lic-gold mr-1"></i> <strong id="barAdvisorName">MANOHER SINGH</strong> | LIC Authorized Agency</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-200">
+        <a id="barPhoneLink" href="tel:8440096343" class="hover:text-lic-gold font-bold transition flex items-center gap-1.5">
+          <i class="fa-solid fa-phone text-lic-gold"></i> <span id="barPhoneText">8440096343</span>
+        </a>
+        <span class="text-slate-600">|</span>
+        <a id="barWaLink" href="https://wa.me/918440096343" target="_blank" class="hover:text-emerald-300 text-emerald-400 font-bold flex items-center gap-1">
+          <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+        </a>
+        <span class="text-slate-600 hidden md:inline">|</span>
+        <span class="text-slate-400 text-[11px] hidden md:inline"><i class="fa-solid fa-location-dot text-rose-400"></i> <span id="barCityText">Malwara, Raniwara (Raj.)</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navbar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        
+        <!-- Logo Area (Direct Editable) -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div id="navLogoContainer" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-lic-blue via-lic-lightBlue to-lic-blue flex items-center justify-center text-lic-gold font-black text-2xl shadow-md overflow-hidden">
+            <span id="navLogoText">KDS</span>
+            <img id="navLogoImg" src="" class="w-full h-full object-cover hidden" alt="Logo" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl font-black tracking-tight text-lic-blue" id="navBrandName">KDS <span class="text-lic-gold">LIC</span></span>
+              <span class="text-[10px] font-extrabold px-1.5 py-0.5 bg-amber-50 text-amber-800 rounded border border-amber-200">SEVA KENDRA</span>
+            </div>
+            <p class="text-xs font-semibold text-slate-500" id="navSubTitle">Manoher Singh • Malwara, Raniwara</p>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-bold text-slate-700">
+          <a href="#calculator-section" class="hover:text-lic-lightBlue transition py-1">Plan Finder / Calculator</a>
+          <a href="#schemes-list" class="hover:text-lic-lightBlue transition py-1">All LIC Schemes</a>
+          <a href="#agent-banner" class="hover:text-lic-lightBlue transition py-1">Official Office</a>
+        </nav>
+
+        <!-- Right Quick Action -->
+        <div class="flex items-center gap-3">
+          <button onclick="openAdminModal()" class="bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1.5" title="Change Logo & Details">
+            <i class="fa-solid fa-gear"></i>
+            <span>Logo/Details Badlein</span>
+          </button>
+          <a href="#calculator-section" class="bg-lic-gold hover:bg-amber-400 text-lic-blue font-black px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center gap-2">
+            <i class="fa-solid fa-calculator"></i>
+            <span>Calculate</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-lic-blue via-[#003860] to-lic-lightBlue text-white py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <div class="lg:col-span-7 space-y-4 text-center lg:text-left">
+        <div class="inline-flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-full text-xs font-bold text-lic-gold border border-white/15">
+          <i class="fa-solid fa-file-pdf"></i> Official PDF Quotation & 1 se 25 Saal Chart
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight">
+          Apne Budget me Sahi LIC Policy Chuniye aur <span class="text-lic-gold">Complete PDF</span> Paiye
+        </h1>
+        <p class="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl">
+          Jaaniye 1 se 25 saal tak: <strong>Kitna Premium Jama Hoga</strong>, <strong>Life Cover</strong>, <strong>Loan Suvidha</strong>, aur <strong>Tax-Free Returns</strong>.
+        </p>
+        <div class="bg-white/10 rounded-2xl p-3.5 text-xs text-slate-200 flex items-start gap-3 text-left border border-white/15">
+          <i class="fa-solid fa-building text-lic-gold text-base mt-0.5"></i>
+          <div>
+            <p class="font-bold text-white text-xs">OFFICIAL LIC ADVISORY POINT: <span id="heroOfficeName">KDS SERVICES</span></p>
+            <p class="text-slate-300 text-[11px] mt-0.5" id="heroOfficeAddress">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
+            <p class="text-lic-gold font-bold text-[11px] mt-1">Advisor: <span id="heroAdvisorName">MANOHER SINGH</span> | Mo: <span id="heroAdvisorPhone">8440096343</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Fast Finder -->
+      <div class="lg:col-span-5">
+        <div class="bg-white text-slate-800 rounded-3xl p-6 shadow-2xl border-4 border-lic-gold/30 space-y-4">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+            <h3 class="font-black text-lg text-lic-blue"><i class="fa-solid fa-bolt text-lic-gold mr-1"></i> Quick Finder</h3>
+            <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-black">100% Free</span>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+              <span>Aapki Umar (Age):</span>
+              <span id="quickAgeDisplay" class="text-lic-lightBlue font-black">30 Varsh</span>
+            </div>
+            <input type="range" id="quickAgeInput" min="0" max="60" value="30" class="w-full accent-lic-gold cursor-pointer" oninput="syncAge(this.value)" />
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+              <span>Aapka Budget (Yearly):</span>
+              <span id="quickBudgetDisplay" class="text-lic-lightBlue font-black">₹ 50,000 / Year</span>
+            </div>
+            <input type="range" id="quickBudgetInput" min="5000" max="250000" step="5000" value="50000" class="w-full accent-lic-gold cursor-pointer" oninput="syncBudget(this.value)" />
+          </div>
+          <button onclick="document.getElementById('schemes-list').scrollIntoView({ behavior: 'smooth' })" class="w-full bg-lic-blue hover:bg-lic-lightBlue text-white font-black py-3 rounded-xl text-sm transition shadow">
+            Matching LIC Schemes Dekhein
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULATOR SECTION -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full space-y-12">
+    <section id="calculator-section" class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+      <div class="bg-lic-blue p-6 text-white flex justify-between items-center">
+        <div>
+          <span class="bg-lic-gold text-lic-blue px-2.5 py-0.5 rounded text-xs font-black uppercase">Smart LIC Calculator</span>
+          <h2 class="text-2xl font-black mt-2">Apni Details Bharein & Plan Chunein</h2>
+        </div>
+      </div>
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs font-bold">
+          <div>
+            <label class="block text-slate-700 mb-1">Customer Name</label>
+            <input type="text" id="custName" value="Ramesh Kumar" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm" />
+          </div>
+          <div>
+            <label class="block text-slate-700 mb-1">Mobile Number</label>
+            <input type="tel" id="custPhone" value="9876543210" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm" />
+          </div>
+          <div>
+            <label class="block text-slate-700 mb-1">Age (Umar): <span id="ageValDisplay" class="text-lic-lightBlue">30 Saal</span></label>
+            <input type="number" id="calcAge" value="30" min="0" max="65" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm" oninput="syncAge(this.value)" />
+          </div>
+          <div>
+            <label class="block text-slate-700 mb-1">Yearly Budget: <span id="budgetValDisplay" class="text-amber-800">₹50,000</span></label>
+            <select id="calcBudget" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-bold" onchange="syncBudget(this.value)">
+              <option value="25000">₹ 25,000 / Saal</option>
+              <option value="50000" selected>₹ 50,000 / Saal</option>
+              <option value="100000">₹ 1,00,000 / Saal</option>
+              <option value="200000">₹ 2,00,000 / Saal</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCHEMES LIST -->
+    <section id="schemes-list" class="space-y-6">
+      <h3 class="text-2xl font-black text-lic-blue">Top LIC Schemes Matching Your Profile</h3>
+      <div id="schemesGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Javascript dynamic schemes -->
+      </div>
+    </section>
+
+    <!-- AGENT OFFICIAL FOOTER CARD -->
+    <section id="agent-banner" class="bg-lic-blue text-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-lic-gold/40">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <div>
+          <span class="bg-lic-gold text-lic-blue font-black px-2.5 py-1 rounded text-xs uppercase">Authorized LIC Advisor Point</span>
+          <h3 class="text-2xl sm:text-3xl font-black mt-2" id="footerOfficeTitle">KDS LIC CONSULTANCY</h3>
+          <p class="text-slate-300 text-xs mt-2" id="footerFullAddress">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
+          <p class="text-amber-300 font-bold text-sm mt-2">Advisor: <span id="footerAdvisorName">MANOHER SINGH</span></p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 justify-end">
+          <a id="footerCallBtn" href="tel:8440096343" class="bg-white text-lic-blue font-black py-3 px-5 rounded-xl text-xs flex items-center justify-center gap-2 shadow">
+            <i class="fa-solid fa-phone text-lic-lightBlue"></i>
+            <span id="footerCallText">Call: 8440096343</span>
+          </a>
+          <a id="footerWaBtn" href="https://wa.me/918440096343" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white font-black py-3 px-5 rounded-xl text-xs flex items-center justify-center gap-2 shadow">
+            <i class="fa-brands fa-whatsapp text-base"></i>
+            <span>WhatsApp Chat</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================================================= -->
+  <!-- ADMIN / DIRECT EDIT MODAL (LOGO & DETAILS WITHOUT CODE) -->
+  <!-- ======================================================= -->
+  <div id="adminModal" class="fixed inset-0 z-50 bg-slate-900/80 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl p-6 border border-slate-200">
+      <div class="flex justify-between items-center pb-3 border-b">
+        <div>
+          <h3 class="font-black text-lg text-slate-900">⚙ Logo & Details Manager</h3>
+          <p class="text-xs text-slate-500">Yahan se aap bina code chhue logo aur details badal sakte hain.</p>
+        </div>
+        <button onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="mt-4 space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Apna Logo Upload Karein (Image / Photo)</label>
+          <input type="file" id="logoFileInput" accept="image/*" class="w-full border border-slate-300 rounded-xl p-2 text-xs" onchange="previewUploadedLogo(event)" />
+          <p class="text-[10px] text-slate-400 mt-1">Image select karte hi logo website aur PDF me update ho jayega.</p>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Agency / Website Name</label>
+          <input type="text" id="adminAgencyName" value="KDS LIC" class="w-full border border-slate-300 rounded-xl p-2 font-bold" />
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Advisor Name</label>
+          <input type="text" id="adminAdvisorName" value="MANOHER SINGH" class="w-full border border-slate-300 rounded-xl p-2 font-bold" />
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Mobile Number</label>
+          <input type="text" id="adminPhone" value="8440096343" class="w-full border border-slate-300 rounded-xl p-2 font-bold" />
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Full Office Address</label>
+          <textarea id="adminAddress" rows="2" class="w-full border border-slate-300 rounded-xl p-2 font-bold">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</textarea>
+        </div>
+
+        <div class="pt-2 flex gap-2">
+          <button onclick="saveAdminSettings()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-2.5 rounded-xl text-xs transition">
+            Save Details (Update Karein)
+          </button>
+          <button onclick="resetToDefaultSettings()" class="w-1/3 bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs">
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF / BENEFIT MODAL -->
+  <div id="pdfModal" class="fixed inset-0 z-50 bg-slate-900/80 hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[94vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="bg-lic-blue text-white p-4 flex justify-between items-center">
+        <span class="font-bold text-sm text-amber-300">Official Benefit Illustration & PDF</span>
+        <div class="flex gap-2">
+          <button onclick="togglePdfLang()" id="pdfLangBtn" class="bg-amber-400 text-slate-950 font-bold px-3 py-1 rounded text-xs">HINDI</button>
+          <button onclick="triggerDirectPdfSave()" class="bg-emerald-600 text-white font-bold px-4 py-1 rounded text-xs shadow">📥 Save PDF</button>
+          <button onclick="closePdfModal()" class="text-white text-xl font-bold px-2">&times;</button>
+        </div>
+      </div>
+      <div class="p-6 overflow-y-auto flex-1 bg-slate-50">
+        <div id="quotationPrintableTarget" class="bg-white p-6 rounded-2xl border border-slate-300 space-y-4 text-xs">
+          <!-- Dynamic quotation HTML -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const schemesData = [
+      { id: '936', name: 'LIC Jeevan Labh (Table 936)', term: 25, ppt: 16, tag: 'Most Popular' },
+      { id: '945', name: 'LIC Jeevan Umang (Table 945)', term: 25, ppt: 15, tag: '8% Lifetime Pension' },
+      { id: '871', name: 'LIC Jeevan Utsav (Table 871)', term: 20, ppt: 10, tag: '10% Guaranteed Income' }
+    ];
+
+    let currentPdfLang = 'hi';
+    let activePlan = schemesData[0];
+
+    // Initialize LocalStorage Configuration
+    function loadSavedSettings() {
+      const saved = JSON.parse(localStorage.getItem('kds_lic_config') || '{}');
+      if (saved.logoUrl) {
+        document.getElementById('navLogoImg').src = saved.logoUrl;
+        document.getElementById('navLogoImg').classList.remove('hidden');
+        document.getElementById('navLogoText').classList.add('hidden');
+      }
+      if (saved.agencyName) {
+        document.getElementById('navBrandName').innerText = saved.agencyName;
+        document.getElementById('adminAgencyName').value = saved.agencyName;
+      }
+      if (saved.advisorName) {
+        document.getElementById('barAdvisorName').innerText = saved.advisorName;
+        document.getElementById('heroAdvisorName').innerText = saved.advisorName;
+        document.getElementById('footerAdvisorName').innerText = saved.advisorName;
+        document.getElementById('adminAdvisorName').value = saved.advisorName;
+      }
+      if (saved.phone) {
+        document.getElementById('barPhoneText').innerText = saved.phone;
+        document.getElementById('heroAdvisorPhone').innerText = saved.phone;
+        document.getElementById('footerCallText').innerText = "Call: " + saved.phone;
+        document.getElementById('barPhoneLink').href = "tel:" + saved.phone;
+        document.getElementById('footerCallBtn').href = "tel:" + saved.phone;
+        document.getElementById('adminPhone').value = saved.phone;
+      }
+      if (saved.address) {
+        document.getElementById('heroOfficeAddress').innerText = saved.address;
+        document.getElementById('footerFullAddress').innerText = saved.address;
+        document.getElementById('adminAddress').value = saved.address;
+      }
+    }
+
+    function openAdminModal() { document.getElementById('adminModal').classList.remove('hidden'); }
+    function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
+
+    function previewUploadedLogo(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const base64 = evt.target.result;
+        document.getElementById('navLogoImg').src = base64;
+        document.getElementById('navLogoImg').classList.remove('hidden');
+        document.getElementById('navLogoText').classList.add('hidden');
+        
+        // Save image to browser memory
+        const config = JSON.parse(localStorage.getItem('kds_lic_config') || '{}');
+        config.logoUrl = base64;
+        localStorage.setItem('kds_lic_config', JSON.stringify(config));
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveAdminSettings() {
+      const config = JSON.parse(localStorage.getItem('kds_lic_config') || '{}');
+      config.agencyName = document.getElementById('adminAgencyName').value;
+      config.advisorName = document.getElementById('adminAdvisorName').value;
+      config.phone = document.getElementById('adminPhone').value;
+      config.address = document.getElementById('adminAddress').value;
+
+      localStorage.setItem('kds_lic_config', JSON.stringify(config));
+      loadSavedSettings();
+      closeAdminModal();
+      alert('Aapki details safaltapoorvak update ho gayi hain!');
+    }
+
+    function resetToDefaultSettings() {
+      localStorage.removeItem('kds_lic_config');
+      location.reload();
+    }
+
+    function syncAge(v) {
+      document.getElementById('quickAgeInput').value = v;
+      document.getElementById('calcAge').value = v;
+      document.getElementById('quickAgeDisplay').innerText = v + ' Varsh';
+      document.getElementById('ageValDisplay').innerText = v + ' Saal';
+      renderCards();
+    }
+
+    function syncBudget(v) {
+      document.getElementById('quickBudgetInput').value = v;
+      document.getElementById('calcBudget').value = v;
+      document.getElementById('quickBudgetDisplay').innerText = '₹ ' + Number(v).toLocaleString('en-IN') + ' / Year';
+      document.getElementById('budgetValDisplay').innerText = '₹ ' + Number(v).toLocaleString('en-IN');
+      renderCards();
+    }
+
+    function renderCards() {
+      const budget = Number(document.getElementById('calcBudget').value) || 50000;
+      const grid = document.getElementById('schemesGrid');
+      grid.innerHTML = schemesData.map((s, idx) => {
+        const totalPaid = budget * s.ppt;
+        const sa = Math.round(budget * (s.ppt * 1.35) / 100000) * 100000;
+        const maturity = Math.round(sa * 2.3);
+
+        return `
+          <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="bg-blue-100 text-lic-blue text-[10px] font-black px-2 py-0.5 rounded">${s.tag}</span>
+                <span class="text-xs font-bold text-slate-500">Table: ${s.id}</span>
+              </div>
+              <h4 class="text-lg font-black text-lic-blue">${s.name}</h4>
+              <div class="mt-4 bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1.5 text-xs">
+                <div class="flex justify-between"><span class="text-slate-500">Term / PPT:</span><span class="font-bold">${s.term} Yrs / Pay ${s.ppt} Yrs</span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Kool Jama:</span><span class="font-bold">₹ ${totalPaid.toLocaleString('en-IN')}</span></div>
+                <div class="flex justify-between text-emerald-700 font-bold"><span class="text-slate-500">Est. Return:</span><span class="text-sm">₹ ${maturity.toLocaleString('en-IN')}*</span></div>
+              </div>
+            </div>
+            <button onclick="openQuotation(${idx})" class="w-full mt-4 bg-lic-blue hover:bg-lic-lightBlue text-white font-black py-2.5 rounded-xl text-xs transition shadow flex items-center justify-center gap-1">
+              <i class="fa-solid fa-file-pdf text-lic-gold"></i> View 1-25 Yr Chart & PDF
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openQuotation(idx) {
+      activePlan = schemesData[idx];
+      renderQuotation();
+      document.getElementById('pdfModal').classList.remove('hidden');
+    }
+
+    function closePdfModal() { document.getElementById('pdfModal').classList.add('hidden'); }
+
+    function togglePdfLang() {
+      currentPdfLang = currentPdfLang === 'hi' ? 'en' : 'hi';
+      document.getElementById('pdfLangBtn').innerText = currentPdfLang === 'hi' ? 'HINDI' : 'ENGLISH';
+      renderQuotation();
+    }
+
+    function renderQuotation() {
+      const budget = Number(document.getElementById('calcBudget').value) || 50000;
+      const age = Number(document.getElementById('calcAge').value) || 30;
+      const name = document.getElementById('custName').value || 'Customer';
+      const phone = document.getElementById('custPhone').value || '8440096343';
+      const sa = Math.round(budget * (activePlan.ppt * 1.35) / 100000) * 100000;
+      const maturity = Math.round(sa * 2.3);
+
+      const config = JSON.parse(localStorage.getItem('kds_lic_config') || '{}');
+      const advisor = config.advisorName || 'MANOHER SINGH';
+      const advPhone = config.phone || '8440096343';
+      const advAddress = config.address || 'BASEMENT HALL MR COMPLEX, MALWARA, RANIWARA';
+
+      let rowsHtml = '';
+      let cumulative = 0;
+      for(let y=1; y<=activePlan.term; y++) {
+        const isPay = y <= activePlan.ppt;
+        const p = isPay ? budget : 0;
+        cumulative += p;
+        const cover = sa + (y * (sa * 0.045));
+        const loan = y >= 3 ? Math.round(cumulative * 0.80) : 0;
+        const ret = (y === activePlan.term) ? `₹ ${maturity.toLocaleString('en-IN')}★` : (p===0 ? '-' : '-');
+
+        rowsHtml += `
+          <tr class="${y%2===0?'bg-slate-50':'bg-white'} ${y===activePlan.term?'bg-amber-100 font-bold':''}">
+            <td class="p-1 border text-center">${y} (${age+y})</td>
+            <td class="p-1 border text-center ${p===0?'text-emerald-700 font-bold':''}">₹ ${p.toLocaleString('en-IN')}</td>
+            <td class="p-1 border text-center">₹ ${cumulative.toLocaleString('en-IN')}</td>
+            <td class="p-1 border text-center text-blue-900">₹ ${Math.round(cover).toLocaleString('en-IN')}</td>
+            <td class="p-1 border text-center text-emerald-800">${loan>0?'₹ '+loan.toLocaleString('en-IN'):'-'}</td>
+            <td class="p-1 border text-center font-bold">${ret}</td>
+          </tr>
+        `;
+      }
+
+      document.getElementById('quotationPrintableTarget').innerHTML = `
+        <div class="border-b-2 border-slate-900 pb-2 flex justify-between items-center">
+          <div>
+            <h2 class="text-base font-black text-slate-900">${config.agencyName || 'KDS LIC INSURANCE CONSULTANCY'}</h2>
+            <p class="text-[10px] text-slate-500">${advAddress}</p>
+          </div>
+          <div class="text-right">
+            <p class="font-bold text-slate-900">${advisor}</p>
+            <p class="text-emerald-700 font-bold">Mo: ${advPhone}</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-100 p-2 rounded text-[11px] grid grid-cols-2 sm:grid-cols-4 gap-1">
+          <div><strong>Name:</strong> ${name}</div>
+          <div><strong>Age/Mo:</strong> ${age} Yrs / ${phone}</div>
+          <div><strong>Scheme:</strong> ${activePlan.name}</div>
+          <div><strong>Term/PPT:</strong> ${activePlan.term} Yrs / Pay ${activePlan.ppt} Yrs</div>
+        </div>
+
+        <table class="w-full text-[10px] border-collapse mt-2">
+          <thead class="bg-slate-900 text-white">
+            <tr>
+              <th class="p-1.5 border">Year (Age)</th>
+              <th class="p-1.5 border">Premium</th>
+              <th class="p-1.5 border">Total Paid</th>
+              <th class="p-1.5 border">Life Cover</th>
+              <th class="p-1.5 border">Loan (80%)</th>
+              <th class="p-1.5 border">Return / Maturity</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+
+        <div class="bg-blue-50 p-2 rounded text-[10px] border border-blue-200">
+          <strong>IRDAI Official Norms:</strong> 4% conservative yield and 8% return projections as per standard LIC bonus declarations.
+        </div>
+      `;
+    }
+
+    function triggerDirectPdfSave() {
+      const element = document.getElementById('quotationPrintableTarget');
+      const opt = {
+        margin: [6, 6, 6, 6],
+        filename: 'KDS_LIC_Quotation.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().set(opt).from(element).save();
+    }
+
+    window.onload = function() {
+      loadSavedSettings();
+      renderCards();
+    };
+  </script>
+</body>
+</html>
