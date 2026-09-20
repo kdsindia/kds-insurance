@@ -1,89 +1,412 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
   <title>About Manoher Singh - Authorized Insurance Advisor | KDS Insurance</title>
-  <meta name="description" content="Manoher Singh - Authorized Insurance Agent in Malwara, Raniwara. Expert advisory for LIC Life Insurance, Motor Vehicle Insurance, and Family Health Mediclaim." />
+  <meta name="description" content="Manoher Singh - Authorized Insurance Consultant in Malwara, Raniwara. Comprehensive advisory for LIC Life Savings, General Motor Insurance, and Family Health Mediclaim." />
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-</head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
 
-  <!-- Header -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
-    <div class="max-w-5xl mx-auto px-4 h-16 flex justify-between items-center">
-      <a href="/" class="flex items-center gap-2 font-black text-slate-900 text-lg">
-        <img src="logo.png" onerror="this.style.display='none';" class="h-10 w-auto" alt="Logo" />
-        <span>KDS <span class="text-amber-500">INSURANCE</span></span>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              dark: '#001A33',
+              navy: '#002B49',
+              lightBlue: '#00558F',
+              gold: '#FFAE00',
+              bgLight: '#F4F7FB'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-brand-bgLight text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- Main Navbar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-18 flex justify-between items-center py-3">
+      <a href="/" class="flex items-center gap-3 group">
+        <img src="logo.png" onerror="this.style.display='none';" class="h-11 w-auto object-contain rounded-lg" alt="KDS INSURANCE" />
+        <div>
+          <span class="text-lg font-black text-brand-navy">KDS <span class="text-brand-gold">INSURANCE</span></span>
+          <p class="text-[10px] text-slate-500 font-bold">Authorized Advisory Point • Malwara</p>
+        </div>
       </a>
-      <a href="/" class="text-xs font-bold bg-slate-900 text-white px-3.5 py-2 rounded-xl hover:bg-slate-800 transition">
-        <i class="fa-solid fa-arrow-left mr-1"></i> Calculator Portal
+
+      <a href="/" class="text-xs font-bold bg-brand-navy hover:bg-brand-lightBlue text-white px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+        <i class="fa-solid fa-calculator text-brand-gold"></i>
+        <span>Calculator Portal</span>
       </a>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="max-w-4xl mx-auto px-4 py-10 w-full space-y-8">
+  <!-- Main Container -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8 w-full space-y-8 flex-grow">
     
-    <!-- Profile Card -->
+    <!-- Profile Card Header -->
     <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
       <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-        <div class="w-24 h-24 rounded-2xl bg-slate-900 text-amber-400 flex items-center justify-center text-4xl shadow-md flex-shrink-0">
+        <div class="w-24 h-24 rounded-2xl bg-brand-navy text-brand-gold flex items-center justify-center text-4xl shadow-md flex-shrink-0">
           <i class="fa-solid fa-user-tie"></i>
         </div>
-        <div>
-          <span class="text-[11px] font-black uppercase tracking-wider bg-amber-100 text-amber-900 px-2.5 py-0.5 rounded">Authorized Insurance Agent</span>
-          <h1 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">Manoher Singh</h1>
-          <p class="text-xs text-slate-500 mt-1">LIC Life Insurance • Motor Insurance • Health Mediclaim Consultation</p>
-          <div class="flex flex-wrap gap-2 mt-4 justify-center sm:justify-start">
-            <a href="tel:8440096343" class="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition">
-              <i class="fa-solid fa-phone text-amber-400 mr-1.5"></i> 8440096343
+        <div class="space-y-1">
+          <div class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-900 border border-amber-200/60 px-3 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider">
+            <i class="fa-solid fa-shield-halved text-brand-gold"></i> Authorized Insurance Advisor
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-black text-brand-navy">Manoher Singh</h1>
+          <p class="text-xs sm:text-sm text-slate-500 font-medium">LIC Life Insurance • Motor Vehicle Coverage • Family Health Mediclaim</p>
+          <div class="flex flex-wrap gap-2 pt-3 justify-center sm:justify-start">
+            <a href="tel:8440096343" class="bg-brand-navy hover:bg-brand-lightBlue text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+              <i class="fa-solid fa-phone text-brand-gold"></i> Call: 8440096343
             </a>
-            <a href="https://wa.me/918440096343" target="_blank" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-emerald-700 transition">
-              <i class="fa-brands fa-whatsapp mr-1.5"></i> WhatsApp
+            <a href="https://wa.me/918440096343" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+              <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
             </a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- About Text -->
-    <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-4 text-xs sm:text-sm leading-relaxed text-slate-600 shadow-sm">
-      <h2 class="text-lg font-black text-slate-900 border-b pb-2">Hamare Baare Me (About Us)</h2>
-      <p>
-        <strong>KDS INSURANCE</strong> ek vishwasniya bima paramarsh seva kendra hai, jiska sanchalan authorized agent <strong>Manoher Singh</strong> dwara Malwara (Raniwara) kshetra me kiya jata hai. Hamara uddeshya har parivar ko sahi budget aur aavashyakta ke anusar behtar bima suraksha pradan karna hai.
-      </p>
+    <!-- Professional Profile Overview -->
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-4 shadow-sm">
+      <div>
+        <span class="text-[11px] font-black uppercase tracking-wider bg-blue-50 text-brand-lightBlue px-2.5 py-0.5 rounded">About Our Agency</span>
+        <h2 class="text-xl font-black text-brand-navy mt-1">Dedicated Financial & Risk Advisory</h2>
+      </div>
       
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-        <div class="border border-slate-100 bg-slate-50 p-4 rounded-2xl">
-          <h3 class="font-black text-slate-900 text-xs mb-1"><i class="fa-solid fa-shield-halved text-blue-700 mr-1"></i> LIC Life Insurance</h3>
-          <p class="text-[11px]">Bachat, retirement pension, bacho ki shiksha aur suraksha ke official plans.</p>
+      <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+        <strong>KDS Insurance Services</strong> is an authorized multi-line insurance advisory center founded and managed by <strong>Manoher Singh</strong>, based in Malwara (Raniwara), Rajasthan. Our mission is to provide transparent, unbiased, and customized insurance planning for individuals, families, and businesses across the region.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-3">
+        <div class="border border-slate-200 bg-slate-50 p-4 rounded-2xl space-y-1">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 text-brand-navy flex items-center justify-center text-sm font-bold mb-2">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3 class="font-black text-xs text-brand-navy">LIC Life Savings</h3>
+          <p class="text-[11px] text-slate-500 leading-relaxed">Official savings, pension, child education, and long-term risk protection policies.</p>
         </div>
-        <div class="border border-slate-100 bg-slate-50 p-4 rounded-2xl">
-          <h3 class="font-black text-slate-900 text-xs mb-1"><i class="fa-solid fa-car text-emerald-600 mr-1"></i> Vahan Bima (Motor)</h3>
-          <p class="text-[11px]">Car, Bike aur Commercial gadiyo ka Third Party aur Zero Dep instant renewal.</p>
+
+        <div class="border border-slate-200 bg-slate-50 p-4 rounded-2xl space-y-1">
+          <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-sm font-bold mb-2">
+            <i class="fa-solid fa-car-shield"></i>
+          </div>
+          <h3 class="font-black text-xs text-brand-navy">Motor Insurance</h3>
+          <p class="text-[11px] text-slate-500 leading-relaxed">Third-Party (TP), Comprehensive, and Zero-Depreciation covers for all vehicle types.</p>
         </div>
-        <div class="border border-slate-100 bg-slate-50 p-4 rounded-2xl">
-          <h3 class="font-black text-slate-900 text-xs mb-1"><i class="fa-solid fa-heart-pulse text-rose-600 mr-1"></i> Swasthya Bima (Health)</h3>
-          <p class="text-[11px]">Top hospitals me cashless ilaj, no room rent capping mediclaim suvidha.</p>
+
+        <div class="border border-slate-200 bg-slate-50 p-4 rounded-2xl space-y-1">
+          <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 flex items-center justify-center text-sm font-bold mb-2">
+            <i class="fa-solid fa-heart-pulse"></i>
+          </div>
+          <h3 class="font-black text-xs text-brand-navy">Health Mediclaim</h3>
+          <p class="text-[11px] text-slate-500 leading-relaxed">Cashless treatments, zero room rent capping, and Section 80D tax deductions.</p>
         </div>
       </div>
     </div>
 
-    <!-- Office Address -->
-    <div class="bg-slate-900 text-white rounded-3xl p-6 shadow-md border-l-4 border-amber-400">
-      <h3 class="text-sm font-black text-amber-400 uppercase">Office Address & Seva Kendra</h3>
-      <p class="text-xs text-slate-300 mt-1">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
-      <p class="text-xs text-slate-400 mt-2"><i class="fa-solid fa-clock text-amber-400 mr-1"></i> Helpline: 8440096343 (Subah 9 AM se Sham 8 PM)</p>
+    <!-- Contact, Share & QR Code Section -->
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+      
+      <div class="text-center sm:text-left">
+        <span class="text-[11px] font-black uppercase tracking-wider bg-amber-100 text-amber-900 px-2.5 py-0.5 rounded">Connect & Share</span>
+        <h2 class="text-xl sm:text-2xl font-black text-brand-navy mt-1">Sampark Karein Ya Portal Share Karein</h2>
+        <p class="text-xs text-slate-500 mt-0.5">Direct call/chat karein ya JPEG poster banakar WhatsApp par share karein.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        
+        <!-- Left Column: Action Buttons -->
+        <div class="md:col-span-7 space-y-3">
+          
+          <a href="tel:8440096343" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-bold p-3.5 rounded-2xl text-xs sm:text-sm transition flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-brand-gold text-brand-dark flex items-center justify-center text-base">
+                <i class="fa-solid fa-phone"></i>
+              </div>
+              <div class="text-left">
+                <div class="font-black text-white">Call Now: 8440096343</div>
+                <div class="text-[10px] text-slate-300">Direct Advisor Line (Manoher Singh)</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+          </a>
+
+          <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20mujhe%20KDS%20Insurance%20ke%20baare%20me%20jaankari%20chahiye" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold p-3.5 rounded-2xl text-xs sm:text-sm transition flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-white/20 text-white flex items-center justify-center text-lg">
+                <i class="fa-brands fa-whatsapp"></i>
+              </div>
+              <div class="text-left">
+                <div class="font-black text-white">Chat on WhatsApp</div>
+                <div class="text-[10px] text-emerald-100">Instant Policy Quotation & Advice</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs text-emerald-200"></i>
+          </a>
+
+          <!-- Generate & Share Poster Button -->
+          <button type="button" id="posterShareBtn" onclick="shareAsJpegPoster()" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold p-3.5 rounded-2xl text-xs sm:text-sm transition flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-amber-400 text-slate-900 flex items-center justify-center text-base">
+                <i class="fa-solid fa-image"></i>
+              </div>
+              <div class="text-left">
+                <div class="font-black text-white">Send Visiting Card on WhatsApp</div>
+                <div class="text-[10px] text-emerald-200">Complete insurance details & QR code</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-share-nodes text-xs text-emerald-300"></i>
+          </button>
+
+          <!-- Text Link Share Button -->
+          <button type="button" onclick="shareWebsiteLink()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold p-3 rounded-2xl text-xs transition flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-link text-brand-lightBlue ml-1"></i>
+              <span>Copy Portal Link</span>
+            </div>
+            <i class="fa-solid fa-copy text-xs text-slate-400"></i>
+          </button>
+
+        </div>
+
+        <!-- Right Column: QR Code Box -->
+        <div class="md:col-span-5 bg-slate-50 border border-slate-200 rounded-2xl p-5 text-center flex flex-col items-center justify-center space-y-3">
+          <div class="bg-white p-2.5 rounded-2xl border border-slate-200 shadow-sm">
+            <img 
+              id="portalQrImage"
+              crossorigin="anonymous"
+              src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https%3A%2F%2Fkdsinsurance.in%2F" 
+              alt="KDS Insurance QR Code" 
+              class="w-32 h-32 object-contain rounded-lg"
+            />
+          </div>
+          
+          <div>
+            <h3 class="text-xs font-black text-brand-navy">Scan QR Code to Visit</h3>
+            <p class="text-[10px] text-slate-500">Phone camera se scan karke direct portal kholein</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Official Office Details -->
+    <div class="bg-brand-navy text-white rounded-3xl p-6 sm:p-7 shadow-md border-l-4 border-brand-gold">
+      <h3 class="text-xs font-black text-brand-gold uppercase tracking-wider">Office Address & Seva Kendra</h3>
+      <p class="text-xs sm:text-sm text-slate-200 mt-1">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
+      <div class="flex flex-wrap items-center gap-4 text-xs text-slate-400 mt-3 pt-3 border-t border-white/10">
+        <span><i class="fa-solid fa-phone text-brand-gold mr-1"></i> Helpline: 8440096343</span>
+        <span><i class="fa-solid fa-clock text-brand-gold mr-1"></i> Mon - Sat: 9:00 AM - 8:00 PM</span>
+      </div>
     </div>
 
   </main>
 
+  <!-- Hidden Canvas for JPEG Generation -->
+  <canvas id="posterCanvas" width="1200" height="630" class="hidden"></canvas>
+
   <!-- Footer -->
-  <footer class="bg-slate-900 border-t border-slate-800 text-slate-500 text-[11px] py-4 text-center">
-    &copy; 2026 Manoher Singh (Authorized Insurance Agent) • KDS Insurance
+  <footer class="bg-brand-dark border-t border-slate-800 text-slate-400 text-xs py-5 text-center">
+    <div class="max-w-4xl mx-auto px-4">
+      &copy; 2026 Manoher Singh (Authorized Insurance Agent) • KDS Insurance Services
+    </div>
   </footer>
+
+  <!-- Toast Notification -->
+  <div id="shareToast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 text-xs font-bold hidden flex items-center gap-2">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+    <span id="shareToastText">Success</span>
+  </div>
+
+  <!-- JavaScript Scripts -->
+  <script>
+    function showShareToast(msg) {
+      const toast = document.getElementById('shareToast');
+      const toastText = document.getElementById('shareToastText');
+      if (toast && toastText) {
+        toastText.innerText = msg;
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+          toast.classList.add('hidden');
+        }, 3500);
+      }
+    }
+
+    // 1. Text Link Share / Copy
+    function shareWebsiteLink() {
+      navigator.clipboard.writeText('https://kdsinsurance.in/').then(() => {
+        showShareToast('Website Link clipboard par copy ho gaya!');
+      }).catch(() => {
+        window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent('https://kdsinsurance.in/'), '_blank');
+      });
+    }
+
+    // 2. High-Quality JPEG Poster Generator (Left: Details, Right: QR Code)
+    function shareAsJpegPoster() {
+      const btn = document.getElementById('posterShareBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = `<span class="text-xs font-bold text-white"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Poster Banaya Jaa Raha Hai...</span>`;
+      btn.disabled = true;
+
+      const canvas = document.getElementById('posterCanvas');
+      const ctx = canvas.getContext('2d');
+
+      // Poster Background Gradient
+      const grad = ctx.createLinearGradient(0, 0, 1200, 630);
+      grad.addColorStop(0, '#001A33');
+      grad.addColorStop(0.5, '#002B49');
+      grad.addColorStop(1, '#001428');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1200, 630);
+
+      // Gold Border Frame
+      ctx.lineWidth = 14;
+      ctx.strokeStyle = '#FFAE00';
+      ctx.strokeRect(7, 7, 1186, 616);
+
+      // Decorative Accent
+      ctx.fillStyle = 'rgba(255, 174, 0, 0.08)';
+      ctx.beginPath();
+      ctx.arc(1150, 50, 260, 0, Math.PI * 2);
+      ctx.fill();
+
+      // LEFT SIDE - Text & Services Information
+      ctx.fillStyle = '#FFAE00';
+      ctx.font = 'bold 22px Inter, sans-serif';
+      ctx.fillText('AUTHORIZED INSURANCE ADVISORY SEVA KENDRA', 60, 75);
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '900 48px Inter, sans-serif';
+      ctx.fillText('KDS INSURANCE SERVICES', 60, 135);
+
+      ctx.fillStyle = '#94A3B8';
+      ctx.font = '600 24px Inter, sans-serif';
+      ctx.fillText('Advisor: Manoher Singh  |  Helpline: 8440096343', 60, 175);
+
+      // Divider Line
+      ctx.strokeStyle = '#FFAE00';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(60, 205);
+      ctx.lineTo(760, 205);
+      ctx.stroke();
+
+      // Service 1: Life Insurance
+      ctx.fillStyle = '#FFAE00';
+      ctx.font = 'bold 25px Inter, sans-serif';
+      ctx.fillText('✔ LIC LIFE INSURANCE (जीवन बीमा)', 60, 255);
+      ctx.fillStyle = '#E2E8F0';
+      ctx.font = '20px Inter, sans-serif';
+      ctx.fillText('Jeevan Labh, Anand, Umang, Utsav • Bachat & Pension Plans', 95, 290);
+
+      // Service 2: Motor Insurance
+      ctx.fillStyle = '#FFAE00';
+      ctx.font = 'bold 25px Inter, sans-serif';
+      ctx.fillText('✔ MOTOR VEHICLE INSURANCE (वाहन बीमा)', 60, 345);
+      ctx.fillStyle = '#E2E8F0';
+      ctx.font = '20px Inter, sans-serif';
+      ctx.fillText('Bike, Car, Commercial • Third Party & 0-Dep Instant Policy', 95, 380);
+
+      // Service 3: Health Insurance
+      ctx.fillStyle = '#FFAE00';
+      ctx.font = 'bold 25px Inter, sans-serif';
+      ctx.fillText('✔ HEALTH MEDICLAIM (स्वास्थ्य बीमा)', 60, 435);
+      ctx.fillStyle = '#E2E8F0';
+      ctx.font = '20px Inter, sans-serif';
+      ctx.fillText('100% Cashless Treatment • No Room Rent Capping • 80D Tax Benefit', 95, 470);
+
+      // Footer Location Details
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.fillRect(60, 520, 700, 65);
+      ctx.fillStyle = '#F8FAFC';
+      ctx.font = 'bold 18px Inter, sans-serif';
+      ctx.fillText('📍 Office: Basement Hall MR Complex, near Police Chowki, Raniwara, Malwara (Raj.)', 80, 560);
+
+      // RIGHT SIDE - QR Code Box
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.roundRect(810, 80, 330, 470, 24);
+      ctx.fill();
+
+      ctx.fillStyle = '#002B49';
+      ctx.font = '900 24px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('SCAN TO VISIT', 975, 130);
+
+      ctx.fillStyle = '#64748B';
+      ctx.font = 'bold 15px Inter, sans-serif';
+      ctx.fillText('Direct Portal & Calculator', 975, 160);
+
+      // Draw QR Image onto Canvas
+      const qrImg = new Image();
+      qrImg.crossOrigin = 'anonymous';
+      qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https%3A%2F%2Fkdsinsurance.in%2F';
+
+      qrImg.onload = function() {
+        ctx.drawImage(qrImg, 850, 185, 250, 250);
+
+        ctx.fillStyle = '#002B49';
+        ctx.font = '900 17px Inter, sans-serif';
+        ctx.fillText('kdsinsurance.in', 975, 475);
+
+        ctx.fillStyle = '#059669';
+        ctx.font = 'bold 14px Inter, sans-serif';
+        ctx.fillText('Instant Premium Quotes', 975, 505);
+
+        ctx.textAlign = 'left'; // Reset alignment
+
+        // Convert to JPEG Blob
+        canvas.toBlob(function(blob) {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+
+          const file = new File([blob], 'kds-insurance-poster.jpeg', { type: 'image/jpeg' });
+
+          // Mobile: Native Share (WhatsApp/Social Media image share)
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({
+              files: [file],
+              title: 'KDS Insurance Advisory Portal',
+              text: 'KDS Insurance - Life, Motor & Health Insurance Advisory by Manoher Singh (Mo: 8440096343). Website: https://kdsinsurance.in/'
+            }).catch((e) => console.log('Share dismissed', e));
+          } else {
+            // Desktop: Auto Download JPEG & Open WhatsApp text
+            const link = document.createElement('a');
+            link.download = 'kds-insurance-poster.jpeg';
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            showShareToast('JPEG Poster download ho gaya hai!');
+          }
+        }, 'image/jpeg', 0.95);
+      };
+
+      qrImg.onerror = function() {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        showShareToast('QR Code load nahi ho paya, dobara try karein.');
+      };
+    }
+  </script>
 
 </body>
 </html>
