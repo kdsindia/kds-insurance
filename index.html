@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <!-- SEO & GOOGLE VERIFICATION -->
+  <!-- SEO & GOOGLE SITE VERIFICATION -->
   <meta name="google-site-verification" content="4mTqww8O_oKqvKdAcGa073EWUQYrZsU7thAHophgWLo" />
   <title>KDS INSURANCE | LIC Policy Calculator & Hindi Benefit Chart - Malwara, Raniwara</title>
   <meta name="description" content="KDS Insurance Malwara (Manoher Singh - 8440096343). LIC policy ka aasan Hindi benefit chart, monthly/yearly premium calculation, 4% aur 8% sarkari niyam anusaar return." />
@@ -651,7 +651,6 @@
 
         let returnText = '-';
         if (y === term) {
-          const maturity4 = sumAssured + revBonus4;
           const maturity8 = sumAssured + revBonus8 + fab8;
           returnText = `₹${(maturity8/100000).toFixed(2)} लाख* (@8%)`;
         } else if (scheme.id === '945' && !isPaying) {
@@ -771,7 +770,7 @@
       document.getElementById('quotationModal').classList.add('hidden');
     }
 
-    // SHORT AND CLEAN HINDI BENEFIT CHART
+    // EXACT SHORT & CLEAN HINDI BENEFIT CHART (NO AWKWARD NON-GUARANTEED COLUMNS)
     function renderModalContent() {
       if (!activeModalScheme) return;
       const age = Number(document.getElementById('calcAgeInput').value) || 30;
@@ -787,64 +786,68 @@
       const target = document.getElementById('quotationPrintableTarget');
 
       target.innerHTML = `
-        <div style="font-family: 'Noto Sans Devanagari', sans-serif; color: #0f172a; line-height: 1.4;">
+        <div style="font-family: 'Noto Sans Devanagari', sans-serif; color: #0f172a; line-height: 1.35;">
           
-          <!-- LETTERHEAD -->
+          <!-- LETTERHEAD WITH LOGO IMAGE -->
           <div style="border-bottom: 2px solid #002B49; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <h2 style="font-size: 16px; font-weight: 900; color: #002B49; margin: 0;">KDS INSURANCE SEVA KENDRA</h2>
-              <p style="font-size: 10.5px; color: #00558F; margin: 2px 0 0 0; font-weight: 700;">
-                अधिकृत बीमा सलाहकार: <strong>मनोहर सिंह</strong> (मोबाइल: 8440096343)
-              </p>
-              <p style="font-size: 9px; color: #475569; margin: 1px 0 0 0;">
-                बेसमेंट हॉल MR कॉम्प्लेक्स, पुलिस चौकी के पास, मालवाड़ा, रानीवाड़ा (राजस्थान) - 343039
-              </p>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <img src="logo.png" onerror="this.style.display='none';" style="height: 46px; width: auto; object-fit: contain;" alt="KDS INSURANCE" />
+              <div>
+                <h2 style="font-size: 15px; font-weight: 900; color: #002B49; margin: 0; line-height: 1.1;">KDS INSURANCE SEVA KENDRA</h2>
+                <p style="font-size: 10px; color: #00558F; margin: 2px 0 0 0; font-weight: 700;">
+                  अधिकृत बीमा सलाहकार: <strong>मनोहर सिंह</strong> (मोबाइल: 8440096343)
+                </p>
+                <p style="font-size: 8.5px; color: #475569; margin: 1px 0 0 0;">
+                  बेसमेंट हॉल MR कॉम्प्लेक्स, पुलिस चौकी के पास, मालवाड़ा, रानीवाड़ा (राजस्थान) - 343039
+                </p>
+              </div>
             </div>
+
             <div style="text-align: right;">
-              <span style="background: #FFAE00; color: #002B49; font-size: 9.5px; font-weight: 900; padding: 3px 8px; border-radius: 4px;">
+              <span style="background: #FFAE00; color: #002B49; font-size: 9.5px; font-weight: 900; padding: 2px 8px; border-radius: 4px; display: inline-block;">
                 पॉलिसी बेनिफिट सारांश
               </span>
-              <p style="font-size: 9px; color: #64748b; margin: 3px 0 0 0;">तारीख: ${new Date().toLocaleDateString('hi-IN')}</p>
+              <p style="font-size: 8.5px; color: #64748b; margin: 3px 0 0 0;">तारीख: ${new Date().toLocaleDateString('hi-IN')}</p>
             </div>
           </div>
 
-          <!-- SUMMARY STRIP -->
-          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; margin-bottom: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 10px;">
+          <!-- SUMMARY CARD -->
+          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 9.5px;">
             <div>
               <p style="margin: 0;"><strong>ग्राहक का नाम:</strong> ${custName}</p>
               <p style="margin: 2px 0;"><strong>प्रवेश आयु:</strong> ${sched.age} वर्ष</p>
               <p style="margin: 2px 0;"><strong>योजना:</strong> ${sched.scheme.name}</p>
             </div>
             <div>
-              <p style="margin: 0;"><strong>पॉलिसी अवधि:</strong> ${sched.term} वर्ष (प्रीमियम: ${sched.ppt} वर्ष)</p>
+              <p style="margin: 0;"><strong>पॉलिसी अवधि:</strong> ${sched.term} वर्ष (प्रीमियम: <strong>${sched.ppt} वर्ष</strong>)</p>
               <p style="margin: 2px 0; color: #002B49; font-weight: bold;"><strong>प्रीमियम:</strong> ₹ ${sched.modeAmount.toLocaleString('en-IN')} ${modeText}</p>
-              <p style="margin: 2px 0;"><strong>कुल जमा:</strong> ₹ ${sched.totalPaid.toLocaleString('en-IN')}</p>
+              <p style="margin: 2px 0;"><strong>कुल जमा प्रीमियम:</strong> ₹ ${sched.totalPaid.toLocaleString('en-IN')}</p>
             </div>
             <div>
               <p style="margin: 0;"><strong>मूल बीमाधन:</strong> ₹ ${sched.sumAssured.toLocaleString('en-IN')}</p>
               <p style="margin: 2px 0; color: #047857; font-weight: 900; font-size: 11px;">
-                <strong>मैच्योरिटी (@8%):</strong> ₹ ${sched.maturity8.toLocaleString('en-IN')}*
+                <strong>मैच्योरिटी लाभ (@8%):</strong> ₹ ${sched.maturity8.toLocaleString('en-IN')}*
               </p>
-              <p style="margin: 1px 0; color: #475569; font-size: 9px;">मैच्योरिटी (@4%): ₹ ${sched.maturity4.toLocaleString('en-IN')}*</p>
+              <p style="margin: 1px 0; color: #64748b; font-size: 8.5px;">मैच्योरिटी (@4%): ₹ ${sched.maturity4.toLocaleString('en-IN')}*</p>
             </div>
           </div>
 
-          <!-- SHORT & EASY HINDI TABLE (8 COLUMNS ONLY) -->
-          <h3 style="font-size: 11px; font-weight: 900; color: #002B49; margin: 0 0 6px 0; text-transform: uppercase;">
+          <!-- SHORT & CLEAN 8-COLUMN HINDI TABLE -->
+          <h3 style="font-size: 10.5px; font-weight: 900; color: #002B49; margin: 0 0 5px 0; text-transform: uppercase;">
             वर्ष 1 से ${sched.term} वर्ष तक संक्षिप्त प्रीमियम, सुरक्षा एवं रिटर्न विवरण
           </h3>
 
-          <table style="width: 100%; border-collapse: collapse; font-size: 9.5px; border: 1px solid #cbd5e1; text-align: right;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 9px; border: 1px solid #cbd5e1; text-align: right;">
             <thead>
               <tr style="background: #002B49; color: #ffffff; font-weight: bold; text-align: center;">
-                <th style="padding: 5px 4px; border: 1px solid #94a3b8;">वर्ष</th>
-                <th style="padding: 5px 4px; border: 1px solid #94a3b8;">उम्र</th>
-                <th style="padding: 5px 4px; border: 1px solid #94a3b8;">प्रीमियम (${sched.mode.toUpperCase()})</th>
-                <th style="padding: 5px 4px; border: 1px solid #94a3b8;">कुल जमा</th>
-                <th style="padding: 5px 4px; border: 1px solid #94a3b8;">नॉर्मल कवर</th>
-                <th style="padding: 5px 4px; border: 1px solid #94a3b8;">एक्सीडेंट कवर</th>
-                <th style="padding: 5px 4px; border: 1px solid #94a3b8;">लोन पात्रता</th>
-                <th style="padding: 5px 4px; border: 1px solid #94a3b8; background: #004d80;">रिटर्न / मैच्योरिटी*</th>
+                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">वर्ष</th>
+                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">उम्र</th>
+                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">प्रीमियम (${sched.mode.toUpperCase()})</th>
+                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">कुल जमा</th>
+                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">नॉर्मल कवर</th>
+                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">एक्सीडेंट कवर</th>
+                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">लोन पात्रता</th>
+                <th style="padding: 4px 3px; border: 1px solid #94a3b8; background: #004d80;">रिटर्न / मैच्योरिटी*</th>
               </tr>
             </thead>
             <tbody>
@@ -853,18 +856,18 @@
                 const isBg = (i % 2 === 1);
                 return `
                   <tr style="background: ${isLast ? '#fef3c7' : (isBg ? '#f8fafc' : '#ffffff')}; font-weight: ${isLast ? 'bold' : 'normal'};">
-                    <td style="padding: 4px 4px; border: 1px solid #cbd5e1; text-align: center;">${r.year}</td>
-                    <td style="padding: 4px 4px; border: 1px solid #cbd5e1; text-align: center;">${r.age}</td>
-                    <td style="padding: 4px 4px; border: 1px solid #cbd5e1; color: ${r.modePay > 0 ? '#0f172a' : '#94a3b8'};">
+                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; text-align: center;">${r.year}</td>
+                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; text-align: center;">${r.age}</td>
+                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; color: ${r.modePay > 0 ? '#0f172a' : '#94a3b8'};">
                       ${r.modePay > 0 ? '₹ ' + r.modePay.toLocaleString('en-IN') : 'कोई नहीं (फ्री)'}
                     </td>
-                    <td style="padding: 4px 4px; border: 1px solid #cbd5e1;">₹ ${r.cumulativePaid.toLocaleString('en-IN')}</td>
-                    <td style="padding: 4px 4px; border: 1px solid #cbd5e1; color: #0284c7;">₹ ${r.normalCover.toLocaleString('en-IN')}</td>
-                    <td style="padding: 4px 4px; border: 1px solid #cbd5e1;">₹ ${r.accidentalCover.toLocaleString('en-IN')}</td>
-                    <td style="padding: 4px 4px; border: 1px solid #cbd5e1; color: #047857;">
+                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; font-weight: 600;">₹ ${r.cumulativePaid.toLocaleString('en-IN')}</td>
+                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; color: #0284c7;">₹ ${r.normalCover.toLocaleString('en-IN')}</td>
+                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1;">₹ ${r.accidentalCover.toLocaleString('en-IN')}</td>
+                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; color: #047857;">
                       ${r.loanValue > 0 ? '₹ ' + r.loanValue.toLocaleString('en-IN') : '-'}
                     </td>
-                    <td style="padding: 4px 4px; border: 1px solid #cbd5e1; background: ${isLast ? '#fde68a' : 'transparent'}; color: ${isLast ? '#b45309' : '#0f172a'}; font-weight: ${isLast ? '900' : 'normal'};">
+                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; background: ${isLast ? '#fde68a' : 'transparent'}; color: ${isLast ? '#b45309' : '#0f172a'}; font-weight: ${isLast ? '900' : 'normal'};">
                       ${r.returnText}
                     </td>
                   </tr>
@@ -873,19 +876,22 @@
             </tbody>
           </table>
 
-          <!-- STATUTORY & IRDAI NOTE -->
-          <div style="margin-top: 10px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 8px 10px; font-size: 8.5px; color: #1e3a8a;">
-            <p style="margin: 0; font-weight: bold;">⚖️ सरकारी नियम व IRDAI दिशा-निर्देश:</p>
-            <p style="margin: 2px 0 0 0;">
-              • 4% रिटर्न की दर पर कुल अनुमानित मैच्योरिटी: <strong>₹ ${sched.maturity4.toLocaleString('en-IN')}</strong> (कंजर्वेटिव बेसलाइन)
+          <!-- STATUTORY DISCLAIMER NOTES BOX (SAFELY WRITTEN AT BOTTOM) -->
+          <div style="margin-top: 8px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 6px 10px; font-size: 8px; color: #1e3a8a; line-height: 1.35;">
+            <p style="margin: 0; font-weight: bold;">⚖️ सरकारी नियम व IRDAI दिशा-निर्देश (महत्वपूर्ण नोट):</p>
+            <p style="margin: 1.5px 0 0 0;">
+              • <strong>4% दर पर बेसलाइन मैच्योरिटी:</strong> लगभग ₹ ${sched.maturity4.toLocaleString('en-IN')}* (कंजर्वेटिव सरकारी अनुमान)।
             </p>
-            <p style="margin: 1px 0 0 0;">
-              • 8% रिटर्न की दर पर कुल अनुमानित मैच्योरिटी: <strong>₹ ${sched.maturity8.toLocaleString('en-IN')}</strong> (घोषित एलआईसी बोनस व FAB सहित)
+            <p style="margin: 1.5px 0 0 0;">
+              • <strong>8% दर पर अनुमानित मैच्योरिटी:</strong> लगभग ₹ ${sched.maturity8.toLocaleString('en-IN')}* (घोषित एलआईसी बोनस दर एवं फाइनल एडिशनल बोनस FAB सहित)।
+            </p>
+            <p style="margin: 1.5px 0 0 0; color: #475569;">
+              • यह इलस्ट्रेशन केवल पॉलिसी की सरल समझ हेतु है। वास्तविक लाभ एलआईसी द्वारा समय-समय पर घोषित बोनस मूल्यांकन के अनुसार देय होंगे।
             </p>
           </div>
 
-          <!-- FOOTER -->
-          <div style="background: #002B49; color: #ffffff; padding: 8px 12px; border-radius: 6px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 9px;">
+          <!-- FOOTER AGENT STRIP -->
+          <div style="background: #002B49; color: #ffffff; padding: 6px 12px; border-radius: 6px; margin-top: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 8.5px;">
             <div>
               <p style="margin: 0; font-weight: 900; color: #FFAE00;">मनोहर सिंह (अधिकृत एलआईसी बीमा सलाहकार)</p>
               <p style="margin: 1px 0 0 0;">बेसमेंट हॉल MR कॉम्प्लेक्स, पुलिस चौकी के पास, मालवाड़ा, रानीवाड़ा</p>
