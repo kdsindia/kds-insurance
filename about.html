@@ -129,7 +129,7 @@
       <div class="text-center sm:text-left">
         <span class="text-[11px] font-black uppercase tracking-wider bg-amber-100 text-amber-900 px-2.5 py-0.5 rounded">Connect & Share</span>
         <h2 class="text-xl sm:text-2xl font-black text-brand-navy mt-1">Sampark Karein Ya Portal Share Karein</h2>
-        <p class="text-xs text-slate-500 mt-0.5">Direct call/chat karein ya JPEG poster banakar WhatsApp par share karein.</p>
+        <p class="text-xs text-slate-500 mt-0.5">Direct call/chat karein ya Visiting Card banakar WhatsApp par share karein.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
@@ -163,27 +163,29 @@
             <i class="fa-solid fa-chevron-right text-xs text-emerald-200"></i>
           </a>
 
-          <!-- Generate & Share Poster Button -->
+          <!-- Send Visiting Card Button (Modern & Direct) -->
           <button type="button" id="posterShareBtn" onclick="shareAsJpegPoster()" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold p-3.5 rounded-2xl text-xs sm:text-sm transition flex items-center justify-between shadow-sm">
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 rounded-xl bg-amber-400 text-slate-900 flex items-center justify-center text-base">
-                <i class="fa-solid fa-image"></i>
+                <i class="fa-solid fa-address-card"></i>
               </div>
               <div class="text-left">
                 <div class="font-black text-white">Send Visiting Card on WhatsApp</div>
-                <div class="text-[10px] text-emerald-200">Complete insurance details & QR code</div>
+                <div class="text-[10px] text-emerald-200">QR Code sahit digital card WhatsApp par share karein</div>
               </div>
             </div>
-            <i class="fa-solid fa-share-nodes text-xs text-emerald-300"></i>
+            <i class="fa-solid fa-paper-plane text-xs text-emerald-300"></i>
           </button>
 
-          <!-- Text Link Share Button -->
-          <button type="button" onclick="shareWebsiteLink()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold p-3 rounded-2xl text-xs transition flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <i class="fa-solid fa-link text-brand-lightBlue ml-1"></i>
-              <span>Copy Portal Link</span>
+          <!-- Copy Portal Link Button -->
+          <button type="button" onclick="shareWebsiteLink()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold p-3 rounded-2xl text-xs transition flex items-center justify-between border border-slate-200/60 shadow-sm">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-lg bg-blue-50 text-brand-lightBlue flex items-center justify-center text-xs">
+                <i class="fa-solid fa-link"></i>
+              </div>
+              <span class="font-bold text-slate-800">Copy Portal Link</span>
             </div>
-            <i class="fa-solid fa-copy text-xs text-slate-400"></i>
+            <i class="fa-regular fa-clone text-xs text-slate-400"></i>
           </button>
 
         </div>
@@ -252,7 +254,7 @@
       }
     }
 
-    // 1. Text Link Share / Copy
+    // 1. Text Link Copy
     function shareWebsiteLink() {
       navigator.clipboard.writeText('https://kdsinsurance.in/').then(() => {
         showShareToast('Website Link clipboard par copy ho gaya!');
@@ -261,17 +263,17 @@
       });
     }
 
-    // 2. High-Quality JPEG Poster Generator (Left: Details, Right: QR Code)
+    // 2. Reliable JPEG Card Generator & Share
     function shareAsJpegPoster() {
       const btn = document.getElementById('posterShareBtn');
       const originalText = btn.innerHTML;
-      btn.innerHTML = `<span class="text-xs font-bold text-white"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Poster Banaya Jaa Raha Hai...</span>`;
+      btn.innerHTML = `<span class="text-xs font-bold text-white"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Visiting Card Taiyar Ho Rha Hai...</span>`;
       btn.disabled = true;
 
       const canvas = document.getElementById('posterCanvas');
       const ctx = canvas.getContext('2d');
 
-      // Poster Background Gradient
+      // Background
       const grad = ctx.createLinearGradient(0, 0, 1200, 630);
       grad.addColorStop(0, '#001A33');
       grad.addColorStop(0.5, '#002B49');
@@ -284,26 +286,19 @@
       ctx.strokeStyle = '#FFAE00';
       ctx.strokeRect(7, 7, 1186, 616);
 
-      // Decorative Accent
-      ctx.fillStyle = 'rgba(255, 174, 0, 0.08)';
-      ctx.beginPath();
-      ctx.arc(1150, 50, 260, 0, Math.PI * 2);
-      ctx.fill();
-
-      // LEFT SIDE - Text & Services Information
+      // Left Details
       ctx.fillStyle = '#FFAE00';
-      ctx.font = 'bold 22px Inter, sans-serif';
+      ctx.font = 'bold 22px sans-serif';
       ctx.fillText('AUTHORIZED INSURANCE ADVISORY SEVA KENDRA', 60, 75);
 
       ctx.fillStyle = '#FFFFFF';
-      ctx.font = '900 48px Inter, sans-serif';
+      ctx.font = '900 46px sans-serif';
       ctx.fillText('KDS INSURANCE SERVICES', 60, 135);
 
       ctx.fillStyle = '#94A3B8';
-      ctx.font = '600 24px Inter, sans-serif';
+      ctx.font = '600 24px sans-serif';
       ctx.fillText('Advisor: Manoher Singh  |  Helpline: 8440096343', 60, 175);
 
-      // Divider Line
       ctx.strokeStyle = '#FFAE00';
       ctx.lineWidth = 3;
       ctx.beginPath();
@@ -311,99 +306,97 @@
       ctx.lineTo(760, 205);
       ctx.stroke();
 
-      // Service 1: Life Insurance
+      // Services
       ctx.fillStyle = '#FFAE00';
-      ctx.font = 'bold 25px Inter, sans-serif';
+      ctx.font = 'bold 24px sans-serif';
       ctx.fillText('✔ LIC LIFE INSURANCE (जीवन बीमा)', 60, 255);
       ctx.fillStyle = '#E2E8F0';
-      ctx.font = '20px Inter, sans-serif';
+      ctx.font = '20px sans-serif';
       ctx.fillText('Jeevan Labh, Anand, Umang, Utsav • Bachat & Pension Plans', 95, 290);
 
-      // Service 2: Motor Insurance
       ctx.fillStyle = '#FFAE00';
-      ctx.font = 'bold 25px Inter, sans-serif';
+      ctx.font = 'bold 24px sans-serif';
       ctx.fillText('✔ MOTOR VEHICLE INSURANCE (वाहन बीमा)', 60, 345);
       ctx.fillStyle = '#E2E8F0';
-      ctx.font = '20px Inter, sans-serif';
+      ctx.font = '20px sans-serif';
       ctx.fillText('Bike, Car, Commercial • Third Party & 0-Dep Instant Policy', 95, 380);
 
-      // Service 3: Health Insurance
       ctx.fillStyle = '#FFAE00';
-      ctx.font = 'bold 25px Inter, sans-serif';
+      ctx.font = 'bold 24px sans-serif';
       ctx.fillText('✔ HEALTH MEDICLAIM (स्वास्थ्य बीमा)', 60, 435);
       ctx.fillStyle = '#E2E8F0';
-      ctx.font = '20px Inter, sans-serif';
+      ctx.font = '20px sans-serif';
       ctx.fillText('100% Cashless Treatment • No Room Rent Capping • 80D Tax Benefit', 95, 470);
 
-      // Footer Location Details
       ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
       ctx.fillRect(60, 520, 700, 65);
       ctx.fillStyle = '#F8FAFC';
-      ctx.font = 'bold 18px Inter, sans-serif';
-      ctx.fillText('📍 Office: Basement Hall MR Complex, near Police Chowki, Raniwara, Malwara (Raj.)', 80, 560);
+      ctx.font = 'bold 18px sans-serif';
+      ctx.fillText('📍 Office: Basement Hall MR Complex, near Police Chowki, Malwara (Raniwara)', 80, 560);
 
-      // RIGHT SIDE - QR Code Box
+      // Right Side QR Box
       ctx.fillStyle = '#FFFFFF';
       ctx.beginPath();
       ctx.roundRect(810, 80, 330, 470, 24);
       ctx.fill();
 
       ctx.fillStyle = '#002B49';
-      ctx.font = '900 24px Inter, sans-serif';
+      ctx.font = '900 24px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('SCAN TO VISIT', 975, 130);
 
       ctx.fillStyle = '#64748B';
-      ctx.font = 'bold 15px Inter, sans-serif';
+      ctx.font = 'bold 15px sans-serif';
       ctx.fillText('Direct Portal & Calculator', 975, 160);
 
-      // Draw QR Image onto Canvas
       const qrImg = new Image();
       qrImg.crossOrigin = 'anonymous';
       qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https%3A%2F%2Fkdsinsurance.in%2F';
 
-      qrImg.onload = function() {
+      qrImg.onload = function () {
         ctx.drawImage(qrImg, 850, 185, 250, 250);
 
         ctx.fillStyle = '#002B49';
-        ctx.font = '900 17px Inter, sans-serif';
+        ctx.font = '900 17px sans-serif';
         ctx.fillText('kdsinsurance.in', 975, 475);
 
         ctx.fillStyle = '#059669';
-        ctx.font = 'bold 14px Inter, sans-serif';
-        ctx.fillText('Instant Premium Quotes', 975, 505);
+        ctx.font = 'bold 14px sans-serif';
+        ctx.fillText('Instant Policy Quotes', 975, 505);
 
-        ctx.textAlign = 'left'; // Reset alignment
+        ctx.textAlign = 'left';
 
-        // Convert to JPEG Blob
-        canvas.toBlob(function(blob) {
+        canvas.toBlob(function (blob) {
           btn.innerHTML = originalText;
           btn.disabled = false;
 
-          const file = new File([blob], 'kds-insurance-poster.jpeg', { type: 'image/jpeg' });
+          if (!blob || blob.size === 0) {
+            showShareToast('Image generate nahi ho saki, kripya dobara try karein.');
+            return;
+          }
 
-          // Mobile: Native Share (WhatsApp/Social Media image share)
+          const file = new File([blob], 'kds-insurance-card.jpg', { type: 'image/jpeg' });
+
           if (navigator.canShare && navigator.canShare({ files: [file] })) {
             navigator.share({
-              files: [file],
-              title: 'KDS Insurance Advisory Portal',
-              text: 'KDS Insurance - Life, Motor & Health Insurance Advisory by Manoher Singh (Mo: 8440096343). Website: https://kdsinsurance.in/'
-            }).catch((e) => console.log('Share dismissed', e));
+              files: [file]
+            }).catch((err) => {
+              console.log('Share canceled', err);
+            });
           } else {
-            // Desktop: Auto Download JPEG & Open WhatsApp text
             const link = document.createElement('a');
-            link.download = 'kds-insurance-poster.jpeg';
+            link.download = 'kds-insurance-card.jpg';
             link.href = URL.createObjectURL(blob);
             link.click();
-            showShareToast('JPEG Poster download ho gaya hai!');
+            showShareToast('Card download ho gaya hai! WhatsApp par photo attach karein.');
           }
-        }, 'image/jpeg', 0.95);
+        }, 'image/jpeg', 0.92);
       };
 
-      qrImg.onerror = function() {
+      qrImg.onerror = function () {
         btn.innerHTML = originalText;
         btn.disabled = false;
-        showShareToast('QR Code load nahi ho paya, dobara try karein.');
+        showShareToast('Network issue: Image load nahi hui.');
       };
     }
   </script>
