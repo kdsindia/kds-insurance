@@ -25,25 +25,6 @@ Ye ek single-page responsive web portal hai jo LIC Life Insurance, General Motor
 
 ---
 
-## 🛠️ Recent Fixes & Updates (Changelog)
-
-1. **Independent Modal Print Engine (Fixed):**
-   - Pehle LIC, Motor ya Health ka print command dene par tino modals ek sath print me aate the.
-   - Print CSS (`@media print`) ko update kiya gaya jisme `.hidden` class wale modals print engine se exclude ho jate hain. Ab sirf active modal hi print/PDF me aata hai.
-
-2. **Official Header Logo in All Print Layouts:**
-   - Pehle `logo.png` sirf LIC ke print layout me render hota tha.
-   - Ab **Motor Quotation** aur **Health Quotation** ke print letterhead me bhi `logo.png` aur proper alignment integrate kar diya gaya hai.
-
----
-
-## 📁 File Structure
-
-- `index.html` - Poora application code (HTML5, Tailwind CSS, Vanilla JS aur Print Styles).
-- `logo.png` - Agency branding logo (header aur print formats me use hota hai).
-
----
-
 ## 📞 Advisor Contact Information
 
 - **Agent Name:** Manoher Singh (Authorized Insurance Agent)
