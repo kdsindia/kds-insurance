@@ -3,14 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <!-- SEO & GOOGLE SITE VERIFICATION -->
   <meta name="google-site-verification" content="4mTqww8O_oKqvKdAcGa073EWUQYrZsU7thAHophgWLo" />
-  <title>KDS INSURANCE | LIC Policy Calculator & Hindi Benefit Chart - Malwara, Raniwara</title>
-  <meta name="description" content="KDS Insurance Malwara (Manoher Singh - 8440096343). LIC policy ka aasan Hindi benefit chart, monthly/yearly premium calculation, 4% aur 8% sarkari niyam anusaar return." />
-  <meta name="keywords" content="LIC agent Malwara, LIC advisor Raniwara, KDS Insurance, Jeevan Labh, Jeevan Utsav, Jeevan Umang, Manoher Singh LIC" />
-  <meta name="author" content="Manoher Singh Deora" />
-  <link rel="canonical" href="https://kdsinsurance.in/" />
+  <title>KDS INSURANCE - Life Insurance & Savings Customer Portal</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -26,7 +20,7 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Noto Sans Devanagari', 'Inter', 'sans-serif'],
+            sans: ['Inter', 'Noto Sans Devanagari', 'sans-serif'],
           },
           colors: {
             brand: {
@@ -57,11 +51,14 @@
         color: #000000 !important;
         margin: 0 !important;
         padding: 0 !important;
-        font-size: 10.5px !important;
+        width: 100% !important;
+        font-size: 11px !important;
       }
+
       body > *:not(#quotationModal) {
         display: none !important;
       }
+
       #quotationModal {
         position: static !important;
         display: block !important;
@@ -70,31 +67,61 @@
         margin: 0 !important;
         overflow: visible !important;
       }
+
       #quotationModal > div {
         max-width: 100% !important;
+        max-height: none !important;
         box-shadow: none !important;
         border: none !important;
         border-radius: 0 !important;
+        overflow: visible !important;
       }
+
+      #quotationModal .bg-brand-navy.text-white.p-4,
+      #quotationModal .bg-white.p-4.border-t,
       .no-print {
         display: none !important;
       }
+
+      #quotationModal .flex-grow {
+        padding: 0 !important;
+        background: white !important;
+        overflow: visible !important;
+      }
+
       #quotationPrintableTarget {
         display: block !important;
         width: 100% !important;
+        max-width: 100% !important;
         padding: 0 !important;
         margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
       }
+
       table {
         page-break-inside: auto;
         width: 100% !important;
       }
       tr {
         page-break-inside: avoid !important;
+        page-break-after: auto;
       }
       thead {
         display: table-header-group !important;
       }
+    }
+
+    .table-scroll::-webkit-scrollbar {
+      height: 6px;
+    }
+    .table-scroll::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 4px;
+    }
+    .table-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
     }
   </style>
 </head>
@@ -106,14 +133,14 @@
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
       <div class="flex items-center gap-2">
         <span class="bg-brand-gold text-brand-dark font-black px-2 py-0.5 rounded text-[10px] tracking-wider uppercase">Authorized Insurance Agent</span>
-        <span class="text-slate-200"><i class="fa-solid fa-user-tie text-brand-gold mr-1"></i> <strong>MANOHER SINGH</strong> | LIC Advisory Point</span>
+        <span class="text-slate-200"><i class="fa-solid fa-user-tie text-brand-gold mr-1"></i> <strong>MANOHER SINGH</strong> | Insurance Advisory Point</span>
       </div>
       <div class="flex items-center gap-4 text-slate-200">
         <a href="tel:8440096343" class="hover:text-brand-gold font-bold transition flex items-center gap-1.5">
           <i class="fa-solid fa-phone text-brand-gold"></i> 8440096343
         </a>
         <span class="text-slate-600">|</span>
-        <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20mujhe%20LIC%20Policy%20ki%20jaankari%20chahiye" target="_blank" class="hover:text-emerald-300 text-emerald-400 font-bold flex items-center gap-1">
+        <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20mujhe%20Insurance%20Policy%20ki%20jaankari%20aur%20Quotation%20chahiye" target="_blank" class="hover:text-emerald-300 text-emerald-400 font-bold flex items-center gap-1">
           <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
         </a>
         <span class="text-slate-600 hidden md:inline">|</span>
@@ -126,8 +153,11 @@
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
+        
+        <!-- Logo Display -->
         <a href="#" class="flex items-center gap-3 py-1 group">
           <img src="logo.png" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" class="h-12 sm:h-14 w-auto object-contain rounded-lg" alt="KDS INSURANCE SEVA KENDRA" />
+          
           <div id="logoFallback" class="hidden items-center gap-2">
             <div class="w-10 h-10 rounded-xl bg-brand-navy flex items-center justify-center text-brand-gold font-black text-xl">KDS</div>
             <div>
@@ -137,16 +167,27 @@
           </div>
         </a>
 
+        <!-- Desktop Navigation -->
         <nav class="hidden md:flex items-center gap-6 text-sm font-bold text-slate-700">
-          <a href="#calculator-section" class="hover:text-brand-lightBlue transition py-1">पॉलिसी कैलकुलेटर</a>
-          <a href="#schemes-list" class="hover:text-brand-lightBlue transition py-1">योजनाएं (Schemes)</a>
-          <a href="#agent-banner" class="hover:text-brand-lightBlue transition py-1">संपर्क करें</a>
+          <a href="#calculator-section" class="hover:text-brand-lightBlue transition py-1">Plan Finder / Calculator</a>
+          <a href="#schemes-list" class="hover:text-brand-lightBlue transition py-1">Insurance Schemes</a>
+          <a href="#comparison-section" class="hover:text-brand-lightBlue transition py-1 flex items-center gap-1.5">
+            Compare Plans
+            <span id="navCompareCountBadge" class="hidden bg-brand-gold text-brand-dark text-[11px] px-1.5 py-0.2 rounded-full font-black">0</span>
+          </a>
+          <a href="#agent-banner" class="hover:text-brand-lightBlue transition py-1">Contact Office</a>
         </nav>
 
-        <div class="flex items-center gap-3">
-          <a href="tel:8440096343" class="bg-gradient-to-r from-brand-gold to-amber-500 hover:from-amber-400 text-brand-dark font-black px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm shadow flex items-center gap-2 transition">
-            <i class="fa-solid fa-phone"></i>
-            <span>8440096343</span>
+        <!-- Right Quick Action -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button onclick="openLeadModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5">
+            <i class="fa-solid fa-headset text-brand-lightBlue"></i>
+            <span class="hidden sm:inline">Callback Request</span>
+            <span class="sm:hidden">Call</span>
+          </button>
+          <a href="#calculator-section" class="bg-gradient-to-r from-brand-gold to-amber-500 hover:from-amber-400 hover:to-brand-gold text-brand-dark font-black px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:shadow-lg transition flex items-center gap-2">
+            <i class="fa-solid fa-calculator"></i>
+            <span>Calculate</span>
           </a>
         </div>
       </div>
@@ -154,25 +195,26 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="relative bg-gradient-to-br from-brand-dark via-brand-navy to-brand-lightBlue text-white py-10 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-      <div class="lg:col-span-7 space-y-3 text-center lg:text-left">
-        <span class="inline-flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-full text-xs font-bold text-brand-gold border border-white/15">
-          <i class="fa-solid fa-shield-halved"></i> सरकारी नियमानुसार 4% व 8% रिटर्न इलस्ट्रेशन
-        </span>
-        <h1 class="text-3xl sm:text-4xl font-black leading-tight">
-          अपने बजट व उम्र के अनुसार सही <span class="text-brand-gold">LIC योजना</span> चुनें
+  <section class="relative bg-gradient-to-br from-brand-dark via-brand-navy to-brand-lightBlue text-white py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+      <div class="lg:col-span-7 space-y-4 text-center lg:text-left">
+        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold text-brand-gold border border-white/15">
+          <i class="fa-solid fa-shield-halved"></i> Policy Benefits & Premium Illustration Chart
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
+          Apne Budget & Umar ke Anusaar Sahi <span class="text-brand-gold">Insurance Policy</span> Samjhein
         </h1>
-        <p class="text-slate-200 text-xs sm:text-sm leading-relaxed max-w-2xl">
-          मंथली या सालाना प्रीमियम, नॉर्मल व एक्सीडेंटल लाइफ कवर, लोन सुविधा और मैच्योरिटी रिटर्न का पूरा विवरण आसान हिंदी में देखें व PDF डाउनलोड करें।
+        <p class="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl">
+          Jaaniye: <strong>Monthly / Saalana Premium</strong>, <strong>Normal & Accidental Life Cover</strong>, <strong>Loan Suvidha</strong>, aur policy terms ke mutabiq anumanit returns (IRDAI prescribed 4% & 8% standard projection rates ke sath)[cite: 9].
         </p>
 
-        <div class="bg-white/10 border border-white/15 rounded-2xl p-3 text-xs text-slate-200 flex items-start gap-2.5">
+        <!-- Address Pill -->
+        <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-3.5 text-xs text-slate-200 flex items-start gap-3 text-left">
           <i class="fa-solid fa-location-dot text-brand-gold text-base mt-0.5"></i>
           <div>
-            <p class="font-bold text-white">KDS INSURANCE SEVA KENDRA - MALWARA</p>
-            <p class="text-slate-300 text-[11px]">BASEMENT HALL MR COMPLEX, NEAR POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
-            <p class="text-brand-gold font-bold text-[11px]">सलाहकार: MANOHER SINGH | मो: 8440096343</p>
+            <p class="font-bold text-white text-xs">KDS INSURANCE SERVICES & CUSTOMER ASSISTANCE POINT</p>
+            <p class="text-slate-300 text-[11px] mt-0.5">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
+            <p class="text-brand-gold font-bold text-[11px] mt-1">Authorized Agent: MANOHER SINGH | Mo: 8440096343</p>
           </div>
         </div>
       </div>
@@ -181,52 +223,63 @@
       <div class="lg:col-span-5">
         <div class="bg-white text-slate-800 rounded-3xl p-6 shadow-2xl border-4 border-brand-gold/30">
           <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-            <h3 class="font-black text-base text-brand-navy flex items-center gap-2">
-              <i class="fa-solid fa-bolt text-brand-gold"></i> क्विक प्लान सेलेक्टर
-            </h3>
+            <div>
+              <h3 class="font-black text-lg text-brand-navy flex items-center gap-2">
+                <i class="fa-solid fa-bolt text-brand-gold"></i> Quick Plan Recommendation
+              </h3>
+              <p class="text-xs text-slate-500">Umar, term aur budget ke anusaar filter karein</p>
+            </div>
             <span class="text-[11px] bg-blue-100 text-brand-navy px-2 py-0.5 rounded font-black">Active Plans</span>
           </div>
 
-          <div class="mt-4 space-y-3">
+          <div class="mt-4 space-y-3.5">
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">प्रीमियम का प्रकार (Mode):</label>
-              <select id="quickHeroMode" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800" onchange="syncFromQuickMode(this.value)">
-                <option value="monthly" selected>मंथली (मासिक)</option>
-                <option value="quarterly">त्रैमासिक (3 महीने)</option>
-                <option value="half_yearly">छमाही (6 महीने)</option>
-                <option value="yearly">सालाना (Yearly)</option>
-              </select>
+              <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                <span>Aapki Umar (Age):</span>
+                <span id="quickAgeDisplay" class="text-brand-lightBlue font-black">30 Varsh</span>
+              </div>
+              <input type="range" id="quickAgeInput" min="0" max="60" value="30" class="w-full accent-brand-gold cursor-pointer" oninput="syncAgeFromHero(this.value)" />
             </div>
 
             <div>
               <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
-                <span>प्रीमियम बजट:</span>
-                <span id="quickBudgetDisplay" class="text-brand-lightBlue font-black">₹ 5,000 / माह</span>
+                <span>Aapka Budget (Premium):</span>
+                <span id="quickBudgetDisplay" class="text-brand-lightBlue font-black">₹ 5,000 / Month</span>
               </div>
-              <input type="number" id="quickBudgetInput" value="5000" step="500" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800" oninput="syncFromQuickBudget(this.value)" />
+              <input type="range" id="quickBudgetInput" min="1000" max="100000" step="500" value="5000" class="w-full accent-brand-gold cursor-pointer" oninput="syncBudgetFromHero(this.value)" />
             </div>
 
+            <!-- DYNAMIC SEPARATE TERM AND PPT IN QUICK HERO -->
             <div class="grid grid-cols-2 gap-2">
               <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">आपकी उम्र (Age):</label>
-                <input type="number" id="quickAgeInput" value="30" min="0" max="65" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800" oninput="syncFromQuickAge(this.value)" />
+                <label class="block text-xs font-bold text-slate-700 mb-1">Policy Term:</label>
+                <select id="quickHeroTerm" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800" onchange="syncTermFromHero(this.value)">
+                  <option value="any">Sabhi Term (All)</option>
+                  <option value="10">10 Saal Term</option>
+                  <option value="15">15 Saal Term</option>
+                  <option value="16">16 Saal Term</option>
+                  <option value="20">20 Saal Term</option>
+                  <option value="21">21 Saal Term</option>
+                  <option value="25" selected>25 Saal Term</option>
+                </select>
               </div>
+
               <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">पॉलिसी अवधि (Term):</label>
-                <select id="quickTermInput" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800" onchange="syncFromQuickTerm(this.value)">
-                  <option value="10">10 वर्ष</option>
-                  <option value="15">15 वर्ष</option>
-                  <option value="16">16 वर्ष</option>
-                  <option value="20">20 वर्ष</option>
-                  <option value="21">21 वर्ष</option>
-                  <option value="25" selected>25 वर्ष</option>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Paying Term (PPT):</label>
+                <select id="quickHeroPpt" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800" onchange="syncPptFromHero(this.value)">
+                  <option value="any">Sabhi PPT (All)</option>
+                  <option value="10">10 Saal Bharna</option>
+                  <option value="15">15 Saal Bharna</option>
+                  <option value="16" selected>16 Saal Bharna</option>
+                  <option value="20">20 Saal Bharna</option>
+                  <option value="25">25 Saal Bharna</option>
                 </select>
               </div>
             </div>
 
-            <button onclick="scrollToCalculator()" class="w-full mt-2 bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-2.5 rounded-xl text-xs transition shadow flex items-center justify-center gap-2">
-              <i class="fa-solid fa-calculator text-brand-gold"></i>
-              <span>कैलकुलेशन देखें व प्रिंट निकालें</span>
+            <button onclick="scrollToAndFilterFromHero()" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 rounded-xl text-sm transition shadow-md flex items-center justify-center gap-2">
+              <i class="fa-solid fa-magnifying-glass text-brand-gold"></i>
+              <span>Plans Dekhein & Calculation Karein</span>
             </button>
           </div>
         </div>
@@ -241,89 +294,127 @@
       <div class="bg-gradient-to-r from-brand-navy to-brand-lightBlue p-6 sm:p-8 text-white">
         <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
           <div>
-            <span class="bg-brand-gold text-brand-dark px-2.5 py-0.5 rounded text-xs font-black uppercase">प्लान कैलकुलेटर</span>
-            <h2 class="text-2xl sm:text-3xl font-black mt-1">अपनी जानकारी भरें और योजना चुनें</h2>
-            <p class="text-slate-200 text-xs sm:text-sm mt-0.5">IRDAI के 4% व 8% के सरकारी दिशा-निर्देशों के अनुसार गणना।</p>
+            <div class="flex items-center gap-2">
+              <span class="bg-brand-gold text-brand-dark px-2.5 py-0.5 rounded text-xs font-black uppercase tracking-wider">Plan Illustration Calculator</span>
+              <span class="text-xs text-sky-200">Based on IRDAI-prescribed 4% & 8% projection rates</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black mt-2">Apni Details Bharein & Plan Customize Karein</h2>
+            <p class="text-slate-200 text-xs sm:text-sm mt-1">Policy Term aur Premium Paying Term dono alag-alag select karke filter karein[cite: 9, 10].</p>
           </div>
           <button onclick="resetCalculatorForm()" class="self-start sm:self-center text-xs bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-1.5 rounded-xl text-white font-semibold transition flex items-center gap-1.5">
-            <i class="fa-solid fa-arrows-rotate"></i> रीसेट (Reset)
+            <i class="fa-solid fa-arrows-rotate"></i> Reset
           </button>
         </div>
       </div>
 
       <div class="p-6 sm:p-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <form id="policyCalculatorForm" onsubmit="event.preventDefault(); applyPolicyFilters();" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           
           <div>
-            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">ग्राहक का नाम</label>
-            <input type="text" id="custName" value="रमेश कुमार" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white" oninput="updateSummarySnapshot()" />
+            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
+              <i class="fa-solid fa-user text-brand-lightBlue mr-1"></i> Customer Name (Naam)
+            </label>
+            <input type="text" id="custName" placeholder="Jaise: Ramesh Kumar" value="Ramesh Kumar" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none transition" />
           </div>
 
           <div>
-            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">मोबाइल नंबर</label>
-            <input type="tel" id="custPhone" value="9876543210" maxlength="10" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white" />
+            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
+              <i class="fa-solid fa-phone text-brand-lightBlue mr-1"></i> Mobile Number
+            </label>
+            <input type="tel" id="custPhone" placeholder="10 Digits Mobile" value="9876543210" maxlength="10" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none transition" />
           </div>
 
           <div>
             <div class="flex justify-between items-center mb-1.5">
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider">उम्र (Age)</label>
-              <span id="selectedAgeBadge" class="bg-blue-100 text-brand-navy text-xs font-black px-2.5 py-0.5 rounded-md">30 वर्ष</span>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider">
+                <i class="fa-solid fa-cake-candles text-brand-lightBlue mr-1"></i> Age (Umar)
+              </label>
+              <span id="selectedAgeBadge" class="bg-blue-100 text-brand-navy text-xs font-black px-2.5 py-0.5 rounded-md">30 Saal</span>
             </div>
             <div class="flex items-center gap-3">
-              <input type="number" id="calcAgeInput" min="0" max="65" value="30" class="w-20 bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-center text-sm font-black text-slate-800 focus:bg-white" oninput="handleAgeUpdate(this.value)" />
-              <input type="range" id="calcAgeSlider" min="0" max="65" value="30" class="flex-grow accent-brand-gold cursor-pointer" oninput="handleAgeUpdate(this.value)" />
+              <input type="number" id="calcAgeInput" min="0" max="65" value="30" class="w-20 bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-center text-sm font-black text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="updateAgeSlider(this.value)" />
+              <input type="range" id="calcAgeSlider" min="0" max="65" value="30" class="flex-grow accent-brand-gold cursor-pointer" oninput="updateAgeInput(this.value)" />
             </div>
           </div>
 
           <div>
-            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">प्रीमियम का प्रकार (Payment Mode)</label>
-            <select id="calcMode" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white" onchange="handleModeUpdate(this.value)">
-              <option value="monthly" selected>मंथली (Monthly)</option>
-              <option value="quarterly">त्रैमासिक (Quarterly)</option>
-              <option value="half_yearly">छमाही (Half-Yearly)</option>
-              <option value="yearly">सालाना (Yearly)</option>
+            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
+              <i class="fa-solid fa-bullseye text-brand-lightBlue mr-1"></i> Policy Category
+            </label>
+            <select id="calcCategory" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none transition" onchange="applyPolicyFilters()">
+              <option value="all">🌟 All Categories (Sabhi)</option>
+              <option value="endowment">💰 Savings & Endowment Plans</option>
+              <option value="whole_life">♾️ Whole Life / Regular Income Plans</option>
+              <option value="children">🎓 Children Education & Marriage</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
+              <i class="fa-regular fa-clock text-brand-lightBlue mr-1"></i> Premium Mode (Payment)
+            </label>
+            <select id="calcMode" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none transition" onchange="onModeChange(this.value)">
+              <option value="monthly" selected>Monthly (Masik)</option>
+              <option value="quarterly">Quarterly (Traimasik)</option>
+              <option value="half_yearly">Half-Yearly (Chhamahi)</option>
+              <option value="yearly">Yearly (Saalana)</option>
             </select>
           </div>
 
           <div>
             <div class="flex justify-between items-center mb-1.5">
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider">प्रीमियम बजट (₹)</label>
-              <span id="selectedBudgetBadge" class="bg-amber-100 text-amber-900 text-xs font-black px-2 py-0.5 rounded-md">₹ 5,000 / माह</span>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider">
+                <i class="fa-solid fa-indian-rupee-sign text-brand-lightBlue mr-1"></i> Premium Budget (₹)
+              </label>
+              <span id="selectedBudgetBadge" class="bg-amber-100 text-amber-900 text-xs font-black px-2 py-0.5 rounded-md">₹ 5,000 / Month</span>
             </div>
-            <input type="number" id="calcBudgetInput" min="500" step="500" value="5000" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-black text-slate-800 focus:bg-white" oninput="handleBudgetUpdate(this.value)" />
-            <input type="range" id="calcBudgetSlider" min="500" max="100000" step="500" value="5000" class="w-full accent-brand-gold cursor-pointer mt-2" oninput="handleBudgetUpdate(this.value)" />
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-black text-slate-500">₹</span>
+              <input type="number" id="calcBudgetInput" min="500" step="500" value="5000" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-black text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="updateBudgetSlider(this.value)" />
+            </div>
+            <div class="mt-2">
+              <input type="range" id="calcBudgetSlider" min="500" max="100000" step="500" value="5000" class="w-full accent-brand-gold cursor-pointer" oninput="updateBudgetInput(this.value)" />
+            </div>
           </div>
 
+          <!-- SEPARATE POLICY TERM FIELD -->
           <div>
-            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">पॉलिसी अवधि (Term)</label>
-            <select id="calcTerm" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white" onchange="handleTermUpdate(this.value)">
-              <option value="10">10 वर्ष टर्म (10 वर्ष प्रीमियम)</option>
-              <option value="15">15 वर्ष टर्म (10 या 15 वर्ष प्रीमियम)</option>
-              <option value="16">16 वर्ष टर्म (10 वर्ष प्रीमियम)</option>
-              <option value="20">20 वर्ष टर्म (15 वर्ष प्रीमियम)</option>
-              <option value="21">21 वर्ष टर्म (15 वर्ष प्रीमियम)</option>
-              <option value="25" selected>25 वर्ष टर्म (16 वर्ष प्रीमियम)</option>
+            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
+              <i class="fa-solid fa-calendar-check text-brand-lightBlue mr-1"></i> Policy Term (Kitne Saal?)
+            </label>
+            <select id="calcTerm" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none transition" onchange="onTermFieldChange(this.value)">
+              <option value="any">Sabhi Term (All Terms)</option>
+              <option value="10">10 Saal Policy Term</option>
+              <option value="15">15 Saal Policy Term</option>
+              <option value="16">16 Saal Policy Term</option>
+              <option value="20">20 Saal Policy Term</option>
+              <option value="21">21 Saal Policy Term</option>
+              <option value="25" selected>25 Saal Policy Term</option>
             </select>
           </div>
 
+          <!-- SEPARATE PREMIUM PAYING TERM (PPT) FIELD -->
           <div>
-            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">योजना की श्रेणी (Category)</label>
-            <select id="calcCategory" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white" onchange="renderPolicies()">
-              <option value="all">सभी योजनाएं (All Plans)</option>
-              <option value="endowment" selected>बचत योजनाएं (Savings & Endowment)</option>
-              <option value="whole_life">आजीवन / पेंशन योजनाएं (Whole Life)</option>
-              <option value="children">बच्चों की शिक्षा व विवाह (Child Plans)</option>
+            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
+              <i class="fa-solid fa-wallet text-brand-lightBlue mr-1"></i> Paying Term / PPT (Kitne Saal Bharna?)
+            </label>
+            <select id="calcPpt" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none transition" onchange="onPptFieldChange(this.value)">
+              <option value="any">Sabhi PPT (All PPTs)</option>
+              <option value="10">10 Saal Premium Bharna</option>
+              <option value="15">15 Saal Premium Bharna</option>
+              <option value="16" selected>16 Saal Premium Bharna</option>
+              <option value="20">20 Saal Premium Bharna</option>
+              <option value="25">25 Saal Premium Bharna</option>
             </select>
           </div>
 
-          <div class="flex items-end">
-            <button type="button" onclick="renderPolicies()" class="w-full bg-brand-gold hover:bg-amber-400 text-brand-dark font-black py-3.5 px-4 rounded-xl text-sm shadow transition flex items-center justify-center gap-2">
+          <div class="lg:col-span-4 flex justify-end">
+            <button type="button" onclick="applyPolicyFilters()" class="w-full sm:w-auto bg-brand-gold hover:bg-amber-400 text-brand-dark font-black py-3.5 px-8 rounded-xl text-base shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2">
               <i class="fa-solid fa-calculator"></i>
-              <span>गणना देखें (<span id="btnMatchCount">2</span>)</span>
+              <span>Filter & Show Matching Plans (<span id="btnMatchCount">5</span>)</span>
             </button>
           </div>
-
-        </div>
+        </form>
 
         <!-- Live Snapshot Bar -->
         <div class="mt-6 bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 text-xs">
@@ -332,102 +423,206 @@
               <i class="fa-solid fa-receipt"></i>
             </div>
             <div>
-              <p class="font-extrabold text-slate-800">वर्तमान गणना स्नैपशॉट:</p>
+              <p class="font-extrabold text-slate-800">Current Calculation Snapshot:</p>
               <p class="text-slate-500">
-                ग्राहक: <strong id="summaryCustomerName" class="text-slate-800">रमेश कुमार</strong> 
-                (उम्र: <span id="summaryAge" class="font-bold text-brand-navy">30</span> वर्ष) | 
-                प्रीमियम: <strong id="summaryBudget" class="text-brand-navy">₹ 5,000 / माह</strong> 
-                <span id="summaryAnnualEquivalent" class="text-slate-500">(सालाना: ₹60,000)</span>
+                Customer: <strong id="summaryCustomerName" class="text-slate-800">Ramesh Kumar</strong> (Age: <span id="summaryAge" class="font-bold text-brand-navy">30</span> yrs) | 
+                Selected: <strong id="summaryBudget" class="text-brand-navy">₹ 5,000 / Month</strong> 
+                <span id="summaryAnnualEquivalent" class="text-slate-500">(Annualized: ₹60,000)</span>
               </p>
             </div>
           </div>
-          <div class="text-blue-900 bg-blue-50 px-2.5 py-1 rounded border border-blue-200 font-bold">
-            <i class="fa-solid fa-circle-info mr-1"></i> आयकर धारा 80C एवं 10(10D) के तहत कर-मुक्त
+          <div class="flex items-center gap-2 text-slate-600 font-bold">
+            <span class="text-blue-900 bg-blue-50 px-2.5 py-1 rounded border border-blue-200"><i class="fa-solid fa-circle-info mr-1"></i> Tax benefits subject to prevailing IT laws u/s 80C & 10(10D)[cite: 9]</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SCHEMES LISTING -->
+    <!-- SCHEMES LIST -->
     <section id="schemes-list" class="space-y-6">
       <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
         <div>
-          <h3 class="text-2xl font-black text-brand-navy">आपके लिए उपयुक्त LIC योजनाएं</h3>
-          <p class="text-xs text-slate-500 mt-1">शॉर्ट हिंदी चार्ट व PDF देखने के लिए किसी भी प्लान के <strong>"शॉर्ट हिंदी चार्ट व प्रिंट"</strong> बटन पर क्लिक करें।</p>
+          <div class="flex items-center gap-3">
+            <h3 class="text-2xl font-black text-brand-navy tracking-tight">Available Plans Matching Your Profile</h3>
+            <span id="resultsCountBadge" class="bg-brand-navy text-white text-xs font-bold px-2.5 py-1 rounded-full">5 Schemes Found</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-1">Kisi bhi plan ka full year-by-year chart dekhne ke liye <strong>"Preview & Print"</strong> par click karein[cite: 9].</p>
         </div>
-        <div id="resultsCountBadge" class="bg-brand-navy text-white text-xs font-bold px-3 py-1 rounded-full self-start sm:self-auto">
-          Plans Found
+
+        <div class="flex flex-wrap items-center gap-2 text-xs font-bold">
+          <span class="text-slate-400">Sort By:</span>
+          <button onclick="sortPolicies('return')" class="bg-white border border-slate-300 text-slate-700 hover:border-brand-lightBlue px-3 py-1.5 rounded-lg transition">Highest Return</button>
+          <button onclick="sortPolicies('ppt')" class="bg-white border border-slate-300 text-slate-700 hover:border-brand-lightBlue px-3 py-1.5 rounded-lg transition">Shortest Paying Term</button>
         </div>
       </div>
 
       <div id="policiesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </section>
 
+    <!-- COMPARISON SECTION -->
+    <section id="comparison-section" class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-200">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-6 border-b border-slate-200">
+        <div>
+          <span class="text-xs font-bold text-brand-lightBlue uppercase tracking-wider bg-blue-50 px-2.5 py-1 rounded">Side-by-Side Comparison</span>
+          <h3 class="text-2xl font-black text-brand-navy mt-1">Schemes Compare Karein (Tulna Matrix)</h3>
+          <p class="text-xs text-slate-500">2 ya 3 plans aamne-saamne rakh kar unka premium aur return compare karein[cite: 9].</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="clearCompareSelection()" class="text-xs font-bold text-rose-600 hover:text-rose-700 transition">
+            <i class="fa-solid fa-trash-can mr-1"></i> Clear Comparison
+          </button>
+        </div>
+      </div>
+
+      <div id="comparisonContainer" class="mt-6 overflow-x-auto"></div>
+    </section>
+
     <!-- AGENT OFFICIAL FOOTER CARD -->
     <section id="agent-banner" class="relative bg-gradient-to-r from-brand-dark via-brand-navy to-slate-950 rounded-3xl p-6 sm:p-10 text-white shadow-2xl overflow-hidden border-2 border-brand-gold/40">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <div class="lg:col-span-8 space-y-3">
-          <span class="bg-brand-gold text-brand-dark px-3 py-0.5 rounded text-xs font-black uppercase">Official LIC Advisor Contact</span>
-          <h3 class="text-2xl sm:text-3xl font-black text-white">MANOHER SINGH (LIC Authorized Agent)</h3>
-          <p class="text-slate-300 text-xs">
-            <i class="fa-solid fa-location-dot text-rose-400 mr-1"></i> BASEMENT HALL MR COMPLEX, MALWARA, NEAR POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039
-          </p>
-          <p class="text-slate-300 text-xs">
-            <i class="fa-solid fa-phone text-emerald-400 mr-1"></i> हेल्पलाइन व व्हाट्सएप: <strong>8440096343</strong>
-          </p>
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <div class="lg:col-span-8 space-y-4">
+          <div class="inline-flex items-center gap-2 bg-brand-gold text-brand-dark px-3 py-1 rounded-md text-xs font-black uppercase">
+            <i class="fa-solid fa-user-check"></i> Authorized Insurance Agent
+          </div>
+          
+          <h3 class="text-2xl sm:text-4xl font-black tracking-tight leading-snug">
+            KDS INSURANCE CONSULTATION & CUSTOMER ASSISTANCE POINT
+          </h3>
+
+          <div class="bg-white/10 rounded-2xl p-4 border border-white/15 space-y-1.5 text-xs text-slate-200">
+            <p><strong class="text-brand-gold text-sm">MANOHER SINGH</strong> (Authorized Insurance Agent)</p>
+            <p><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i> <strong>Office Address:</strong> BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
+            <p><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> <strong>Helpline:</strong> 8440096343 | Doorstep Paperless e-KYC & Revival Assistance</p>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs">
+            <div class="flex items-center gap-2 bg-white/5 p-2.5 rounded-xl border border-white/10">
+              <i class="fa-solid fa-file-shield text-brand-gold"></i>
+              <span>New Policy Paperless e-KYC</span>
+            </div>
+            <div class="flex items-center gap-2 bg-white/5 p-2.5 rounded-xl border border-white/10">
+              <i class="fa-solid fa-arrows-rotate text-brand-gold"></i>
+              <span>Lapsed Policy Revival</span>
+            </div>
+            <div class="flex items-center gap-2 bg-white/5 p-2.5 rounded-xl border border-white/10">
+              <i class="fa-solid fa-hand-holding-dollar text-brand-gold"></i>
+              <span>Claim & Maturity Assistance</span>
+            </div>
+          </div>
         </div>
-        <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
-          <a href="tel:8440096343" class="w-full bg-white hover:bg-slate-100 text-brand-navy font-black py-3 rounded-xl text-center text-xs sm:text-sm shadow">
-            <i class="fa-solid fa-phone mr-1"></i> कॉल करें: 8440096343
-          </a>
-          <a href="https://wa.me/918440096343" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black py-3 rounded-xl text-center text-xs sm:text-sm shadow">
-            <i class="fa-brands fa-whatsapp mr-1"></i> व्हाट्सएप संदेश भेजें
-          </a>
+
+        <div class="lg:col-span-4 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 text-center space-y-4">
+          <div class="w-16 h-16 rounded-full bg-brand-gold text-brand-dark mx-auto flex items-center justify-center text-2xl font-black shadow-lg">
+            <i class="fa-solid fa-phone-volume"></i>
+          </div>
+
+          <div>
+            <h4 class="font-extrabold text-lg text-white">Contact Manohar Singh</h4>
+            <p class="text-xs text-slate-300">Call ya WhatsApp par paramarsh lein</p>
+          </div>
+
+          <div class="space-y-2.5">
+            <a href="tel:8440096343" class="w-full bg-white hover:bg-slate-100 text-brand-navy font-black py-3 px-4 rounded-xl text-sm transition shadow flex items-center justify-center gap-2">
+              <i class="fa-solid fa-phone text-brand-lightBlue"></i>
+              <span>Call: 8440096343</span>
+            </a>
+
+            <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20mujhe%20Policy%20ki%20jaankari%20chahiye" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black py-3 px-4 rounded-xl text-sm transition shadow flex items-center justify-center gap-2">
+              <i class="fa-brands fa-whatsapp text-lg"></i>
+              <span>WhatsApp Chat</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- SHORT HINDI BENEFIT ILLUSTRATION PREVIEW MODAL -->
-  <div id="quotationModal" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
-    <div class="bg-white rounded-2xl max-w-5xl w-full max-h-[96vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+  <!-- REGULATORY COMPLIANT FOOTER -->
+  <footer class="bg-brand-dark text-slate-400 text-xs border-t border-brand-lightBlue/40 py-8 px-4 sm:px-6 lg:px-8 mt-12">
+    <div class="max-w-7xl mx-auto space-y-4">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+        <div>
+          <span class="text-lg font-black text-white">KDS <span class="text-brand-gold">INSURANCE</span> SERVICES</span>
+          <p class="text-slate-300 text-xs mt-0.5">Authorized Insurance Agent: <strong>MANOHER SINGH</strong> (Malwara, Raniwara)</p>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-300 font-bold">
+          <a href="#calculator-section" class="hover:text-brand-gold transition">Calculator</a>
+          <a href="#schemes-list" class="hover:text-brand-gold transition">All Plans</a>
+          <a href="#comparison-section" class="hover:text-brand-gold transition">Compare</a>
+        </div>
+      </div>
+
+      <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700/80 text-[11px] text-slate-300 leading-relaxed">
+        <p class="font-bold text-amber-400 mb-1">REGULATORY & STATUTORY DISCLAIMER:</p>
+        <p>
+          This is a personal informational customer portal operated by <strong>MANOHER SINGH</strong>, an authorized individual insurance agent[cite: 9]. This website is <strong>NOT</strong> an official insurer website[cite: 9].
+        </p>
+        <p class="mt-1">
+          Policy information, benefits, premiums, surrender values, bonuses, and eligibility are governed strictly by the respective official policy contract documents and applicable IRDAI regulations[cite: 9]. Illustrations displayed at 4% and 8% are standard regulatory projections and do not constitute a guaranteed return[cite: 9]. Tax benefits are subject to prevailing provisions of the Income Tax Act (including Section 80C and Section 10(10D)) as amended from time to time[cite: 9].
+        </p>
+      </div>
+
+      <div class="text-center text-slate-500 text-[11px] pt-2">
+        &copy; 2026 Manoher Singh (Authorized Insurance Agent) • All Rights Reserved[cite: 9].
+      </div>
+    </div>
+  </footer>
+
+  <!-- QUOTATION & BENEFIT MODAL (ORIGINAL CLEAN A4 TABLE FORMAT WITH LOGO) -->
+  <div id="quotationModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[96vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
       
-      <!-- Top Bar -->
-      <div class="bg-brand-navy text-white p-4 flex justify-between items-center no-print">
+      <!-- Modal Top Bar -->
+      <div class="bg-brand-navy text-white p-4 sm:p-5 flex justify-between items-center z-10 border-b border-brand-lightBlue no-print">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-brand-gold text-brand-dark flex items-center justify-center font-black">
-            <i class="fa-solid fa-file-invoice"></i>
+          <div class="w-10 h-10 rounded-xl bg-brand-gold text-brand-dark font-black flex items-center justify-center text-lg">
+            <i class="fa-solid fa-print"></i>
           </div>
           <div>
-            <h4 id="modalHeadingTitle" class="text-sm sm:text-base font-black">LIC पॉलिसी संक्षिप्त हिंदी बेनिफिट चार्ट</h4>
-            <p class="text-[11px] text-slate-300">सरकारी नियमानुसार 4% व 8% मानक रिटर्न सहित</p>
+            <div class="flex items-center gap-2">
+              <h3 id="modalHeaderTitle" class="text-lg font-black text-white">Policy Benefit Illustration Preview</h3>
+              <span id="pdfLangIndicator" class="bg-blue-900/80 text-brand-gold border border-brand-gold/40 text-[10px] font-bold px-2 py-0.5 rounded">HINDI</span>
+            </div>
+            <p class="text-xs text-slate-300">Benefit Illustration (Clean A4 Print Format)[cite: 9]</p>
           </div>
         </div>
 
-        <button onclick="closeQuotationModal()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
+        <div class="flex items-center gap-2">
+          <div class="bg-white/10 p-1 rounded-xl flex items-center gap-1 border border-white/15 text-xs font-bold">
+            <button id="langBtnHi" onclick="switchQuotationLanguage('hi')" class="px-2.5 py-1 rounded-lg bg-brand-gold text-brand-dark transition">हिंदी</button>
+            <button id="langBtnEn" onclick="switchQuotationLanguage('en')" class="px-2.5 py-1 rounded-lg text-white hover:bg-white/10 transition">English</button>
+          </div>
 
-      <!-- Printable Target -->
-      <div class="flex-grow overflow-y-auto p-4 sm:p-6 bg-slate-100">
-        <div id="quotationPrintableTarget" class="bg-white p-6 rounded-xl border border-slate-300 max-w-4xl mx-auto shadow-sm"></div>
-      </div>
-
-      <!-- Bottom Bar -->
-      <div class="bg-white p-4 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-3 no-print">
-        <span class="text-xs text-slate-500 font-bold">
-          <i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> आपके द्वारा चुने गए मंथली/सालाना मोड व अवधि के अनुसार तैयार चार्ट।
-        </span>
-        <div class="flex items-center gap-3 w-full sm:w-auto">
-          <button onclick="window.print()" class="flex-1 sm:flex-none bg-brand-navy hover:bg-brand-lightBlue text-white font-black px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow flex items-center justify-center gap-2">
-            <i class="fa-solid fa-print text-brand-gold"></i>
-            <span>प्रिंट निकालें / PDF सेव करें</span>
+          <button onclick="closeQuotationModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+            <i class="fa-solid fa-xmark text-lg"></i>
           </button>
-          <button onclick="shareOnWhatsApp()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow flex items-center gap-1.5">
+        </div>
+      </div>
+
+      <!-- Modal Body (Print Target with logo) -->
+      <div class="flex-grow overflow-y-auto p-4 sm:p-6 bg-slate-50">
+        <div id="quotationPrintableTarget" class="pdf-page-container bg-white p-6 rounded-2xl border border-slate-200 max-w-4xl mx-auto"></div>
+      </div>
+
+      <!-- Modal Actions Footer -->
+      <div class="bg-white p-4 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-3 no-print">
+        <div class="text-xs text-slate-500 flex items-center gap-2">
+          <i class="fa-solid fa-circle-info text-blue-800"></i>
+          <span>Subject to policy terms & IRDAI standard guidelines[cite: 9]</span>
+        </div>
+
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <button onclick="triggerBrowserPrint()" class="flex-1 sm:flex-none bg-blue-900 hover:bg-blue-800 text-white font-black px-6 py-3 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow">
+            <i class="fa-solid fa-print text-brand-gold text-base"></i>
+            <span>Print Quotation / Save as PDF</span>
+          </button>
+
+          <button onclick="shareQuoteOnWhatsApp()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-4 py-3 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow" title="Share on WhatsApp">
             <i class="fa-brands fa-whatsapp text-base"></i>
-            <span>व्हाट्सएप पर भेजें</span>
+            <span class="hidden sm:inline">WhatsApp</span>
           </button>
         </div>
       </div>
@@ -435,334 +630,722 @@
     </div>
   </div>
 
+  <!-- Lead Modal -->
+  <div id="leadModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 p-6">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-100">
+        <div>
+          <h3 class="font-black text-lg text-brand-navy">Insurance Policy Information & Assistance</h3>
+          <p class="text-xs text-slate-500">Manoher Singh (Authorized Agent) Call Karenge[cite: 9]</p>
+        </div>
+        <button onclick="closeLeadModal()" class="text-slate-400 hover:text-slate-600">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleLeadSubmit(event)" class="mt-4 space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Aapka Naam</label>
+          <input type="text" id="leadName" required placeholder="Shri Ramesh Kumar" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-lightBlue" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Mobile Number</label>
+          <input type="tel" id="leadPhone" required placeholder="84XXXXXXXX" maxlength="10" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-lightBlue" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Aapki City / Gaon</label>
+          <input type="text" id="leadCity" value="Raniwara / Malwara" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-lightBlue" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Interested Scheme</label>
+          <select id="leadSchemeSelect" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-lightBlue">
+            <option value="Jeevan Labh">Jeevan Labh Plan</option>
+            <option value="Jeevan Umang">Jeevan Umang Plan</option>
+            <option value="Jeevan Utsav">Jeevan Utsav Plan</option>
+            <option value="New Jeevan Anand">New Jeevan Anand Plan</option>
+            <option value="Children Money Back">Children Money Back Plan</option>
+          </select>
+        </div>
+
+        <button type="submit" class="w-full mt-3 bg-brand-gold hover:bg-amber-400 text-brand-dark font-black py-3 rounded-xl text-sm shadow transition">
+          Callback Request Bhejein
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Element -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 text-xs font-bold hidden flex items-center gap-3 transition-all duration-300">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+    <span id="toastMessage">Success</span>
+  </div>
+
   <script>
+    // OFFICIAL SCHEMES WITH EXACT TERM & PPT COMBINATIONS
     const officialLicSchemes = [
       {
-        id: '936',
-        name: 'एलआईसी जीवन लाभ (Plan 936)',
-        tagline: 'सीमित प्रीमियम अवधि, उच्च बचत एवं बोनस लाभ',
+        id: 'jeevan_labh',
+        name: 'Jeevan Labh Plan (Table 936)',
+        nameHi: 'जीवन लाभ योजना (टेबल 936)',
+        tagline: 'Limited Premium Paying, High Savings & Bonus Potential',
+        taglineHi: 'सीमित प्रीमियम अवधि, बचत एवं बोनस लाभ',
         category: 'endowment',
         minAge: 8,
         maxAge: 59,
-        getPpt: (term) => (term <= 16 ? 10 : (term <= 21 ? 15 : 16)),
-        minSa: 200000,
-        bonusRate4: 0.022,
-        bonusRate8: 0.048,
-        historicalBonus: '₹54 प्रति हज़ार'
+        // Supported pairs: {term: 25, ppt: 16}, {term: 21, ppt: 15}, {term: 16, ppt: 10}
+        combinations: [
+          {term: 25, ppt: 16},
+          {term: 21, ppt: 15},
+          {term: 16, ppt: 10}
+        ],
+        defaultTerm: 25,
+        defaultPpt: 16,
+        minSumAssured: 200000,
+        expectedReturnRate: 2.35,
+        description: 'Lokpriya limited premium paying endowment plan. 25 saal ke term par 16 saal premium bharna hota hai[cite: 9].',
+        descriptionHi: 'सीमित प्रीमियम योजना। 25 वर्ष की पॉलिसी में 16 वर्ष प्रीमियम देना होता है और परिपक्वता पर बोनस सहित रिटर्न मिलता है[cite: 9]।',
+        matchTermPpt: function(term, ppt) {
+          return this.combinations.some(c => 
+            (term === 'any' || c.term === Number(term)) && 
+            (ppt === 'any' || c.ppt === Number(ppt))
+          );
+        },
+        getPptForTerm: function(term) {
+          const found = this.combinations.find(c => c.term === Number(term));
+          return found ? found.ppt : 16;
+        }
       },
       {
-        id: '945',
-        name: 'एलआईसी जीवन उमंग (Plan 945)',
-        tagline: 'प्रीमियम के बाद आजीवन 8% वार्षिक सर्वाइवल बेनिफिट',
+        id: 'jeevan_umang',
+        name: 'Jeevan Umang Plan (Table 945)',
+        nameHi: 'जीवन उमंग योजना (टेबल 945)',
+        tagline: 'Annual Survival Benefit: 8% of Basic Sum Assured, as per policy terms',
+        taglineHi: 'वार्षिक सर्वाइवल बेनिफिट: बेसिक सम एश्योर्ड का 8% (शर्तों के अधीन)',
         category: 'whole_life',
         minAge: 0,
         maxAge: 55,
-        getPpt: (term) => Math.max(15, term - 5),
-        minSa: 200000,
-        bonusRate4: 0.020,
-        bonusRate8: 0.044,
-        historicalBonus: '₹50 प्रति हज़ार'
+        combinations: [
+          {term: 25, ppt: 20},
+          {term: 20, ppt: 15},
+          {term: 15, ppt: 15}
+        ],
+        defaultTerm: 25,
+        defaultPpt: 20,
+        minSumAssured: 200000,
+        expectedReturnRate: 2.85,
+        description: 'Premium paying term ke baad se Basic Sum Assured ka 8% har saal Annual Survival Benefit ke roop me milta hai[cite: 9].',
+        descriptionHi: 'प्रीमियम अवधि के बाद बेसिक सम एश्योर्ड का 8% वार्षिक सर्वाइवल बेनिफिट के रूप में मिलता है[cite: 9]।',
+        matchTermPpt: function(term, ppt) {
+          return this.combinations.some(c => 
+            (term === 'any' || c.term === Number(term)) && 
+            (ppt === 'any' || c.ppt === Number(ppt))
+          );
+        },
+        getPptForTerm: function(term) {
+          const found = this.combinations.find(c => c.term === Number(term));
+          return found ? found.ppt : 20;
+        }
       },
       {
-        id: '871',
-        name: 'एलआईसी जीवन उत्सव (Plan 871)',
-        tagline: 'गारंटीड 10% रेगुलर इनकम बेनिफिट (आजीवन)',
+        id: 'jeevan_utsav',
+        name: 'Jeevan Utsav Plan (Table 871)',
+        nameHi: 'जीवन उत्सव योजना (टेबल 871)',
+        tagline: 'Regular / Flexi Income Benefit: 10% of BSA as per policy terms',
+        taglineHi: 'रेगुलर / फ्लेक्सी इनकम बेनिफिट: 10% सम एश्योर्ड (शर्तों के अधीन)',
         category: 'whole_life',
         minAge: 0,
         maxAge: 65,
-        getPpt: (term) => Math.min(10, term - 4),
-        minSa: 500000,
-        bonusRate4: 0.024,
-        bonusRate8: 0.048,
-        historicalBonus: '₹40 प्रति हज़ार (गारंटीड)'
+        combinations: [
+          {term: 16, ppt: 10},
+          {term: 20, ppt: 10},
+          {term: 25, ppt: 10}
+        ],
+        defaultTerm: 16,
+        defaultPpt: 10,
+        minSumAssured: 500000,
+        expectedReturnRate: 2.75,
+        description: 'Non-linked, guaranteed addition plan. Premium poora hone ke baad terms ke mutabiq 10% Regular Income Benefit milta hai[cite: 9].',
+        descriptionHi: 'नॉन-लिंक्ड गारंटीड एडिशन प्लान। 10 वर्ष प्रीमियम के बाद 10% रेगुलर इनकम बेनिफिट का विकल्प[cite: 9]।',
+        matchTermPpt: function(term, ppt) {
+          return this.combinations.some(c => 
+            (term === 'any' || c.term === Number(term)) && 
+            (ppt === 'any' || c.ppt === Number(ppt))
+          );
+        },
+        getPptForTerm: function(term) {
+          return 10;
+        }
       },
       {
-        id: '915',
-        name: 'एलआईसी न्यू जीवन आनंद (Plan 915)',
-        tagline: 'जिंदगी के साथ भी, जिंदगी के बाद भी (डबल रिस्क कवर)',
+        id: 'jeevan_anand',
+        name: 'New Jeevan Anand Plan (Table 915)',
+        nameHi: 'न्यू जीवन आनंद योजना (टेबल 915)',
+        tagline: 'Savings & Lifelong Protection Cover (Dual Benefit)',
+        taglineHi: 'बचत एवं आजीवन सुरक्षा कवर (डबल बेनिफिट)',
         category: 'endowment',
         minAge: 18,
         maxAge: 50,
-        getPpt: (term) => term,
-        minSa: 100000,
-        bonusRate4: 0.021,
-        bonusRate8: 0.046,
-        historicalBonus: '₹48 प्रति हज़ार'
+        combinations: [
+          {term: 15, ppt: 15},
+          {term: 20, ppt: 20},
+          {term: 21, ppt: 21},
+          {term: 25, ppt: 25}
+        ],
+        defaultTerm: 25,
+        defaultPpt: 25,
+        minSumAssured: 100000,
+        expectedReturnRate: 2.10,
+        description: 'Maturity par full sum assured + bonus mil jata hai aur uske baad bhi jeevan bhar basic life cover rehta hai[cite: 9].',
+        descriptionHi: 'परिपक्वता पर सम एश्योर्ड व बोनस मिलता है एवं उसके पश्चात भी आजीवन लाइफ कवर बना रहता है[cite: 9]।',
+        matchTermPpt: function(term, ppt) {
+          return this.combinations.some(c => 
+            (term === 'any' || c.term === Number(term)) && 
+            (ppt === 'any' || c.ppt === Number(ppt))
+          );
+        },
+        getPptForTerm: function(term) {
+          return Number(term) || 25;
+        }
       },
       {
-        id: '874',
-        name: 'एलआईसी अमृतबाल (Plan 874)',
-        tagline: 'बच्चों की उच्च शिक्षा हेतु गारंटीड ₹80 प्रति हज़ार एडिशन',
+        id: 'child_money_back',
+        name: 'Children Money Back Plan (Table 932)',
+        nameHi: 'चिल्ड्रन मनी बैक योजना (टेबल 932)',
+        tagline: 'Child Education & Marriage - Periodic Survival Payouts',
+        taglineHi: 'बच्चे की उच्च शिक्षा और विवाह हेतु नियत अवधि पर सर्वाइवल बेनिफिट',
         category: 'children',
         minAge: 0,
         maxAge: 12,
-        getPpt: (term) => Math.min(10, term - 5),
-        minSa: 200000,
-        bonusRate4: 0.025,
-        bonusRate8: 0.050,
-        historicalBonus: '₹80 प्रति हज़ार'
+        combinations: [
+          {term: 25, ppt: 20}
+        ],
+        defaultTerm: 25,
+        defaultPpt: 20,
+        minSumAssured: 100000,
+        expectedReturnRate: 2.05,
+        description: 'Bachhe ki 18, 20, 22 saal ki umar par 20-20% Money Back aur 25 saal par 40% + Bonus as per terms[cite: 9].',
+        descriptionHi: '18, 20 एवं 22 वर्ष की आयु पर 20-20% सर्वाइवल बेनिफिट और 25वें वर्ष बोनस सहित शेष भुगतान[cite: 9]।',
+        matchTermPpt: function(term, ppt) {
+          return this.combinations.some(c => 
+            (term === 'any' || c.term === Number(term)) && 
+            (ppt === 'any' || c.ppt === Number(ppt))
+          );
+        },
+        getPptForTerm: function(term) {
+          return 20;
+        }
       }
     ];
 
-    let activeModalScheme = null;
+    let currentSchemesList = [...officialLicSchemes];
+    let comparedPlanIds = ['jeevan_labh', 'jeevan_umang'];
+    let activeQuotationData = null;
+    let currentPdfLang = 'hi';
 
     window.addEventListener('DOMContentLoaded', () => {
-      updateLabelsAndBadges();
-      renderPolicies();
+      syncBudgetBadges();
+      applyPolicyFilters();
+      renderComparisonMatrix();
+      updateCompareCountBadge();
     });
 
-    function getModeHindiText(mode) {
-      if (mode === 'monthly') return '/ माह (मंथली)';
-      if (mode === 'quarterly') return '/ 3 माह (त्रैमासिक)';
-      if (mode === 'half_yearly') return '/ 6 माह (छमाही)';
-      return '/ वर्ष (सालाना)';
+    function syncAgeFromHero(val) {
+      document.getElementById('quickAgeDisplay').innerText = `${val} Varsh`;
+      document.getElementById('calcAgeInput').value = val;
+      document.getElementById('calcAgeSlider').value = val;
+      document.getElementById('selectedAgeBadge').innerText = `${val} Saal`;
+      applyPolicyFilters();
     }
 
-    function syncFromQuickMode(mode) {
-      document.getElementById('calcMode').value = mode;
-      updateLabelsAndBadges();
-      renderPolicies();
+    function syncBudgetFromHero(val) {
+      document.getElementById('calcBudgetInput').value = val;
+      document.getElementById('calcBudgetSlider').value = val;
+      syncBudgetBadges();
+      applyPolicyFilters();
     }
 
-    function syncFromQuickBudget(budget) {
-      document.getElementById('calcBudgetInput').value = budget;
-      document.getElementById('calcBudgetSlider').value = Math.min(100000, budget);
-      updateLabelsAndBadges();
-      renderPolicies();
+    function syncTermFromHero(val) {
+      document.getElementById('calcTerm').value = val;
+      applyPolicyFilters();
     }
 
-    function syncFromQuickAge(age) {
-      document.getElementById('calcAgeInput').value = age;
-      document.getElementById('calcAgeSlider').value = age;
-      updateLabelsAndBadges();
-      renderPolicies();
+    function syncPptFromHero(val) {
+      document.getElementById('calcPpt').value = val;
+      applyPolicyFilters();
     }
 
-    function syncFromQuickTerm(term) {
-      document.getElementById('calcTerm').value = term;
-      renderPolicies();
+    function onTermFieldChange(val) {
+      document.getElementById('quickHeroTerm').value = val;
+      applyPolicyFilters();
     }
 
-    function handleModeUpdate(mode) {
-      document.getElementById('quickHeroMode').value = mode;
-      updateLabelsAndBadges();
-      renderPolicies();
+    function onPptFieldChange(val) {
+      document.getElementById('quickHeroPpt').value = val;
+      applyPolicyFilters();
     }
 
-    function handleBudgetUpdate(val) {
-      const num = Math.max(100, Number(val) || 0);
+    function updateAgeSlider(val) {
+      val = Math.max(0, Math.min(65, Number(val) || 0));
+      document.getElementById('calcAgeSlider').value = val;
+      document.getElementById('quickAgeInput').value = val;
+      document.getElementById('quickAgeDisplay').innerText = `${val} Varsh`;
+      document.getElementById('selectedAgeBadge').innerText = `${val} Saal`;
+      applyPolicyFilters();
+    }
+
+    function updateAgeInput(val) {
+      document.getElementById('calcAgeInput').value = val;
+      document.getElementById('quickAgeInput').value = val;
+      document.getElementById('quickAgeDisplay').innerText = `${val} Varsh`;
+      document.getElementById('selectedAgeBadge').innerText = `${val} Saal`;
+      applyPolicyFilters();
+    }
+
+    function onModeChange(mode) {
+      syncBudgetBadges();
+      applyPolicyFilters();
+    }
+
+    function updateBudgetSlider(val) {
+      const num = Number(val) || 1000;
+      document.getElementById('calcBudgetSlider').value = num;
       document.getElementById('quickBudgetInput').value = num;
+      syncBudgetBadges();
+      applyPolicyFilters();
+    }
+
+    function updateBudgetInput(val) {
+      const num = Number(val) || 1000;
       document.getElementById('calcBudgetInput').value = num;
-      document.getElementById('calcBudgetSlider').value = Math.min(100000, num);
-      updateLabelsAndBadges();
-      renderPolicies();
+      document.getElementById('quickBudgetInput').value = num;
+      syncBudgetBadges();
+      applyPolicyFilters();
     }
 
-    function handleAgeUpdate(val) {
-      const num = Math.max(0, Math.min(65, Number(val) || 0));
-      document.getElementById('quickAgeInput').value = num;
-      document.getElementById('calcAgeInput').value = num;
-      document.getElementById('calcAgeSlider').value = num;
-      updateLabelsAndBadges();
-      renderPolicies();
-    }
-
-    function handleTermUpdate(val) {
-      document.getElementById('quickTermInput').value = val;
-      renderPolicies();
-    }
-
-    function updateLabelsAndBadges() {
+    function syncBudgetBadges() {
       const mode = document.getElementById('calcMode').value;
       const budget = Number(document.getElementById('calcBudgetInput').value) || 5000;
-      const age = Number(document.getElementById('calcAgeInput').value) || 30;
-      const modeText = getModeHindiText(mode);
+      
+      let suffix = '/ Year';
+      if (mode === 'monthly') suffix = '/ Month';
+      else if (mode === 'quarterly') suffix = '/ Quarter';
+      else if (mode === 'half_yearly') suffix = '/ Half-Yr';
 
-      document.getElementById('quickBudgetDisplay').innerText = `₹ ${budget.toLocaleString('en-IN')} ${modeText}`;
-      document.getElementById('selectedBudgetBadge').innerText = `₹ ${budget.toLocaleString('en-IN')} ${modeText}`;
-      document.getElementById('summaryBudget').innerText = `₹ ${budget.toLocaleString('en-IN')} ${modeText}`;
-      document.getElementById('selectedAgeBadge').innerText = `${age} वर्ष`;
-      document.getElementById('summaryAge').innerText = age;
+      const displayText = `₹ ${budget.toLocaleString('en-IN')} ${suffix}`;
+      document.getElementById('quickBudgetDisplay').innerText = displayText;
+      document.getElementById('selectedBudgetBadge').innerText = displayText;
+      document.getElementById('summaryBudget').innerText = displayText;
 
-      // Annualized calculation for internal projection
-      let annual = budget;
-      if (mode === 'monthly') annual = budget * 12;
-      else if (mode === 'quarterly') annual = budget * 4;
-      else if (mode === 'half_yearly') annual = budget * 2;
-
-      if (mode !== 'yearly') {
-        document.getElementById('summaryAnnualEquivalent').innerText = `(सालाना: ₹${annual.toLocaleString('en-IN')})`;
-      } else {
-        document.getElementById('summaryAnnualEquivalent').innerText = '';
-      }
+      const annual = getAnnualBudget();
+      document.getElementById('summaryAnnualEquivalent').innerText = (mode !== 'yearly') ? `(Annualized: ₹${annual.toLocaleString('en-IN')})` : '';
     }
 
-    function updateSummarySnapshot() {
-      document.getElementById('summaryCustomerName').innerText = document.getElementById('custName').value || 'ग्राहक';
-    }
-
-    function scrollToCalculator() {
-      renderPolicies();
-      document.getElementById('calculator-section').scrollIntoView({ behavior: 'smooth' });
+    function getAnnualBudget() {
+      const raw = Number(document.getElementById('calcBudgetInput').value) || 5000;
+      const mode = document.getElementById('calcMode').value;
+      if (mode === 'monthly') return raw * 12;
+      if (mode === 'quarterly') return raw * 4;
+      if (mode === 'half_yearly') return raw * 2;
+      return raw;
     }
 
     function resetCalculatorForm() {
-      document.getElementById('custName').value = 'रमेश कुमार';
+      document.getElementById('custName').value = 'Ramesh Kumar';
       document.getElementById('custPhone').value = '9876543210';
-      handleModeUpdate('monthly');
-      handleBudgetUpdate(5000);
-      handleAgeUpdate(30);
-      handleTermUpdate('25');
-      document.getElementById('calcCategory').value = 'endowment';
-      renderPolicies();
+      document.getElementById('calcAgeInput').value = '30';
+      document.getElementById('calcAgeSlider').value = '30';
+      document.getElementById('quickAgeInput').value = '30';
+      document.getElementById('quickAgeDisplay').innerText = '30 Varsh';
+      document.getElementById('selectedAgeBadge').innerText = '30 Saal';
+      
+      document.getElementById('calcMode').value = 'monthly';
+      document.getElementById('calcBudgetInput').value = '5000';
+      document.getElementById('calcBudgetSlider').value = '5000';
+      document.getElementById('quickBudgetInput').value = '5000';
+      
+      document.getElementById('calcCategory').value = 'all';
+      document.getElementById('calcTerm').value = '25';
+      document.getElementById('calcPpt').value = '16';
+      document.getElementById('quickHeroTerm').value = '25';
+      document.getElementById('quickHeroPpt').value = '16';
+      
+      syncBudgetBadges();
+      applyPolicyFilters();
+      showToast('Calculator parameters reset.');
     }
 
-    function calculatePolicyShortSchedule(scheme, age, modeAmount, mode, customTerm) {
-      const term = Number(customTerm) || 20;
-      const ppt = scheme.getPpt(term);
-      
-      let annualPremium = modeAmount;
-      if (mode === 'monthly') annualPremium = modeAmount * 12;
-      else if (mode === 'quarterly') annualPremium = modeAmount * 4;
-      else if (mode === 'half_yearly') annualPremium = modeAmount * 2;
+    function scrollToAndFilterFromHero() {
+      applyPolicyFilters();
+      document.getElementById('schemes-list').scrollIntoView({ behavior: 'smooth' });
+    }
 
-      let sumAssured = Math.round((annualPremium * ppt * 0.72) / 25000) * 25000;
-      sumAssured = Math.max(scheme.minSa, sumAssured);
+    // ACCURATE PLAN DETAILS ENGINE (MATCHING USER'S TERM & PPT SELECTIONS)
+    function calculateFullPlanDetails(scheme, userAge, annualBudget) {
+      const selectedTerm = document.getElementById('calcTerm').value;
+      const selectedPpt = document.getElementById('calcPpt').value;
 
-      const rows = [];
+      let chosenTerm = scheme.defaultTerm;
+      let chosenPpt = scheme.defaultPpt;
+
+      // Find compatible combination
+      const match = scheme.combinations.find(c => 
+        (selectedTerm === 'any' || c.term === Number(selectedTerm)) &&
+        (selectedPpt === 'any' || c.ppt === Number(selectedPpt))
+      );
+
+      if (match) {
+        chosenTerm = match.term;
+        chosenPpt = match.ppt;
+      } else {
+        if (selectedTerm !== 'any') {
+          const tMatch = scheme.combinations.find(c => c.term === Number(selectedTerm));
+          if (tMatch) {
+            chosenTerm = tMatch.term;
+            chosenPpt = tMatch.ppt;
+          }
+        }
+      }
+
+      let sumAssured = Math.round((annualBudget * chosenPpt * 0.70) / 25000) * 25000;
+      sumAssured = Math.max(scheme.minSumAssured, sumAssured);
+
+      const totalInvestment = annualBudget * chosenPpt;
+      let estimatedMaturity = Math.round(totalInvestment * scheme.expectedReturnRate);
+      let regularAnnualIncome = 0;
+
+      if (scheme.id === 'jeevan_utsav') {
+        regularAnnualIncome = sumAssured * 0.10;
+        estimatedMaturity = sumAssured + (sumAssured * 0.04 * chosenPpt);
+      } else if (scheme.id === 'jeevan_umang') {
+        regularAnnualIncome = sumAssured * 0.08;
+      }
+
+      // 1 to chosenTerm Detailed Schedule Rows
+      const yearRows = [];
       let cumulativePaid = 0;
 
-      for (let y = 1; y <= term; y++) {
-        const isPaying = (y <= ppt);
-        const thisYearModePay = isPaying ? modeAmount : 0;
-        cumulativePaid += isPaying ? annualPremium : 0;
+      for (let y = 1; y <= chosenTerm; y++) {
+        const clientAge = userAge + y - 1;
+        const premiumThisYear = (y <= chosenPpt) ? annualBudget : 0;
+        cumulativePaid += premiumThisYear;
 
-        const revBonus4 = Math.round(sumAssured * scheme.bonusRate4 * y);
-        const revBonus8 = Math.round(sumAssured * scheme.bonusRate8 * y);
-        const fab8 = (y >= 15 && y === term) ? Math.round(sumAssured * 0.15) : 0;
+        const bonusRate4 = 0.022;
+        const bonusRate8 = 0.048;
 
-        const normalCover = sumAssured + revBonus8;
-        const accidentalCover = (sumAssured * 2) + revBonus8;
+        const accruedBonus4 = Math.round(sumAssured * bonusRate4 * y);
+        const accruedBonus8 = Math.round(sumAssured * bonusRate8 * y);
+
+        const normalCover = sumAssured + accruedBonus8;
+        const accidentalCover = (sumAssured * 2) + accruedBonus8;
 
         let loanValue = 0;
+        let surrenderValue = 0;
         if (y >= 2 && cumulativePaid > 0) {
-          loanValue = Math.round(cumulativePaid * Math.min(0.80, 0.30 + ((y - 2) * 0.03)));
+          const surrenderFactor = Math.min(0.85, 0.30 + ((y - 2) * 0.028));
+          surrenderValue = Math.round(cumulativePaid * surrenderFactor);
+          loanValue = Math.round(surrenderValue * 0.90);
         }
 
-        let returnText = '-';
-        if (y === term) {
-          const maturity8 = sumAssured + revBonus8 + fab8;
-          returnText = `₹${(maturity8/100000).toFixed(2)} लाख* (@8%)`;
-        } else if (scheme.id === '945' && !isPaying) {
-          returnText = `₹${(sumAssured * 0.08).toLocaleString('en-IN')}/वर्ष`;
-        } else if (scheme.id === '871' && !isPaying) {
-          returnText = `₹${(sumAssured * 0.10).toLocaleString('en-IN')}/वर्ष`;
+        let cashInflow = 0;
+        let returnNote = '-';
+
+        if (scheme.id === 'child_money_back') {
+          if (clientAge === 18 || clientAge === 20 || clientAge === 22) {
+            cashInflow = sumAssured * 0.20;
+            returnNote = `Survival ₹${cashInflow.toLocaleString('en-IN')}`;
+          } else if (y === chosenTerm) {
+            cashInflow = (sumAssured * 0.40) + accruedBonus8;
+            returnNote = `Maturity ₹${cashInflow.toLocaleString('en-IN')}`;
+          }
+        } else if (scheme.id === 'jeevan_umang' && y > chosenPpt) {
+          cashInflow = regularAnnualIncome;
+          returnNote = `8% BSA ₹${cashInflow.toLocaleString('en-IN')}`;
+        } else if (scheme.id === 'jeevan_utsav' && y > chosenPpt) {
+          cashInflow = regularAnnualIncome;
+          returnNote = `10% Benefit ₹${cashInflow.toLocaleString('en-IN')}`;
+        } else if (y === chosenTerm) {
+          cashInflow = estimatedMaturity;
+          returnNote = `Maturity ₹${cashInflow.toLocaleString('en-IN')}`;
         }
 
-        rows.push({
+        yearRows.push({
           year: y,
-          age: age + y - 1,
-          modePay: thisYearModePay,
-          cumulativePaid,
-          normalCover,
-          accidentalCover,
-          loanValue,
-          returnText
+          age: clientAge,
+          premium: premiumThisYear,
+          cumulativePaid: cumulativePaid,
+          normalCover: normalCover,
+          accidentalCover: accidentalCover,
+          loanValue: loanValue,
+          cashInflow: cashInflow,
+          returnNote: returnNote,
+          irdai4Return: Math.round(sumAssured + accruedBonus4),
+          irdai8Return: Math.round(sumAssured + accruedBonus8)
         });
       }
 
-      const totalPaid = annualPremium * ppt;
-      const lastMaturity4 = sumAssured + Math.round(sumAssured * scheme.bonusRate4 * term);
-      const lastMaturity8 = sumAssured + Math.round(sumAssured * scheme.bonusRate8 * term) + ((term >= 15) ? Math.round(sumAssured * 0.15) : 0);
-
       return {
         scheme,
-        age,
-        term,
-        ppt,
-        mode,
-        modeAmount,
-        annualPremium,
-        totalPaid,
+        userAge,
+        term: chosenTerm,
+        ppt: chosenPpt,
+        annualBudget,
+        totalInvestment,
         sumAssured,
-        maturity4: lastMaturity4,
-        maturity8: lastMaturity8,
-        rows
+        estimatedMaturity,
+        regularAnnualIncome,
+        yearRows
       };
     }
 
-    function renderPolicies() {
-      const container = document.getElementById('policiesContainer');
+    function applyPolicyFilters() {
       const age = Number(document.getElementById('calcAgeInput').value) || 30;
-      const customTerm = Number(document.getElementById('calcTerm').value) || 25;
-      const mode = document.getElementById('calcMode').value;
-      const modeAmount = Number(document.getElementById('calcBudgetInput').value) || 5000;
-      const cat = document.getElementById('calcCategory').value;
+      const category = document.getElementById('calcCategory').value;
+      const annualBudget = getAnnualBudget();
+      const custName = document.getElementById('custName').value || 'Customer';
+      const termFilter = document.getElementById('calcTerm').value;
+      const pptFilter = document.getElementById('calcPpt').value;
 
-      const matched = officialLicSchemes.filter(s => {
-        const okAge = age >= s.minAge && age <= s.maxAge;
-        const okCat = (cat === 'all') || (s.category === cat);
-        return okAge && okCat;
+      document.getElementById('summaryCustomerName').innerText = custName;
+      document.getElementById('summaryAge').innerText = age;
+
+      // Filter schemes based on age, category, AND separate term / ppt compatibility
+      currentSchemesList = officialLicSchemes.filter(s => {
+        const validAge = age >= s.minAge && age <= s.maxAge;
+        const validCat = (category === 'all') || (s.category === category);
+        const validCombination = s.matchTermPpt(termFilter, pptFilter);
+        return validAge && validCat && validCombination;
       });
 
-      document.getElementById('btnMatchCount').innerText = matched.length;
-      document.getElementById('resultsCountBadge').innerText = `${matched.length} योजनाएं उपलब्ध`;
+      document.getElementById('btnMatchCount').innerText = currentSchemesList.length;
+      document.getElementById('resultsCountBadge').innerText = `${currentSchemesList.length} Schemes Matching Criteria`;
 
-      const modeText = getModeHindiText(mode);
+      renderPolicyCards(age, annualBudget);
+    }
 
-      container.innerHTML = matched.map(s => {
-        const sched = calculatePolicyShortSchedule(s, age, modeAmount, mode, customTerm);
+    function renderPolicyCards(age, annualBudget) {
+      const container = document.getElementById('policiesContainer');
+      const mode = document.getElementById('calcMode').value;
+      const rawBudget = Number(document.getElementById('calcBudgetInput').value) || 5000;
+      
+      let modeSuffix = '/ Yr';
+      if (mode === 'monthly') modeSuffix = '/ Month';
+      else if (mode === 'quarterly') modeSuffix = '/ Quarter';
+      else if (mode === 'half_yearly') modeSuffix = '/ 6-Mo';
+
+      if (currentSchemesList.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-12 bg-white rounded-3xl border border-dashed border-slate-300 p-6">
+            <i class="fa-solid fa-triangle-exclamation text-amber-500 text-3xl mb-2"></i>
+            <h4 class="font-black text-slate-700 text-lg">Chune Huye Term / PPT Combination me koi Scheme nahi mili</h4>
+            <p class="text-xs text-slate-500 mt-1">Kripya Policy Term ya PPT ko 'Sabhi' (All) par set karein ya anya combination chunein.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = currentSchemesList.map(scheme => {
+        const calc = calculateFullPlanDetails(scheme, age, annualBudget);
+        const isCompared = comparedPlanIds.includes(scheme.id);
 
         return `
-          <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+          <div class="bg-white rounded-3xl border ${isCompared ? 'border-brand-gold ring-2 ring-brand-gold/30' : 'border-slate-200'} p-6 shadow-sm hover:shadow-xl transition flex flex-col justify-between relative group">
+            
             <div>
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-[10px] font-black uppercase bg-blue-50 text-brand-lightBlue px-2 py-0.5 rounded">LIC Policy</span>
-                <span class="text-[10px] font-bold bg-amber-50 text-amber-800 px-2 py-0.5 rounded">अवधि: ${sched.term} वर्ष (भरना: ${sched.ppt} वर्ष)</span>
+              <div class="flex justify-between items-start mb-3">
+                <span class="text-[11px] font-black uppercase tracking-wider bg-blue-50 text-brand-lightBlue px-2.5 py-1 rounded-md border border-blue-100">
+                  Plan Info
+                </span>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800">
+                  Term: ${calc.term} Yrs | Pay: ${calc.ppt} Yrs
+                </span>
               </div>
-              <h4 class="text-lg font-black text-brand-navy">${s.name}</h4>
-              <p class="text-xs text-slate-500 mt-1">${s.tagline}</p>
 
-              <div class="mt-4 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 space-y-1.5 text-xs">
-                <div class="flex justify-between text-slate-600">
-                  <span>प्रीमियम (${mode.toUpperCase()}):</span>
-                  <span class="font-black text-slate-800">₹ ${sched.modeAmount.toLocaleString('en-IN')} ${modeText}</span>
+              <h4 class="text-xl font-black text-brand-navy group-hover:text-brand-lightBlue transition">
+                ${scheme.name}
+              </h4>
+              <p class="text-xs text-slate-500 font-medium line-clamp-2 mt-1">
+                ${scheme.tagline}
+              </p>
+
+              <div class="mt-4 bg-slate-50 rounded-2xl p-4 border border-slate-100 space-y-2 text-xs">
+                <div class="flex justify-between pb-1.5 border-b border-slate-200">
+                  <span class="text-slate-500">Selected Premium:</span>
+                  <span class="font-bold text-slate-800">₹ ${rawBudget.toLocaleString('en-IN')} ${modeSuffix}</span>
                 </div>
-                <div class="flex justify-between text-slate-600">
-                  <span>कुल जमा (${sched.ppt} वर्ष में):</span>
-                  <span class="font-black text-slate-800">₹ ${sched.totalPaid.toLocaleString('en-IN')}</span>
+                <div class="flex justify-between pb-1.5 border-b border-slate-200">
+                  <span class="text-slate-500">Kool Jama (${calc.ppt} Saal me):</span>
+                  <span class="font-bold text-slate-800">₹ ${calc.totalInvestment.toLocaleString('en-IN')}</span>
                 </div>
-                <div class="flex justify-between text-slate-600">
-                  <span>मूल बीमाधन (Sum Assured):</span>
-                  <span class="font-black text-slate-800">₹ ${sched.sumAssured.toLocaleString('en-IN')}</span>
-                </div>
-                <div class="flex justify-between text-emerald-700 font-bold pt-1 border-t border-slate-200">
-                  <span>मैच्योरिटी लाभ (@8%):</span>
-                  <span class="font-black text-sm">₹ ${sched.maturity8.toLocaleString('en-IN')}*</span>
-                </div>
-                <div class="flex justify-between text-[11px] text-amber-800 pt-0.5">
-                  <span>बोनस ट्रेंड:</span>
-                  <span class="font-bold">${s.historicalBonus}</span>
+
+                ${calc.regularAnnualIncome > 0 ? `
+                  <div class="flex justify-between items-center text-emerald-700 font-bold">
+                    <span>Survival / Income Benefit:</span>
+                    <span class="text-sm font-black">₹ ${Math.round(calc.regularAnnualIncome).toLocaleString('en-IN')}/yr*</span>
+                  </div>
+                ` : `
+                  <div class="flex justify-between items-center text-emerald-700 font-bold">
+                    <span>Estimated Maturity*:</span>
+                    <span class="text-sm font-black">₹ ${calc.estimatedMaturity.toLocaleString('en-IN')}*</span>
+                  </div>
+                `}
+
+                <div class="flex justify-between text-[11px] text-slate-500 pt-1">
+                  <span>Normal Cover: ₹${(calc.sumAssured/100000).toFixed(1)}L</span>
+                  <span>Accident: ₹${((calc.sumAssured*2)/100000).toFixed(1)}L</span>
                 </div>
               </div>
             </div>
 
-            <div class="mt-5 pt-3 border-t border-slate-100">
-              <button onclick="openBenefitModal('${s.id}')" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-2.5 px-4 rounded-xl text-xs transition shadow flex items-center justify-center gap-2">
-                <i class="fa-solid fa-file-pdf text-brand-gold"></i>
-                <span>शॉर्ट हिंदी चार्ट व प्रिंट (1 से ${sched.term} वर्ष)</span>
+            <!-- Action Buttons -->
+            <div class="mt-6 pt-4 border-t border-slate-100 space-y-2">
+              <button onclick="openQuotationPreviewModal('${scheme.id}')" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 px-4 rounded-xl text-xs transition shadow-sm flex items-center justify-center gap-2">
+                <i class="fa-solid fa-print text-brand-gold text-sm"></i>
+                <span>Preview & Print (1 to ${calc.term} Saal Chart)</span>
+              </button>
+
+              <button onclick="toggleCompareScheme('${scheme.id}')" class="w-full py-1.5 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition ${isCompared ? 'bg-amber-100 text-amber-900' : 'text-slate-600 hover:bg-slate-100'}">
+                <i class="fa-solid ${isCompared ? 'fa-square-check text-brand-deepGold' : 'fa-square'} text-sm"></i>
+                <span>${isCompared ? 'Comparison me shamil hai' : '+ Compare me jodein'}</span>
               </button>
             </div>
+
           </div>
         `;
       }).join('');
     }
 
-    function openBenefitModal(schemeId) {
+    function sortPolicies(criterion) {
+      const age = Number(document.getElementById('calcAgeInput').value) || 30;
+      const budget = getAnnualBudget();
+
+      if (criterion === 'return') {
+        currentSchemesList.sort((a, b) => {
+          return calculateFullPlanDetails(b, age, budget).estimatedMaturity - calculateFullPlanDetails(a, age, budget).estimatedMaturity;
+        });
+        showToast('Sorted: Sabse Zyada Returns');
+      } else if (criterion === 'ppt') {
+        currentSchemesList.sort((a, b) => a.defaultPpt - b.defaultPpt);
+        showToast('Sorted: Sabse Kam Saal Premium Bharna');
+      }
+      renderPolicyCards(age, budget);
+    }
+
+    function toggleCompareScheme(id) {
+      const idx = comparedPlanIds.indexOf(id);
+      if (idx > -1) {
+        comparedPlanIds.splice(idx, 1);
+        showToast('Scheme comparison se hatai gayi.');
+      } else {
+        if (comparedPlanIds.length >= 3) {
+          showToast('Ek baar me अधिकतम 3 plans compare kar sakte hain.');
+          return;
+        }
+        comparedPlanIds.push(id);
+        showToast('Scheme comparison me jodi gayi!');
+      }
+      updateCompareCountBadge();
+      applyPolicyFilters();
+      renderComparisonMatrix();
+    }
+
+    function clearCompareSelection() {
+      comparedPlanIds = [];
+      updateCompareCountBadge();
+      applyPolicyFilters();
+      renderComparisonMatrix();
+      showToast('Compare list khali kar di gayi.');
+    }
+
+    function updateCompareCountBadge() {
+      const b = document.getElementById('navCompareCountBadge');
+      if (comparedPlanIds.length > 0) {
+        b.innerText = comparedPlanIds.length;
+        b.classList.remove('hidden');
+      } else {
+        b.classList.add('hidden');
+      }
+    }
+
+    function renderComparisonMatrix() {
+      const container = document.getElementById('comparisonContainer');
+      const age = Number(document.getElementById('calcAgeInput').value) || 30;
+      const budget = getAnnualBudget();
+
+      if (comparedPlanIds.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-10 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
+            <p class="text-xs text-slate-500 font-bold">Koi scheme compare ke liye select nahi hai. Upar diye gaye plans se '+ Compare me jodein' click karein.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const schemes = comparedPlanIds.map(id => officialLicSchemes.find(s => s.id === id)).filter(Boolean);
+
+      container.innerHTML = `
+        <table class="w-full text-left border-collapse min-w-[650px] text-xs">
+          <thead>
+            <tr class="border-b-2 border-slate-200 bg-slate-50">
+              <th class="p-3.5 font-black text-slate-700">Scheme Parameters</th>
+              ${schemes.map(s => `
+                <th class="p-3.5 font-black text-brand-navy border-l border-slate-200">
+                  <div class="flex justify-between items-center">
+                    <span>${s.name}</span>
+                    <button onclick="toggleCompareScheme('${s.id}')" class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-xmark"></i></button>
+                  </div>
+                </th>
+              `).join('')}
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <tr>
+              <td class="p-3 font-bold text-slate-600">Paying Term / Policy Term</td>
+              ${schemes.map(s => {
+                const c = calculateFullPlanDetails(s, age, budget);
+                return `<td class="p-3 border-l border-slate-200 font-bold text-brand-lightBlue">Pay ${c.ppt} Saal / Term${c.term} Saal</td>`;
+              }).join('')}
+            </tr>
+            <tr class="bg-slate-50/50">
+              <td class="p-3 font-bold text-slate-600">Total Premium Paid</td>
+              ${schemes.map(s => {
+                const c = calculateFullPlanDetails(s, age, budget);
+                return `<td class="p-3 border-l border-slate-200 font-black">₹ ${c.totalInvestment.toLocaleString('en-IN')}</td>`;
+              }).join('')}
+            </tr>
+            <tr class="bg-emerald-50/40">
+              <td class="p-3 font-bold text-emerald-900">Maturity / Returns*</td>
+              ${schemes.map(s => {
+                const c = calculateFullPlanDetails(s, age, budget);
+                if (c.regularAnnualIncome > 0) {
+                  return `<td class="p-3 border-l border-slate-200 font-black text-emerald-700">₹ ${Math.round(c.regularAnnualIncome).toLocaleString('en-IN')}/yr (Terms Apply)</td>`;
+                }
+                return `<td class="p-3 border-l border-slate-200 font-black text-emerald-700">₹ ${c.estimatedMaturity.toLocaleString('en-IN')}*</td>`;
+              }).join('')}
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-slate-600">Year-by-Year Print View</td>
+              ${schemes.map(s => `
+                <td class="p-3 border-l border-slate-200">
+                  <button onclick="openQuotationPreviewModal('${s.id}')" class="bg-brand-navy text-white font-black px-3 py-1.5 rounded-lg text-[11px] hover:bg-brand-lightBlue transition flex items-center gap-1">
+                    <i class="fa-solid fa-print text-brand-gold"></i> Open & Print
+                  </button>
+                </td>
+              `).join('')}
+            </tr>
+          </tbody>
+        </table>
+      `;
+    }
+
+    function openQuotationPreviewModal(schemeId) {
       const scheme = officialLicSchemes.find(s => s.id === schemeId);
       if (!scheme) return;
-      activeModalScheme = scheme;
-      renderModalContent();
+
+      const age = Number(document.getElementById('calcAgeInput').value) || 30;
+      const budget = getAnnualBudget();
+      activeQuotationData = calculateFullPlanDetails(scheme, age, budget);
+
+      renderQuotationContent();
       document.getElementById('quotationModal').classList.remove('hidden');
     }
 
@@ -770,164 +1353,205 @@
       document.getElementById('quotationModal').classList.add('hidden');
     }
 
-    // EXACT SHORT & CLEAN HINDI BENEFIT CHART (NO AWKWARD NON-GUARANTEED COLUMNS)
-    function renderModalContent() {
-      if (!activeModalScheme) return;
-      const age = Number(document.getElementById('calcAgeInput').value) || 30;
-      const customTerm = Number(document.getElementById('calcTerm').value) || 25;
-      const mode = document.getElementById('calcMode').value;
-      const modeAmount = Number(document.getElementById('calcBudgetInput').value) || 5000;
-      const sched = calculatePolicyShortSchedule(activeModalScheme, age, modeAmount, mode, customTerm);
-      const custName = document.getElementById('custName').value || 'रमेश कुमार';
-      const modeText = getModeHindiText(mode);
+    function switchQuotationLanguage(lang) {
+      currentPdfLang = lang;
+      document.getElementById('pdfLangIndicator').innerText = lang === 'hi' ? 'HINDI' : 'ENGLISH';
+      if (lang === 'hi') {
+        document.getElementById('langBtnHi').className = 'px-2.5 py-1 rounded-lg bg-brand-gold text-brand-dark font-black transition';
+        document.getElementById('langBtnEn').className = 'px-2.5 py-1 rounded-lg text-white hover:bg-white/10 font-bold transition';
+      } else {
+        document.getElementById('langBtnHi').className = 'px-2.5 py-1 rounded-lg text-white hover:bg-white/10 font-bold transition';
+        document.getElementById('langBtnEn').className = 'px-2.5 py-1 rounded-lg bg-brand-gold text-brand-dark font-black transition';
+      }
+      renderQuotationContent();
+    }
 
-      document.getElementById('modalHeadingTitle').innerText = `${sched.scheme.name} - अवधि: ${sched.term} वर्ष`;
+    // ORIGINAL CLEAN A4 TABLE IN MODAL (WITH ACCURATE DYNAMIC ROWS)
+    function renderQuotationContent() {
+      if (!activeQuotationData) return;
+      const d = activeQuotationData;
+      const isHi = currentPdfLang === 'hi';
+      const custName = document.getElementById('custName').value || 'Customer';
+      const custPhone = document.getElementById('custPhone').value || '8440096343';
+      const mode = document.getElementById('calcMode').value.toUpperCase();
+      const rawBudget = Number(document.getElementById('calcBudgetInput').value) || 5000;
+      const dateStr = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
 
       const target = document.getElementById('quotationPrintableTarget');
 
       target.innerHTML = `
-        <div style="font-family: 'Noto Sans Devanagari', sans-serif; color: #0f172a; line-height: 1.35;">
+        <div style="width: 100%; color: #0f172a; font-family: 'Inter', sans-serif;">
           
           <!-- LETTERHEAD WITH LOGO IMAGE -->
           <div style="border-bottom: 2px solid #002B49; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
             <div style="display: flex; align-items: center; gap: 10px;">
-              <img src="logo.png" onerror="this.style.display='none';" style="height: 46px; width: auto; object-fit: contain;" alt="KDS INSURANCE" />
+              <img src="logo.png" onerror="this.style.display='none';" style="height: 48px; width: auto; object-fit: contain;" alt="KDS INSURANCE" />
               <div>
-                <h2 style="font-size: 15px; font-weight: 900; color: #002B49; margin: 0; line-height: 1.1;">KDS INSURANCE SEVA KENDRA</h2>
-                <p style="font-size: 10px; color: #00558F; margin: 2px 0 0 0; font-weight: 700;">
-                  अधिकृत बीमा सलाहकार: <strong>मनोहर सिंह</strong> (मोबाइल: 8440096343)
+                <h1 style="font-size: 15px; font-weight: 900; color: #002B49; margin: 0; line-height: 1.1;">
+                  KDS INSURANCE CONSULTANCY & CUSTOMER SERVICES
+                </h1>
+                <p style="font-size: 9.5px; font-weight: 700; color: #00558F; margin: 1px 0 0 0;">
+                  Authorized Insurance Advisory Services (Manoher Singh)
                 </p>
-                <p style="font-size: 8.5px; color: #475569; margin: 1px 0 0 0;">
-                  बेसमेंट हॉल MR कॉम्प्लेक्स, पुलिस चौकी के पास, मालवाड़ा, रानीवाड़ा (राजस्थान) - 343039
+                <p style="font-size: 8.5px; color: #475569; margin: 2px 0 0 0;">
+                  BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039
                 </p>
               </div>
             </div>
 
             <div style="text-align: right;">
-              <span style="background: #FFAE00; color: #002B49; font-size: 9.5px; font-weight: 900; padding: 2px 8px; border-radius: 4px; display: inline-block;">
-                पॉलिसी बेनिफिट सारांश
+              <span style="background: #FFAE00; color: #002B49; font-weight: 900; font-size: 9.5px; padding: 2px 6px; border-radius: 3px; display: inline-block;">
+                ${isHi ? 'पॉलिसी बेनिफिट इलस्ट्रेशन' : 'POLICY BENEFIT ILLUSTRATION'}
               </span>
-              <p style="font-size: 8.5px; color: #64748b; margin: 3px 0 0 0;">तारीख: ${new Date().toLocaleDateString('hi-IN')}</p>
+              <p style="font-size: 10px; font-weight: 800; color: #002B49; margin: 3px 0 0 0;">Agent: MANOHER SINGH</p>
+              <p style="font-size: 10px; font-weight: 800; color: #00558F; margin: 1px 0 0 0;">Mo: 8440096343</p>
+              <p style="font-size: 8.5px; color: #64748b; margin: 1px 0 0 0;">Date: ${dateStr}</p>
             </div>
           </div>
 
-          <!-- SUMMARY CARD -->
-          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 9.5px;">
+          <!-- CLIENT & PLAN METADATA CARD (COMPACT) -->
+          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 10px; line-height: 1.35;">
             <div>
-              <p style="margin: 0;"><strong>ग्राहक का नाम:</strong> ${custName}</p>
-              <p style="margin: 2px 0;"><strong>प्रवेश आयु:</strong> ${sched.age} वर्ष</p>
-              <p style="margin: 2px 0;"><strong>योजना:</strong> ${sched.scheme.name}</p>
+              <p style="margin: 1px 0;"><strong>${isHi ? 'ग्राहक का नाम' : 'Client Name'}:</strong> ${custName}</p>
+              <p style="margin: 1px 0;"><strong>${isHi ? 'मोबाइल नंबर' : 'Mobile Number'}:</strong> ${custPhone}</p>
+              <p style="margin: 1px 0;"><strong>${isHi ? 'प्रवेश आयु (Age)' : 'Entry Age'}:</strong> ${d.userAge} Years</p>
             </div>
             <div>
-              <p style="margin: 0;"><strong>पॉलिसी अवधि:</strong> ${sched.term} वर्ष (प्रीमियम: <strong>${sched.ppt} वर्ष</strong>)</p>
-              <p style="margin: 2px 0; color: #002B49; font-weight: bold;"><strong>प्रीमियम:</strong> ₹ ${sched.modeAmount.toLocaleString('en-IN')} ${modeText}</p>
-              <p style="margin: 2px 0;"><strong>कुल जमा प्रीमियम:</strong> ₹ ${sched.totalPaid.toLocaleString('en-IN')}</p>
+              <p style="margin: 1px 0;"><strong>${isHi ? 'प्रस्तावित योजना' : 'Proposed Scheme'}:</strong> <span style="color: #002B49; font-weight: 800;">${isHi ? d.scheme.nameHi : d.scheme.name}</span></p>
+              <p style="margin: 1px 0;"><strong>${isHi ? 'पॉलिसी / प्रीमियम अवधि' : 'Term / Premium Term'}:</strong> ${d.term} Yrs / <strong>Pay ${d.ppt} Yrs</strong></p>
+              <p style="margin: 1px 0;"><strong>${isHi ? 'प्रीमियम' : 'Premium'}:</strong> ₹ ${rawBudget.toLocaleString('en-IN')} / ${mode}</p>
             </div>
             <div>
-              <p style="margin: 0;"><strong>मूल बीमाधन:</strong> ₹ ${sched.sumAssured.toLocaleString('en-IN')}</p>
-              <p style="margin: 2px 0; color: #047857; font-weight: 900; font-size: 11px;">
-                <strong>मैच्योरिटी लाभ (@8%):</strong> ₹ ${sched.maturity8.toLocaleString('en-IN')}*
+              <p style="margin: 1px 0;"><strong>${isHi ? 'मूल बीमाधन (Sum Assured)' : 'Basic Sum Assured'}:</strong> ₹ ${d.sumAssured.toLocaleString('en-IN')}</p>
+              <p style="margin: 1px 0;"><strong>${isHi ? 'कुल जमा (Total Paid)' : 'Total Deposit'}:</strong> ₹ ${d.totalInvestment.toLocaleString('en-IN')}</p>
+              <p style="margin: 1px 0; color: #047857; font-weight: 800;">
+                <strong>${isHi ? 'अनुमानित रिटर्न / बेनिफिट' : 'Est. Return / Maturity'}:</strong> ₹ ${d.regularAnnualIncome > 0 ? (Math.round(d.regularAnnualIncome).toLocaleString('en-IN') + '/Yr*') : d.estimatedMaturity.toLocaleString('en-IN')}*
               </p>
-              <p style="margin: 1px 0; color: #64748b; font-size: 8.5px;">मैच्योरिटी (@4%): ₹ ${sched.maturity4.toLocaleString('en-IN')}*</p>
             </div>
           </div>
 
-          <!-- SHORT & CLEAN 8-COLUMN HINDI TABLE -->
+          <!-- YEAR 1 TO TERM DETAILED SCHEDULE TABLE -->
           <h3 style="font-size: 10.5px; font-weight: 900; color: #002B49; margin: 0 0 5px 0; text-transform: uppercase;">
-            वर्ष 1 से ${sched.term} वर्ष तक संक्षिप्त प्रीमियम, सुरक्षा एवं रिटर्न विवरण
+            ${isHi ? `वर्ष 1 से ${d.term} वर्ष तक प्रीमियम, रिस्क कवर एवं रिटर्न चार्ट (अनुमानित)` : `Year 1 to ${d.term} Premium, Risk Cover & Cash Flow Illustration`}
           </h3>
 
-          <table style="width: 100%; border-collapse: collapse; font-size: 9px; border: 1px solid #cbd5e1; text-align: right;">
-            <thead>
-              <tr style="background: #002B49; color: #ffffff; font-weight: bold; text-align: center;">
-                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">वर्ष</th>
-                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">उम्र</th>
-                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">प्रीमियम (${sched.mode.toUpperCase()})</th>
-                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">कुल जमा</th>
-                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">नॉर्मल कवर</th>
-                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">एक्सीडेंट कवर</th>
-                <th style="padding: 4px 3px; border: 1px solid #94a3b8;">लोन पात्रता</th>
-                <th style="padding: 4px 3px; border: 1px solid #94a3b8; background: #004d80;">रिटर्न / मैच्योरिटी*</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${sched.rows.map((r, i) => {
-                const isLast = (r.year === sched.term);
-                const isBg = (i % 2 === 1);
-                return `
-                  <tr style="background: ${isLast ? '#fef3c7' : (isBg ? '#f8fafc' : '#ffffff')}; font-weight: ${isLast ? 'bold' : 'normal'};">
-                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; text-align: center;">${r.year}</td>
-                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; text-align: center;">${r.age}</td>
-                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; color: ${r.modePay > 0 ? '#0f172a' : '#94a3b8'};">
-                      ${r.modePay > 0 ? '₹ ' + r.modePay.toLocaleString('en-IN') : 'कोई नहीं (फ्री)'}
-                    </td>
-                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; font-weight: 600;">₹ ${r.cumulativePaid.toLocaleString('en-IN')}</td>
-                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; color: #0284c7;">₹ ${r.normalCover.toLocaleString('en-IN')}</td>
-                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1;">₹ ${r.accidentalCover.toLocaleString('en-IN')}</td>
-                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; color: #047857;">
-                      ${r.loanValue > 0 ? '₹ ' + r.loanValue.toLocaleString('en-IN') : '-'}
-                    </td>
-                    <td style="padding: 3.5px 3px; border: 1px solid #cbd5e1; background: ${isLast ? '#fde68a' : 'transparent'}; color: ${isLast ? '#b45309' : '#0f172a'}; font-weight: ${isLast ? '900' : 'normal'};">
-                      ${r.returnText}
-                    </td>
-                  </tr>
-                `;
-              }).join('')}
-            </tbody>
-          </table>
-
-          <!-- STATUTORY DISCLAIMER NOTES BOX (SAFELY WRITTEN AT BOTTOM) -->
-          <div style="margin-top: 8px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 6px 10px; font-size: 8px; color: #1e3a8a; line-height: 1.35;">
-            <p style="margin: 0; font-weight: bold;">⚖️ सरकारी नियम व IRDAI दिशा-निर्देश (महत्वपूर्ण नोट):</p>
-            <p style="margin: 1.5px 0 0 0;">
-              • <strong>4% दर पर बेसलाइन मैच्योरिटी:</strong> लगभग ₹ ${sched.maturity4.toLocaleString('en-IN')}* (कंजर्वेटिव सरकारी अनुमान)।
-            </p>
-            <p style="margin: 1.5px 0 0 0;">
-              • <strong>8% दर पर अनुमानित मैच्योरिटी:</strong> लगभग ₹ ${sched.maturity8.toLocaleString('en-IN')}* (घोषित एलआईसी बोनस दर एवं फाइनल एडिशनल बोनस FAB सहित)।
-            </p>
-            <p style="margin: 1.5px 0 0 0; color: #475569;">
-              • यह इलस्ट्रेशन केवल पॉलिसी की सरल समझ हेतु है। वास्तविक लाभ एलआईसी द्वारा समय-समय पर घोषित बोनस मूल्यांकन के अनुसार देय होंगे।
-            </p>
+          <div style="width: 100%; margin-bottom: 10px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 9px; text-align: right; border: 1px solid #94a3b8;">
+              <thead>
+                <tr style="background: #002B49; color: #ffffff; font-weight: bold; text-align: center;">
+                  <th style="padding: 4px 2px; border: 1px solid #94a3b8;">${isHi ? 'वर्ष' : 'Year'}</th>
+                  <th style="padding: 4px 2px; border: 1px solid #94a3b8;">${isHi ? 'उम्र' : 'Age'}</th>
+                  <th style="padding: 4px 2px; border: 1px solid #94a3b8;">${isHi ? 'प्रीमियम (सालाना)' : 'Premium (Annual)'}</th>
+                  <th style="padding: 4px 2px; border: 1px solid #94a3b8;">${isHi ? 'कुल जमा' : 'Total Paid'}</th>
+                  <th style="padding: 4px 2px; border: 1px solid #94a3b8;">${isHi ? 'नॉर्मल कवर' : 'Normal Cover'}</th>
+                  <th style="padding: 4px 2px; border: 1px solid #94a3b8;">${isHi ? 'एक्सीडेंट कवर' : 'Accident Cover'}</th>
+                  <th style="padding: 4px 2px; border: 1px solid #94a3b8;">${isHi ? 'लोन पात्रता' : 'Loan Value'}</th>
+                  <th style="padding: 4px 2px; border: 1px solid #94a3b8; background: #003e6b;">${isHi ? 'रिटर्न / इनफ्लो*' : 'Inflow*'}</th>
+                  <th style="padding: 4px 2px; border: 1px solid #94a3b8;">IRDAI @4%</th>
+                  <th style="padding: 4px 2px; border: 1px solid #94a3b8;">IRDAI @8%</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${d.yearRows.map((r, idx) => {
+                  const isBg = (idx % 2 === 1);
+                  const isLast = (r.year === d.term);
+                  return `
+                    <tr style="background: ${isLast ? '#fef3c7' : (isBg ? '#f8fafc' : '#ffffff')}; font-weight: ${isLast ? '900' : 'normal'};">
+                      <td style="padding: 3px 2px; border: 1px solid #cbd5e1; text-align: center;">${r.year}</td>
+                      <td style="padding: 3px 2px; border: 1px solid #cbd5e1; text-align: center;">${r.age}</td>
+                      <td style="padding: 3px 2px; border: 1px solid #cbd5e1; color: ${r.premium > 0 ? '#0f172a' : '#94a3b8'};">
+                        ${r.premium > 0 ? '₹ ' + r.premium.toLocaleString('en-IN') : 'NIL'}
+                      </td>
+                      <td style="padding: 3px 2px; border: 1px solid #cbd5e1; font-weight: 700;">₹ ${r.cumulativePaid.toLocaleString('en-IN')}</td>
+                      <td style="padding: 3px 2px; border: 1px solid #cbd5e1;">₹ ${r.normalCover.toLocaleString('en-IN')}</td>
+                      <td style="padding: 3px 2px; border: 1px solid #cbd5e1;">₹ ${r.accidentalCover.toLocaleString('en-IN')}</td>
+                      <td style="padding: 3px 2px; border: 1px solid #cbd5e1; color: ${r.loanValue > 0 ? '#0369a1' : '#94a3b8'};">
+                        ${r.loanValue > 0 ? '₹ ' + r.loanValue.toLocaleString('en-IN') : '-'}
+                      </td>
+                      <td style="padding: 3px 2px; border: 1px solid #94a3b8; text-align: right; background: ${isLast ? '#fde68a' : (r.cashInflow > 0 ? '#dcfce7' : 'transparent')}; color: ${r.cashInflow > 0 ? '#166534' : '#64748b'}; font-weight: ${r.cashInflow > 0 ? '900' : 'normal'};">
+                        ${r.cashInflow > 0 ? '₹ ' + r.cashInflow.toLocaleString('en-IN') : '-'}
+                      </td>
+                      <td style="padding: 3px 2px; border: 1px solid #cbd5e1; color: #475569;">₹ ${r.irdai4Return.toLocaleString('en-IN')}</td>
+                      <td style="padding: 3px 2px; border: 1px solid #cbd5e1; font-weight: bold; color: #002B49;">₹ ${r.irdai8Return.toLocaleString('en-IN')}</td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
           </div>
 
-          <!-- FOOTER AGENT STRIP -->
-          <div style="background: #002B49; color: #ffffff; padding: 6px 12px; border-radius: 6px; margin-top: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 8.5px;">
-            <div>
-              <p style="margin: 0; font-weight: 900; color: #FFAE00;">मनोहर सिंह (अधिकृत एलआईसी बीमा सलाहकार)</p>
-              <p style="margin: 1px 0 0 0;">बेसमेंट हॉल MR कॉम्प्लेक्स, पुलिस चौकी के पास, मालवाड़ा, रानीवाड़ा</p>
-            </div>
-            <div style="text-align: right;">
-              <p style="margin: 0; font-weight: 900;">कॉल / व्हाट्सएप: 8440096343</p>
-              <p style="margin: 1px 0 0 0; color: #cbd5e1;">ऑनलाइन e-KYC एवं घर बैठे पॉलिसी सुविधा</p>
+          <!-- BOTTOM AGENT CONTACT & STATUTORY FOOTER -->
+          <div style="background: #002B49; color: #ffffff; border-radius: 6px; padding: 8px 12px; border-left: 4px solid #FFAE00; margin-top: 6px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;">
+              <div>
+                <h4 style="margin: 0; font-size: 11px; font-weight: 900; color: #FFAE00;">
+                  ${isHi ? 'बीमा परामर्श एवं सहायता हेतु संपर्क करें' : 'FOR INSURANCE ASSISTANCE & ENQUIRY'}
+                </h4>
+                <p style="margin: 1px 0 0 0; font-size: 9.5px; color: #e2e8f0;">
+                  Authorized Insurance Agent: <strong>MANOHER SINGH</strong> | Mo: <strong>8440096343</strong>
+                </p>
+                <p style="margin: 1px 0 0 0; font-size: 9px; color: #cbd5e1;">
+                  BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039
+                </p>
+              </div>
             </div>
           </div>
+
+          <p style="font-size: 7.5px; color: #64748b; text-align: center; margin: 6px 0 0 0; line-height: 1.2;">
+            *Statutory Disclaimer: This illustration is prepared by an authorized insurance agent for guidance. Non-guaranteed projection values (at 4% & 8%) conform to standard IRDAI guidelines and are subject to future bonus declarations[cite: 9].
+          </p>
 
         </div>
       `;
     }
 
-    function shareOnWhatsApp() {
-      if (!activeModalScheme) return;
-      const age = Number(document.getElementById('calcAgeInput').value) || 30;
-      const customTerm = Number(document.getElementById('calcTerm').value) || 25;
-      const mode = document.getElementById('calcMode').value;
-      const modeAmount = Number(document.getElementById('calcBudgetInput').value) || 5000;
-      const sched = calculatePolicyShortSchedule(activeModalScheme, age, modeAmount, mode, customTerm);
-      const modeText = getModeHindiText(mode);
+    function triggerBrowserPrint() {
+      window.print();
+    }
 
+    function shareQuoteOnWhatsApp() {
+      if (!activeQuotationData) return;
+      const d = activeQuotationData;
+      const custName = document.getElementById('custName').value || 'Customer';
       const text = encodeURIComponent(
-        `*एलआईसी पॉलिसी बेनिफिट सारांश*\n\n` +
-        `*योजना:* ${sched.scheme.name}\n` +
-        `*उम्र:* ${sched.age} वर्ष | *अवधि:* ${sched.term} वर्ष (प्रीमियम: ${sched.ppt} वर्ष)\n` +
-        `*प्रीमियम:* ₹${sched.modeAmount.toLocaleString('en-IN')} ${modeText}\n` +
-        `*कुल जमा राशि:* ₹${sched.totalPaid.toLocaleString('en-IN')}\n` +
-        `*मूल बीमाधन (Sum Assured):* ₹${sched.sumAssured.toLocaleString('en-IN')}\n` +
-        `*अनुमानित मैच्योरिटी (@8%):* ₹${sched.maturity8.toLocaleString('en-IN')}*\n\n` +
-        `*सलाहकार:* मनोहर सिंह (मो: 8440096343)\n` +
-        `*कार्यालय:* बेसमेंट हॉल MR कॉम्प्लेक्स, मालवाड़ा (रानीवाड़ा)\n` +
-        `ऑनलाइन देखें: https://kdsinsurance.in/`
+        `*Policy Illustration Summary*\n\n` +
+        `*Customer:* ${custName} (Age: ${d.userAge} Yrs)\n` +
+        `*Plan:* ${d.scheme.name}\n` +
+        `*Term / PPT:* ${d.term} Yrs / Pay for ${d.ppt} Yrs\n` +
+        `*Annual Premium:* ₹${d.annualBudget.toLocaleString('en-IN')}\n` +
+        `*Total Investment:* ₹${d.totalInvestment.toLocaleString('en-IN')}\n` +
+        `*Est. Maturity / Benefit:* ₹${d.regularAnnualIncome > 0 ? (Math.round(d.regularAnnualIncome).toLocaleString('en-IN') + '/Yr*') : d.estimatedMaturity.toLocaleString('en-IN')}*\n` +
+        `*Normal Life Cover:* ₹${d.sumAssured.toLocaleString('en-IN')}\n\n` +
+        `*Authorized Agent:* MANOHER SINGH (Mo: 8440096343)\n` +
+        `*Office:* BASEMENT HALL MR COMPLEX, near POLICE CHOWKI, Malwara, Rajasthan 343039\n` +
+        `_(Subject to policy terms & IRDAI projection guidelines)_`
       );
       window.open(`https://wa.me/918440096343?text=${text}`, '_blank');
+    }
+
+    function openLeadModal() {
+      document.getElementById('leadModal').classList.remove('hidden');
+    }
+
+    function closeLeadModal() {
+      document.getElementById('leadModal').classList.add('hidden');
+    }
+
+    function handleLeadSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('leadName').value;
+      closeLeadModal();
+      showToast(`Dhanyawad ${name}! Manohar Singh ji 8440096343 se aapko jaldi call karenge.`);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      const text = document.getElementById('toastMessage');
+      text.innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 4000);
     }
   </script>
 
