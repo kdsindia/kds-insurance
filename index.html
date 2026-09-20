@@ -149,7 +149,7 @@
     </div>
   </div>
 
-  <!-- Main Navbar -->
+  <!-- Main Navbar (With Exact Proportional Banner Logo) -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
@@ -158,6 +158,7 @@
         <a href="#" class="flex items-center gap-3 py-1 group">
           <img src="logo.png" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" class="h-12 sm:h-14 w-auto object-contain rounded-lg" alt="KDS INSURANCE SEVA KENDRA" />
           
+          <!-- Fallback text logo if image is uploading -->
           <div id="logoFallback" class="hidden items-center gap-2">
             <div class="w-10 h-10 rounded-xl bg-brand-navy flex items-center justify-center text-brand-gold font-black text-xl">KDS</div>
             <div>
@@ -205,7 +206,7 @@
           Apne Budget & Umar ke Anusaar Sahi <span class="text-brand-gold">Insurance Policy</span> Samjhein
         </h1>
         <p class="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl">
-          Jaaniye: <strong>Saalana Premium</strong>, <strong>Normal & Accidental Life Cover</strong>, <strong>Loan Suvidha</strong>, aur policy terms ke mutabiq anumanit returns (IRDAI prescribed 4% & 8% standard projection rates ke sath)[cite: 11].
+          Jaaniye: <strong>Saalana Premium</strong>, <strong>Normal & Accidental Life Cover</strong>, <strong>Loan Suvidha</strong>, aur policy terms ke mutabiq anumanit returns (IRDAI prescribed 4% & 8% standard projection rates ke sath).
         </p>
 
         <!-- Address Pill -->
@@ -227,7 +228,7 @@
               <h3 class="font-black text-lg text-brand-navy flex items-center gap-2">
                 <i class="fa-solid fa-bolt text-brand-gold"></i> Quick Plan Recommendation
               </h3>
-              <p class="text-xs text-slate-500">Umar, term aur budget ke anusaar filter karein</p>
+              <p class="text-xs text-slate-500">Umar aur budget ke anusaar filter karein</p>
             </div>
             <span class="text-[11px] bg-blue-100 text-brand-navy px-2 py-0.5 rounded font-black">Plan Details</span>
           </div>
@@ -235,30 +236,30 @@
           <div class="mt-4 space-y-3.5">
             <div>
               <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
-                <span>Aapki Umar (Age - No Limit):</span>
+                <span>Aapki Umar (Age):</span>
                 <span id="quickAgeDisplay" class="text-brand-lightBlue font-black">30 Varsh</span>
               </div>
-              <input type="number" id="quickAgeInput" min="0" max="100" value="30" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800" oninput="syncAgeFromHero(this.value)" />
+              <input type="range" id="quickAgeInput" min="0" max="60" value="30" class="w-full accent-brand-gold cursor-pointer" oninput="syncAgeFromHero(this.value)" />
             </div>
 
             <div>
               <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
                 <span>Aapka Budget (Premium):</span>
-                <span id="quickBudgetDisplay" class="text-brand-lightBlue font-black">₹ 5,000 / Month</span>
+                <span id="quickBudgetDisplay" class="text-brand-lightBlue font-black">₹ 50,000 / Year</span>
               </div>
-              <input type="number" id="quickBudgetInput" min="500" max="500000" step="500" value="5000" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800" oninput="syncBudgetFromHero(this.value)" />
+              <input type="range" id="quickBudgetInput" min="5000" max="250000" step="5000" value="50000" class="w-full accent-brand-gold cursor-pointer" oninput="syncBudgetFromHero(this.value)" />
             </div>
 
-            <!-- DYNAMIC SEPARATE TERM AND PPT (NO 25-YEAR LIMIT) -->
-            <div class="grid grid-cols-2 gap-2">
-              <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Policy Term (Saal):</label>
-                <input type="number" id="quickTermInput" min="5" max="100" value="25" placeholder="Term (e.g. 25, 30, 35)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800" oninput="syncTermFromHero(this.value)" />
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Paying Term / PPT:</label>
-                <input type="number" id="quickPptInput" min="1" max="100" value="16" placeholder="PPT (e.g. 16, 20, 25)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800" oninput="syncPptFromHero(this.value)" />
-              </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Aapka Mukhya Lakshya (Goal):</label>
+              <select id="quickGoalSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-brand-lightBlue focus:outline-none">
+                <option value="all">Sabhi Schemes Dekhein (All Plans)</option>
+                <option value="savings" selected>Guaranteed Savings + High Bonus (Jeevan Labh)</option>
+                <option value="lifetime">Annual Survival Benefit / 8% BSA (Jeevan Umang)</option>
+                <option value="guaranteed10">Regular Income Benefit 10% (Jeevan Utsav)</option>
+                <option value="double">Zindagi ke Sath Bhi, Baad Bhi (New Jeevan Anand)</option>
+                <option value="child">Bachhe ki Padhai & Shaadi (Children Money Back)</option>
+              </select>
             </div>
 
             <button onclick="scrollToAndFilterFromHero()" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 rounded-xl text-sm transition shadow-md flex items-center justify-center gap-2">
@@ -283,7 +284,7 @@
               <span class="text-xs text-sky-200">Based on IRDAI-prescribed 4% & 8% projection rates</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-black mt-2">Apni Details Bharein & Plan Customize Karein</h2>
-            <p class="text-slate-200 text-xs sm:text-sm mt-1">Policy Term aur PPT dono bina kisi limit ke (25 saal se zyada bhi) set kar sakte hain[cite: 11].</p>
+            <p class="text-slate-200 text-xs sm:text-sm mt-1">Aapki details hamare office dwara enquiry aur customer assistance ke liye securely use ki jati hain.</p>
           </div>
           <button onclick="resetCalculatorForm()" class="self-start sm:self-center text-xs bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-1.5 rounded-xl text-white font-semibold transition flex items-center gap-1.5">
             <i class="fa-solid fa-arrows-rotate"></i> Reset
@@ -311,12 +312,13 @@
           <div>
             <div class="flex justify-between items-center mb-1.5">
               <label class="block text-xs font-black text-slate-700 uppercase tracking-wider">
-                <i class="fa-solid fa-cake-candles text-brand-lightBlue mr-1"></i> Age (Umar - No Limit)
+                <i class="fa-solid fa-cake-candles text-brand-lightBlue mr-1"></i> Age (Umar)
               </label>
               <span id="selectedAgeBadge" class="bg-blue-100 text-brand-navy text-xs font-black px-2.5 py-0.5 rounded-md">30 Saal</span>
             </div>
             <div class="flex items-center gap-3">
-              <input type="number" id="calcAgeInput" min="0" max="100" value="30" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-center text-sm font-black text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="updateAgeInput(this.value)" />
+              <input type="number" id="calcAgeInput" min="0" max="65" value="30" class="w-20 bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-center text-sm font-black text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="updateAgeSlider(this.value)" />
+              <input type="range" id="calcAgeSlider" min="0" max="65" value="30" class="flex-grow accent-brand-gold cursor-pointer" oninput="updateAgeInput(this.value)" />
             </div>
           </div>
 
@@ -326,9 +328,10 @@
             </label>
             <select id="calcCategory" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none transition" onchange="applyPolicyFilters()">
               <option value="all">🌟 All Categories (Sabhi)</option>
-              <option value="endowment" selected>💰 Savings & Endowment Plans</option>
+              <option value="endowment">💰 Savings & Endowment Plans</option>
               <option value="whole_life">♾️ Whole Life / Regular Income Plans</option>
               <option value="children">🎓 Children Education & Marriage</option>
+              <option value="term">🛡️ Pure Risk Cover Plans</option>
             </select>
           </div>
 
@@ -337,10 +340,10 @@
               <i class="fa-regular fa-clock text-brand-lightBlue mr-1"></i> Premium Mode (Payment)
             </label>
             <select id="calcMode" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none transition" onchange="calculateAmounts()">
-              <option value="monthly" selected>Monthly (Masik)</option>
-              <option value="quarterly">Quarterly (Traimasik)</option>
+              <option value="yearly" selected>Yearly (Saalana - Best Rebate)</option>
               <option value="half_yearly">Half-Yearly (Chhamahi)</option>
-              <option value="yearly">Yearly (Saalana - Best Rebate)</option>
+              <option value="quarterly">Quarterly (Traimasik)</option>
+              <option value="monthly">Monthly (Masik)</option>
             </select>
           </div>
 
@@ -349,32 +352,31 @@
               <label class="block text-xs font-black text-slate-700 uppercase tracking-wider">
                 <i class="fa-solid fa-indian-rupee-sign text-brand-lightBlue mr-1"></i> Premium Budget (₹)
               </label>
-              <span id="selectedBudgetBadge" class="bg-amber-100 text-amber-900 text-xs font-black px-2 py-0.5 rounded-md">₹ 5,000 / Month</span>
+              <span id="selectedBudgetBadge" class="bg-amber-100 text-amber-900 text-xs font-black px-2 py-0.5 rounded-md">₹ 50,000 / Yr</span>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-sm font-black text-slate-500">₹</span>
-              <input type="number" id="calcBudgetInput" min="500" step="500" value="5000" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-black text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="updateBudgetInput(this.value)" />
+              <input type="number" id="calcBudgetInput" min="5000" step="1000" value="50000" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-black text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="updateBudgetSlider(this.value)" />
+            </div>
+            <div class="mt-2">
+              <input type="range" id="calcBudgetSlider" min="5000" max="250000" step="5000" value="50000" class="w-full accent-brand-gold cursor-pointer" oninput="updateBudgetInput(this.value)" />
             </div>
           </div>
 
-          <!-- SEPARATE POLICY TERM (OPEN NUMBER INPUT) -->
           <div>
             <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
-              <i class="fa-solid fa-calendar-check text-brand-lightBlue mr-1"></i> Policy Term (Kitne Saal?)
+              <i class="fa-solid fa-calendar-check text-brand-lightBlue mr-1"></i> Term & Paying Term (PPT)
             </label>
-            <input type="number" id="calcTerm" min="5" max="100" value="25" placeholder="e.g. 25, 30, 35, 40" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none transition" oninput="onTermChange(this.value)" />
+            <select id="calcTerm" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none transition" onchange="applyPolicyFilters()">
+              <option value="25" selected>25 Saal Term (Pay for 16 or 20 Yrs)</option>
+              <option value="21">21 Saal Term (Pay for 15 or 21 Yrs)</option>
+              <option value="16">16 Saal Term (Pay for 10 or 16 Yrs)</option>
+              <option value="20">20 Saal Term (Pay for 15 or 20 Yrs)</option>
+            </select>
           </div>
 
-          <!-- SEPARATE PREMIUM PAYING TERM (OPEN NUMBER INPUT) -->
-          <div>
-            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
-              <i class="fa-solid fa-wallet text-brand-lightBlue mr-1"></i> Premium Paying Term / PPT (Kitne Saal Bharna?)
-            </label>
-            <input type="number" id="calcPpt" min="1" max="100" value="16" placeholder="e.g. 10, 16, 20, 25, 30" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-lightBlue focus:outline-none transition" oninput="onPptChange(this.value)" />
-          </div>
-
-          <div class="lg:col-span-4 flex justify-end">
-            <button type="button" onclick="applyPolicyFilters()" class="w-full sm:w-auto bg-brand-gold hover:bg-amber-400 text-brand-dark font-black py-3.5 px-8 rounded-xl text-base shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2">
+          <div class="flex items-end">
+            <button type="button" onclick="applyPolicyFilters()" class="w-full bg-brand-gold hover:bg-amber-400 text-brand-dark font-black py-3.5 px-4 rounded-xl text-base shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2">
               <i class="fa-solid fa-calculator"></i>
               <span>Calculate & Compare (<span id="btnMatchCount">5</span>)</span>
             </button>
@@ -389,16 +391,11 @@
             </div>
             <div>
               <p class="font-extrabold text-slate-800">Current Calculation Snapshot:</p>
-              <p class="text-slate-500">
-                Customer: <strong id="summaryCustomerName" class="text-slate-800">Ramesh Kumar</strong> 
-                (Age: <span id="summaryAge" class="font-bold text-brand-navy">30</span> yrs) | 
-                Selected Budget: <strong id="summaryBudget">₹ 5,000 / Month</strong>
-                <span id="summaryAnnualEquivalent" class="text-slate-500 font-normal">(Annual: ₹60,000)</span>
-              </p>
+              <p class="text-slate-500">Customer: <strong id="summaryCustomerName" class="text-slate-800">Ramesh Kumar</strong> (Age: <span id="summaryAge" class="font-bold text-brand-navy">30</span> yrs) | Budget: <strong id="summaryBudget">₹ 50,000 Yearly</strong></p>
             </div>
           </div>
           <div class="flex items-center gap-2 text-slate-600 font-bold">
-            <span class="text-blue-900 bg-blue-50 px-2.5 py-1 rounded border border-blue-200"><i class="fa-solid fa-circle-info mr-1"></i> Tax benefits subject to prevailing IT laws u/s 80C & 10(10D)[cite: 11]</span>
+            <span class="text-blue-900 bg-blue-50 px-2.5 py-1 rounded border border-blue-200"><i class="fa-solid fa-circle-info mr-1"></i> Tax benefits subject to prevailing IT laws u/s 80C & 10(10D)</span>
           </div>
         </div>
       </div>
@@ -412,7 +409,7 @@
             <h3 class="text-2xl font-black text-brand-navy tracking-tight">Available Plans Matching Your Profile</h3>
             <span id="resultsCountBadge" class="bg-brand-navy text-white text-xs font-bold px-2.5 py-1 rounded-full">5 Schemes Found</span>
           </div>
-          <p class="text-xs text-slate-500 mt-1">Kisi bhi plan ka full year-by-year chart dekhne ke liye <strong>"Preview & Print"</strong> par click karein[cite: 11].</p>
+          <p class="text-xs text-slate-500 mt-1">Kisi bhi plan ka full year-by-year chart dekhne ke liye <strong>"Preview & Print"</strong> par click karein.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2 text-xs font-bold">
@@ -431,7 +428,7 @@
         <div>
           <span class="text-xs font-bold text-brand-lightBlue uppercase tracking-wider bg-blue-50 px-2.5 py-1 rounded">Side-by-Side Comparison</span>
           <h3 class="text-2xl font-black text-brand-navy mt-1">Schemes Compare Karein (Tulna Matrix)</h3>
-          <p class="text-xs text-slate-500">2 ya 3 plans aamne-saamne rakh kar unka premium aur return compare karein[cite: 11].</p>
+          <p class="text-xs text-slate-500">2 ya 3 plans aamne-saamne rakh kar unka premium aur return compare karein.</p>
         </div>
         <div class="flex items-center gap-3">
           <button onclick="clearCompareSelection()" class="text-xs font-bold text-rose-600 hover:text-rose-700 transition">
@@ -521,23 +518,24 @@
         </div>
       </div>
 
+      <!-- DISCLAIMER -->
       <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700/80 text-[11px] text-slate-300 leading-relaxed">
         <p class="font-bold text-amber-400 mb-1">REGULATORY & STATUTORY DISCLAIMER:</p>
         <p>
-          This is a personal informational customer portal operated by <strong>MANOHER SINGH</strong>, an authorized individual insurance agent[cite: 11]. This website is <strong>NOT</strong> an official insurer website[cite: 11].
+          This is a personal informational customer portal operated by <strong>MANOHER SINGH</strong>, an authorized individual insurance agent. This website is <strong>NOT</strong> an official insurer website.
         </p>
         <p class="mt-1">
-          Policy information, benefits, premiums, surrender values, bonuses, and eligibility are governed strictly by the respective official policy contract documents and applicable IRDAI regulations[cite: 11]. Illustrations displayed at 4% and 8% are standard regulatory projections and do not constitute a guaranteed return[cite: 11]. Tax benefits are subject to prevailing provisions of the Income Tax Act (including Section 80C and Section 10(10D)) as amended from time to time[cite: 11].
+          Policy information, benefits, premiums, surrender values, bonuses, and eligibility are governed strictly by the respective official policy contract documents and applicable IRDAI regulations. Illustrations displayed at 4% and 8% are standard regulatory projections and do not constitute a guaranteed return. Tax benefits are subject to prevailing provisions of the Income Tax Act (including Section 80C and Section 10(10D)) as amended from time to time.
         </p>
       </div>
 
       <div class="text-center text-slate-500 text-[11px] pt-2">
-        &copy; 2026 Manoher Singh (Authorized Insurance Agent) • All Rights Reserved[cite: 11].
+        &copy; 2026 Manoher Singh (Authorized Insurance Agent) • All Rights Reserved.
       </div>
     </div>
   </footer>
 
-  <!-- QUOTATION & BENEFIT MODAL (ORIGINAL PURANI TABLE WITH UNRESTRICTED TERMS & LOGO) -->
+  <!-- QUOTATION & BENEFIT MODAL (PERFECT A4 PRINTING WITH LOGO) -->
   <div id="quotationModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[96vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
       
@@ -552,7 +550,7 @@
               <h3 id="modalHeaderTitle" class="text-lg font-black text-white">Policy Benefit Illustration Preview</h3>
               <span id="pdfLangIndicator" class="bg-blue-900/80 text-brand-gold border border-brand-gold/40 text-[10px] font-bold px-2 py-0.5 rounded">HINDI</span>
             </div>
-            <p id="modalSubTitle" class="text-xs text-slate-300">Policy Benefit Illustration (Clean A4 Print Format)[cite: 11]</p>
+            <p class="text-xs text-slate-300">1 to 25 Saal Benefit Illustration (Clean A4 Print Format)</p>
           </div>
         </div>
 
@@ -577,7 +575,7 @@
       <div class="bg-white p-4 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-3 no-print">
         <div class="text-xs text-slate-500 flex items-center gap-2">
           <i class="fa-solid fa-circle-info text-blue-800"></i>
-          <span>Subject to policy terms & IRDAI standard guidelines[cite: 11]</span>
+          <span>Subject to policy terms & IRDAI standard guidelines</span>
         </div>
 
         <div class="flex items-center gap-3 w-full sm:w-auto">
@@ -602,7 +600,7 @@
       <div class="flex justify-between items-center pb-3 border-b border-slate-100">
         <div>
           <h3 class="font-black text-lg text-brand-navy">Insurance Policy Information & Assistance</h3>
-          <p class="text-xs text-slate-500">Manoher Singh (Authorized Agent) Call Karenge[cite: 11]</p>
+          <p class="text-xs text-slate-500">Manoher Singh (Authorized Agent) Call Karenge</p>
         </div>
         <button onclick="closeLeadModal()" class="text-slate-400 hover:text-slate-600">
           <i class="fa-solid fa-xmark text-lg"></i>
@@ -647,109 +645,96 @@
   </div>
 
   <script>
-    // ACTIVE OFFICIAL LIC SCHEMES WITH UNRESTRICTED TERMS SUPPORT
     const officialLicSchemes = [
       {
         id: 'jeevan_labh',
-        name: 'Jeevan Labh Plan (Table 936)',
-        nameHi: 'जीवन लाभ योजना (टेबल 936)',
+        name: 'Jeevan Labh Plan',
+        nameHi: 'जीवन लाभ योजना',
         tagline: 'Limited Premium Paying, High Savings & Bonus Potential',
         taglineHi: 'सीमित प्रीमियम अवधि, बचत एवं बोनस लाभ',
         category: 'endowment',
         minAge: 8,
-        maxAge: 70,
+        maxAge: 59,
+        availableTerms: [16, 21, 25],
         defaultTerm: 25,
         defaultPpt: 16,
-        getPpt: function(term) {
-          const t = Number(term);
-          if (t <= 16) return 10;
-          if (t <= 21) return 15;
-          if (t <= 25) return 16;
-          return Math.max(16, t - 9); // Beyond 25 years support
-        },
+        getPpt: (term) => term === 25 ? 16 : (term === 21 ? 15 : 10),
         minSumAssured: 200000,
         expectedReturnRate: 2.35,
-        description: 'Lokpriya limited premium paying endowment plan. Chune huye term par kam saal premium bharna hota hai[cite: 11].',
-        descriptionHi: 'सीमित प्रीमियम योजना। चुने हुए टर्म पर कम साल प्रीमियम देना होता है और परिपक्वता पर पूरा रिटर्न मिलता है[cite: 11]।'
+        description: 'Lokpriya limited premium paying endowment plan. 25 saal ke term par 16 saal premium bharna hota hai. Simple Reversionary Bonus aur Final Additional Bonus milta hai.',
+        descriptionHi: 'सीमित प्रीमियम योजना। 25 वर्ष की पॉलिसी में 16 वर्ष प्रीमियम देना होता है और परिपक्वता पर बोनस सहित रिटर्न मिलता है।'
       },
       {
         id: 'jeevan_umang',
-        name: 'Jeevan Umang Plan (Table 945)',
-        nameHi: 'जीवन उमंग योजना (टेबल 945)',
+        name: 'Jeevan Umang Plan',
+        nameHi: 'जीवन उमंग योजना',
         tagline: 'Annual Survival Benefit: 8% of Basic Sum Assured, as per policy terms',
         taglineHi: 'वार्षिक सर्वाइवल बेनिफिट: बेसिक सम एश्योर्ड का 8% (शर्तों के अधीन)',
         category: 'whole_life',
         minAge: 0,
-        maxAge: 70,
+        maxAge: 55,
+        availableTerms: [15, 20, 25],
         defaultTerm: 25,
         defaultPpt: 20,
-        getPpt: function(term) {
-          const t = Number(term);
-          return Math.max(15, t - 5);
-        },
+        getPpt: (term) => term === 25 ? 20 : (term === 20 ? 15 : 15),
         minSumAssured: 200000,
         expectedReturnRate: 2.85,
-        description: 'Premium paying term ke baad se Basic Sum Assured ka 8% har saal Annual Survival Benefit ke roop me milta hai[cite: 11].',
-        descriptionHi: 'प्रीमियम अवधि के बाद बेसिक सम एश्योर्ड का 8% वार्षिक सर्वाइवल बेनिफिट के रूप में मिलता है[cite: 11]।'
+        description: 'Premium paying term ke baad se Basic Sum Assured ka 8% har saal Annual Survival Benefit ke roop me milta hai, sath hi 100 saal tak life cover bana rehta hai.',
+        descriptionHi: 'प्रीमियम अवधि के बाद बेसिक सम एश्योर्ड का 8% वार्षिक सर्वाइवल बेनिफिट के रूप में मिलता है और 100 वर्ष की आयु तक रिस्क कवर रहता है।'
       },
       {
         id: 'jeevan_utsav',
-        name: 'Jeevan Utsav Plan (Table 871)',
-        nameHi: 'जीवन उत्सव योजना (टेबल 871)',
+        name: 'Jeevan Utsav Plan',
+        nameHi: 'जीवन उत्सव योजना',
         tagline: 'Regular / Flexi Income Benefit: 10% of BSA as per policy terms',
         taglineHi: 'रेगुलर / फ्लेक्सी इनकम बेनिफिट: 10% सम एश्योर्ड (शर्तों के अधीन)',
         category: 'whole_life',
         minAge: 0,
-        maxAge: 75,
-        defaultTerm: 25,
+        maxAge: 65,
+        availableTerms: [16],
+        defaultTerm: 16,
         defaultPpt: 10,
-        getPpt: function(term) {
-          const t = Number(term);
-          return Math.min(16, Math.max(5, t - 5));
-        },
+        getPpt: () => 10,
         minSumAssured: 500000,
         expectedReturnRate: 2.75,
-        description: 'Non-linked, guaranteed addition plan. Premium poora hone ke baad terms ke mutabiq 10% Regular Income Benefit milta hai[cite: 11].',
-        descriptionHi: 'नॉन-लिंक्ड गारंटीड एडिशन प्लान। प्रीमियम के बाद 10% रेगुलर इनकम बेनिफिट का विकल्प[cite: 11]।'
+        description: 'Non-linked, guaranteed addition plan. Premium avadhi poori hone ke baad terms ke mutabiq 10% Regular Income Benefit milta hai.',
+        descriptionHi: 'नॉन-लिंक्ड गारंटीड एडिशन प्लान। प्रीमियम अवधि के पश्चात नियम अनुसार 10% रेगुलर इनकम बेनिफिट का विकल्प।'
       },
       {
         id: 'jeevan_anand',
-        name: 'New Jeevan Anand Plan (Table 915)',
-        nameHi: 'न्यू जीवन आनंद योजना (टेबल 915)',
+        name: 'New Jeevan Anand Plan',
+        nameHi: 'न्यू जीवन आनंद योजना',
         tagline: 'Savings & Lifelong Protection Cover (Dual Benefit)',
         taglineHi: 'बचत एवं आजीवन सुरक्षा कवर (डबल बेनिफिट)',
         category: 'endowment',
         minAge: 18,
-        maxAge: 65,
+        maxAge: 50,
+        availableTerms: [15, 21, 25],
         defaultTerm: 25,
         defaultPpt: 25,
-        getPpt: function(term) {
-          return Number(term) || 25;
-        },
+        getPpt: (term) => term,
         minSumAssured: 100000,
         expectedReturnRate: 2.10,
-        description: 'Maturity par full sum assured + bonus mil jata hai aur uske baad bhi jeevan bhar basic life cover rehta hai[cite: 11].',
-        descriptionHi: 'परिपक्वता पर सम एश्योर्ड व बोनस मिलता है एवं उसके पश्चात भी आजीवन लाइफ कवर बना रहता है[cite: 11]।'
+        description: 'Maturity par full sum assured + bonus mil jata hai aur uske baad bhi jeevan bhar basic life cover rehta hai.',
+        descriptionHi: 'परिपक्वता पर सम एश्योर्ड व बोनस मिलता है एवं उसके पश्चात भी आजीवन लाइफ कवर बना रहता है।'
       },
       {
         id: 'child_money_back',
-        name: 'Children Money Back Plan (Table 932)',
-        nameHi: 'चिल्ड्रन मनी बैक योजना (टेबल 932)',
+        name: 'Children Money Back Plan',
+        nameHi: 'चिल्ड्रन मनी बैक योजना',
         tagline: 'Child Education & Marriage - Periodic Survival Payouts',
         taglineHi: 'बच्चे की उच्च शिक्षा और विवाह हेतु नियत अवधि पर सर्वाइवल बेनिफिट',
         category: 'children',
         minAge: 0,
-        maxAge: 15,
+        maxAge: 12,
+        availableTerms: [25],
         defaultTerm: 25,
         defaultPpt: 20,
-        getPpt: function(term) {
-          const t = Number(term);
-          return Math.max(10, t - 5);
-        },
+        getPpt: () => 20,
         minSumAssured: 100000,
         expectedReturnRate: 2.05,
-        description: 'Bachhe ki padhai aur career ke liye nishchit samay par money back return[cite: 11].',
-        descriptionHi: 'बच्चे की उच्च शिक्षा और करियर हेतु समय-समय पर मनी बैक रिटर्न[cite: 11]।'
+        description: 'Bachhe ki 18, 20, 22 saal ki umar par 20-20% Money Back aur 25 saal par 40% + Bonus as per terms.',
+        descriptionHi: '18, 20 एवं 22 वर्ष की आयु पर 20-20% सर्वाइवल बेनिफिट और 25वें वर्ष बोनस सहित शेष भुगतान।'
       }
     ];
 
@@ -768,70 +753,57 @@
     function syncHeroInputs() {
       const age = document.getElementById('quickAgeInput').value;
       const budget = document.getElementById('quickBudgetInput').value;
-      const mode = document.getElementById('calcMode').value;
-      const modeSuffix = mode === 'monthly' ? '/ Month' : (mode === 'quarterly' ? '/ Quarter' : (mode === 'half_yearly' ? '/ 6-Mo' : '/ Year'));
-
       document.getElementById('quickAgeDisplay').innerText = `${age} Varsh`;
-      document.getElementById('quickBudgetDisplay').innerText = `₹ ${Number(budget).toLocaleString('en-IN')} ${modeSuffix}`;
-      document.getElementById('selectedBudgetBadge').innerText = `₹ ${Number(budget).toLocaleString('en-IN')} ${modeSuffix}`;
-      document.getElementById('summaryBudget').innerText = `₹ ${Number(budget).toLocaleString('en-IN')} ${modeSuffix}`;
+      document.getElementById('quickBudgetDisplay').innerText = `₹ ${Number(budget).toLocaleString('en-IN')} / Year`;
     }
 
     function syncAgeFromHero(val) {
       document.getElementById('quickAgeDisplay').innerText = `${val} Varsh`;
       document.getElementById('calcAgeInput').value = val;
+      document.getElementById('calcAgeSlider').value = val;
       document.getElementById('selectedAgeBadge').innerText = `${val} Saal`;
-      document.getElementById('summaryAge').innerText = val;
-      applyPolicyFilters();
     }
 
     function syncBudgetFromHero(val) {
+      document.getElementById('quickBudgetDisplay').innerText = `₹ ${Number(val).toLocaleString('en-IN')} / Year`;
       document.getElementById('calcBudgetInput').value = val;
-      syncHeroInputs();
-      applyPolicyFilters();
+      document.getElementById('calcBudgetSlider').value = val;
+      document.getElementById('selectedBudgetBadge').innerText = `₹ ${Number(val).toLocaleString('en-IN')} / Yr`;
     }
 
-    function syncTermFromHero(val) {
-      document.getElementById('calcTerm').value = val;
-      applyPolicyFilters();
-    }
-
-    function syncPptFromHero(val) {
-      document.getElementById('calcPpt').value = val;
+    function updateAgeSlider(val) {
+      val = Math.max(0, Math.min(65, Number(val) || 0));
+      document.getElementById('calcAgeSlider').value = val;
+      document.getElementById('selectedAgeBadge').innerText = `${val} Saal`;
       applyPolicyFilters();
     }
 
     function updateAgeInput(val) {
-      document.getElementById('quickAgeInput').value = val;
-      document.getElementById('quickAgeDisplay').innerText = `${val} Varsh`;
+      document.getElementById('calcAgeInput').value = val;
       document.getElementById('selectedAgeBadge').innerText = `${val} Saal`;
-      document.getElementById('summaryAge').innerText = val;
+      applyPolicyFilters();
+    }
+
+    function updateBudgetSlider(val) {
+      const num = Number(val) || 5000;
+      document.getElementById('calcBudgetSlider').value = num;
+      document.getElementById('selectedBudgetBadge').innerText = `₹ ${num.toLocaleString('en-IN')} / Yr`;
       applyPolicyFilters();
     }
 
     function updateBudgetInput(val) {
-      document.getElementById('quickBudgetInput').value = val;
-      syncHeroInputs();
-      applyPolicyFilters();
-    }
-
-    function onTermChange(val) {
-      document.getElementById('quickTermInput').value = val;
-      applyPolicyFilters();
-    }
-
-    function onPptChange(val) {
-      document.getElementById('quickPptInput').value = val;
+      const num = Number(val) || 5000;
+      document.getElementById('calcBudgetInput').value = num;
+      document.getElementById('selectedBudgetBadge').innerText = `₹ ${num.toLocaleString('en-IN')} / Yr`;
       applyPolicyFilters();
     }
 
     function calculateAmounts() {
-      syncHeroInputs();
       applyPolicyFilters();
     }
 
     function getAnnualBudget() {
-      const raw = Number(document.getElementById('calcBudgetInput').value) || 5000;
+      const raw = Number(document.getElementById('calcBudgetInput').value) || 50000;
       const mode = document.getElementById('calcMode').value;
       if (mode === 'monthly') return raw * 12;
       if (mode === 'quarterly') return raw * 4;
@@ -843,56 +815,58 @@
       document.getElementById('custName').value = 'Ramesh Kumar';
       document.getElementById('custPhone').value = '9876543210';
       document.getElementById('calcAgeInput').value = '30';
-      document.getElementById('quickAgeInput').value = '30';
-      document.getElementById('calcBudgetInput').value = '5000';
-      document.getElementById('quickBudgetInput').value = '5000';
-      document.getElementById('calcMode').value = 'monthly';
+      document.getElementById('calcAgeSlider').value = '30';
+      document.getElementById('calcBudgetInput').value = '50000';
+      document.getElementById('calcBudgetSlider').value = '50000';
+      document.getElementById('calcMode').value = 'yearly';
       document.getElementById('calcCategory').value = 'all';
       document.getElementById('calcTerm').value = '25';
-      document.getElementById('quickTermInput').value = '25';
-      document.getElementById('calcPpt').value = '16';
-      document.getElementById('quickPptInput').value = '16';
-      syncHeroInputs();
+      document.getElementById('selectedAgeBadge').innerText = '30 Saal';
+      document.getElementById('selectedBudgetBadge').innerText = '₹ 50,000 / Yr';
       applyPolicyFilters();
       showToast('Calculator parameters reset.');
     }
 
     function scrollToAndFilterFromHero() {
+      const goal = document.getElementById('quickGoalSelect').value;
+      const cat = document.getElementById('calcCategory');
+      if (goal === 'savings') cat.value = 'endowment';
+      else if (goal === 'lifetime' || goal === 'guaranteed10') cat.value = 'whole_life';
+      else if (goal === 'double') cat.value = 'endowment';
+      else if (goal === 'child') cat.value = 'children';
+      else cat.value = 'all';
+
       applyPolicyFilters();
       document.getElementById('schemes-list').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // UNRESTRICTED DYNAMIC CALCULATION ENGINE (SUPPORTS > 25 YEARS)
     function calculateFullPlanDetails(scheme, userAge, annualBudget) {
       let chosenTerm = Number(document.getElementById('calcTerm').value) || scheme.defaultTerm;
-      let chosenPpt = Number(document.getElementById('calcPpt').value) || scheme.getPpt(chosenTerm);
-
-      // PPT cannot exceed Policy Term
-      if (chosenPpt > chosenTerm) {
-        chosenPpt = chosenTerm;
+      if (!scheme.availableTerms.includes(chosenTerm)) {
+        chosenTerm = scheme.availableTerms[0] || scheme.defaultTerm;
       }
 
-      let sumAssured = Math.round((annualBudget * chosenPpt * 0.70) / 25000) * 25000;
+      const ppt = scheme.getPpt(chosenTerm);
+      let sumAssured = Math.round((annualBudget * ppt * 0.70) / 25000) * 25000;
       sumAssured = Math.max(scheme.minSumAssured, sumAssured);
 
-      const totalInvestment = annualBudget * chosenPpt;
+      const totalInvestment = annualBudget * ppt;
       let estimatedMaturity = Math.round(totalInvestment * scheme.expectedReturnRate);
       let regularAnnualIncome = 0;
 
       if (scheme.id === 'jeevan_utsav') {
         regularAnnualIncome = sumAssured * 0.10;
-        estimatedMaturity = sumAssured + (sumAssured * 0.04 * chosenPpt);
+        estimatedMaturity = sumAssured + (sumAssured * 0.04 * ppt);
       } else if (scheme.id === 'jeevan_umang') {
         regularAnnualIncome = sumAssured * 0.08;
       }
 
-      // 1 to chosenTerm Detailed Schedule Rows (Dynamic length: 10, 25, 30, 35+ years)
       const yearRows = [];
       let cumulativePaid = 0;
 
       for (let y = 1; y <= chosenTerm; y++) {
         const clientAge = userAge + y - 1;
-        const premiumThisYear = (y <= chosenPpt) ? annualBudget : 0;
+        const premiumThisYear = (y <= ppt) ? annualBudget : 0;
         cumulativePaid += premiumThisYear;
 
         const bonusRate4 = 0.022;
@@ -907,7 +881,7 @@
         let loanValue = 0;
         let surrenderValue = 0;
         if (y >= 2 && cumulativePaid > 0) {
-          const surrenderFactor = Math.min(0.85, 0.30 + ((y - 2) * 0.025));
+          const surrenderFactor = Math.min(0.85, 0.30 + ((y - 2) * 0.028));
           surrenderValue = Math.round(cumulativePaid * surrenderFactor);
           loanValue = Math.round(surrenderValue * 0.90);
         }
@@ -923,10 +897,10 @@
             cashInflow = (sumAssured * 0.40) + accruedBonus8;
             returnNote = `Maturity ₹${cashInflow.toLocaleString('en-IN')}`;
           }
-        } else if (scheme.id === 'jeevan_umang' && y > chosenPpt) {
+        } else if (scheme.id === 'jeevan_umang' && y > ppt) {
           cashInflow = regularAnnualIncome;
           returnNote = `8% BSA ₹${cashInflow.toLocaleString('en-IN')}`;
-        } else if (scheme.id === 'jeevan_utsav' && y > chosenPpt) {
+        } else if (scheme.id === 'jeevan_utsav' && y > ppt) {
           cashInflow = regularAnnualIncome;
           returnNote = `10% Benefit ₹${cashInflow.toLocaleString('en-IN')}`;
         } else if (y === chosenTerm) {
@@ -953,7 +927,7 @@
         scheme,
         userAge,
         term: chosenTerm,
-        ppt: chosenPpt,
+        ppt: ppt,
         annualBudget,
         totalInvestment,
         sumAssured,
@@ -968,16 +942,10 @@
       const category = document.getElementById('calcCategory').value;
       const annualBudget = getAnnualBudget();
       const custName = document.getElementById('custName').value || 'Customer';
-      const mode = document.getElementById('calcMode').value;
 
       document.getElementById('summaryCustomerName').innerText = custName;
       document.getElementById('summaryAge').innerText = age;
-
-      if (mode !== 'yearly') {
-        document.getElementById('summaryAnnualEquivalent').innerText = `(Annual: ₹${annualBudget.toLocaleString('en-IN')})`;
-      } else {
-        document.getElementById('summaryAnnualEquivalent').innerText = '';
-      }
+      document.getElementById('summaryBudget').innerText = `₹ ${annualBudget.toLocaleString('en-IN')} Yearly`;
 
       currentSchemesList = officialLicSchemes.filter(s => {
         const validAge = age >= s.minAge && age <= s.maxAge;
@@ -993,14 +961,7 @@
 
     function renderPolicyCards(age, annualBudget) {
       const container = document.getElementById('policiesContainer');
-      const mode = document.getElementById('calcMode').value;
-      const rawBudget = Number(document.getElementById('calcBudgetInput').value) || 5000;
       
-      let modeSuffix = '/ Yr';
-      if (mode === 'monthly') modeSuffix = '/ Month';
-      else if (mode === 'quarterly') modeSuffix = '/ Quarter';
-      else if (mode === 'half_yearly') modeSuffix = '/ 6-Mo';
-
       container.innerHTML = currentSchemesList.map(scheme => {
         const calc = calculateFullPlanDetails(scheme, age, annualBudget);
         const isCompared = comparedPlanIds.includes(scheme.id);
@@ -1014,7 +975,7 @@
                   Plan Info
                 </span>
                 <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800">
-                  Term: ${calc.term} Yrs | Pay: ${calc.ppt} Yrs
+                  PPT: ${calc.ppt} Yrs
                 </span>
               </div>
 
@@ -1027,11 +988,11 @@
 
               <div class="mt-4 bg-slate-50 rounded-2xl p-4 border border-slate-100 space-y-2 text-xs">
                 <div class="flex justify-between pb-1.5 border-b border-slate-200">
-                  <span class="text-slate-500">Selected Premium:</span>
-                  <span class="font-bold text-slate-800">₹ ${rawBudget.toLocaleString('en-IN')} ${modeSuffix}</span>
+                  <span class="text-slate-500">Term / Paying Term:</span>
+                  <span class="font-bold text-slate-800">${calc.term} Saal (Pay for ${calc.ppt} Saal)</span>
                 </div>
                 <div class="flex justify-between pb-1.5 border-b border-slate-200">
-                  <span class="text-slate-500">Kool Jama (${calc.ppt} Saal me):</span>
+                  <span class="text-slate-500">Kool Jama (Total Paid):</span>
                   <span class="font-bold text-slate-800">₹ ${calc.totalInvestment.toLocaleString('en-IN')}</span>
                 </div>
 
@@ -1058,7 +1019,7 @@
             <div class="mt-6 pt-4 border-t border-slate-100 space-y-2">
               <button onclick="openQuotationPreviewModal('${scheme.id}')" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 px-4 rounded-xl text-xs transition shadow-sm flex items-center justify-center gap-2">
                 <i class="fa-solid fa-print text-brand-gold text-sm"></i>
-                <span>Preview & Print (1 to ${calc.term} Saal Chart)</span>
+                <span>Preview & Print (1 to 25 Saal Chart)</span>
               </button>
 
               <button onclick="toggleCompareScheme('${scheme.id}')" class="w-full py-1.5 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition ${isCompared ? 'bg-amber-100 text-amber-900' : 'text-slate-600 hover:bg-slate-100'}">
@@ -1224,7 +1185,6 @@
       renderQuotationContent();
     }
 
-    // ORIGINAL PURANI A4 BENEFIT TABLE WITH LOGO (DYNAMIC ROWS TO CHOSEN TERM)
     function renderQuotationContent() {
       if (!activeQuotationData) return;
       const d = activeQuotationData;
@@ -1232,10 +1192,7 @@
       const custName = document.getElementById('custName').value || 'Customer';
       const custPhone = document.getElementById('custPhone').value || '8440096343';
       const mode = document.getElementById('calcMode').value.toUpperCase();
-      const rawBudget = Number(document.getElementById('calcBudgetInput').value) || 5000;
       const dateStr = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-
-      document.getElementById('modalSubTitle').innerText = `${d.term} Saal Benefit Illustration (Clean A4 Print Format)`;
 
       const target = document.getElementById('quotationPrintableTarget');
 
@@ -1279,7 +1236,7 @@
             <div>
               <p style="margin: 1px 0;"><strong>${isHi ? 'प्रस्तावित योजना' : 'Proposed Scheme'}:</strong> <span style="color: #002B49; font-weight: 800;">${isHi ? d.scheme.nameHi : d.scheme.name}</span></p>
               <p style="margin: 1px 0;"><strong>${isHi ? 'पॉलिसी / प्रीमियम अवधि' : 'Term / Premium Term'}:</strong> ${d.term} Yrs / <strong>Pay ${d.ppt} Yrs</strong></p>
-              <p style="margin: 1px 0;"><strong>${isHi ? 'प्रीमियम मोड' : 'Payment Mode'}:</strong> ₹ ${rawBudget.toLocaleString('en-IN')} / ${mode}</p>
+              <p style="margin: 1px 0;"><strong>${isHi ? 'प्रीमियम मोड' : 'Payment Mode'}:</strong> ${mode} (₹ ${d.annualBudget.toLocaleString('en-IN')}/Yr)</p>
             </div>
             <div>
               <p style="margin: 1px 0;"><strong>${isHi ? 'मूल बीमाधन (Sum Assured)' : 'Basic Sum Assured'}:</strong> ₹ ${d.sumAssured.toLocaleString('en-IN')}</p>
@@ -1290,7 +1247,7 @@
             </div>
           </div>
 
-          <!-- YEAR 1 TO CUSTOM TERM DETAILED SCHEDULE TABLE -->
+          <!-- YEAR 1 TO TERM DETAILED SCHEDULE TABLE -->
           <h3 style="font-size: 10.5px; font-weight: 900; color: #002B49; margin: 0 0 5px 0; text-transform: uppercase;">
             ${isHi ? `वर्ष 1 से ${d.term} वर्ष तक प्रीमियम, रिस्क कवर एवं रिटर्न चार्ट (अनुमानित)` : `Year 1 to ${d.term} Premium, Risk Cover & Cash Flow Illustration`}
           </h3>
@@ -1358,7 +1315,7 @@
           </div>
 
           <p style="font-size: 7.5px; color: #64748b; text-align: center; margin: 6px 0 0 0; line-height: 1.2;">
-            *Statutory Disclaimer: This illustration is prepared by an authorized insurance agent for guidance. Non-guaranteed projection values (at 4% & 8%) conform to standard IRDAI guidelines and are subject to future bonus declarations[cite: 11].
+            *Statutory Disclaimer: This illustration is prepared by an authorized insurance agent for guidance. Non-guaranteed projection values (at 4% & 8%) conform to standard IRDAI guidelines and are subject to future bonus declarations.
           </p>
 
         </div>
