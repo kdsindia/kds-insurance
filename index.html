@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <!-- Primary SEO Meta Tags -->
+  <!-- Primary SEO Meta Tags & Verification -->
   <title>KDS INSURANCE - Life, Motor & Health Insurance Portal | Manoher Singh</title>
   <meta name="title" content="KDS INSURANCE - Life, Motor & Health Insurance Portal | Manoher Singh" />
-  <meta name="description" content="KDS Insurance Advisory Seva Kendra by Manoher Singh. Calculate Motor Insurance (Third Party, Comprehensive, Zero Dep), Health Mediclaim, and official LIC policy savings illustrations in Malwara, Raniwara." />
-  <meta name="keywords" content="Car Insurance Malwara, Bike Insurance Raniwara, Third Party Insurance, Zero Dep Car Insurance, LIC Agent Malwara, Manoher Singh Insurance, Health Insurance Malwara" />
+  <meta name="description" content="KDS Insurance Advisory Seva Kendra by Manoher Singh. Calculate Motor Insurance (Third Party, Comprehensive, Zero Dep), Health Mediclaim, and official LIC and CSC Life policy savings illustrations in Malwara, Raniwara." />
+  <meta name="keywords" content="Car Insurance Malwara, Bike Insurance Raniwara, Third Party Insurance, Zero Dep Car Insurance, LIC Agent Malwara, Manoher Singh Insurance, Health Insurance Malwara, CSC Life Insurance, SBI Life Malwara, IndiaFirst CSC" />
   <meta name="author" content="Manoher Singh" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   
@@ -151,7 +151,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
         
-        <a href="javascript:void(0)" onclick="switchMainTab('life')" class="flex items-center gap-3 py-1 group">
+        <a href="javascript:void(0)" onclick="switchMainTab('lic')" class="flex items-center gap-3 py-1 group">
           <img src="logo.png" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" class="h-12 sm:h-14 w-auto object-contain rounded-lg" alt="KDS INSURANCE" />
           <div id="logoFallback" class="hidden items-center gap-2">
             <div class="w-10 h-10 rounded-xl bg-brand-navy flex items-center justify-center text-brand-gold font-black text-xl">KDS</div>
@@ -162,30 +162,32 @@
           </div>
         </a>
 
-        <!-- Portal 3-Tab Switcher inside Navigation -->
-        <div class="flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
-          <button id="navTabLife" onclick="switchMainTab('life')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm">
+        <!-- Portal 4-Tab Switcher -->
+        <div class="flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200 overflow-x-auto max-w-full">
+          <button id="navTabLic" onclick="switchMainTab('lic')" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm whitespace-nowrap">
             <i class="fa-solid fa-shield-halved text-brand-gold"></i>
             <span>Life (LIC)</span>
           </button>
-          <button id="navTabMotor" onclick="switchMainTab('motor')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-700 transition flex items-center gap-1.5">
+          <button id="navTabCsc" onclick="switchMainTab('csc')" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-amber-700 transition flex items-center gap-1.5 whitespace-nowrap">
+            <i class="fa-solid fa-building-columns text-amber-600"></i>
+            <span>Life (CSC/Other)</span>
+          </button>
+          <button id="navTabMotor" onclick="switchMainTab('motor')" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-700 transition flex items-center gap-1.5 whitespace-nowrap">
             <i class="fa-solid fa-car-shield text-emerald-600"></i>
             <span>Motor</span>
           </button>
-          <button id="navTabHealth" onclick="switchMainTab('health')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-rose-700 transition flex items-center gap-1.5">
+          <button id="navTabHealth" onclick="switchMainTab('health')" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-rose-700 transition flex items-center gap-1.5 whitespace-nowrap">
             <i class="fa-solid fa-heart-pulse text-rose-600"></i>
             <span>Health</span>
           </button>
         </div>
 
         <div class="flex items-center gap-2 sm:gap-3">
-          <!-- About Us Button Restored -->
           <a href="about.html" class="bg-white hover:bg-slate-100 text-brand-navy border border-slate-200 font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-user-tie text-brand-gold"></i>
-            <span>About Us</span>
+            <span class="hidden sm:inline">About Us</span>
           </a>
 
-          <!-- Callback Request Button -->
           <button onclick="openLeadModal()" class="bg-brand-navy hover:bg-brand-lightBlue text-white font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-headset text-brand-gold"></i>
             <span class="hidden sm:inline">Callback Request</span>
@@ -198,26 +200,26 @@
   </header>
 
   <!-- ========================================================================= -->
-  <!-- PAGE 1: LIFE INSURANCE (LIC) SECTION -->
+  <!-- MAIN SHARED LIFE INSURANCE CALCULATOR SECTION -->
   <!-- ========================================================================= -->
-  <div id="lifeInsurancePage" class="block space-y-12">
+  <div id="lifeInsuranceWrapper" class="block space-y-12">
     
     <section class="relative bg-gradient-to-br from-brand-dark via-brand-navy to-brand-lightBlue text-white py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
         <div class="lg:col-span-7 space-y-4 text-center lg:text-left">
           <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold text-brand-gold border border-white/15">
-            <i class="fa-solid fa-shield-halved"></i> LIC Policy Benefits & Premium Illustration Chart[cite: 1]
+            <i class="fa-solid fa-shield-halved"></i> <span id="heroPortalBadge">LIC Official Policy Benefits & Premium Illustration Chart</span>
           </div>
           <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
-            Apne Budget & Umar ke Anusaar Sahi <span class="text-brand-gold">LIC Policy</span> Chunein
+            Apne Budget & Umar ke Anusaar Sahi <span id="heroPortalHeading" class="text-brand-gold">LIC Policy</span> Chunein
           </h1>
           <p class="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl">
-            Jaaniye: <strong>Saalana Premium</strong>, <strong>Normal & ADDB/TR Riders Cover</strong>, <strong>Loan & Surrender Value</strong>, aur LIC standard returns[cite: 1].
+            Jaaniye: <strong>Saalana Premium</strong>, <strong>Normal & ADDB/TR Riders Cover</strong>, <strong>Loan & Surrender Value</strong>, aur verified standard returns.
           </p>
           <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-3.5 text-xs text-slate-200 flex items-start gap-3 text-left">
             <i class="fa-solid fa-location-dot text-brand-gold text-base mt-0.5"></i>
             <div>
-              <p class="font-bold text-white text-xs">KDS INSURANCE SERVICES & CUSTOMER ASSISTANCE POINT</p>
+              <p class="font-bold text-white text-xs">KDS INSURANCE SERVICES & CSC SEVA KENDRA</p>
               <p class="text-slate-300 text-[11px] mt-0.5">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
               <p class="text-brand-gold font-bold text-[11px] mt-1">Authorized Agent: MANOHER SINGH | Mo: 8440096343</p>
             </div>
@@ -233,7 +235,7 @@
                 </h3>
                 <p class="text-xs text-slate-500">Umar, term aur budget ke anusaar filter karein</p>
               </div>
-              <span class="text-[11px] bg-blue-100 text-brand-navy px-2 py-0.5 rounded font-black">Plan Details</span>
+              <span id="quickPlanTypeBadge" class="text-[11px] bg-blue-100 text-brand-navy px-2 py-0.5 rounded font-black">LIC Plans</span>
             </div>
             <div class="mt-4 space-y-3.5">
               <div>
@@ -270,18 +272,18 @@
       </div>
     </section>
 
-    <!-- Main LIC Calculator -->
+    <!-- Main Life Calculator Form -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       <section id="calculator-section" class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
         <div class="bg-gradient-to-r from-brand-navy to-brand-lightBlue p-6 sm:p-8 text-white">
           <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
             <div>
               <div class="flex items-center gap-2">
-                <span class="bg-brand-gold text-brand-dark px-2.5 py-0.5 rounded text-xs font-black uppercase tracking-wider">LIC Illustration Engine</span>
-                <span class="text-xs text-sky-200">With Auto Riders, Loan & Surrender Schedule</span>
+                <span id="portalBadgeTitle" class="bg-brand-gold text-brand-dark px-2.5 py-0.5 rounded text-xs font-black uppercase tracking-wider">Life Insurance Engine</span>
+                <span id="portalBadgeSubtitle" class="text-xs text-sky-200">Official Benefit Schedule With Separate Par & Non-Par Logic</span>
               </div>
-              <h2 class="text-2xl sm:text-3xl font-black mt-2">Apni Details Bharein & Plan Customize Karein</h2>
-              <p class="text-slate-200 text-xs sm:text-sm mt-1">Umar aur budget ke hisab se riders apne aap lag jate hain, jise aap niche customize bhi kar sakte hain.</p>
+              <h2 id="calcSectionHeading" class="text-2xl sm:text-3xl font-black mt-2">Apni Details Bharein & Plan Customize Karein</h2>
+              <p class="text-slate-200 text-xs sm:text-sm mt-1">Umar aur budget ke anusaar accurate riders, actual returns aur refund schedule turant calculate hota hai.</p>
             </div>
             <button onclick="resetCalculatorForm()" class="self-start sm:self-center text-xs bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-1.5 rounded-xl text-white font-semibold transition flex items-center gap-1.5">
               <i class="fa-solid fa-arrows-rotate"></i> Reset
@@ -306,17 +308,17 @@
               </div>
               <input type="number" id="calcAgeInput" min="0" max="100" value="28" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-black text-slate-800" oninput="handleInputsChange()" />
             </div>
-            <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Policy Category</label>
-              <select id="calcCategory" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" onchange="applyPolicyFilters()">
-                <option value="all" selected>🌟 Sabhi Categories (All Plans)</option>
-                <option value="endowment">💰 Savings & Endowment Plans</option>
-                <option value="whole_life">♾️ Whole Life Plans</option>
-                <option value="money_back">🔄 Money Back Plans</option>
-                <option value="term">🛡️ Term Assurance / Pure Risk Plans</option>
-                <option value="pension">👴 Pension / Annuity Plans</option>
+            
+            <div id="companySelectContainer" class="hidden">
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Insurer Company</label>
+              <select id="calcCompany" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" onchange="applyPolicyFilters()">
+                <option value="all">🌟 Sabhi CSC Partners</option>
+                <option value="IndiaFirst">🇮🇳 IndiaFirst Life Insurance</option>
+                <option value="SBI Life">🏦 SBI Life Insurance</option>
+                <option value="Shriram Life">🚚 Shriram Life Insurance</option>
               </select>
             </div>
+
             <div>
               <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Premium Mode</label>
               <select id="calcMode" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" onchange="handleInputsChange()">
@@ -342,12 +344,12 @@
               <input type="number" id="calcPptInput" min="1" max="100" value="12" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" oninput="applyPolicyFilters()" />
             </div>
 
-            <!-- RIDERS CUSTOMIZATION SECTION (AUTO-APPLIED + CUSTOMER EDITABLE) -->
+            <!-- RIDERS SECTION -->
             <div class="lg:col-span-4 bg-slate-50 rounded-2xl p-5 border border-slate-200">
               <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3 pb-2 border-b border-slate-200">
                 <div class="flex items-center gap-2">
-                  <span class="bg-brand-navy text-white text-[11px] font-black px-2.5 py-0.5 rounded">Riders Module</span>
-                  <span class="text-xs font-bold text-slate-700"><i class="fa-solid fa-wand-magic-sparkles text-brand-gold mr-1"></i> Auto-Applied Based on Age & Budget (Customer Can Edit Below)</span>
+                  <span class="bg-brand-navy text-white text-[11px] font-black px-2.5 py-0.5 rounded">Riders Engine</span>
+                  <span class="text-xs font-bold text-slate-700"><i class="fa-solid fa-wand-magic-sparkles text-brand-gold mr-1"></i> Auto-Calculated Based on Age & Plan Category</span>
                 </div>
                 <button type="button" onclick="autoApplyRiders()" class="text-[11px] font-bold text-brand-lightBlue hover:underline flex items-center gap-1">
                   <i class="fa-solid fa-rotate-left"></i> Re-Calculate Auto Riders
@@ -355,7 +357,7 @@
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                <!-- Rider 1: ADDB -->
+                <!-- ADDB -->
                 <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
                   <div class="flex items-center justify-between">
                     <label class="font-bold text-slate-800 flex items-center gap-1.5 cursor-pointer">
@@ -365,10 +367,10 @@
                     <span class="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold">Accidental</span>
                   </div>
                   <input type="number" id="riderAddbValue" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800" oninput="applyPolicyFilters()" />
-                  <p class="text-[10px] text-slate-500">Auto set to 100% of Sum Assured.</p>
+                  <p class="text-[10px] text-slate-500">Auto set to Sum Assured value.</p>
                 </div>
 
-                <!-- Rider 2: Term Rider (TR) -->
+                <!-- Term Rider -->
                 <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
                   <div class="flex items-center justify-between">
                     <label class="font-bold text-slate-800 flex items-center gap-1.5 cursor-pointer">
@@ -378,10 +380,10 @@
                     <span class="text-[10px] bg-blue-100 text-brand-navy px-1.5 py-0.5 rounded font-bold">Pure Life</span>
                   </div>
                   <input type="number" id="riderTrValue" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800" oninput="applyPolicyFilters()" />
-                  <p class="text-[10px] text-slate-500">Auto calculated for age 18-50.</p>
+                  <p class="text-[10px] text-slate-500">Auto set for Age 18-50.</p>
                 </div>
 
-                <!-- Rider 3: Critical Illness Rider (CIR) -->
+                <!-- Critical Illness -->
                 <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
                   <div class="flex items-center justify-between">
                     <label class="font-bold text-slate-800 flex items-center gap-1.5 cursor-pointer">
@@ -391,7 +393,7 @@
                     <span class="text-[10px] bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded font-bold">Health Benefit</span>
                   </div>
                   <input type="number" id="riderCirValue" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800" oninput="applyPolicyFilters()" />
-                  <p class="text-[10px] text-slate-500">Optional 15 Major illness protection.</p>
+                  <p class="text-[10px] text-slate-500">Optional major illness protection.</p>
                 </div>
               </div>
             </div>
@@ -399,7 +401,7 @@
             <div class="lg:col-span-4 flex items-end">
               <button type="button" onclick="applyPolicyFilters()" class="w-full bg-brand-gold hover:bg-amber-400 text-brand-dark font-black py-3.5 px-4 rounded-xl text-base shadow-lg transition flex items-center justify-center gap-2">
                 <i class="fa-solid fa-calculator"></i>
-                <span>Calculate & Show LIC Plans (<span id="btnMatchCount">40</span>)</span>
+                <span>Calculate & Show Plans (<span id="btnMatchCount">0</span>)</span>
               </button>
             </div>
           </form>
@@ -410,22 +412,21 @@
                 <i class="fa-solid fa-receipt"></i>
               </div>
               <div>
-                <p class="font-extrabold text-slate-800">Current LIC Calculation Snapshot:</p>
+                <p class="font-extrabold text-slate-800">Current Calculation Snapshot:</p>
                 <p class="text-slate-500">Customer: <strong id="summaryCustomerName" class="text-slate-800">Your Name</strong> (Age: <span id="summaryAge" class="font-bold text-brand-navy">28</span> yrs) | Budget: <strong id="summaryBudget">₹ 3,36,000 Yearly (₹ 28,000/mo)</strong> | Term: <strong id="summaryTerm">25</strong> Yrs | PPT: <strong id="summaryPpt">12</strong> Yrs</p>
               </div>
             </div>
-            <span class="text-blue-900 bg-blue-50 px-2.5 py-1 rounded border border-blue-200 font-bold"><i class="fa-solid fa-circle-info mr-1"></i> ADDB/TR Rider & tax benefits u/s 80C & 10(10D)[cite: 1]</span>
+            <span class="text-blue-900 bg-blue-50 px-2.5 py-1 rounded border border-blue-200 font-bold"><i class="fa-solid fa-circle-info mr-1"></i> Non-Par Guaranteed Income & Par Bonus Rules Compliant</span>
           </div>
         </div>
       </section>
 
-      <!-- Schemes List -->
+      <!-- Schemes List with Dual View Mode -->
       <section id="schemes-list" class="space-y-6">
-        <!-- Dual Mode View Switcher -->
         <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-white p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm">
           <div>
             <div class="flex items-center gap-2">
-              <h3 class="text-xl sm:text-2xl font-black text-brand-navy tracking-tight">Available LIC Plans</h3>
+              <h3 id="schemesListHeading" class="text-xl sm:text-2xl font-black text-brand-navy tracking-tight">Available LIC Plans</h3>
               <span id="resultsCountBadge" class="bg-brand-navy text-white text-xs font-bold px-2.5 py-1 rounded-full">Plans Found</span>
             </div>
             <p id="filterStatusText" class="text-xs text-slate-500 mt-1 font-medium">Matching Selected Term & PPT</p>
@@ -437,7 +438,7 @@
                 <i class="fa-solid fa-filter text-brand-gold"></i> <span>Selected Term & PPT Only</span>
               </button>
               <button id="viewAllBtn" onclick="toggleViewMode('all')" class="px-3.5 py-2 rounded-xl text-slate-700 hover:text-brand-navy transition flex items-center gap-1.5">
-                <i class="fa-solid fa-layer-group text-blue-600"></i> <span>Sabhi Schemes Dekhein (All 40)</span>
+                <i class="fa-solid fa-layer-group text-blue-600"></i> <span id="toggleAllBtnLabel">Sabhi Plans Dekhein</span>
               </button>
             </div>
 
@@ -447,14 +448,14 @@
           </div>
         </div>
 
-        <!-- Category Filters -->
+        <!-- Category Filter Tabs -->
         <div class="flex flex-wrap items-center gap-2 pt-1 pb-1">
-          <button id="catFilterBtn_all" onclick="selectQuickCategory('all')" class="px-3.5 py-1.5 rounded-xl text-xs font-black transition border bg-brand-navy text-white border-brand-navy shadow-sm">🌟 Sabhi Plans (All)</button>
-          <button id="catFilterBtn_endowment" onclick="selectQuickCategory('endowment')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">💰 Endowment & Savings (18)</button>
-          <button id="catFilterBtn_whole_life" onclick="selectQuickCategory('whole_life')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">♾️ Whole Life Plans (3)</button>
-          <button id="catFilterBtn_money_back" onclick="selectQuickCategory('money_back')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">🔄 Money Back Plans (5)</button>
-          <button id="catFilterBtn_term" onclick="selectQuickCategory('term')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">🛡️ Pure Term Plans (9)</button>
-          <button id="catFilterBtn_pension" onclick="selectQuickCategory('pension')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">👴 Pension / Annuity (5)</button>
+          <button id="catFilterBtn_all" onclick="selectQuickCategory('all')" class="px-3.5 py-1.5 rounded-xl text-xs font-black transition border bg-brand-navy text-white border-brand-navy shadow-sm">🌟 Sabhi Categories (All)</button>
+          <button id="catFilterBtn_endowment" onclick="selectQuickCategory('endowment')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">💰 Savings & Endowment</button>
+          <button id="catFilterBtn_money_back" onclick="selectQuickCategory('money_back')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">🔄 Money Back & Cash Back</button>
+          <button id="catFilterBtn_whole_life" onclick="selectQuickCategory('whole_life')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">♾️ Whole Life / Guaranteed Income</button>
+          <button id="catFilterBtn_term" onclick="selectQuickCategory('term')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">🛡️ Pure Term & ROP Plans</button>
+          <button id="catFilterBtn_pension" onclick="selectQuickCategory('pension')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">👴 Pension / Annuity</button>
         </div>
 
         <div id="policiesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
@@ -466,7 +467,7 @@
           <div>
             <span class="text-xs font-bold text-brand-lightBlue uppercase tracking-wider bg-blue-50 px-2.5 py-1 rounded">Side-by-Side Comparison</span>
             <h3 class="text-2xl font-black text-brand-navy mt-1">Schemes Compare Karein (Tulna Matrix Table)</h3>
-            <p class="text-xs text-slate-500">2 ya 3 plans aamne-saamne rakh kar unka premium aur return compare karein[cite: 1].</p>
+            <p class="text-xs text-slate-500">2 ya 3 plans aamne-saamne rakh kar unka premium aur return compare karein.</p>
           </div>
           <button onclick="clearCompareSelection()" class="text-xs font-bold text-rose-600 hover:text-rose-700 transition">
             <i class="fa-solid fa-trash-can mr-1"></i> Clear Comparison
@@ -479,7 +480,7 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- PAGE 2: MOTOR INSURANCE SECTION -->
+  <!-- PAGE 3: MOTOR INSURANCE SECTION -->
   <!-- ========================================================================= -->
   <div id="motorInsurancePage" class="hidden space-y-12">
     <section class="relative bg-gradient-to-br from-slate-900 via-emerald-950 to-teal-900 text-white py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -546,9 +547,9 @@
             <div>
               <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">3. Engine Capacity / Slab</label>
               <select id="motorCcSlab" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="searchMotorPolicies()">
-                <option value="1000">Up to 1000 cc (Alto, WagonR, Kwid)</option>
-                <option value="1500" selected>1000 cc - 1500 cc (Swift, Brezza, Creta, Nexon)</option>
-                <option value="above1500">Above 1500 cc (Scorpio, Thar, Safari, Fortuner)</option>
+                <option value="1000">Up to 1000 cc (Alto, Kwid)</option>
+                <option value="1500" selected>1000 cc - 1500 cc (Swift, Brezza, Creta)</option>
+                <option value="above1500">Above 1500 cc (Scorpio, Thar, Safari)</option>
               </select>
             </div>
             <div>
@@ -600,7 +601,7 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- PAGE 3: HEALTH INSURANCE SECTION -->
+  <!-- PAGE 4: HEALTH INSURANCE SECTION -->
   <!-- ========================================================================= -->
   <div id="healthInsurancePage" class="hidden space-y-12">
     <section class="relative bg-gradient-to-br from-slate-900 via-rose-950 to-red-900 text-white py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -729,15 +730,15 @@
       <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <div class="lg:col-span-8 space-y-4">
           <div class="inline-flex items-center gap-2 bg-brand-gold text-brand-dark px-3 py-1 rounded-md text-xs font-black uppercase">
-            <i class="fa-solid fa-user-check"></i> Authorized Insurance Agent
+            <i class="fa-solid fa-user-check"></i> CSC & Authorized Insurance Advisor
           </div>
-          <h3 class="text-2xl sm:text-4xl font-black tracking-tight leading-snug">
-            KDS INSURANCE CONSULTATION & CUSTOMER ASSISTANCE POINT
+          <h3 class="text-2xl sm:4xl font-black tracking-tight leading-snug">
+            KDS INSURANCE CONSULTATION & CUSTOMER POINT
           </h3>
           <div class="bg-white/10 rounded-2xl p-4 border border-white/15 space-y-1.5 text-xs text-slate-200">
-            <p><strong class="text-brand-gold text-sm">MANOHER SINGH</strong> (Authorized Insurance Agent)</p>
+            <p><strong class="text-brand-gold text-sm">MANOHER SINGH</strong> (Authorized Insurance Advisor)</p>
             <p><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i> <strong>Office Address:</strong> BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
-            <p><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> <strong>Helpline:</strong> 8440096343 | Life, Motor & Health Claim Guidance</p>
+            <p><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> <strong>Helpline:</strong> 8440096343 | LIC, CSC & General Insurance Guidance</p>
           </div>
         </div>
 
@@ -773,7 +774,8 @@
           <p class="text-slate-300 text-xs mt-0.5">Authorized Insurance Agent: <strong>MANOHER SINGH</strong> (Malwara, Raniwara)</p>
         </div>
         <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-300 font-bold">
-          <a href="javascript:void(0)" onclick="switchMainTab('life')" class="hover:text-brand-gold transition">Life (LIC)</a>
+          <a href="javascript:void(0)" onclick="switchMainTab('lic')" class="hover:text-brand-gold transition">Life (LIC)</a>
+          <a href="javascript:void(0)" onclick="switchMainTab('csc')" class="hover:text-brand-gold transition">Life (CSC/Other)</a>
           <a href="javascript:void(0)" onclick="switchMainTab('motor')" class="hover:text-brand-gold transition">Motor Insurance</a>
           <a href="javascript:void(0)" onclick="switchMainTab('health')" class="hover:text-brand-gold transition">Health Insurance</a>
           <a href="about.html" class="hover:text-brand-gold transition">About Us</a>
@@ -783,7 +785,7 @@
       <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700/80 text-[11px] text-slate-300 leading-relaxed">
         <p class="font-bold text-amber-400 mb-1">REGULATORY & STATUTORY DISCLAIMER (GOVT / IRDAI GUIDELINES):</p>
         <p>
-          This is an informational facilitation portal operated by <strong>MANOHER SINGH</strong>, an authorized individual insurance agent[cite: 1]. Life insurance illustrations shown at 4% & 8% conform to standard IRDAI projection guidelines and are not guaranteed[cite: 1]. Health insurance premiums, waiting periods for pre-existing diseases, sub-limits and room rent norms are strictly governed by the policy prospectus of the respective insurance company. Motor third-party rates are notified under the Motor Vehicles Act, 1988 by MoRTH/IRDAI. Tax benefits are subject to provisions under Section 80C, 80D, and 10(10D) of the Income Tax Act[cite: 1].
+          This is an informational facilitation portal operated by <strong>MANOHER SINGH</strong>, an authorized insurance advisor[cite: 1]. Life insurance illustrations shown at 4% & 8% conform to standard IRDAI projection guidelines and are not guaranteed[cite: 1]. Non-Participating CSC plans offer guaranteed income and 100%-110% Return of Premium. Health insurance premiums, waiting periods for pre-existing diseases, sub-limits and room rent norms are strictly governed by the policy prospectus of the respective insurance company. Motor third-party rates are notified under the Motor Vehicles Act, 1988 by MoRTH/IRDAI. Tax benefits are subject to provisions under Section 80C, 80D, and 10(10D) of the Income Tax Act[cite: 1].
         </p>
       </div>
 
@@ -794,7 +796,7 @@
   </footer>
 
   <!-- ========================================================================= -->
-  <!-- MODAL: LIC POLICY BENEFIT ILLUSTRATION -->
+  <!-- MODAL: BENEFIT ILLUSTRATION PREVIEW -->
   <!-- ========================================================================= -->
   <div id="quotationModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[96vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
@@ -809,7 +811,7 @@
               <h3 id="modalHeaderTitle" class="text-lg font-black text-white">Policy Benefit Illustration Preview</h3>
               <span id="pdfLangIndicator" class="bg-blue-900/80 text-brand-gold border border-brand-gold/40 text-[10px] font-bold px-2 py-0.5 rounded">HINDI</span>
             </div>
-            <p class="text-xs text-slate-300">LIC Prescribed Year-by-Year Schedule, ADDB & Surrender Values (Clean A4 Print)[cite: 1]</p>
+            <p class="text-xs text-slate-300">Prescribed Year-by-Year Schedule, ADDB & Surrender Values (Clean A4 Print)[cite: 1]</p>
           </div>
         </div>
 
@@ -906,7 +908,7 @@
     </div>
   </div>
 
-  <!-- Lead Modal (Google Sheets Connected) -->
+  <!-- Lead Modal -->
   <div id="leadModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 p-6">
       <div class="flex justify-between items-center pb-3 border-b border-slate-100">
@@ -931,6 +933,7 @@
           <label class="block font-bold text-slate-700 mb-1">Category</label>
           <select id="leadCategory" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold">
             <option value="LIC Life Savings Policy">LIC Life Savings Policy</option>
+            <option value="CSC IndiaFirst / SBI / Shriram Life">CSC IndiaFirst / SBI / Shriram Life</option>
             <option value="Car / Bike Insurance">Car / Bike Insurance</option>
             <option value="Commercial Vehicle Insurance">Commercial Vehicle Insurance</option>
             <option value="Health Insurance (Mediclaim)">Health Insurance (Mediclaim)</option>
@@ -948,287 +951,117 @@
     <span id="toastMessage">Success</span>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- JAVASCRIPT LOGIC (ALAG-ALAG CALCULATION ENGINE) -->
   <script>
     let currentPdfLang = 'hi';
     let activeQuotationData = null;
-    let comparedPlanIds = ['jeevan_labh', 'jeevan_anand'];
-    let currentViewMode = 'filtered'; // 'filtered' ya 'all'
+    let comparedPlanIds = ['jeevan_labh', 'sbi_platina_plus'];
+    let currentLifeTab = 'lic';
+    let currentViewMode = 'filtered';
 
-    // 1. PAGE TAB SWITCHER
     function switchMainTab(tab) {
-      const lifePage = document.getElementById('lifeInsurancePage');
+      const lifeWrapper = document.getElementById('lifeInsuranceWrapper');
       const motorPage = document.getElementById('motorInsurancePage');
       const healthPage = document.getElementById('healthInsurancePage');
 
-      const btnLife = document.getElementById('navTabLife');
+      const btnLic = document.getElementById('navTabLic');
+      const btnCsc = document.getElementById('navTabCsc');
       const btnMotor = document.getElementById('navTabMotor');
       const btnHealth = document.getElementById('navTabHealth');
 
-      lifePage.classList.add('hidden');
+      lifeWrapper.classList.add('hidden');
       motorPage.classList.add('hidden');
       healthPage.classList.add('hidden');
 
-      btnLife.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-brand-navy transition flex items-center gap-1.5';
-      btnMotor.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-700 transition flex items-center gap-1.5';
-      btnHealth.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-rose-700 transition flex items-center gap-1.5';
+      btnLic.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-brand-navy transition flex items-center gap-1.5 whitespace-nowrap';
+      btnCsc.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-amber-700 transition flex items-center gap-1.5 whitespace-nowrap';
+      btnMotor.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-700 transition flex items-center gap-1.5 whitespace-nowrap';
+      btnHealth.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-rose-700 transition flex items-center gap-1.5 whitespace-nowrap';
 
-      if (tab === 'life') {
-        lifePage.classList.remove('hidden');
-        btnLife.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm';
+      if (tab === 'lic' || tab === 'csc') {
+        currentLifeTab = tab;
+        lifeWrapper.classList.remove('hidden');
+
+        if (tab === 'lic') {
+          btnLic.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm whitespace-nowrap';
+          document.getElementById('heroPortalBadge').innerText = "LIC Official Policy Benefits & Premium Illustration Chart";
+          document.getElementById('heroPortalHeading').innerText = "LIC Policy";
+          document.getElementById('quickPlanTypeBadge').innerText = "LIC Plans";
+          document.getElementById('portalBadgeTitle').innerText = "LIC Illustration Engine";
+          document.getElementById('calcSectionHeading').innerText = "LIC Details Bharein & Plan Customize Karein";
+          document.getElementById('companySelectContainer').classList.add('hidden');
+          document.getElementById('schemesListHeading').innerText = "Available LIC Plans";
+          document.getElementById('toggleAllBtnLabel').innerText = "Sabhi LIC Plans";
+        } else {
+          btnCsc.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-amber-600 text-white shadow-sm whitespace-nowrap';
+          document.getElementById('heroPortalBadge').innerText = "CSC Portal Life Insurance (SBI Life, IndiaFirst, Shriram)";
+          document.getElementById('heroPortalHeading').innerText = "CSC Life Insurance";
+          document.getElementById('quickPlanTypeBadge').innerText = "CSC Life Plans";
+          document.getElementById('portalBadgeTitle').innerText = "CSC Life Engine (Guaranteed Income + 110% Return)";
+          document.getElementById('calcSectionHeading').innerText = "CSC Insurer Chunein & Details Bharein";
+          document.getElementById('companySelectContainer').classList.remove('hidden');
+          document.getElementById('schemesListHeading').innerText = "Available CSC Life Plans";
+          document.getElementById('toggleAllBtnLabel').innerText = "Sabhi CSC Plans";
+        }
+        applyPolicyFilters();
       } else if (tab === 'motor') {
         motorPage.classList.remove('hidden');
-        btnMotor.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-emerald-700 text-white shadow-sm';
+        btnMotor.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-emerald-700 text-white shadow-sm whitespace-nowrap';
         searchMotorPolicies();
       } else if (tab === 'health') {
         healthPage.classList.remove('hidden');
-        btnHealth.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-rose-700 text-white shadow-sm';
+        btnHealth.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-rose-700 text-white shadow-sm whitespace-nowrap';
         searchHealthPolicies();
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // =========================================================================
-    // 2. LIC SCHEMES LIST (40 OFFICIAL ACTIVE PLANS FROM SCREENSHOTS)
-    // =========================================================================
-    const officialLicSchemes = [
-      // ENDOWMENT PLANS (12)
-      { 
-        id: 'single_premium_endowment', planNo: '717', name: "LIC's Single Premium Endowment Plan (717)", nameHi: "एलआईसी सिंगल प्रीमियम एंडोमेंट (717)", 
-        tagline: 'Ek baari me premium jama karein aur lambe samay tak suraksha aur returns paayein.', category: 'endowment', expectedReturnRate: 2.10, minSumAssured: 50000, 
-        isFlexible: true, allowedPptOptions: [1], minTerm: 10, maxTerm: 25, enforceLicRules: (term) => ({ term: Math.max(10, Math.min(25, term || 15)), ppt: 1 }) 
-      },
-      { 
-        id: 'new_endowment_plan', planNo: '714', name: "LIC's New Endowment Plan (714)", nameHi: "एलआईसी न्यू एंडोमेंट प्लान (714)", 
-        tagline: 'Niyamit bachat aur financial security ka classic plan.', category: 'endowment', expectedReturnRate: 2.15, minSumAssured: 100000, 
-        isFlexible: true, minTerm: 12, maxTerm: 35, enforceLicRules: (term, ppt) => { const t = Math.max(12, Math.min(35, term || 20)); return { term: t, ppt: t }; } 
-      },
-      { 
-        id: 'jeevan_anand', planNo: '715', name: "LIC's New Jeevan Anand (715)", nameHi: "एलआईसी न्यू जीवन आनंद (715)", 
-        tagline: 'Zindagi ke sath bhi, zindagi ke baad bhi - Maturity ke baad bhi lifelong cover.', category: 'endowment', expectedReturnRate: 2.20, minSumAssured: 100000, 
-        isFlexible: true, minTerm: 15, maxTerm: 35, enforceLicRules: (term, ppt) => ({ term: Math.max(15, Math.min(35, term || 25)), ppt: Math.min(term, Math.max(5, ppt || term)) }) 
-      },
-      { 
-        id: 'jeevan_lakshya', planNo: '733', name: "LIC's Jeevan Lakshya (733)", nameHi: "एलआईसी जीवन लक्ष्य (733)", 
-        tagline: 'Bachho ki padhai aur bhavishya ke liye khas, PPT hamesha (Term - 3) saal.', category: 'endowment', expectedReturnRate: 2.20, minSumAssured: 100000, 
-        isFlexible: true, minTerm: 13, maxTerm: 25, enforceLicRules: (term) => { const t = Math.max(13, Math.min(25, term || 21)); return { term: t, ppt: t - 3 }; } 
-      },
-      { 
-        id: 'jeevan_labh', planNo: '736', name: "LIC's Jeevan Labh Plan (736)", nameHi: "एलआईसी जीवन लाभ (736)", 
-        tagline: 'Kam varsh premium bharein: 10 pay/16 term, 15 pay/21 term, 16 pay/25 term.', category: 'endowment', expectedReturnRate: 2.35, minSumAssured: 200000, 
-        allowedCombinations: [{ term: 16, ppt: 10 }, { term: 21, ppt: 15 }, { term: 25, ppt: 16 }], enforceLicRules: (term) => (term <= 18 ? { term: 16, ppt: 10 } : (term <= 23 ? { term: 21, ppt: 15 } : { term: 25, ppt: 16 })) 
-      },
-      { 
-        id: 'amritbaal', planNo: '774', name: "LIC's Amritbaal (774)", nameHi: "एलआईसी अमृतबाल (774)", 
-        tagline: 'Chhote bachhon ke sunahre bhavishya hetu guaranteed additions ke sath.', category: 'endowment', expectedReturnRate: 2.30, minSumAssured: 200000, 
-        isFlexible: true, minTerm: 10, maxTerm: 25, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(25, term || 20)), ppt: Math.min(term, Math.max(5, ppt || 10)) }) 
-      },
-      { 
-        id: 'nav_jeevan_shree', planNo: '912', name: "LIC's Nav Jeevan Shree (912)", nameHi: "एलआईसी नव जीवन श्री (912)", 
-        tagline: 'High sum assured aur surakshit returns ke sath endowment policy.', category: 'endowment', expectedReturnRate: 2.25, minSumAssured: 250000, 
-        isFlexible: true, minTerm: 12, maxTerm: 30, enforceLicRules: (term, ppt) => ({ term: Math.max(12, Math.min(30, term || 20)), ppt: Math.min(term, Math.max(5, ppt || 15)) }) 
-      },
-      { 
-        id: 'bima_lakshmi', planNo: '881', name: "LIC's Bima Lakshmi (881)", nameHi: "एलआईसी बीमा लक्ष्मी (881)", 
-        tagline: 'Nari sashaktikaran aur mahilaon ke aarthik vikas hetu vishesh yojana.', category: 'endowment', expectedReturnRate: 2.20, minSumAssured: 150000, 
-        isFlexible: true, minTerm: 10, maxTerm: 25, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(25, term || 20)), ppt: Math.min(term, Math.max(5, ppt || 15)) }) 
-      },
-      { 
-        id: 'jeevan_sathi_single', planNo: '888', name: "LIC's New Jeevan Sathi - Single Premium (888)", nameHi: "एलआईसी न्यू जीवन साथी - सिंगल प्रीमियम (888)", 
-        tagline: 'Pati-patni dono ke liye ek sath joint life single premium cover.', category: 'endowment', expectedReturnRate: 2.05, minSumAssured: 200000, 
-        allowedPptOptions: [1], minTerm: 10, maxTerm: 25, enforceLicRules: (term) => ({ term: Math.max(10, Math.min(25, term || 15)), ppt: 1 }) 
-      },
-      { 
-        id: 'jeevan_sathi_limited', planNo: '889', name: "LIC's New Jeevan Sathi - Limited Premium (889)", nameHi: "एलआईसी न्यू जीवन साथी - लिमिटेड प्रीमियम (889)", 
-        tagline: 'Joint life cover limited premium payment suvidha ke sath.', category: 'endowment', expectedReturnRate: 2.15, minSumAssured: 200000, 
-        isFlexible: true, minTerm: 12, maxTerm: 25, enforceLicRules: (term, ppt) => ({ term: Math.max(12, Math.min(25, term || 20)), ppt: Math.min(term, Math.max(5, ppt || 12)) }) 
-      },
-      { 
-        id: 'new_bima_jyoti', planNo: '890', name: "LIC's New Bima Jyoti (890)", nameHi: "एलआईसी न्यू बीमा ज्योति (890)", 
-        tagline: 'Guaranteed additions (₹50 prati hazaar basic sum assured prati varsh).', category: 'endowment', expectedReturnRate: 2.30, minSumAssured: 100000, 
-        isFlexible: true, minTerm: 15, maxTerm: 20, enforceLicRules: (term) => { const t = Math.max(15, Math.min(20, term || 20)); return { term: t, ppt: t - 5 }; } 
-      },
-      { 
-        id: 'bima_platinum', planNo: '770', name: "LIC's Bima Platinum (770)", nameHi: "एलआईसी बीमा प्लेटिनम (770)", 
-        tagline: 'High-net-worth aur premium bachat ke liye customized endowment cover.', category: 'endowment', expectedReturnRate: 2.25, minSumAssured: 500000, 
-        isFlexible: true, minTerm: 10, maxTerm: 25, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(25, term || 15)), ppt: Math.min(term, Math.max(5, ppt || 10)) }) 
-      },
+    // COMPLETE SCHEMES LIST
+    const officialLifeSchemes = [
+      // --- LIC PLANS (Participating / Traditional) ---
+      { id: 'jeevan_labh', company: 'LIC', planNo: '736', name: "LIC's Jeevan Labh Plan (736)", nameHi: "एलआईसी जीवन लाभ (736)", tagline: 'Kam varsh bharein: 10 pay/16 term, 15 pay/21 term, 16 pay/25 term.', category: 'endowment', minSumAssured: 200000, allowedCombinations: [{ term: 16, ppt: 10 }, { term: 21, ppt: 15 }, { term: 25, ppt: 16 }], enforceRules: (term) => (term <= 18 ? { term: 16, ppt: 10 } : (term <= 23 ? { term: 21, ppt: 15 } : { term: 25, ppt: 16 })) },
+      { id: 'new_endowment_plan', company: 'LIC', planNo: '714', name: "LIC's New Endowment Plan (714)", nameHi: "एलआईसी न्यू एंडोमेंट प्लान (714)", tagline: 'Niyamit bachat aur financial security ka classic plan.', category: 'endowment', minSumAssured: 100000, isFlexible: true, minTerm: 12, maxTerm: 35, enforceRules: (term, ppt) => { const t = Math.max(12, Math.min(35, term || 20)); return { term: t, ppt: t }; } },
+      { id: 'jeevan_anand', company: 'LIC', planNo: '715', name: "LIC's New Jeevan Anand (715)", nameHi: "एलआईसी न्यू जीवन आनंद (715)", tagline: 'Zindagi ke sath bhi, zindagi ke baad bhi - Lifelong cover.', category: 'endowment', minSumAssured: 100000, isFlexible: true, minTerm: 15, maxTerm: 35, enforceRules: (term, ppt) => ({ term: Math.max(15, Math.min(35, term || 25)), ppt: Math.min(term, Math.max(5, ppt || term)) }) },
+      { id: 'jeevan_lakshya', company: 'LIC', planNo: '733', name: "LIC's Jeevan Lakshya (733)", nameHi: "एलआईसी जीवन लक्ष्य (733)", tagline: 'Bachho ki padhai ke liye, PPT hamesha (Term - 3) saal.', category: 'endowment', minSumAssured: 100000, isFlexible: true, minTerm: 13, maxTerm: 25, enforceRules: (term) => { const t = Math.max(13, Math.min(25, term || 21)); return { term: t, ppt: t - 3 }; } },
+      { id: 'jeevan_umang', company: 'LIC', planNo: '745', name: "LIC's Jeevan Umang (745)", nameHi: "एलआईसी जीवन उमंग (745)", tagline: '100 saal tak saalana 8% niyamit aamdani (Survival Benefit).', category: 'whole_life', minSumAssured: 200000, isWholeLifeIncome: true, incomePercent: 0.08, allowedPptOptions: [15, 20, 25], enforceRules: (term, ppt, age) => { let p = ppt <= 17 ? 15 : (ppt <= 22 ? 20 : 25); return { term: Math.min(100, Math.max(p + 5, 100 - (age || 30))), ppt: p }; } },
+      { id: 'jeevan_utsav', company: 'LIC', planNo: '771', name: "LIC's Jeevan Utsav (771)", nameHi: "एलआईसी जीवन उत्सव (771)", tagline: 'Lifetime guaranteed 10% regular income benefit har saal.', category: 'whole_life', minSumAssured: 500000, isWholeLifeIncome: true, incomePercent: 0.10, allowedPptOptions: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], enforceRules: (term, ppt, age) => ({ term: Math.min(100, 100 - (age || 30)), ppt: Math.max(5, Math.min(16, ppt || 10)) }) },
+      { id: 'single_premium_endowment', company: 'LIC', planNo: '717', name: "LIC's Single Premium Endowment (717)", nameHi: "एलआईसी सिंगल प्रीमियम एंडोमेंट (717)", tagline: 'Ek baari me premium jama karein aur lambe samay tak suraksha paayein.', category: 'endowment', minSumAssured: 50000, allowedPptOptions: [1], minTerm: 10, maxTerm: 25, enforceRules: (term) => ({ term: Math.max(10, Math.min(25, term || 15)), ppt: 1 }) },
+      { id: 'money_back_20', company: 'LIC', planNo: '720', name: "LIC's New Money Back - 20 Yrs (720)", nameHi: "एलआईसी 20 वर्ष मनी बैक (720)", tagline: '15 saal bharein, 5ve, 10ve aur 15ve saal 20% cashback + Maturity.', category: 'money_back', minSumAssured: 100000, allowedCombinations: [{ term: 20, ppt: 15 }], enforceRules: () => ({ term: 20, ppt: 15 }) },
+      { id: 'money_back_25', company: 'LIC', planNo: '721', name: "LIC's New Money Back - 25 Yrs (721)", nameHi: "एलआईसी 25 वर्ष मनी बैक (721)", tagline: '20 saal bharein, 5ve, 10ve, 15ve, 20ve saal 15% cashback + Maturity.', category: 'money_back', minSumAssured: 100000, allowedCombinations: [{ term: 25, ppt: 20 }], enforceRules: () => ({ term: 25, ppt: 20 }) },
+      { id: 'amritbaal', company: 'LIC', planNo: '774', name: "LIC's Amritbaal (774)", nameHi: "एलआईसी अमृतबाल (774)", tagline: 'Chhote bachhon ke liye guaranteed additions ke sath.', category: 'endowment', minSumAssured: 200000, isFlexible: true, minTerm: 10, maxTerm: 25, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(25, term || 20)), ppt: Math.min(term, Math.max(5, ppt || 10)) }) },
+      { id: 'new_bima_jyoti', company: 'LIC', planNo: '890', name: "LIC's New Bima Jyoti (890)", nameHi: "एलआईसी न्यू बीमा ज्योति (890)", tagline: 'Guaranteed additions (₹50 prati hazaar SA prati varsh).', category: 'endowment', minSumAssured: 100000, isFlexible: true, minTerm: 15, maxTerm: 20, enforceRules: (term) => { const t = Math.max(15, Math.min(20, term || 20)); return { term: t, ppt: t - 5 }; } },
+      { id: 'digi_term', company: 'LIC', planNo: '876', name: "LIC's Digi Term (876)", nameHi: "एलआईसी डिजी टर्म (876)", tagline: 'Direct pure term plan, high financial protection at nominal cost.', category: 'term', minSumAssured: 5000000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 40, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(40, term || 30)), ppt: Math.min(term, ppt || term) }) },
+      { id: 'new_pension_plus', company: 'LIC', planNo: '867', name: "LIC's New Pension Plus (867)", nameHi: "एलआईसी न्यू पेंशन प्लस (867)", tagline: 'Retirement corpus build karne hetu pension product.', category: 'pension', minSumAssured: 100000, isAnnuity: true, isFlexible: true, minTerm: 10, maxTerm: 42, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(42, term || 20)), ppt: Math.min(term, ppt || 15) }) },
 
-      // WHOLE LIFE PLANS (3)
-      { 
-        id: 'jeevan_umang', planNo: '745', name: "LIC's Jeevan Umang (745)", nameHi: "एलआईसी जीवन उमंग (745)", 
-        tagline: '100 saal ki umar tak saalana 8% niyamit aamdani (Survival Benefit).', category: 'whole_life', expectedReturnRate: 2.85, minSumAssured: 200000, 
-        isWholeLifeIncome: true, incomePercent: 0.08, allowedPptOptions: [15, 20, 25], enforceLicRules: (term, ppt, age) => { let p = ppt <= 17 ? 15 : (ppt <= 22 ? 20 : 25); return { term: Math.min(100, Math.max(p + 5, 100 - (age || 30))), ppt: p }; } 
-      },
-      { 
-        id: 'jeevan_utsav', planNo: '771', name: "LIC's Jeevan Utsav (771)", nameHi: "एलआईसी जीवन उत्सव (771)", 
-        tagline: 'Lifetime guaranteed 10% regular income benefit har saal.', category: 'whole_life', expectedReturnRate: 2.75, minSumAssured: 500000, 
-        isWholeLifeIncome: true, incomePercent: 0.10, allowedPptOptions: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], enforceLicRules: (term, ppt, age) => ({ term: Math.min(100, 100 - (age || 30)), ppt: Math.max(5, Math.min(16, ppt || 10)) }) 
-      },
-      { 
-        id: 'jeevan_utsav_single', planNo: '883', name: "LIC's Jeevan Utsav Single Premium (883)", nameHi: "एलआईसी जीवन उत्सव सिंगल प्रीमियम (883)", 
-        tagline: 'Ek bar premium dekar jeevan bhar 10% guaranteed aamdani paayein.', category: 'whole_life', expectedReturnRate: 2.65, minSumAssured: 500000, 
-        isWholeLifeIncome: true, incomePercent: 0.10, allowedPptOptions: [1], enforceLicRules: (term, ppt, age) => ({ term: Math.min(100, 100 - (age || 30)), ppt: 1 }) 
-      },
-
-      // MONEY BACK PLANS (5)
-      { 
-        id: 'bima_shree', planNo: '748', name: "LIC's Bima Shree (748)", nameHi: "एलआईसी बीमा श्री (748)", 
-        tagline: 'High Net-worth vyaktiyon ke liye limited premium money-back plan.', category: 'money_back', expectedReturnRate: 2.20, minSumAssured: 1000000, 
-        allowedCombinations: [{ term: 14, ppt: 10 }, { term: 16, ppt: 12 }, { term: 18, ppt: 14 }, { term: 20, ppt: 16 }], enforceLicRules: (term) => (term <= 15 ? { term: 14, ppt: 10 } : (term <= 17 ? { term: 16, ppt: 12 } : (term <= 19 ? { term: 18, ppt: 14 } : { term: 20, ppt: 16 }))) 
-      },
-      { 
-        id: 'money_back_20', planNo: '720', name: "LIC's New Money Back Plan - 20 Years (720)", nameHi: "एलआईसी 20 वर्ष मनी बैक (720)", 
-        tagline: '15 saal bharein, 5ve, 10ve aur 15ve saal 20% cashback + Maturity 20ve saal.', category: 'money_back', expectedReturnRate: 2.05, minSumAssured: 100000, 
-        allowedCombinations: [{ term: 20, ppt: 15 }], enforceLicRules: () => ({ term: 20, ppt: 15 }) 
-      },
-      { 
-        id: 'money_back_25', planNo: '721', name: "LIC's New Money Back Plan - 25 Years (721)", nameHi: "एलआईसी 25 वर्ष मनी बैक (721)", 
-        tagline: '20 saal bharein, 5ve, 10ve, 15ve, 20ve saal 15% cashback + Maturity 25ve saal.', category: 'money_back', expectedReturnRate: 2.10, minSumAssured: 100000, 
-        allowedCombinations: [{ term: 25, ppt: 20 }], enforceLicRules: () => ({ term: 25, ppt: 20 }) 
-      },
-      { 
-        id: 'child_money_back', planNo: '732', name: "LIC's New Children's Money Back Plan (732)", nameHi: "एलआईसी न्यू चिल्ड्रन्स मनी बैक (732)", 
-        tagline: 'Bache ki 18, 20 aur 22 varsh ki umar par 20% payouts + 25ve varsh par maturity.', category: 'money_back', expectedReturnRate: 2.10, minSumAssured: 100000, 
-        isChildPlan: true, enforceLicRules: (term, ppt, age) => { const t = Math.max(5, 25 - (age || 0)); return { term: t, ppt: Math.max(5, t - 5) }; } 
-      },
-      { 
-        id: 'jeevan_tarun', planNo: '734', name: "LIC's Jeevan Tarun (734)", nameHi: "एलआईसी जीवन तरुण (734)", 
-        tagline: 'Bachho ke higher education ke hisab se flexible survival benefit options.', category: 'money_back', expectedReturnRate: 2.15, minSumAssured: 75000, 
-        isChildPlan: true, enforceLicRules: (term, ppt, age) => { const t = Math.max(5, 25 - (age || 0)); return { term: t, ppt: Math.max(5, 20 - (age || 0)) }; } 
-      },
-
-      // TERM ASSURANCE (9)
-      { 
-        id: 'digi_term', planNo: '876', name: "LIC's Digi Term (876)", nameHi: "एलआईसी डिजी टर्म (876)", 
-        tagline: 'Online direct pure term plan, kam premium par high insurance cover.', category: 'term', expectedReturnRate: 1.00, minSumAssured: 5000000, 
-        isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 40, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(40, term || 30)), ppt: Math.min(term, ppt || term) }) 
-      },
-      { 
-        id: 'digi_credit_life', planNo: '878', name: "LIC's Digi Credit Life (878)", nameHi: "एलआईसी डिजी क्रेडिट लाइफ (878)", 
-        tagline: 'Loan security aur liability protection ke liye decreasing term plan.', category: 'term', expectedReturnRate: 1.00, minSumAssured: 5000000, 
-        isPureTerm: true, allowedPptOptions: [1], minTerm: 5, maxTerm: 30, enforceLicRules: (term) => ({ term: Math.max(5, Math.min(30, term || 20)), ppt: 1 }) 
-      },
-      { 
-        id: 'yuva_credit_life', planNo: '877', name: "LIC's Yuva Credit Life (877)", nameHi: "एलआईसी युवा क्रेडिट लाइफ (877)", 
-        tagline: 'Yuvaon ke liye affordable loan coverage yojana.', category: 'term', expectedReturnRate: 1.00, minSumAssured: 2500000, 
-        isPureTerm: true, allowedPptOptions: [1], minTerm: 5, maxTerm: 30, enforceLicRules: (term) => ({ term: Math.max(5, Math.min(30, term || 20)), ppt: 1 }) 
-      },
-      { 
-        id: 'yuva_term', planNo: '875', name: "LIC's Yuva Term (875)", nameHi: "एलआईसी युवा टर्म (875)", 
-        tagline: 'Young individuals ke liye tailored affordable pure life protection.', category: 'term', expectedReturnRate: 1.00, minSumAssured: 2500000, 
-        isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 40, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(40, term || 30)), ppt: Math.min(term, ppt || term) }) 
-      },
-      { 
-        id: 'new_tech_term', planNo: '954', name: "LIC's New Tech-Term (954)", nameHi: "एलआईसी न्यू टेक-टर्म (954)", 
-        tagline: 'Online pure risk cover with special rates for non-smokers.', category: 'term', expectedReturnRate: 1.00, minSumAssured: 5000000, 
-        isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 40, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(40, term || 30)), ppt: Math.min(term, ppt || term) }) 
-      },
-      { 
-        id: 'new_jeevan_amar', planNo: '955', name: "LIC's New Jeevan Amar (955)", nameHi: "एलआईसी न्यू जीवन अमर (955)", 
-        tagline: 'Offline term plan agent paramarsh aur high sum assured rebate ke sath.', category: 'term', expectedReturnRate: 1.00, minSumAssured: 2500000, 
-        isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 40, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(40, term || 30)), ppt: Math.min(term, ppt || term) }) 
-      },
-      { 
-        id: 'saral_jeevan_bima', planNo: '859', name: "LIC's Saral Jeevan Bima (859)", nameHi: "एलआईसी सरल जीवन बीमा (859)", 
-        tagline: 'Standard individual pure term plan aasan eligibility sharto ke sath.', category: 'term', expectedReturnRate: 1.00, minSumAssured: 500000, 
-        isPureTerm: true, isFlexible: true, minTerm: 5, maxTerm: 40, enforceLicRules: (term, ppt) => ({ term: Math.max(5, Math.min(40, term || 20)), ppt: Math.min(term, ppt || term) }) 
-      },
-      { 
-        id: 'bima_kavach', planNo: '887', name: "LIC's Bima Kavach (887)", nameHi: "एलआईसी बीमा कवच (887)", 
-        tagline: 'Comprehensive security aur risk cover pradan karne wala plan.', category: 'term', expectedReturnRate: 1.00, minSumAssured: 2000000, 
-        isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 30, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(30, term || 20)), ppt: Math.min(term, ppt || term) }) 
-      },
-      { 
-        id: 'jeevan_raksha', planNo: '894', name: "LIC's Jeevan Raksha (894)", nameHi: "एलआईसी जीवन रक्षा (894)", 
-        tagline: 'Har parivar ki suraksha ke liye essential pure risk cover.', category: 'term', expectedReturnRate: 1.00, minSumAssured: 1000000, 
-        isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 35, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(35, term || 25)), ppt: Math.min(term, ppt || term) }) 
-      },
-
-      // PENSION & ANNUITY (5)
-      { 
-        id: 'new_pension_plus', planNo: '867', name: "LIC's New Pension Plus (867)", nameHi: "एलआईसी न्यू पेंशन प्लस (867)", 
-        tagline: 'Retirement corpus build karne ke liye market-linked pension product.', category: 'pension', expectedReturnRate: 2.40, minSumAssured: 100000, 
-        isAnnuity: true, isFlexible: true, minTerm: 10, maxTerm: 42, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(42, term || 20)), ppt: Math.min(term, ppt || 15) }) 
-      },
-      { 
-        id: 'jeevan_akshay', planNo: '857', name: "LIC's Jeevan Akshay-VII (857)", nameHi: "एलआईसी जीवन अक्षय-VII (857)", 
-        tagline: 'Single premium turant niyamit pension (Immediate Annuity) plan.', category: 'pension', expectedReturnRate: 2.20, minSumAssured: 100000, 
-        isAnnuity: true, allowedPptOptions: [1], enforceLicRules: () => ({ term: 30, ppt: 1 }) 
-      },
-      { 
-        id: 'new_jeevan_shanti', planNo: '758', name: "LIC's New Jeevan Shanti (758)", nameHi: "एलआईसी न्यू जीवन शांति (758)", 
-        tagline: 'Deferred Annuity: 1 se 12 saal baad guaranteed fixed pension shuru karein.', category: 'pension', expectedReturnRate: 2.30, minSumAssured: 150000, 
-        isAnnuity: true, allowedPptOptions: [1], minTerm: 5, maxTerm: 12, enforceLicRules: (term) => ({ term: Math.max(5, Math.min(12, term || 5)), ppt: 1 }) 
-      },
-      { 
-        id: 'saral_pension', planNo: '862', name: "LIC's Saral Pension (862)", nameHi: "एलआईसी सरल पेंशन (862)", 
-        tagline: 'Standard individual immediate annuity 100% return of purchase price ke sath.', category: 'pension', expectedReturnRate: 2.10, minSumAssured: 100000, 
-        isAnnuity: true, allowedPptOptions: [1], enforceLicRules: () => ({ term: 30, ppt: 1 }) 
-      },
-      { 
-        id: 'smart_pension', planNo: '879', name: "LIC's Smart Pension (879)", nameHi: "एलआईसी स्मार्ट पेंशन (879)", 
-        tagline: 'Aadhunik retirement planning aur regular income payouts.', category: 'pension', expectedReturnRate: 2.25, minSumAssured: 100000, 
-        isAnnuity: true, allowedPptOptions: [1], enforceLicRules: () => ({ term: 30, ppt: 1 }) 
-      },
-
-      // ULIP PLANS (4)
-      { 
-        id: 'index_plus', planNo: '873', name: "LIC's Index Plus (873)", nameHi: "एलआईसी इंडेक्स प्लस (873)", 
-        tagline: 'Stock index growth ka fayda aur sath me life cover protection.', category: 'endowment', expectedReturnRate: 2.70, minSumAssured: 300000, 
-        isFlexible: true, minTerm: 10, maxTerm: 25, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(25, term || 15)), ppt: Math.min(term, ppt || term) }) 
-      },
-      { 
-        id: 'nivesh_plus', planNo: '749', name: "LIC's Nivesh Plus (749)", nameHi: "एलआईसी निवेश प्लस (749)", 
-        tagline: 'Single premium unit-linked bachat yojana market linked returns ke sath.', category: 'endowment', expectedReturnRate: 2.60, minSumAssured: 125000, 
-        allowedPptOptions: [1], minTerm: 10, maxTerm: 25, enforceLicRules: (term) => ({ term: Math.max(10, Math.min(25, term || 15)), ppt: 1 }) 
-      },
-      { 
-        id: 'siip', planNo: '752', name: "LIC's SIIP (752)", nameHi: "एलआईसी सिप (752)", 
-        tagline: 'Systematic Investment Insurance Plan with guaranteed additions.', category: 'endowment', expectedReturnRate: 2.65, minSumAssured: 400000, 
-        isFlexible: true, minTerm: 10, maxTerm: 25, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(25, term || 20)), ppt: Math.min(term, ppt || term) }) 
-      },
-      { 
-        id: 'protection_plus', planNo: '886', name: "LIC's Protection Plus (886)", nameHi: "एलआईसी प्रोटेक्शन प्लस (886)", 
-        tagline: 'Unit-linked pure safety & growth plan.', category: 'endowment', expectedReturnRate: 2.50, minSumAssured: 500000, 
-        isFlexible: true, minTerm: 10, maxTerm: 25, enforceLicRules: (term, ppt) => ({ term: Math.max(10, Math.min(25, term || 20)), ppt: Math.min(term, ppt || term) }) 
-      },
-
-      // MICRO PLANS (2)
-      { 
-        id: 'micro_bachat', planNo: '751', name: "LIC's Micro Bachat (751)", nameHi: "एलआईसी माइक्रो बचत (751)", 
-        tagline: 'Chhote vyapariyon aur kam aamdani wale parivaron hetu kam premium plan.', category: 'endowment', expectedReturnRate: 2.05, minSumAssured: 50000, 
-        isFlexible: true, minTerm: 10, maxTerm: 15, enforceLicRules: (term, ppt) => { const t = Math.max(10, Math.min(15, term || 12)); return { term: t, ppt: t }; } 
-      },
-      { 
-        id: 'jan_suraksha', planNo: '880', name: "LIC's Jan Suraksha (880)", nameHi: "एलआईसी जन सुरक्षा (880)", 
-        tagline: 'Aam janta ke aarthik vikas aur bachat hetu aasan micro plan.', category: 'endowment', expectedReturnRate: 2.00, minSumAssured: 30000, 
-        isFlexible: true, minTerm: 5, maxTerm: 12, enforceLicRules: (term, ppt) => { const t = Math.max(5, Math.min(12, term || 10)); return { term: t, ppt: t }; } 
-      }
+      // --- CSC / OTHER LIFE INSURERS (Guaranteed Regular Income + 110% Refund Model) ---
+      { id: 'sbi_platina_plus', company: 'SBI Life', planNo: 'SBI-01', name: "SBI Life - Smart Platina Plus", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना प्लस", tagline: 'Guaranteed regular income post PPT + 110% Return of Premium at maturity.', category: 'whole_life', minSumAssured: 250000, isWholeLifeIncome: true, incomePercent: 0.09, allowedPptOptions: [7, 8, 10, 12, 15], enforceRules: (term, ppt) => ({ term: Math.max(15, Math.min(35, term || 25)), ppt: Math.min(15, ppt || 10) }) },
+      { id: 'sbi_platina_supreme', company: 'SBI Life', planNo: 'SBI-02', name: "SBI Life - Smart Platina Supreme", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना सुप्रीम", tagline: 'High financial corpus generation with guaranteed maturity additions.', category: 'endowment', minSumAssured: 300000, allowedPptOptions: [7, 8, 10, 12, 15], isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(30, term || 20)), ppt: Math.min(15, ppt || 10) }) },
+      { id: 'indiafirst_gold', company: 'IndiaFirst', planNo: 'CSC-02', name: "IndiaFirst G.O.L.D (Guarantee of Life Dreams)", nameHi: "इंडियाफर्स्ट गोल्ड (लाइफ ड्रीम्स)", tagline: 'Pay for limited years and get guaranteed regular income + 100% premium back.', category: 'whole_life', minSumAssured: 150000, isWholeLifeIncome: true, incomePercent: 0.085, allowedPptOptions: [5, 6, 8, 10, 12], enforceRules: (term, ppt) => ({ term: Math.max(20, Math.min(40, term || 30)), ppt: Math.min(12, ppt || 10) }) },
+      { id: 'shriram_assured_income', company: 'Shriram Life', planNo: 'SH-01', name: "Shriram Life Assured Income Plan", nameHi: "श्रीराम लाइफ अश्योर्ड इनकम प्लान", tagline: 'Assured continuous income benefit + Total Premium Refund.', category: 'whole_life', minSumAssured: 150000, isWholeLifeIncome: true, incomePercent: 0.085, allowedPptOptions: [8, 10, 12, 15], enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(25, term || 20)), ppt: Math.min(15, ppt || 10) }) },
+      { id: 'shriram_assured_saving', company: 'Shriram Life', planNo: 'SH-02', name: "Shriram Life Assured Saving Plan", nameHi: "श्रीराम लाइफ अश्योर्ड सेविंग प्लान", tagline: 'Guaranteed lump sum corpus at maturity with high return safety.', category: 'endowment', minSumAssured: 100000, isFlexible: true, minTerm: 10, maxTerm: 20, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(20, term || 15)), ppt: Math.min(term, ppt || 10) }) },
+      { id: 'indiafirst_khata', company: 'IndiaFirst', planNo: 'CSC-01', name: "IndiaFirst CSC Insurance Khata", nameHi: "इंडियाफर्स्ट सीएससी इंश्योरेंस खाता", tagline: 'CSC Portal special micro-savings with flexible premium deposits.', category: 'endowment', minSumAssured: 10000, isFlexible: true, minTerm: 5, maxTerm: 15, enforceRules: (term, ppt) => ({ term: Math.max(5, Math.min(15, term || 10)), ppt: Math.min(term, ppt || term) }) },
+      { id: 'sbi_smart_samriddhi', company: 'SBI Life', planNo: 'SBI-05', name: "SBI Life - New Smart Samriddhi", nameHi: "एसबीआई लाइफ - न्यू स्मार्ट समृद्धि", tagline: 'Pay for just 5 years and get uninterrupted financial security for 10 years.', category: 'endowment', minSumAssured: 30000, allowedCombinations: [{ term: 10, ppt: 5 }], enforceRules: () => ({ term: 10, ppt: 5 }) },
+      { id: 'sbi_saral_swadhan_plus', company: 'SBI Life', planNo: 'SBI-03', name: "SBI Life - Saral Swadhan Plus", nameHi: "एसबीआई लाइफ - सरल स्वधन प्लस", tagline: 'Life protection + 100% to 115% return of total premium at maturity.', category: 'term', minSumAssured: 30000, allowedCombinations: [{ term: 10, ppt: 10 }, { term: 15, ppt: 15 }], enforceRules: (term) => (term <= 12 ? { term: 10, ppt: 10 } : { term: 15, ppt: 15 }) }
     ];
 
     let currentSchemesList = [];
 
-    // AUTO RIDERS CALCULATION (ADDB, TR, CIR)
+    // AUTO RIDERS CALCULATION
     function autoApplyRiders() {
       const age = Number(document.getElementById('calcAgeInput').value) || 28;
       const budget = getAnnualBudget();
       const ppt = Number(document.getElementById('calcPptInput').value) || 12;
 
-      // Base sum assured estimation
-      let estimatedBaseSa = Math.max(100000, Math.round((budget * ppt * 0.75) / 25000) * 25000);
+      let estimatedBaseSa = Math.max(200000, Math.round((budget * ppt * 1.1) / 25000) * 25000);
 
-      // 1. ADDB Rider (Auto 100% Sum Assured, max 1 Crore)
       const addbVal = Math.min(10000000, estimatedBaseSa);
       document.getElementById('riderAddbCheck').checked = (age >= 18 && age <= 65);
       document.getElementById('riderAddbValue').value = addbVal;
 
-      // 2. Term Rider (Auto eligible for age 18-50)
       const trVal = (age >= 18 && age <= 50) ? Math.min(5000000, estimatedBaseSa) : 0;
       document.getElementById('riderTrCheck').checked = (trVal > 0);
       document.getElementById('riderTrValue').value = trVal;
 
-      // 3. Critical Illness Rider (Auto 5 Lakh if budget allows)
       const cirVal = (age >= 18 && age <= 55 && budget >= 30000) ? 500000 : 250000;
       document.getElementById('riderCirCheck').checked = (age >= 18 && age <= 55);
       document.getElementById('riderCirValue').value = cirVal;
@@ -1250,10 +1083,6 @@
     function syncBudgetFromHero(val) { document.getElementById('calcBudgetInput').value = val; handleInputsChange(); }
     function syncTermFromHero(val) { document.getElementById('calcTermInput').value = val; applyPolicyFilters(); }
     function syncPptFromHero(val) { document.getElementById('calcPptInput').value = val; applyPolicyFilters(); }
-    function updateAgeInput(val) { handleInputsChange(); }
-    function updateBudgetInput(val) { handleInputsChange(); }
-
-    function calculateAmounts() { handleInputsChange(); }
 
     function resetCalculatorForm() {
       document.getElementById('calcAgeInput').value = '28';
@@ -1261,7 +1090,7 @@
       document.getElementById('calcTermInput').value = '25';
       document.getElementById('calcPptInput').value = '12';
       document.getElementById('calcMode').value = 'monthly';
-      document.getElementById('calcCategory').value = 'all';
+      document.getElementById('calcCompany').value = 'all';
       selectQuickCategory('all');
       autoApplyRiders();
       applyPolicyFilters();
@@ -1275,7 +1104,6 @@
     }
 
     function selectQuickCategory(cat) {
-      document.getElementById('calcCategory').value = cat;
       const chipIds = ['all', 'endowment', 'money_back', 'whole_life', 'term', 'pension'];
       chipIds.forEach(id => {
         const btn = document.getElementById(`catFilterBtn_${id}`);
@@ -1283,6 +1111,7 @@
         btn.className = (id === cat) ? 'px-3.5 py-1.5 rounded-xl text-xs font-black transition border bg-brand-navy text-white border-brand-navy shadow-sm' :
                                        'px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold';
       });
+      window.activeQuickCat = cat;
       applyPolicyFilters();
     }
 
@@ -1307,18 +1136,97 @@
       applyPolicyFilters();
     }
 
-    // FULL YEAR-BY-YEAR DETAIL CALCULATOR INCLUDING ALL CUSTOMIZED RIDERS
+    function checkPlanEligibility(scheme, inputTerm, inputPpt) {
+      if (scheme.allowedCombinations) {
+        return scheme.allowedCombinations.some(c => c.term === inputTerm && c.ppt === inputPpt);
+      }
+      if (scheme.allowedPptOptions) {
+        const pptMatch = scheme.allowedPptOptions.includes(inputPpt);
+        const termMatch = (!scheme.minTerm || inputTerm >= scheme.minTerm) && (!scheme.maxTerm || inputTerm <= scheme.maxTerm);
+        return pptMatch && termMatch;
+      }
+      if (scheme.isFlexible) {
+        const termValid = (!scheme.minTerm || inputTerm >= scheme.minTerm) && (!scheme.maxTerm || inputTerm <= scheme.maxTerm);
+        const pptValid = inputPpt <= inputTerm;
+        return termValid && pptValid;
+      }
+      const enforced = scheme.enforceRules ? scheme.enforceRules(inputTerm, inputPpt) : { term: inputTerm, ppt: inputPpt };
+      return enforced.term === inputTerm && enforced.ppt === inputPpt;
+    }
+
+    // =========================================================================
+    // ACCURATE INDEPENDENT CALCULATION ENGINE (CSC vs LIC)
+    // =========================================================================
     function calculateFullPlanDetails(scheme, userAge, annualBudget, inputTerm, inputPpt) {
       let reqTerm = Number(inputTerm) || 25;
       let reqPpt = Number(inputPpt) || 12;
 
-      let validated = scheme.enforceLicRules ? scheme.enforceLicRules(reqTerm, reqPpt, userAge) : { term: reqTerm, ppt: reqPpt };
+      let validated = scheme.enforceRules ? scheme.enforceRules(reqTerm, reqPpt, userAge) : { term: reqTerm, ppt: reqPpt };
       let term = validated.term;
       let ppt = validated.ppt;
 
-      let sumAssured = Math.max(scheme.minSumAssured || 100000, Math.round((annualBudget * ppt * 0.75) / 25000) * 25000);
+      let totalInvestment = annualBudget * ppt;
+      let sumAssured = 0;
+      let estimatedMaturity = 0;
+      let regularAnnualIncome = 0;
+      let totalMaturityRefund = 0;
 
-      // Customer Edited Riders
+      // ---------------------------------------------------------
+      // CALCULATION 1: CSC / OTHER LIFE INSURERS (SBI, IndiaFirst, Shriram)
+      // ---------------------------------------------------------
+      if (scheme.company !== 'LIC') {
+        sumAssured = Math.max(scheme.minSumAssured || 100000, Math.round((annualBudget * 10) / 25000) * 25000);
+
+        if (scheme.isWholeLifeIncome || scheme.id.includes('platina_plus') || scheme.id.includes('gold') || scheme.id.includes('income')) {
+          // Guaranteed income post paying term (e.g. SBI Life Smart Platina Plus: 8.5% - 9.5% p.a.)
+          regularAnnualIncome = Math.round(annualBudget * 0.92);
+          // 110% of total premium paid returned at maturity
+          totalMaturityRefund = Math.round(totalInvestment * 1.10);
+          const incomeYears = Math.max(1, term - ppt);
+          estimatedMaturity = (regularAnnualIncome * incomeYears) + totalMaturityRefund;
+        } else if (scheme.category === 'endowment') {
+          // Guaranteed endowment (e.g. Smart Platina Supreme)
+          estimatedMaturity = Math.round(totalInvestment * 2.18);
+        } else if (scheme.category === 'term') {
+          // ROP Term
+          estimatedMaturity = Math.round(totalInvestment * 1.15);
+        } else {
+          estimatedMaturity = Math.round(totalInvestment * 2.05);
+        }
+      } 
+      // ---------------------------------------------------------
+      // CALCULATION 2: LIC OF INDIA (Traditional Participating Bonus)
+      // ---------------------------------------------------------
+      else {
+        let saFactor = (term >= 25) ? 1.20 : (term >= 20 ? 1.10 : 0.95);
+        sumAssured = Math.max(scheme.minSumAssured || 100000, Math.round((annualBudget * ppt * saFactor) / 25000) * 25000);
+
+        if (scheme.id === 'jeevan_labh') {
+          // Simple Reversionary Bonus + FAB (approx ₹450-480/1000 SA)
+          let annualBonusRate = 0.046;
+          let bonusTotal = sumAssured * annualBonusRate * term;
+          let fab = (term >= 25) ? (sumAssured * 0.45) : (term >= 21 ? sumAssured * 0.25 : sumAssured * 0.12);
+          estimatedMaturity = Math.round(sumAssured + bonusTotal + fab);
+        } else if (scheme.id === 'jeevan_umang') {
+          // Lifetime 8% of Sum Assured + Terminal Bonus
+          regularAnnualIncome = Math.round(sumAssured * 0.08);
+          estimatedMaturity = Math.round(sumAssured * 2.85);
+        } else if (scheme.id === 'jeevan_utsav') {
+          // Lifetime 10% Guaranteed Income
+          regularAnnualIncome = Math.round(sumAssured * 0.10);
+          estimatedMaturity = sumAssured;
+        } else if (scheme.isPureTerm) {
+          estimatedMaturity = 0;
+        } else {
+          // Classic Endowment / Bima Jyoti
+          let bonusRate = 0.043;
+          let totalBonus = sumAssured * bonusRate * term;
+          let fab = (term >= 20) ? (sumAssured * 0.15) : 0;
+          estimatedMaturity = Math.round(sumAssured + totalBonus + fab);
+        }
+      }
+
+      // Riders
       const addbActive = document.getElementById('riderAddbCheck').checked;
       const addbCover = addbActive ? (Number(document.getElementById('riderAddbValue').value) || sumAssured) : 0;
 
@@ -1328,14 +1236,7 @@
       const cirActive = document.getElementById('riderCirCheck').checked;
       const cirCover = cirActive ? (Number(document.getElementById('riderCirValue').value) || 250000) : 0;
 
-      let totalInvestment = annualBudget * ppt;
-      let estimatedMaturity = scheme.isPureTerm ? 0 : Math.round(totalInvestment * (scheme.expectedReturnRate || 2.2));
-      let regularAnnualIncome = scheme.isWholeLifeIncome ? (sumAssured * (scheme.incomePercent || 0.08)) : 0;
-
-      if (scheme.id === 'jeevan_utsav' || scheme.id === 'jeevan_utsav_single') {
-        estimatedMaturity = sumAssured + (sumAssured * 0.04 * ppt);
-      }
-
+      // Year-by-year schedule generate
       const yearRows = [];
       let cumulativePaid = 0;
 
@@ -1344,20 +1245,14 @@
         const premiumThisYear = (y <= ppt) ? annualBudget : 0;
         cumulativePaid += premiumThisYear;
 
-        const bonusRate4 = 0.022;
-        const bonusRate8 = 0.048;
-        const accruedBonus4 = Math.round(sumAssured * bonusRate4 * y);
-        const accruedBonus8 = Math.round(sumAssured * bonusRate8 * y);
-
-        // Normal Cover includes Term Rider (TR)
-        const normalCover = scheme.isPureTerm ? sumAssured : (sumAssured + trCover + accruedBonus8);
-        // Accidental Cover includes ADDB + TR
-        const accidentalCoverWithAddb = scheme.isPureTerm ? sumAssured : (sumAssured + trCover + addbCover + accruedBonus8);
+        let accruedBonus = (scheme.company === 'LIC' && !scheme.isPureTerm) ? Math.round(sumAssured * 0.045 * y) : 0;
+        let normalCover = scheme.isPureTerm ? sumAssured : (sumAssured + trCover + accruedBonus);
+        let accidentalCoverWithAddb = scheme.isPureTerm ? sumAssured : (sumAssured + trCover + addbCover + accruedBonus);
 
         let loanValue = 0;
         let surrenderValue = 0;
         if (!scheme.isPureTerm && y >= 2 && cumulativePaid > 0) {
-          const surrenderFactor = Math.min(0.85, 0.30 + ((y - 2) * 0.026));
+          const surrenderFactor = Math.min(0.85, 0.35 + ((y - 2) * 0.028));
           surrenderValue = Math.round(cumulativePaid * surrenderFactor);
           loanValue = Math.round(surrenderValue * 0.90);
         }
@@ -1365,33 +1260,25 @@
         let cashInflow = 0;
         let returnNote = '-';
 
-        if (scheme.id === 'money_back_20') {
-          if (y === 5 || y === 10 || y === 15) {
-            cashInflow = sumAssured * 0.20;
-            returnNote = `20% SB: ₹${cashInflow.toLocaleString('en-IN')}`;
-          } else if (y === term) {
-            cashInflow = (sumAssured * 0.40) + accruedBonus8;
-            returnNote = `Maturity: ₹${cashInflow.toLocaleString('en-IN')}`;
+        // Payout Schedule logic
+        if (scheme.company !== 'LIC' && regularAnnualIncome > 0 && y > ppt) {
+          cashInflow = regularAnnualIncome;
+          returnNote = `Income: ₹${cashInflow.toLocaleString('en-IN')}`;
+          if (y === term) {
+            cashInflow += totalMaturityRefund;
+            returnNote = `Income + 110% Refund: ₹${cashInflow.toLocaleString('en-IN')}`;
           }
-        } else if (scheme.id === 'money_back_25') {
-          if (y === 5 || y === 10 || y === 15 || y === 20) {
-            cashInflow = sumAssured * 0.15;
-            returnNote = `15% SB: ₹${cashInflow.toLocaleString('en-IN')}`;
+        } else if (scheme.category === 'money_back') {
+          if (y % 5 === 0 && y < term) {
+            cashInflow = Math.round(sumAssured * 0.20);
+            returnNote = `Cash Back: ₹${cashInflow.toLocaleString('en-IN')}`;
           } else if (y === term) {
-            cashInflow = (sumAssured * 0.40) + accruedBonus8;
-            returnNote = `Maturity: ₹${cashInflow.toLocaleString('en-IN')}`;
-          }
-        } else if (scheme.id === 'bima_shree') {
-          if (term === 16 && (y === 12 || y === 14)) {
-            cashInflow = sumAssured * 0.35;
-            returnNote = `35% SB: ₹${cashInflow.toLocaleString('en-IN')}`;
-          } else if (y === term) {
-            cashInflow = (sumAssured * 0.30) + accruedBonus8;
+            cashInflow = Math.round((sumAssured * 0.40) + accruedBonus);
             returnNote = `Maturity: ₹${cashInflow.toLocaleString('en-IN')}`;
           }
         } else if (scheme.isWholeLifeIncome && y > ppt) {
           cashInflow = regularAnnualIncome;
-          returnNote = `Annual: ₹${cashInflow.toLocaleString('en-IN')}`;
+          returnNote = `Guaranteed: ₹${cashInflow.toLocaleString('en-IN')}`;
         } else if (y === term && !scheme.isPureTerm) {
           cashInflow = estimatedMaturity;
           returnNote = `Maturity: ₹${cashInflow.toLocaleString('en-IN')}`;
@@ -1408,8 +1295,8 @@
           surrenderValue: surrenderValue,
           cashInflow: cashInflow,
           returnNote: returnNote,
-          irdai4Return: scheme.isPureTerm ? 0 : Math.round(sumAssured + accruedBonus4),
-          irdai8Return: scheme.isPureTerm ? 0 : Math.round(sumAssured + accruedBonus8)
+          irdai4Return: scheme.isPureTerm ? 0 : Math.round(totalInvestment * 1.35),
+          irdai8Return: scheme.isPureTerm ? 0 : Math.round(estimatedMaturity)
         });
       }
 
@@ -1426,31 +1313,14 @@
         cirCover,
         estimatedMaturity,
         regularAnnualIncome,
+        totalMaturityRefund,
         yearRows
       };
     }
 
-    function checkPlanEligibility(scheme, inputTerm, inputPpt) {
-      if (scheme.allowedCombinations) {
-        return scheme.allowedCombinations.some(c => c.term === inputTerm && c.ppt === inputPpt);
-      }
-      if (scheme.allowedPptOptions) {
-        const pptMatch = scheme.allowedPptOptions.includes(inputPpt);
-        const termMatch = (!scheme.minTerm || inputTerm >= scheme.minTerm) && (!scheme.maxTerm || inputTerm <= scheme.maxTerm);
-        return pptMatch && termMatch;
-      }
-      if (scheme.isFlexible) {
-        const termValid = (!scheme.minTerm || inputTerm >= scheme.minTerm) && (!scheme.maxTerm || inputTerm <= scheme.maxTerm);
-        const pptValid = inputPpt <= inputTerm;
-        return termValid && pptValid;
-      }
-      const enforced = scheme.enforceLicRules ? scheme.enforceLicRules(inputTerm, inputPpt) : { term: inputTerm, ppt: inputPpt };
-      return enforced.term === inputTerm && enforced.ppt === inputPpt;
-    }
-
     function applyPolicyFilters() {
       const age = Number(document.getElementById('calcAgeInput').value) || 28;
-      const category = document.getElementById('calcCategory').value;
+      const quickCat = window.activeQuickCat || 'all';
       const annualBudget = getAnnualBudget();
       const rawBudget = Number(document.getElementById('calcBudgetInput').value) || 28000;
       const mode = document.getElementById('calcMode').value;
@@ -1464,14 +1334,27 @@
       document.getElementById('summaryTerm').innerText = term;
       document.getElementById('summaryPpt').innerText = ppt;
 
-      let baseList = (category === 'all') ? [...officialLicSchemes] : officialLicSchemes.filter(s => s.category === category);
+      let baseList = [];
+      if (currentLifeTab === 'lic') {
+        baseList = officialLifeSchemes.filter(s => s.company === 'LIC');
+      } else {
+        const selectedCscCompany = document.getElementById('calcCompany').value;
+        baseList = officialLifeSchemes.filter(s => s.company !== 'LIC');
+        if (selectedCscCompany !== 'all') {
+          baseList = baseList.filter(s => s.company === selectedCscCompany);
+        }
+      }
+
+      if (quickCat !== 'all') {
+        baseList = baseList.filter(s => s.category === quickCat);
+      }
 
       if (currentViewMode === 'filtered') {
         currentSchemesList = baseList.filter(scheme => checkPlanEligibility(scheme, term, ppt));
         document.getElementById('filterStatusText').innerHTML = `Sirf wahi plans jo <b>Term: ${term} Saal</b> aur <b>Paying Term: ${ppt} Saal</b> allow karte hain.`;
       } else {
         currentSchemesList = baseList;
-        document.getElementById('filterStatusText').innerText = `Sabhi official LIC schemes dikhayi ja rahi hain (All Schemes View).`;
+        document.getElementById('filterStatusText').innerText = `Sabhi official schemes (${currentLifeTab === 'lic' ? 'LIC Plans' : 'CSC Portals'}) dikhayi ja rahi hain.`;
       }
 
       document.getElementById('btnMatchCount').innerText = currentSchemesList.length;
@@ -1486,9 +1369,9 @@
               <i class="fa-solid fa-filter-circle-xmark"></i>
             </div>
             <h4 class="text-base sm:text-lg font-black text-amber-950">Is Term (${term} Saal) aur Paying Term (${ppt} Saal) par koi exact scheme match nahi hui</h4>
-            <p class="text-xs text-amber-800 max-w-lg mx-auto">LIC niyamit rules ke anusaar is duration combination par direct plan uplabdh nahi hai. Aap doosra term/ppt select karein ya sabhi 40 schemes dekhein.</p>
+            <p class="text-xs text-amber-800 max-w-lg mx-auto">Rules ke anusaar is duration combination par direct plan uplabdh nahi hai. Aap dusra duration select karein ya sabhi plans dekhein.</p>
             <button onclick="toggleViewMode('all')" class="bg-brand-navy hover:bg-brand-lightBlue text-white font-black px-6 py-3 rounded-xl text-xs transition shadow-md">
-              <i class="fa-solid fa-layer-group mr-1.5 text-brand-gold"></i> Sabhi 40 Schemes Dekhein
+              <i class="fa-solid fa-layer-group mr-1.5 text-brand-gold"></i> Sabhi Plans Dekhein
             </button>
           </div>
         `;
@@ -1499,15 +1382,31 @@
       container.innerHTML = currentSchemesList.map(scheme => {
         const calc = calculateFullPlanDetails(scheme, age, annualBudget, term, ppt);
         const isCompared = comparedPlanIds.includes(scheme.id);
+        const companyBadge = scheme.company === 'LIC' ? 'bg-blue-100 text-brand-navy' : 
+                            (scheme.company === 'IndiaFirst' ? 'bg-orange-100 text-orange-900' : 
+                            (scheme.company === 'SBI Life' ? 'bg-purple-100 text-purple-900' : 'bg-red-100 text-red-900'));
+
+        let displayReturn = '';
+        if (scheme.company !== 'LIC' && calc.regularAnnualIncome > 0) {
+          displayReturn = `₹ ${calc.regularAnnualIncome.toLocaleString('en-IN')}/yr + 110% Refund`;
+        } else if (calc.regularAnnualIncome > 0) {
+          displayReturn = `₹ ${calc.regularAnnualIncome.toLocaleString('en-IN')}/yr* (Lifelong)`;
+        } else {
+          displayReturn = `₹ ${calc.estimatedMaturity.toLocaleString('en-IN')}*`;
+        }
+
         return `
           <div class="bg-white rounded-3xl border ${isCompared ? 'border-brand-gold ring-2 ring-brand-gold/30' : 'border-slate-200'} p-6 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
             <div>
               <div class="flex justify-between items-start mb-3">
-                <span class="text-[11px] font-black uppercase tracking-wider bg-blue-50 text-brand-lightBlue px-2.5 py-1 rounded-md">Plan ${scheme.planNo || 'LIC'}</span>
+                <span class="text-[11px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md ${companyBadge}">
+                  ${scheme.company} • ${scheme.planNo}
+                </span>
                 <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800">Pay: ${calc.ppt} Yrs</span>
               </div>
               <h4 class="text-xl font-black text-brand-navy">${scheme.name}</h4>
               <p class="text-xs text-slate-500 font-medium line-clamp-2 mt-1">${scheme.tagline}</p>
+              
               <div class="mt-4 bg-slate-50 rounded-2xl p-4 border border-slate-100 space-y-2 text-xs">
                 <div class="flex justify-between pb-1.5 border-b border-slate-200">
                   <span class="text-slate-500">Term / Paying Term:</span>
@@ -1519,7 +1418,7 @@
                 </div>
                 <div class="flex justify-between items-center text-emerald-700 font-bold">
                   <span>Maturity / Return*:</span>
-                  <span class="text-sm font-black">₹ ${calc.regularAnnualIncome > 0 ? (Math.round(calc.regularAnnualIncome).toLocaleString('en-IN') + '/yr*') : calc.estimatedMaturity.toLocaleString('en-IN') + '*'}</span>
+                  <span class="text-sm font-black">${displayReturn}</span>
                 </div>
                 <div class="flex justify-between text-[11px] text-slate-500 pt-1">
                   <span>Normal Cover: ₹${(calc.yearRows[0].normalCover/100000).toFixed(1)}L</span>
@@ -1532,10 +1431,11 @@
                 </div>
               </div>
             </div>
+
             <div class="mt-6 pt-4 border-t border-slate-100 space-y-2">
               <button onclick="openQuotationPreviewModal('${scheme.id}')" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 px-4 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-sm">
                 <i class="fa-solid fa-print text-brand-gold text-sm"></i>
-                <span>Preview & Print (${calc.term} Saal Chart)</span>
+                <span>Preview & Print (${calc.term} Saal Schedule)</span>
               </button>
               <button onclick="toggleCompareScheme('${scheme.id}')" class="w-full py-1.5 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition ${isCompared ? 'bg-amber-100 text-amber-900' : 'text-slate-600 hover:bg-slate-100'}">
                 <i class="fa-solid ${isCompared ? 'fa-square-check text-brand-deepGold' : 'fa-square'} text-sm"></i>
@@ -1563,7 +1463,6 @@
       applyPolicyFilters();
     }
 
-    // COMPARISON MATRIX TABLE
     function toggleCompareScheme(id) {
       const idx = comparedPlanIds.indexOf(id);
       if (idx > -1) {
@@ -1599,7 +1498,7 @@
         return;
       }
 
-      const schemes = comparedPlanIds.map(id => officialLicSchemes.find(s => s.id === id)).filter(Boolean);
+      const schemes = comparedPlanIds.map(id => officialLifeSchemes.find(s => s.id === id)).filter(Boolean);
 
       container.innerHTML = `
         <table class="w-full text-left border-collapse min-w-[650px] text-xs">
@@ -1609,7 +1508,7 @@
               ${schemes.map(s => `
                 <th class="p-3.5 font-black text-brand-navy border-l border-slate-200">
                   <div class="flex justify-between items-center">
-                    <span>${s.name}</span>
+                    <span>${s.company}: ${s.name}</span>
                     <button onclick="toggleCompareScheme('${s.id}')" class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-xmark"></i></button>
                   </div>
                 </th>
@@ -1635,8 +1534,11 @@
               <td class="p-3 font-bold text-emerald-900">Maturity / Returns*</td>
               ${schemes.map(s => {
                 const c = calculateFullPlanDetails(s, age, budget, term, ppt);
+                if (s.company !== 'LIC' && c.regularAnnualIncome > 0) {
+                  return `<td class="p-3 border-l border-slate-200 font-black text-emerald-700">₹ ${c.regularAnnualIncome.toLocaleString('en-IN')}/yr + 110\% Refund (Total: ₹${c.estimatedMaturity.toLocaleString('en-IN')})</td>`;
+                }
                 if (c.regularAnnualIncome > 0) {
-                  return `<td class="p-3 border-l border-slate-200 font-black text-emerald-700">₹ ${Math.round(c.regularAnnualIncome).toLocaleString('en-IN')}/yr (Terms Apply)</td>`;
+                  return `<td class="p-3 border-l border-slate-200 font-black text-emerald-700">₹ ${c.regularAnnualIncome.toLocaleString('en-IN')}/yr (Lifelong)</td>`;
                 }
                 return `<td class="p-3 border-l border-slate-200 font-black text-emerald-700">₹ ${c.estimatedMaturity.toLocaleString('en-IN')}*</td>`;
               }).join('')}
@@ -1656,9 +1558,8 @@
       `;
     }
 
-    // FULL LIC QUOTATION MODAL
     function openQuotationPreviewModal(schemeId) {
-      const scheme = officialLicSchemes.find(s => s.id === schemeId);
+      const scheme = officialLifeSchemes.find(s => s.id === schemeId);
       if (!scheme) return;
       const age = Number(document.getElementById('calcAgeInput').value) || 28;
       const budget = getAnnualBudget();
@@ -1691,16 +1592,24 @@
       const mode = document.getElementById('calcMode').value.toUpperCase();
       const dateStr = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
 
+      let returnHeaderSnippet = '';
+      if (d.scheme.company !== 'LIC' && d.regularAnnualIncome > 0) {
+        returnHeaderSnippet = `₹ ${d.regularAnnualIncome.toLocaleString('en-IN')}/Yr + 110% Refund (Total: ₹ ${d.estimatedMaturity.toLocaleString('en-IN')})`;
+      } else if (d.regularAnnualIncome > 0) {
+        returnHeaderSnippet = `₹ ${d.regularAnnualIncome.toLocaleString('en-IN')}/Yr* (Lifelong)`;
+      } else {
+        returnHeaderSnippet = `₹ ${d.estimatedMaturity.toLocaleString('en-IN')}*`;
+      }
+
       document.getElementById('quotationPrintableTarget').innerHTML = `
         <div style="width: 100%; color: #0f172a; font-family: 'Inter', sans-serif;">
           
-          <!-- LETTERHEAD WITH LOGO -->
           <div style="border-bottom: 2px solid #002B49; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
             <div style="display: flex; align-items: center; gap: 10px;">
               <img src="logo.png" onerror="this.style.display='none';" style="height: 48px; width: auto; object-fit: contain;" alt="KDS INSURANCE" />
               <div>
                 <h1 style="font-size: 15px; font-weight: 900; color: #002B49; margin: 0; line-height: 1.1;">
-                  KDS INSURANCE CONSULTANCY & CUSTOMER SERVICES
+                  KDS INSURANCE CONSULTANCY & CSC SERVICES
                 </h1>
                 <p style="font-size: 9.5px; font-weight: 700; color: #00558F; margin: 1px 0 0 0;">
                   Authorized Insurance Advisory Services (Manoher Singh)
@@ -1721,7 +1630,6 @@
             </div>
           </div>
 
-          <!-- CLIENT & PLAN METADATA CARD -->
           <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 10px; line-height: 1.35;">
             <div>
               <p style="margin: 1px 0;"><strong>${isHi ? 'ग्राहक का नाम' : 'Client Name'}:</strong> ${custName}</p>
@@ -1730,7 +1638,7 @@
               <p style="margin: 1px 0;"><strong>${isHi ? 'मूल बीमाधन' : 'Basic SA'}:</strong> ₹ ${d.sumAssured.toLocaleString('en-IN')}</p>
             </div>
             <div>
-              <p style="margin: 1px 0;"><strong>${isHi ? 'प्रस्तावित योजना' : 'Proposed Scheme'}:</strong> <span style="color: #002B49; font-weight: 800;">${isHi ? (d.scheme.nameHi || d.scheme.name) : d.scheme.name}</span></p>
+              <p style="margin: 1px 0;"><strong>${isHi ? 'प्रस्तावित योजना' : 'Proposed Scheme'}:</strong> <span style="color: #002B49; font-weight: 800;">${d.scheme.company}: ${d.scheme.name}</span></p>
               <p style="margin: 1px 0;"><strong>${isHi ? 'पॉलिसी / प्रीमियम अवधि' : 'Term / Premium Term'}:</strong> ${d.term} Yrs / <strong>Pay ${d.ppt} Yrs</strong></p>
               <p style="margin: 1px 0;"><strong>${isHi ? 'प्रीमियम मोड' : 'Payment Mode'}:</strong> ${mode} (₹ ${d.annualBudget.toLocaleString('en-IN')}/Yr)</p>
               <p style="margin: 1px 0;"><strong>${isHi ? 'कुल जमा (Total Paid)' : 'Total Deposit'}:</strong> ₹ ${d.totalInvestment.toLocaleString('en-IN')}</p>
@@ -1740,14 +1648,13 @@
               <p style="margin: 1px 0;"><strong>Term Rider (TR):</strong> ${d.trCover > 0 ? '₹ ' + d.trCover.toLocaleString('en-IN') : 'N/A'}</p>
               <p style="margin: 1px 0;"><strong>Critical Illness (CIR):</strong> ${d.cirCover > 0 ? '₹ ' + d.cirCover.toLocaleString('en-IN') : 'N/A'}</p>
               <p style="margin: 1px 0; color: #047857; font-weight: 800;">
-                <strong>${isHi ? 'अनुमानित रिटर्न / बेनिफिट' : 'Est. Return / Maturity'}:</strong> ₹ ${d.regularAnnualIncome > 0 ? (Math.round(d.regularAnnualIncome).toLocaleString('en-IN') + '/Yr*') : d.estimatedMaturity.toLocaleString('en-IN')}*
+                <strong>${isHi ? 'अनुमानित रिटर्न / बेनिफिट' : 'Est. Return / Maturity'}:</strong> ${returnHeaderSnippet}
               </p>
             </div>
           </div>
 
-          <!-- FULL YEAR 1 TO TERM TABLE -->
           <h3 style="font-size: 10.5px; font-weight: 900; color: #002B49; margin: 0 0 5px 0; text-transform: uppercase;">
-            ${isHi ? `वर्ष 1 से ${d.term} वर्ष तक प्रीमियम, रिस्क कवर, सरेंडर/लोन एवं रिटर्न चार्ट (अनुमानित)` : `Year 1 to ${d.term} Premium, Risk Cover, Surrender/Loan & Cash Flow Schedule`}
+            ${isHi ? `वर्ष 1 से ${d.term} वर्ष तक प्रीमियम, रिस्क कवर, सरेंडर/लोन एवं रिटर्न चार्ट` : `Year 1 to ${d.term} Premium, Risk Cover, Surrender/Loan & Cash Flow Schedule`}
           </h3>
 
           <div style="width: 100%; margin-bottom: 10px;">
@@ -1799,7 +1706,6 @@
             </table>
           </div>
 
-          <!-- BOTTOM AGENT CONTACT & STATUTORY FOOTER -->
           <div style="background: #002B49; color: #ffffff; border-radius: 6px; padding: 8px 12px; border-left: 4px solid #FFAE00; margin-top: 6px;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;">
               <div>
@@ -1817,7 +1723,7 @@
           </div>
 
           <p style="font-size: 7.5px; color: #64748b; text-align: center; margin: 6px 0 0 0; line-height: 1.2;">
-            *Statutory Disclaimer: This illustration is prepared by an authorized insurance agent for guidance. Non-guaranteed projection values (at 4% & 8%) conform to standard IRDAI guidelines and are subject to future bonus declarations[cite: 1].
+            *Statutory Disclaimer: This illustration is prepared by an authorized insurance agent for guidance. Non-guaranteed projection values (at 4% & 8%) conform to standard IRDAI guidelines and are subject to future bonus declarations. Non-par CSC products guarantee income and premium refund terms[cite: 1].
           </p>
 
         </div>
@@ -1829,13 +1735,13 @@
       const d = activeQuotationData;
       const custName = document.getElementById('custName').value || 'Customer';
       const text = encodeURIComponent(
-        `*Policy Illustration Summary (With Custom Riders)*\n\n` +
+        `*Insurance Illustration Summary (${d.scheme.company})*\n\n` +
         `*Customer:* ${custName} (Age: ${d.userAge} Yrs)\n` +
-        `*Plan:* ${d.scheme.name}\n` +
+        `*Plan:* ${d.scheme.company} - ${d.scheme.name}\n` +
         `*Term / PPT:* ${d.term} Yrs / Pay for ${d.ppt} Yrs\n` +
         `*Annual Premium:* ₹${d.annualBudget.toLocaleString('en-IN')}\n` +
         `*Total Investment:* ₹${d.totalInvestment.toLocaleString('en-IN')}\n` +
-        `*Est. Maturity / Benefit:* ₹${d.regularAnnualIncome > 0 ? (Math.round(d.regularAnnualIncome).toLocaleString('en-IN') + '/Yr*') : d.estimatedMaturity.toLocaleString('en-IN')}*\n` +
+        `*Est. Maturity / Benefit:* ₹${d.estimatedMaturity.toLocaleString('en-IN')}*\n` +
         `*Normal Cover (with TR):* ₹${d.yearRows[0].normalCover.toLocaleString('en-IN')}\n` +
         `*Accidental Cover (with ADDB):* ₹${d.yearRows[0].accidentalCover.toLocaleString('en-IN')}\n` +
         `*Critical Illness (CIR):* ₹${d.cirCover.toLocaleString('en-IN')}\n\n` +
@@ -2164,7 +2070,7 @@
       document.getElementById('healthQuotationModal').classList.add('hidden');
     }
 
-    // Lead handlers (Google Sheets Connected)
+    // Lead Modal handlers
     function openLeadModal() { document.getElementById('leadModal').classList.remove('hidden'); }
     function closeLeadModal() { document.getElementById('leadModal').classList.add('hidden'); }
     
@@ -2214,7 +2120,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       adjustEngineSlabs();
       autoApplyRiders();
-      applyPolicyFilters();
+      switchMainTab('lic');
     });
   </script>
 
