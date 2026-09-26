@@ -8,8 +8,6 @@
   <title>KDS Insurance Services | LIC Agent, Motor & Health Insurance Malwara, Raniwara</title>
   <meta name="title" content="KDS Insurance Services | LIC Agent, Motor & Health Insurance Malwara, Raniwara" />
   <meta name="description" content="KDS Insurance Services by Authorized Advisor Manoher Singh. Calculate LIC Life, CSC SBI Life, Motor (Car/Bike Third Party, Zero Dep) & Health Mediclaim quotes online in Malwara, Raniwara, Jalore." />
-  
-  <!-- Comprehensive Search Engine Keywords -->
   <meta name="keywords" content="Insurance Services, KDS Insurance, KDS Insurance Services, KDS Insurance Malwara, LIC Agent Raniwara, LIC Policy Malwara, Manoher Singh Insurance, Car Insurance Raniwara, Bike Insurance Malwara, Third Party Insurance, Zero Dep Insurance, Health Insurance Mediclaim, CSC Life Insurance, SBI Life Malwara, Vehicle Insurance Jalore, Commercial Vehicle Insurance Malwara" />
   <meta name="author" content="Manoher Singh" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -20,14 +18,14 @@
   <meta name="google-site-verification" content="4mTqww8O_oKqvKdAcGa073EWUQYrZsU7thAHophgWLo" />
   <meta name="msvalidate.01" content="YOUR_BING_VERIFICATION_CODE" />
 
-  <!-- Open Graph / Social Media Preview (WhatsApp, Facebook) -->
+  <!-- Open Graph / Social Media Preview -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.kdsinsurance.in/" />
   <meta property="og:title" content="KDS Insurance Services | Life, Motor & Health Insurance Portal" />
   <meta property="og:description" content="Authorized Insurance Advisor Manoher Singh. Official LIC benefit illustrations, motor quotes & cashless mediclaim support." />
   <meta property="og:image" content="https://www.kdsinsurance.in/logo.png" />
 
-  <!-- Schema.org JSON-LD Structured Data (Local SEO & Google Search Result Snippets) -->
+  <!-- Schema.org JSON-LD Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -54,14 +52,7 @@
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
       "opens": "09:00",
       "closes": "20:00"
     },
@@ -69,9 +60,7 @@
       "@type": "Person",
       "name": "Manoher Singh"
     },
-    "sameAs": [
-      "https://wa.me/918440096343"
-    ]
+    "sameAs": ["https://wa.me/918440096343"]
   }
   </script>
 
@@ -209,10 +198,11 @@
   <!-- Main Navbar -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-20">
-        
+      
+      <!-- Top Row: Logo & Action Buttons -->
+      <div class="flex justify-between items-center h-16 sm:h-20">
         <a href="javascript:void(0)" onclick="switchMainTab('lic')" class="flex items-center gap-3 py-1 group">
-          <img src="logo.png" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" class="h-12 sm:h-14 w-auto object-contain rounded-lg" alt="KDS INSURANCE" />
+          <img src="logo.png" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" class="h-11 sm:h-14 w-auto object-contain rounded-lg" alt="KDS INSURANCE" />
           <div id="logoFallback" class="hidden items-center gap-2">
             <div class="w-10 h-10 rounded-xl bg-brand-navy flex items-center justify-center text-brand-gold font-black text-xl">KDS</div>
             <div>
@@ -222,23 +212,19 @@
           </div>
         </a>
 
-        <!-- Portal 4-Tab Switcher -->
-        <div class="flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200 overflow-x-auto max-w-full">
-          <button id="navTabLic" onclick="switchMainTab('lic')" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm whitespace-nowrap">
-            <i class="fa-solid fa-shield-halved text-brand-gold"></i>
-            <span>Life (LIC)</span>
+        <!-- Desktop Tab Switcher (Visible on Laptop/Desktop) -->
+        <div class="hidden lg:flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
+          <button id="navTabLic" onclick="switchMainTab('lic')" class="px-3.5 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm">
+            <i class="fa-solid fa-shield-halved text-brand-gold"></i><span>Life (LIC)</span>
           </button>
-          <button id="navTabCsc" onclick="switchMainTab('csc')" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-amber-700 transition flex items-center gap-1.5 whitespace-nowrap">
-            <i class="fa-solid fa-building-columns text-amber-600"></i>
-            <span>Life (CSC/Other)</span>
+          <button id="navTabCsc" onclick="switchMainTab('csc')" class="px-3.5 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-amber-700 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-building-columns text-amber-600"></i><span>Life (CSC/Other)</span>
           </button>
-          <button id="navTabMotor" onclick="switchMainTab('motor')" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-700 transition flex items-center gap-1.5 whitespace-nowrap">
-            <i class="fa-solid fa-car-shield text-emerald-600"></i>
-            <span>Motor</span>
+          <button id="navTabMotor" onclick="switchMainTab('motor')" class="px-3.5 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-emerald-700 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-car-shield text-emerald-600"></i><span>Motor</span>
           </button>
-          <button id="navTabHealth" onclick="switchMainTab('health')" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-rose-700 transition flex items-center gap-1.5 whitespace-nowrap">
-            <i class="fa-solid fa-heart-pulse text-rose-600"></i>
-            <span>Health</span>
+          <button id="navTabHealth" onclick="switchMainTab('health')" class="px-3.5 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-rose-700 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-heart-pulse text-rose-600"></i><span>Health</span>
           </button>
         </div>
 
@@ -254,8 +240,30 @@
             <span class="sm:hidden">Call</span>
           </button>
         </div>
-
       </div>
+
+      <!-- Mobile Dedicated 4-Grid App Bar (Never cut, 100% visible on mobile) -->
+      <div class="lg:hidden pb-2.5 pt-0.5">
+        <div class="grid grid-cols-4 gap-1.5 bg-slate-100 p-1 rounded-2xl border border-slate-200">
+          <button id="mobileNavLic" onclick="switchMainTab('lic')" class="py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-brand-navy text-white shadow-xs">
+            <i class="fa-solid fa-shield-halved text-brand-gold text-xs"></i>
+            <span>Life (LIC)</span>
+          </button>
+          <button id="mobileNavCsc" onclick="switchMainTab('csc')" class="py-2 rounded-xl text-[11px] font-bold text-slate-700 hover:text-amber-700 transition flex flex-col items-center justify-center gap-0.5">
+            <i class="fa-solid fa-building-columns text-amber-600 text-xs"></i>
+            <span>Life (CSC)</span>
+          </button>
+          <button id="mobileNavMotor" onclick="switchMainTab('motor')" class="py-2 rounded-xl text-[11px] font-bold text-slate-700 hover:text-emerald-700 transition flex flex-col items-center justify-center gap-0.5">
+            <i class="fa-solid fa-car-shield text-emerald-600 text-xs"></i>
+            <span>Motor</span>
+          </button>
+          <button id="mobileNavHealth" onclick="switchMainTab('health')" class="py-2 rounded-xl text-[11px] font-bold text-slate-700 hover:text-rose-700 transition flex flex-col items-center justify-center gap-0.5">
+            <i class="fa-solid fa-heart-pulse text-rose-600 text-xs"></i>
+            <span>Health</span>
+          </button>
+        </div>
+      </div>
+
     </div>
   </header>
 
@@ -274,14 +282,14 @@
             Apne Budget & Umar ke Anusaar Sahi <span id="heroPortalHeading" class="text-brand-gold">LIC Policy</span> Chunein
           </h1>
           <p class="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl">
-            Jaaniye: <strong>Saalana Premium</strong>, <strong>Normal & ADDB/TR Riders Cover</strong>, <strong>Loan & Surrender Value</strong>, aur verified standard returns.
+            Jaaniye: <strong>Saalana Premium</strong>, <strong>Normal & ADDB/TR Riders Cover</strong>, <strong>Loan & Surrender Value</strong>, aur verified standard returns[cite: 1].
           </p>
           <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-3.5 text-xs text-slate-200 flex items-start gap-3 text-left">
             <i class="fa-solid fa-location-dot text-brand-gold text-base mt-0.5"></i>
             <div>
               <p class="font-bold text-white text-xs">KDS INSURANCE SERVICES & CSC SEVA KENDRA</p>
-              <p class="text-slate-300 text-[11px] mt-0.5">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
-              <p class="text-brand-gold font-bold text-[11px] mt-1">Authorized Agent: MANOHER SINGH | Mo: 8440096343</p>
+              <p class="text-slate-300 text-[11px] mt-0.5">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039[cite: 1]</p>
+              <p class="text-brand-gold font-bold text-[11px] mt-1">Authorized Agent: MANOHER SINGH | Mo: 8440096343[cite: 1]</p>
             </div>
           </div>
         </div>
@@ -343,7 +351,7 @@
                 <span id="portalBadgeSubtitle" class="text-xs text-sky-200">Official Benefit Schedule With Separate Par & Non-Par Logic</span>
               </div>
               <h2 id="calcSectionHeading" class="text-2xl sm:text-3xl font-black mt-2">Apni Details Bharein & Plan Customize Karein</h2>
-              <p class="text-slate-200 text-xs sm:text-sm mt-1">Umar aur budget ke anusaar accurate riders, actual returns aur refund schedule turant calculate hota hai.</p>
+              <p class="text-slate-200 text-xs sm:text-sm mt-1">Umar aur budget ke anusaar accurate riders, actual returns aur refund schedule turant calculate hota hai[cite: 1].</p>
             </div>
             <button onclick="resetCalculatorForm()" class="self-start sm:self-center text-xs bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-1.5 rounded-xl text-white font-semibold transition flex items-center gap-1.5">
               <i class="fa-solid fa-arrows-rotate"></i> Reset
@@ -527,7 +535,7 @@
           <div>
             <span class="text-xs font-bold text-brand-lightBlue uppercase tracking-wider bg-blue-50 px-2.5 py-1 rounded">Side-by-Side Comparison</span>
             <h3 class="text-2xl font-black text-brand-navy mt-1">Schemes Compare Karein (Tulna Matrix Table)</h3>
-            <p class="text-xs text-slate-500">2 ya 3 plans aamne-saamne rakh kar unka premium aur return compare karein.</p>
+            <p class="text-xs text-slate-500">2 ya 3 plans aamne-saamne rakh kar unka premium aur return compare karein[cite: 1].</p>
           </div>
           <button onclick="clearCompareSelection()" class="text-xs font-bold text-rose-600 hover:text-rose-700 transition">
             <i class="fa-solid fa-trash-can mr-1"></i> Clear Comparison
@@ -553,14 +561,14 @@
             Vahan Bima: Third Party, Comprehensive & <span class="text-emerald-400">Zero Dep (0-Dep)</span>
           </h1>
           <p class="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl">
-            Bike, Car ya Commercial vehicle ka bima turant calculate karein. IRDAI prescribed Third Party rates aur top general insurance companies ke beech compare karein.
+            Bike, Car ya Commercial vehicle ka bima turant calculate karein. IRDAI prescribed Third Party rates aur top general insurance companies ke beech compare karein[cite: 1].
           </p>
           <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-3.5 text-xs text-slate-200 flex items-start gap-3 text-left max-w-xl">
             <i class="fa-solid fa-shield-halved text-emerald-400 text-base mt-0.5"></i>
             <div>
               <p class="font-bold text-white text-xs">GOVERNMENT & IRDAI COMPLIANT MOTOR ADVISORY</p>
-              <p class="text-slate-300 text-[11px] mt-0.5">Instant Policy Issuance, Online Paperless e-Renewal, Cashless Garage Assistance across Raniwara, Malwara & Jalor region.</p>
-              <p class="text-emerald-300 font-bold text-[11px] mt-1">Advisor: MANOHER SINGH | Mo: 8440096343</p>
+              <p class="text-slate-300 text-[11px] mt-0.5">Instant Policy Issuance, Online Paperless e-Renewal, Cashless Garage Assistance across Raniwara, Malwara & Jalor region[cite: 1].</p>
+              <p class="text-emerald-300 font-bold text-[11px] mt-1">Advisor: MANOHER SINGH | Mo: 8440096343[cite: 1]</p>
             </div>
           </div>
         </div>
@@ -674,14 +682,14 @@
             Family & Individual <span class="text-rose-400">Health Insurance</span> Plans
           </h1>
           <p class="text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl">
-            Achanak aane wali bimari ya hospital kharcho se bachein. <strong>Cashless Treatment</strong>, <strong>No Room Rent Capping</strong>, <strong>Day Care Treatments</strong>, aur Section 80D tax benefit.
+            Achanak aane wali bimari ya hospital kharcho se bachein. <strong>Cashless Treatment</strong>, <strong>No Room Rent Capping</strong>, <strong>Day Care Treatments</strong>, aur Section 80D tax benefit[cite: 1].
           </p>
           <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-3.5 text-xs text-slate-200 flex items-start gap-3 text-left max-w-xl">
             <i class="fa-solid fa-notes-medical text-rose-400 text-base mt-0.5"></i>
             <div>
               <p class="font-bold text-white text-xs">CASHLESS HOSPITAL NETWORK SUPPORT</p>
-              <p class="text-slate-300 text-[11px] mt-0.5">Local Jalor, Ahmedabad, Udaipur, Jodhpur & Pan-India top multi-speciality network hospitals par 100% Cashless suvidha.</p>
-              <p class="text-rose-300 font-bold text-[11px] mt-1">Health Advisor: MANOHER SINGH | Mo: 8440096343</p>
+              <p class="text-slate-300 text-[11px] mt-0.5">Local Jalor, Ahmedabad, Udaipur, Jodhpur & Pan-India top multi-speciality network hospitals par 100% Cashless suvidha[cite: 1].</p>
+              <p class="text-rose-300 font-bold text-[11px] mt-1">Health Advisor: MANOHER SINGH | Mo: 8440096343[cite: 1]</p>
             </div>
           </div>
         </div>
@@ -796,9 +804,9 @@
             KDS INSURANCE CONSULTATION & CUSTOMER POINT
           </h3>
           <div class="bg-white/10 rounded-2xl p-4 border border-white/15 space-y-1.5 text-xs text-slate-200">
-            <p><strong class="text-brand-gold text-sm">MANOHER SINGH</strong> (Authorized Insurance Advisor)</p>
-            <p><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i> <strong>Office Address:</strong> BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
-            <p><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> <strong>Helpline:</strong> 8440096343 | LIC, CSC & General Insurance Guidance</p>
+            <p><strong class="text-brand-gold text-sm">MANOHER SINGH</strong> (Authorized Insurance Advisor)[cite: 1]</p>
+            <p><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i> <strong>Office Address:</strong> BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039[cite: 1]</p>
+            <p><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> <strong>Helpline:</strong> 8440096343 | LIC, CSC & General Insurance Guidance[cite: 1]</p>
           </div>
         </div>
 
@@ -831,7 +839,7 @@
       <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
         <div>
           <span class="text-lg font-black text-white">KDS <span class="text-brand-gold">INSURANCE</span> SERVICES</span>
-          <p class="text-slate-300 text-xs mt-0.5">Authorized Insurance Agent: <strong>MANOHER SINGH</strong> (Malwara, Raniwara)</p>
+          <p class="text-slate-300 text-xs mt-0.5">Authorized Insurance Agent: <strong>MANOHER SINGH</strong> (Malwara, Raniwara)[cite: 1]</p>
         </div>
         <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-300 font-bold">
           <a href="javascript:void(0)" onclick="switchMainTab('lic')" class="hover:text-brand-gold transition">Life (LIC)</a>
@@ -845,7 +853,7 @@
       <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700/80 text-[11px] text-slate-300 leading-relaxed">
         <p class="font-bold text-amber-400 mb-1">REGULATORY & STATUTORY DISCLAIMER (GOVT / IRDAI GUIDELINES):</p>
         <p>
-          This is an informational facilitation portal operated by <strong>MANOHER SINGH</strong>, an authorized insurance advisor. Life insurance illustrations shown at 4% & 8% conform to standard IRDAI projection guidelines and are not guaranteed. Non-Participating CSC plans offer guaranteed income and 100%-110% Return of Premium. Health insurance premiums, waiting periods for pre-existing diseases, sub-limits and room rent norms are strictly governed by the policy prospectus of the respective insurance company. Motor third-party rates are notified under the Motor Vehicles Act, 1988 by MoRTH/IRDAI. Tax benefits are subject to provisions under Section 80C, 80D, and 10(10D) of the Income Tax Act.
+          This is an informational facilitation portal operated by <strong>MANOHER SINGH</strong>, an authorized insurance advisor[cite: 1]. Life insurance illustrations shown at 4% & 8% conform to standard IRDAI projection guidelines and are not guaranteed[cite: 1]. Non-Participating CSC plans offer guaranteed income and 100%-110% Return of Premium. Health insurance premiums, waiting periods for pre-existing diseases, sub-limits and room rent norms are strictly governed by the policy prospectus of the respective insurance company. Motor third-party rates are notified under the Motor Vehicles Act, 1988 by MoRTH/IRDAI. Tax benefits are subject to provisions under Section 80C, 80D, and 10(10D) of the Income Tax Act[cite: 1].
         </p>
       </div>
 
@@ -856,7 +864,63 @@
   </footer>
 
   <!-- ========================================================================= -->
-  <!-- MODAL: BENEFIT ILLUSTRATION PREVIEW -->
+  <!-- VIRTUAL ASSISTANT: KDS MITRA (Floating Assistant) -->
+  <!-- ========================================================================= -->
+  <div id="kdsMitraWidget" class="fixed bottom-5 right-5 z-50 select-none">
+    <div id="kdsMitraTrigger" onclick="toggleMitraChat()" class="flex items-center gap-2 cursor-pointer group">
+      <div class="bg-white/95 backdrop-blur-md shadow-2xl border-2 border-brand-gold text-brand-navy px-3.5 py-1.5 rounded-2xl hidden sm:flex flex-col text-right transition group-hover:scale-105">
+        <span class="text-[11px] font-black tracking-wide flex items-center gap-1 justify-end">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          केडीएस मित्र • KDS MITRA
+        </span>
+        <span class="text-[9px] text-slate-500 font-bold">Ask Questions & Get Quotes</span>
+      </div>
+      <div class="relative w-14 h-14 rounded-full bg-gradient-to-tr from-brand-navy to-brand-lightBlue border-2 border-brand-gold shadow-2xl flex items-center justify-center text-white transition group-hover:scale-110 active:scale-95">
+        <i class="fa-solid fa-headset text-2xl text-brand-gold"></i>
+        <span class="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white rounded-full"></span>
+      </div>
+    </div>
+
+    <!-- Chat Box Window -->
+    <div id="kdsMitraWindow" class="hidden absolute bottom-16 right-0 w-[92vw] sm:w-[400px] h-[550px] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden transition-all duration-300">
+      <div class="bg-gradient-to-r from-brand-dark via-brand-navy to-brand-lightBlue p-4 text-white flex justify-between items-center border-b border-brand-gold/40">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-2xl bg-brand-gold text-brand-dark flex items-center justify-center font-black text-lg shadow">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <h4 class="font-black text-sm text-white">केडीएस मित्र (KDS MITRA)</h4>
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            </div>
+            <p class="text-[10px] text-slate-300">Virtual Assistant • KDS Insurance</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1">
+          <button onclick="resetMitraFlow()" title="Restart" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xs">
+            <i class="fa-solid fa-rotate-right"></i>
+          </button>
+          <button onclick="toggleMitraChat()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xs">
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="kdsMitraMessages" class="flex-grow overflow-y-auto p-4 space-y-3 bg-slate-50 text-xs"></div>
+
+      <div class="p-3 bg-white border-t border-slate-200">
+        <form onsubmit="handleMitraUserMessage(event)" class="flex items-center gap-2">
+          <input type="text" id="kdsMitraInput" placeholder="Plan name ya sawal likhein..." class="flex-1 bg-slate-100 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none" />
+          <button type="submit" class="w-10 h-8 rounded-xl bg-brand-navy text-brand-gold flex items-center justify-center shadow">
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: BENEFIT ILLUSTRATION PREVIEW (100% ORIGINAL A4 TABLE RESTORED) -->
   <!-- ========================================================================= -->
   <div id="quotationModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[96vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
@@ -1011,7 +1075,7 @@
     <span id="toastMessage">Success</span>
   </div>
 
-  <!-- JAVASCRIPT LOGIC (ALAG-ALAG CALCULATION ENGINE) -->
+  <!-- JAVASCRIPT LOGIC -->
   <script>
     let currentPdfLang = 'hi';
     let activeQuotationData = null;
@@ -1029,21 +1093,36 @@
       const btnMotor = document.getElementById('navTabMotor');
       const btnHealth = document.getElementById('navTabHealth');
 
+      const mLic = document.getElementById('mobileNavLic');
+      const mCsc = document.getElementById('mobileNavCsc');
+      const mMotor = document.getElementById('mobileNavMotor');
+      const mHealth = document.getElementById('mobileNavHealth');
+
       lifeWrapper.classList.add('hidden');
       motorPage.classList.add('hidden');
       healthPage.classList.add('hidden');
 
-      btnLic.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-brand-navy transition flex items-center gap-1.5 whitespace-nowrap';
-      btnCsc.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-amber-700 transition flex items-center gap-1.5 whitespace-nowrap';
-      btnMotor.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-700 transition flex items-center gap-1.5 whitespace-nowrap';
-      btnHealth.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-rose-700 transition flex items-center gap-1.5 whitespace-nowrap';
+      const desktopInactive = 'px-3.5 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-brand-navy transition flex items-center gap-1.5';
+      const mobileInactive = 'py-2 rounded-xl text-[11px] font-bold text-slate-700 transition flex flex-col items-center justify-center gap-0.5';
+
+      btnLic.className = desktopInactive;
+      btnCsc.className = desktopInactive;
+      btnMotor.className = desktopInactive;
+      btnHealth.className = desktopInactive;
+
+      mLic.className = mobileInactive;
+      mCsc.className = mobileInactive;
+      mMotor.className = mobileInactive;
+      mHealth.className = mobileInactive;
 
       if (tab === 'lic' || tab === 'csc') {
         currentLifeTab = tab;
         lifeWrapper.classList.remove('hidden');
 
         if (tab === 'lic') {
-          btnLic.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm whitespace-nowrap';
+          btnLic.className = 'px-3.5 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm';
+          mLic.className = 'py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-brand-navy text-white shadow-xs';
+          
           document.getElementById('heroPortalBadge').innerText = "LIC Official Policy Benefits & Premium Illustration Chart";
           document.getElementById('heroPortalHeading').innerText = "LIC Policy";
           document.getElementById('quickPlanTypeBadge').innerText = "LIC Plans";
@@ -1053,7 +1132,9 @@
           document.getElementById('schemesListHeading').innerText = "Available LIC Plans";
           document.getElementById('toggleAllBtnLabel').innerText = "Sabhi LIC Plans";
         } else {
-          btnCsc.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-amber-600 text-white shadow-sm whitespace-nowrap';
+          btnCsc.className = 'px-3.5 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-amber-600 text-white shadow-sm';
+          mCsc.className = 'py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-amber-600 text-white shadow-xs';
+
           document.getElementById('heroPortalBadge').innerText = "CSC Portal Life Insurance (SBI Life, IndiaFirst, Shriram)";
           document.getElementById('heroPortalHeading').innerText = "CSC Life Insurance";
           document.getElementById('quickPlanTypeBadge').innerText = "CSC Life Plans";
@@ -1066,11 +1147,13 @@
         applyPolicyFilters();
       } else if (tab === 'motor') {
         motorPage.classList.remove('hidden');
-        btnMotor.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-emerald-700 text-white shadow-sm whitespace-nowrap';
+        btnMotor.className = 'px-3.5 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-emerald-700 text-white shadow-sm';
+        mMotor.className = 'py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-emerald-700 text-white shadow-xs';
         searchMotorPolicies();
       } else if (tab === 'health') {
         healthPage.classList.remove('hidden');
-        btnHealth.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-1.5 bg-rose-700 text-white shadow-sm whitespace-nowrap';
+        btnHealth.className = 'px-3.5 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-rose-700 text-white shadow-sm';
+        mHealth.className = 'py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-rose-700 text-white shadow-xs';
         searchHealthPolicies();
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1078,7 +1161,6 @@
 
     // COMPLETE SCHEMES LIST
     const officialLifeSchemes = [
-      // --- LIC PLANS (Participating / Traditional) ---
       { id: 'jeevan_labh', company: 'LIC', planNo: '736', name: "LIC's Jeevan Labh Plan (736)", nameHi: "एलआईसी जीवन लाभ (736)", tagline: 'Kam varsh bharein: 10 pay/16 term, 15 pay/21 term, 16 pay/25 term.', category: 'endowment', minSumAssured: 200000, allowedCombinations: [{ term: 16, ppt: 10 }, { term: 21, ppt: 15 }, { term: 25, ppt: 16 }], enforceRules: (term) => (term <= 18 ? { term: 16, ppt: 10 } : (term <= 23 ? { term: 21, ppt: 15 } : { term: 25, ppt: 16 })) },
       { id: 'new_endowment_plan', company: 'LIC', planNo: '714', name: "LIC's New Endowment Plan (714)", nameHi: "एलआईसी न्यू एंडोमेंट प्लान (714)", tagline: 'Niyamit bachat aur financial security ka classic plan.', category: 'endowment', minSumAssured: 100000, isFlexible: true, minTerm: 12, maxTerm: 35, enforceRules: (term, ppt) => { const t = Math.max(12, Math.min(35, term || 20)); return { term: t, ppt: t }; } },
       { id: 'jeevan_anand', company: 'LIC', planNo: '715', name: "LIC's New Jeevan Anand (715)", nameHi: "एलआईसी न्यू जीवन आनंद (715)", tagline: 'Zindagi ke sath bhi, zindagi ke baad bhi - Lifelong cover.', category: 'endowment', minSumAssured: 100000, isFlexible: true, minTerm: 15, maxTerm: 35, enforceRules: (term, ppt) => ({ term: Math.max(15, Math.min(35, term || 25)), ppt: Math.min(term, Math.max(5, ppt || term)) }) },
@@ -1093,7 +1175,7 @@
       { id: 'digi_term', company: 'LIC', planNo: '876', name: "LIC's Digi Term (876)", nameHi: "एलआईसी डिजी टर्म (876)", tagline: 'Direct pure term plan, high financial protection at nominal cost.', category: 'term', minSumAssured: 5000000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 40, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(40, term || 30)), ppt: Math.min(term, ppt || term) }) },
       { id: 'new_pension_plus', company: 'LIC', planNo: '867', name: "LIC's New Pension Plus (867)", nameHi: "एलआईसी न्यू पेंशन प्लस (867)", tagline: 'Retirement corpus build karne hetu pension product.', category: 'pension', minSumAssured: 100000, isAnnuity: true, isFlexible: true, minTerm: 10, maxTerm: 42, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(42, term || 20)), ppt: Math.min(term, ppt || 15) }) },
 
-      // --- CSC / OTHER LIFE INSURERS (Guaranteed Regular Income + 110% Refund Model) ---
+      // CSC / OTHER LIFE INSURERS
       { id: 'sbi_platina_plus', company: 'SBI Life', planNo: 'SBI-01', name: "SBI Life - Smart Platina Plus", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना प्लस", tagline: 'Guaranteed regular income post PPT + 110% Return of Premium at maturity.', category: 'whole_life', minSumAssured: 250000, isWholeLifeIncome: true, incomePercent: 0.09, allowedPptOptions: [7, 8, 10, 12, 15], enforceRules: (term, ppt) => ({ term: Math.max(15, Math.min(35, term || 25)), ppt: Math.min(15, ppt || 10) }) },
       { id: 'sbi_platina_supreme', company: 'SBI Life', planNo: 'SBI-02', name: "SBI Life - Smart Platina Supreme", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना सुप्रीम", tagline: 'High financial corpus generation with guaranteed maturity additions.', category: 'endowment', minSumAssured: 300000, allowedPptOptions: [7, 8, 10, 12, 15], isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(30, term || 20)), ppt: Math.min(15, ppt || 10) }) },
       { id: 'indiafirst_gold', company: 'IndiaFirst', planNo: 'CSC-02', name: "IndiaFirst G.O.L.D (Guarantee of Life Dreams)", nameHi: "इंडियाफर्स्ट गोल्ड (लाइफ ड्रीम्स)", tagline: 'Pay for limited years and get guaranteed regular income + 100% premium back.', category: 'whole_life', minSumAssured: 150000, isWholeLifeIncome: true, incomePercent: 0.085, allowedPptOptions: [5, 6, 8, 10, 12], enforceRules: (term, ppt) => ({ term: Math.max(20, Math.min(40, term || 30)), ppt: Math.min(12, ppt || 10) }) },
@@ -1106,7 +1188,6 @@
 
     let currentSchemesList = [];
 
-    // AUTO RIDERS CALCULATION
     function autoApplyRiders() {
       const age = Number(document.getElementById('calcAgeInput').value) || 28;
       const budget = getAnnualBudget();
@@ -1214,7 +1295,7 @@
       return enforced.term === inputTerm && enforced.ppt === inputPpt;
     }
 
-    // ACCURATE INDEPENDENT CALCULATION ENGINE (CSC vs LIC)
+    // ACCURATE CALCULATION ENGINE
     function calculateFullPlanDetails(scheme, userAge, annualBudget, inputTerm, inputPpt) {
       let reqTerm = Number(inputTerm) || 25;
       let reqPpt = Number(inputPpt) || 12;
@@ -1623,6 +1704,7 @@
       renderQuotationContent();
     }
 
+    // ORIGINAL COMPLETE A4 TABLE LAYOUT (RESTORED EXACTLY AS USER HAD)
     function renderQuotationContent() {
       if (!activeQuotationData) return;
       const d = activeQuotationData;
@@ -1652,10 +1734,10 @@
                   KDS INSURANCE CONSULTANCY & CSC SERVICES
                 </h1>
                 <p style="font-size: 9.5px; font-weight: 700; color: #00558F; margin: 1px 0 0 0;">
-                  Authorized Insurance Advisory Services (Manoher Singh)
+                  Authorized Insurance Advisory Services (Manoher Singh)[cite: 1]
                 </p>
                 <p style="font-size: 8.5px; color: #475569; margin: 2px 0 0 0;">
-                  BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039
+                  BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039[cite: 1]
                 </p>
               </div>
             </div>
@@ -1664,8 +1746,8 @@
               <span style="background: #FFAE00; color: #002B49; font-weight: 900; font-size: 9.5px; padding: 2px 6px; border-radius: 3px; display: inline-block;">
                 ${isHi ? 'पॉलिसी बेनिफिट इलस्ट्रेशन (ADDB व TR राइडर सहित)' : 'POLICY BENEFIT ILLUSTRATION (WITH RIDERS)'}
               </span>
-              <p style="font-size: 10px; font-weight: 800; color: #002B49; margin: 3px 0 0 0;">Agent: MANOHER SINGH</p>
-              <p style="font-size: 10px; font-weight: 800; color: #00558F; margin: 1px 0 0 0;">Mo: 8440096343</p>
+              <p style="font-size: 10px; font-weight: 800; color: #002B49; margin: 3px 0 0 0;">Agent: MANOHER SINGH[cite: 1]</p>
+              <p style="font-size: 10px; font-weight: 800; color: #00558F; margin: 1px 0 0 0;">Mo: 8440096343[cite: 1]</p>
               <p style="font-size: 8.5px; color: #64748b; margin: 1px 0 0 0;">Date: ${dateStr}</p>
             </div>
           </div>
@@ -1753,10 +1835,10 @@
                   ${isHi ? 'बीमा परामर्श एवं सहायता हेतु संपर्क करें' : 'FOR INSURANCE ASSISTANCE & ENQUIRY'}
                 </h4>
                 <p style="margin: 1px 0 0 0; font-size: 9.5px; color: #e2e8f0;">
-                  Authorized Insurance Agent: <strong>MANOHER SINGH</strong> | Mo: <strong>8440096343</strong>
+                  Authorized Insurance Agent: <strong>MANOHER SINGH</strong> | Mo: <strong>8440096343</strong>[cite: 1]
                 </p>
                 <p style="margin: 1px 0 0 0; font-size: 9px; color: #cbd5e1;">
-                  BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039
+                  BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039[cite: 1]
                 </p>
               </div>
             </div>
@@ -1786,13 +1868,13 @@
         `*Accidental Cover (with ADDB):* ₹${d.yearRows[0].accidentalCover.toLocaleString('en-IN')}\n` +
         `*Critical Illness (CIR):* ₹${d.cirCover.toLocaleString('en-IN')}\n\n` +
         `*Authorized Agent:* MANOHER SINGH (Mo: 8440096343)\n` +
-        `*Office:* BASEMENT HALL MR COMPLEX, near POLICE CHOWKI, Malwara, Rajasthan 343039\n` +
+        `*Office:* BASEMENT HALL MR COMPLEX, near POLICE CHOWKI, Malwara, Rajasthan 343039[cite: 1]\n` +
         `_(Subject to policy terms & IRDAI projection guidelines)_`
       );
       window.open(`https://wa.me/918440096343?text=${text}`, '_blank');
     }
 
-    // MOTOR INSURANCE LOGIC
+    // 3. MOTOR INSURANCE SECTION
     const generalInsurers = [
       { name: 'New India Assurance (Govt of India)', rating: '4.9 ★', claimsRatio: '98.5%', badge: 'Govt Trust' },
       { name: 'ICICI Lombard General Insurance', rating: '4.8 ★', claimsRatio: '97.2%', badge: 'Fastest Cashless' },
@@ -1900,13 +1982,13 @@
               <img src="logo.png" onerror="this.style.display='none';" style="height: 48px; width: auto; object-fit: contain;" alt="KDS INSURANCE" />
               <div>
                 <h2 style="font-size: 15px; font-weight: 900; color: #002B49; margin: 0; line-height: 1.1;">KDS INSURANCE ADVISORY POINT</h2>
-                <p style="font-size: 9.5px; font-weight: 700; color: #00558F; margin: 1px 0 0 0;">Authorized Insurance Services • Manoher Singh</p>
-                <p style="font-size: 8.5px; color: #475569; margin: 1px 0 0 0;">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
+                <p style="font-size: 9.5px; font-weight: 700; color: #00558F; margin: 1px 0 0 0;">Authorized Insurance Services • Manoher Singh[cite: 1]</p>
+                <p style="font-size: 8.5px; color: #475569; margin: 1px 0 0 0;">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039[cite: 1]</p>
               </div>
             </div>
             <div style="text-align: right;">
               <span style="background: #047857; color: white; font-weight: 900; font-size: 9px; padding: 3px 6px; border-radius: 4px; display: inline-block;">MOTOR QUOTATION</span>
-              <p style="font-size: 9.5px; font-weight: bold; margin: 2px 0 0 0;">Agent: Manoher Singh (8440096343)</p>
+              <p style="font-size: 9.5px; font-weight: bold; margin: 2px 0 0 0;">Agent: Manoher Singh (8440096343)[cite: 1]</p>
               <p style="font-size: 8.5px; color: #64748b; margin: 1px 0 0 0;">Date: ${dateStr}</p>
             </div>
           </div>
@@ -1953,7 +2035,7 @@
 
           <div style="background: #002B49; color: white; padding: 8px 12px; border-radius: 6px; font-size: 9.5px;">
             <p style="margin: 0; font-weight: bold; color: #FFAE00;">For Policy Issuance & Doorstep Renewal:</p>
-            <p style="margin: 2px 0 0 0;">Authorized Insurance Advisor: <strong>MANOHER SINGH</strong> | Helpline: <strong>8440096343</strong></p>
+            <p style="margin: 2px 0 0 0;">Authorized Insurance Advisor: <strong>MANOHER SINGH</strong> | Helpline: <strong>8440096343</strong>[cite: 1]</p>
           </div>
         </div>
       `;
@@ -1964,7 +2046,7 @@
       document.getElementById('generalQuotationModal').classList.add('hidden');
     }
 
-    // HEALTH INSURANCE LOGIC
+    // 4. HEALTH INSURANCE SECTION
     const healthInsurers = [
       { name: 'Star Health & Allied Insurance', plan: 'Star Comprehensive / Young Star', rating: '4.9 ★', hospitals: '14,000+', badge: 'Standalone Leader' },
       { name: 'Care Health Insurance', plan: 'Care Supreme / Care Advantage', rating: '4.8 ★', hospitals: '11,000+', badge: 'Unlimited Recharges' },
@@ -2042,13 +2124,13 @@
               <img src="logo.png" onerror="this.style.display='none';" style="height: 48px; width: auto; object-fit: contain;" alt="KDS INSURANCE" />
               <div>
                 <h2 style="font-size: 15px; font-weight: 900; color: #002B49; margin: 0; line-height: 1.1;">KDS INSURANCE ADVISORY POINT</h2>
-                <p style="font-size: 9.5px; font-weight: 700; color: #00558F; margin: 1px 0 0 0;">Authorized Health Insurance Advisory • Manoher Singh</p>
-                <p style="font-size: 8.5px; color: #475569; margin: 1px 0 0 0;">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039</p>
+                <p style="font-size: 9.5px; font-weight: 700; color: #00558F; margin: 1px 0 0 0;">Authorized Health Insurance Advisory • Manoher Singh[cite: 1]</p>
+                <p style="font-size: 8.5px; color: #475569; margin: 1px 0 0 0;">BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039[cite: 1]</p>
               </div>
             </div>
             <div style="text-align: right;">
               <span style="background: #be123c; color: white; font-weight: 900; font-size: 9px; padding: 3px 6px; border-radius: 4px; display: inline-block;">HEALTH QUOTATION</span>
-              <p style="font-size: 9.5px; font-weight: bold; margin: 2px 0 0 0;">Agent: Manoher Singh (8440096343)</p>
+              <p style="font-size: 9.5px; font-weight: bold; margin: 2px 0 0 0;">Agent: Manoher Singh (8440096343)[cite: 1]</p>
               <p style="font-size: 8.5px; color: #64748b; margin: 1px 0 0 0;">Date: ${dateStr}</p>
             </div>
           </div>
@@ -2095,7 +2177,7 @@
 
           <div style="background: #002B49; color: white; padding: 8px 12px; border-radius: 6px; font-size: 9.5px;">
             <p style="margin: 0; font-weight: bold; color: #FFAE00;">For Cashless Card & Issuance Assistance:</p>
-            <p style="margin: 2px 0 0 0;">Authorized Insurance Advisor: <strong>MANOHER SINGH</strong> | Helpline: <strong>8440096343</strong></p>
+            <p style="margin: 2px 0 0 0;">Authorized Insurance Advisor: <strong>MANOHER SINGH</strong> | Helpline: <strong>8440096343</strong>[cite: 1]</p>
           </div>
         </div>
       `;
@@ -2106,7 +2188,6 @@
       document.getElementById('healthQuotationModal').classList.add('hidden');
     }
 
-    // Lead Modal handlers
     function openLeadModal() { document.getElementById('leadModal').classList.remove('hidden'); }
     function closeLeadModal() { document.getElementById('leadModal').classList.add('hidden'); }
     
@@ -2152,7 +2233,213 @@
       setTimeout(() => toast.classList.add('hidden'), 4000);
     }
 
-    // Initialization on DOM load
+    // KDS MITRA VIRTUAL ASSISTANT
+    let isMitraInitialized = false;
+
+    function toggleMitraChat() {
+      const win = document.getElementById('kdsMitraWindow');
+      if (win.classList.contains('hidden')) {
+        win.classList.remove('hidden');
+        if (!isMitraInitialized) {
+          resetMitraFlow();
+          isMitraInitialized = true;
+        }
+      } else {
+        win.classList.add('hidden');
+      }
+    }
+
+    function appendMitraMessage(sender, htmlContent) {
+      const container = document.getElementById('kdsMitraMessages');
+      const msgDiv = document.createElement('div');
+      
+      if (sender === 'bot') {
+        msgDiv.className = "flex items-start gap-2.5 animate-fadeIn";
+        msgDiv.innerHTML = `
+          <div class="w-7 h-7 rounded-xl bg-brand-navy text-brand-gold flex items-center justify-center font-black text-xs shrink-0 shadow mt-0.5">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3.5 shadow-sm text-slate-800 space-y-2 max-w-[85%]">
+            ${htmlContent}
+          </div>
+        `;
+      } else {
+        msgDiv.className = "flex justify-end animate-fadeIn";
+        msgDiv.innerHTML = `
+          <div class="bg-brand-navy text-white rounded-2xl rounded-tr-none px-3.5 py-2 shadow-sm font-semibold max-w-[80%]">
+            ${htmlContent}
+          </div>
+        `;
+      }
+      container.appendChild(msgDiv);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function resetMitraFlow() {
+      const container = document.getElementById('kdsMitraMessages');
+      container.innerHTML = '';
+      
+      const welcomeHtml = `
+        <p class="font-bold text-slate-800">Namaste! Mai <strong>केडीएस मित्र (KDS MITRA)</strong> hu, Manoher Singh ji ka authorized insurance assistant[cite: 1, 2].</p>
+        <p class="text-slate-600">Aapko kis tarah ki insurance jaankari chahiye? Kripya select karein:</p>
+        <div class="grid grid-cols-1 gap-1.5 pt-1">
+          <button onclick="handleMitraProductSelect('lic')" class="w-full text-left bg-blue-50 hover:bg-blue-100 text-brand-navy border border-blue-200 font-bold px-3 py-2 rounded-xl transition flex items-center justify-between">
+            <span>🛡️ Life Insurance (LIC of India)</span>
+            <i class="fa-solid fa-angle-right text-[10px]"></i>
+          </button>
+          <button onclick="handleMitraProductSelect('csc')" class="w-full text-left bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 font-bold px-3 py-2 rounded-xl transition flex items-center justify-between">
+            <span>🏛️ CSC Life (SBI / IndiaFirst / Shriram)</span>
+            <i class="fa-solid fa-angle-right text-[10px]"></i>
+          </button>
+          <button onclick="handleMitraProductSelect('motor')" class="w-full text-left bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 font-bold px-3 py-2 rounded-xl transition flex items-center justify-between">
+            <span>🚗 Motor Insurance (Car, Bike, Truck)</span>
+            <i class="fa-solid fa-angle-right text-[10px]"></i>
+          </button>
+          <button onclick="handleMitraProductSelect('health')" class="w-full text-left bg-rose-50 hover:bg-rose-100 text-rose-900 border border-rose-200 font-bold px-3 py-2 rounded-xl transition flex items-center justify-between">
+            <span>❤️ Health Mediclaim (Family Floater)</span>
+            <i class="fa-solid fa-angle-right text-[10px]"></i>
+          </button>
+        </div>
+      `;
+      appendMitraMessage('bot', welcomeHtml);
+    }
+
+    function handleMitraProductSelect(product) {
+      if (product === 'lic') {
+        appendMitraMessage('user', 'LIC Life Insurance Plans');
+        const catHtml = `
+          <p class="font-bold text-slate-800">LIC of India ke antargat category chunein:</p>
+          <div class="grid grid-cols-1 gap-1.5 pt-1">
+            <button onclick="handleMitraCategorySelect('lic', 'endowment')" class="text-left bg-slate-100 hover:bg-blue-50 border border-slate-200 font-bold px-3 py-2 rounded-xl">💰 Savings & Endowment (Jeevan Labh, Anand)</button>
+            <button onclick="handleMitraCategorySelect('lic', 'money_back')" class="text-left bg-slate-100 hover:bg-blue-50 border border-slate-200 font-bold px-3 py-2 rounded-xl">🔄 Money Back (Har 5 Saal Cashback)</button>
+            <button onclick="handleMitraCategorySelect('lic', 'whole_life')" class="text-left bg-slate-100 hover:bg-blue-50 border border-slate-200 font-bold px-3 py-2 rounded-xl">♾️ Whole Life (Jeevan Umang 8%, Utsav 10%)</button>
+            <button onclick="handleMitraCategorySelect('lic', 'term')" class="text-left bg-slate-100 hover:bg-blue-50 border border-slate-200 font-bold px-3 py-2 rounded-xl">🛡️ Pure Term Plan (Digi Term)</button>
+          </div>
+        `;
+        appendMitraMessage('bot', catHtml);
+      } else if (product === 'csc') {
+        appendMitraMessage('user', 'CSC Portal Life Insurance');
+        const catHtml = `
+          <p class="font-bold text-slate-800">CSC Partners ke Guaranteed Regular Income + 110% Return plans:</p>
+          <div class="grid grid-cols-1 gap-1.5 pt-1">
+            <button onclick="handleMitraPlanDetail('sbi_platina_plus')" class="text-left bg-purple-50 hover:bg-purple-100 border border-purple-200 font-bold px-3 py-2 rounded-xl">🏦 SBI Life - Smart Platina Plus</button>
+            <button onclick="handleMitraPlanDetail('indiafirst_gold')" class="text-left bg-orange-50 hover:bg-orange-100 border border-orange-200 font-bold px-3 py-2 rounded-xl">🇮🇳 IndiaFirst G.O.L.D (Guaranteed Income)</button>
+            <button onclick="handleMitraPlanDetail('shriram_assured_income')" class="text-left bg-red-50 hover:bg-red-100 border border-red-200 font-bold px-3 py-2 rounded-xl">🚚 Shriram Life - Assured Income</button>
+          </div>
+        `;
+        appendMitraMessage('bot', catHtml);
+      } else if (product === 'motor') {
+        appendMitraMessage('user', 'Motor / Vehicle Insurance');
+        const motorHtml = `
+          <p class="font-bold text-slate-800">Gaadi ke bime ke liye instant quote:</p>
+          <div class="space-y-1.5 pt-1">
+            <button onclick="mitraGoToTab('motor')" class="w-full text-left bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 font-bold px-3 py-2 rounded-xl">🚗 Motor Calculator Kholein</button>
+            <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20ji%2C%20ye%20meri%20RC%20hai%20gaadi%20ka%20insurance%20karna%20hai" target="_blank" class="block text-center bg-emerald-600 text-white font-bold px-3 py-2 rounded-xl shadow mt-2">
+              <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp par RC bhejein (Direct Rate)
+            </a>
+          </div>
+        `;
+        appendMitraMessage('bot', motorHtml);
+      } else if (product === 'health') {
+        appendMitraMessage('user', 'Health Insurance / Mediclaim');
+        const healthHtml = `
+          <p class="font-bold text-slate-800">Mediclaim me Star Health, Care Health aur HDFC ERGO uplabdh hain:</p>
+          <div class="pt-2 flex flex-col gap-1.5">
+            <button onclick="mitraGoToTab('health')" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 rounded-xl">
+              🏥 Health Calculator Open Karein
+            </button>
+          </div>
+        `;
+        appendMitraMessage('bot', healthHtml);
+      }
+    }
+
+    function handleMitraCategorySelect(type, cat) {
+      const filtered = officialLifeSchemes.filter(s => s.company === 'LIC' && s.category === cat);
+      appendMitraMessage('user', `${cat.toUpperCase()} Category Plans`);
+      
+      let html = `<p class="font-bold text-slate-800">Chunein jiske baare me jaankari chahiye:</p><div class="space-y-1.5 pt-1">`;
+      filtered.forEach(p => {
+        html += `
+          <button onclick="handleMitraPlanDetail('${p.id}')" class="w-full text-left bg-white hover:bg-blue-50 border border-slate-200 font-bold px-3 py-2 rounded-xl shadow-xs transition flex justify-between items-center">
+            <span>${p.name}</span>
+            <i class="fa-solid fa-circle-info text-brand-lightBlue"></i>
+          </button>
+        `;
+      });
+      html += `</div>`;
+      appendMitraMessage('bot', html);
+    }
+
+    function handleMitraPlanDetail(planId) {
+      const plan = officialLifeSchemes.find(s => s.id === planId);
+      if (!plan) return;
+
+      appendMitraMessage('user', `${plan.name}`);
+
+      let detailHtml = `
+        <div class="border-b border-slate-200 pb-2 mb-2">
+          <span class="text-[10px] bg-brand-navy text-white px-2 py-0.5 rounded font-black uppercase">${plan.company} • Plan ${plan.planNo}</span>
+          <h5 class="text-sm font-black text-brand-navy mt-1">${plan.name}</h5>
+          <p class="text-[11px] text-slate-600 mt-1">${plan.tagline}</p>
+        </div>
+
+        <div class="pt-2 flex flex-col gap-1.5">
+          <button onclick="mitraLoadInCalculator('${plan.id}')" class="w-full bg-brand-gold hover:bg-amber-400 text-brand-dark font-black py-2 rounded-xl transition shadow flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-calculator"></i>
+            <span>Is Plan Ka Premium & Return Calculate Karein</span>
+          </button>
+        </div>
+      `;
+      appendMitraMessage('bot', detailHtml);
+    }
+
+    function mitraLoadInCalculator(planId) {
+      const plan = officialLifeSchemes.find(s => s.id === planId);
+      if (!plan) return;
+
+      if (plan.company === 'LIC') {
+        switchMainTab('lic');
+      } else {
+        switchMainTab('csc');
+      }
+
+      toggleMitraChat();
+      document.getElementById('calculator-section').scrollIntoView({ behavior: 'smooth' });
+      openQuotationPreviewModal(planId);
+    }
+
+    function mitraGoToTab(tab) {
+      switchMainTab(tab);
+      toggleMitraChat();
+    }
+
+    function handleMitraUserMessage(e) {
+      e.preventDefault();
+      const input = document.getElementById('kdsMitraInput');
+      const query = input.value.trim().toLowerCase();
+      if (!query) return;
+
+      appendMitraMessage('user', input.value);
+      input.value = '';
+
+      setTimeout(() => {
+        if (query.includes('lic') || query.includes('jeevan') || query.includes('labh')) {
+          handleMitraPlanDetail('jeevan_labh');
+        } else if (query.includes('motor') || query.includes('car') || query.includes('bike')) {
+          appendMitraMessage('bot', `<p>Motor calculation ke liye niche click karein:</p><button onclick="mitraGoToTab('motor')" class="w-full bg-emerald-600 text-white font-bold py-1.5 rounded-xl mt-1">Motor Calculator</button>`);
+        } else {
+          appendMitraMessage('bot', `
+            <p>Manoher Singh ji se direct paramarsh ke liye contact karein[cite: 1]:</p>
+            <div class="flex gap-2 pt-1">
+              <a href="tel:8440096343" class="flex-1 bg-brand-navy text-white text-center py-1.5 rounded-xl font-bold">Call</a>
+              <a href="https://wa.me/918440096343" class="flex-1 bg-emerald-600 text-white text-center py-1.5 rounded-xl font-bold">WhatsApp</a>
+            </div>
+          `);
+        }
+      }, 400);
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       adjustEngineSlabs();
       autoApplyRiders();
