@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <!-- Primary SEO Meta Tags & Multi-Search Engine Optimization -->
-  <title>KDS Insurance Services | LIC Agent, Motor & Health Insurance Malwara, Raniwara</title>
-  <meta name="title" content="KDS Insurance Services | LIC Agent, Motor & Health Insurance Malwara, Raniwara" />
+  <title>KDS Insurance Services | Life (LIC/CSC/Other), Motor & Health Insurance</title>
+  <meta name="title" content="KDS Insurance Services | Life (LIC/CSC/Other), Motor & Health Insurance Malwara, Raniwara" />
   <meta name="description" content="KDS Insurance Services by Authorized Advisor Manoher Singh. Calculate LIC Life, CSC SBI Life, Motor (Car/Bike Third Party, Zero Dep) & Health Mediclaim quotes online in Malwara, Raniwara, Jalore." />
   <meta name="keywords" content="Insurance Services, KDS Insurance, KDS Insurance Services, KDS Insurance Malwara, LIC Agent Raniwara, LIC Policy Malwara, Manoher Singh Insurance, Car Insurance Raniwara, Bike Insurance Malwara, Third Party Insurance, Zero Dep Insurance, Health Insurance Mediclaim, CSC Life Insurance, SBI Life Malwara, Vehicle Insurance Jalore, Commercial Vehicle Insurance Malwara" />
   <meta name="author" content="Manoher Singh" />
@@ -14,17 +14,16 @@
   
   <link rel="canonical" href="https://www.kdsinsurance.in/" />
   
-<!-- Favicon / Search Engine Logo -->
+  <!-- Favicon / Search Engine Logo -->
   <link rel="icon" href="https://www.kdsinsurance.in/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="192x192" href="https://www.kdsinsurance.in/favicon.png" />
   <link rel="shortcut icon" href="https://www.kdsinsurance.in/favicon.png" type="image/x-icon" />
   <link rel="apple-touch-icon" href="https://www.kdsinsurance.in/favicon.png" />
   
-  <!-- Search Engine Verification Codes (Google, Bing, Yahoo India) -->
+  <!-- Search Engine Verification Codes -->
   <meta name="google-site-verification" content="4mTqww8O_oKqvKdAcGa073EWUQYrZsU7thAHophgWLo" />
 
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6102605243951626"
-     crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6102605243951626" crossorigin="anonymous"></script>
 
   <!-- Open Graph / Social Media Preview -->
   <meta property="og:type" content="website" />
@@ -92,6 +91,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+  <!-- Hidden Google Translate Element Container -->
+  <div id="google_translate_element" style="display:none;"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'hi',
+        includedLanguages: 'hi,en,gu,mr,bn,ta,te,kn,ml,pa,or,ur',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -117,6 +129,12 @@
   </script>
 
   <style>
+    .goog-te-banner-frame.skiptranslate, .goog-te-gadget-simple { display: none !important; }
+    body { top: 0px !important; }
+    .goog-tooltip { display: none !important; }
+    .goog-tooltip:hover { display: none !important; }
+    .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+
     @page {
       size: A4 portrait;
       margin: 8mm 6mm;
@@ -193,6 +211,77 @@
 
 <body class="bg-brand-bgLight text-slate-800 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-gold selection:text-brand-dark">
 
+  <!-- ========================================================================= -->
+  <!-- WELCOME LANGUAGE SELECTION MODAL (All Indian Languages) -->
+  <!-- ========================================================================= -->
+  <div id="siteLanguageModal" class="fixed inset-0 z-[100] bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border-2 border-brand-gold/60 p-6 sm:p-8 text-center animate-fadeIn">
+      <div class="w-14 h-14 rounded-2xl bg-brand-navy text-brand-gold mx-auto flex items-center justify-center text-2xl font-black shadow-md mb-3">
+        <i class="fa-solid fa-language"></i>
+      </div>
+      <h3 class="text-xl sm:text-2xl font-black text-brand-navy">अपनी भाषा चुनें / Select Language</h3>
+      <p class="text-xs text-slate-500 mt-1">वेबसाइट को अपनी पसंदीदा भाषा में देखने के लिए चुनें</p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mt-6 text-xs font-bold">
+        <button onclick="applySiteLanguage('hi')" class="p-3 rounded-2xl border-2 border-brand-navy bg-brand-navy text-brand-gold hover:opacity-95 shadow transition">
+          <div class="text-sm">हिंदी</div>
+          <div class="text-[10px] text-slate-200">Hindi (Default)</div>
+        </button>
+        <button onclick="applySiteLanguage('en')" class="p-3 rounded-2xl border border-slate-200 hover:border-brand-navy bg-slate-50 hover:bg-white text-slate-800 transition">
+          <div class="text-sm">English</div>
+          <div class="text-[10px] text-slate-500">अंग्रेजी</div>
+        </button>
+        <button onclick="applySiteLanguage('gu')" class="p-3 rounded-2xl border border-slate-200 hover:border-brand-navy bg-slate-50 hover:bg-white text-slate-800 transition">
+          <div class="text-sm">ગુજરાતી</div>
+          <div class="text-[10px] text-slate-500">Gujarati</div>
+        </button>
+        <button onclick="applySiteLanguage('mr')" class="p-3 rounded-2xl border border-slate-200 hover:border-brand-navy bg-slate-50 hover:bg-white text-slate-800 transition">
+          <div class="text-sm">मराठी</div>
+          <div class="text-[10px] text-slate-500">Marathi</div>
+        </button>
+        <button onclick="applySiteLanguage('pa')" class="p-3 rounded-2xl border border-slate-200 hover:border-brand-navy bg-slate-50 hover:bg-white text-slate-800 transition">
+          <div class="text-sm">ਪੰਜਾਬੀ</div>
+          <div class="text-[10px] text-slate-500">Punjabi</div>
+        </button>
+        <button onclick="applySiteLanguage('bn')" class="p-3 rounded-2xl border border-slate-200 hover:border-brand-navy bg-slate-50 hover:bg-white text-slate-800 transition">
+          <div class="text-sm">বাংলা</div>
+          <div class="text-[10px] text-slate-500">Bengali</div>
+        </button>
+        <button onclick="applySiteLanguage('ta')" class="p-3 rounded-2xl border border-slate-200 hover:border-brand-navy bg-slate-50 hover:bg-white text-slate-800 transition">
+          <div class="text-sm">தமிழ்</div>
+          <div class="text-[10px] text-slate-500">Tamil</div>
+        </button>
+        <button onclick="applySiteLanguage('te')" class="p-3 rounded-2xl border border-slate-200 hover:border-brand-navy bg-slate-50 hover:bg-white text-slate-800 transition">
+          <div class="text-sm">తెలుగు</div>
+          <div class="text-[10px] text-slate-500">Telugu</div>
+        </button>
+        <button onclick="applySiteLanguage('kn')" class="p-3 rounded-2xl border border-slate-200 hover:border-brand-navy bg-slate-50 hover:bg-white text-slate-800 transition">
+          <div class="text-sm">ಕನ್ನಡ</div>
+          <div class="text-[10px] text-slate-500">Kannada</div>
+        </button>
+        <button onclick="applySiteLanguage('ml')" class="p-3 rounded-2xl border border-slate-200 hover:border-brand-navy bg-slate-50 hover:bg-white text-slate-800 transition">
+          <div class="text-sm">മലയാളം</div>
+          <div class="text-[10px] text-slate-500">Malayalam</div>
+        </button>
+        <button onclick="applySiteLanguage('or')" class="p-3 rounded-2xl border border-slate-200 hover:border-brand-navy bg-slate-50 hover:bg-white text-slate-800 transition">
+          <div class="text-sm">ଓଡ଼ିଆ</div>
+          <div class="text-[10px] text-slate-500">Odia</div>
+        </button>
+        <button onclick="applySiteLanguage('ur')" class="p-3 rounded-2xl border border-slate-200 hover:border-brand-navy bg-slate-50 hover:bg-white text-slate-800 transition">
+          <div class="text-sm">اردو</div>
+          <div class="text-[10px] text-slate-500">Urdu</div>
+        </button>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center text-xs">
+        <span class="text-slate-500">आप इसे कभी भी बदल सकते हैं</span>
+        <button onclick="closeSiteLanguageModal()" class="text-brand-navy hover:underline font-bold">
+          जारी रखें / Continue &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Top Advisor Bar -->
   <div class="bg-brand-dark text-white text-xs py-2 px-4 border-b border-brand-lightBlue">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
@@ -200,7 +289,11 @@
         <span class="bg-brand-gold text-brand-dark font-black px-2 py-0.5 rounded text-[10px] tracking-wider uppercase">Authorized Insurance Agent</span>
         <span class="text-slate-200"><i class="fa-solid fa-user-tie text-brand-gold mr-1"></i> <strong>MANOHER SINGH</strong> | Insurance Advisory Point</span>
       </div>
-      <div class="flex items-center gap-4 text-slate-200">
+      <div class="flex items-center gap-3 text-slate-200">
+        <button onclick="openSiteLanguageModal()" class="bg-white/10 hover:bg-white/20 text-brand-gold px-2.5 py-1 rounded-lg font-bold text-xs flex items-center gap-1.5 transition">
+          <i class="fa-solid fa-language"></i> <span id="currentLangLabel">भाषा / Language</span>
+        </button>
+        <span class="text-slate-600">|</span>
         <a href="tel:8440096343" class="hover:text-brand-gold font-bold transition flex items-center gap-1.5">
           <i class="fa-solid fa-phone text-brand-gold"></i> 8440096343
         </a>
@@ -231,7 +324,7 @@
           </div>
         </a>
 
-        <!-- Desktop Tab Switcher (Visible on Laptop/Desktop) -->
+        <!-- Desktop Tab Switcher -->
         <div class="hidden lg:flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
           <button id="navTabLic" onclick="switchMainTab('lic')" class="px-3.5 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm">
             <i class="fa-solid fa-shield-halved text-brand-gold"></i><span>Life (LIC)</span>
@@ -248,6 +341,11 @@
         </div>
 
         <div class="flex items-center gap-2 sm:gap-3">
+          <button onclick="openSiteLanguageModal()" class="bg-slate-100 hover:bg-slate-200 text-brand-navy font-bold px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 border border-slate-200 shadow-sm" title="Change Language">
+            <i class="fa-solid fa-language text-brand-lightBlue"></i>
+            <span class="hidden sm:inline">भाषा / Language</span>
+          </button>
+
           <a href="about.html" class="bg-white hover:bg-slate-100 text-brand-navy border border-slate-200 font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-user-tie text-brand-gold"></i>
             <span class="hidden sm:inline">About Us</span>
@@ -261,7 +359,7 @@
         </div>
       </div>
 
-      <!-- Mobile Dedicated 4-Grid App Bar (Never cut, 100% visible on mobile) -->
+      <!-- Mobile Dedicated 4-Grid App Bar -->
       <div class="lg:hidden pb-2.5 pt-0.5">
         <div class="grid grid-cols-4 gap-1.5 bg-slate-100 p-1 rounded-2xl border border-slate-200">
           <button id="mobileNavLic" onclick="switchMainTab('lic')" class="py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-brand-navy text-white shadow-xs">
@@ -270,11 +368,11 @@
           </button>
           <button id="mobileNavCsc" onclick="switchMainTab('csc')" class="py-2 rounded-xl text-[11px] font-bold text-slate-700 hover:text-amber-700 transition flex flex-col items-center justify-center gap-0.5">
             <i class="fa-solid fa-building-columns text-amber-600 text-xs"></i>
-            <span>Life (CSC/Other)</span>
+            <span>Life (CSC)</span>
           </button>
           <button id="mobileNavMotor" onclick="switchMainTab('motor')" class="py-2 rounded-xl text-[11px] font-bold text-slate-700 hover:text-emerald-700 transition flex flex-col items-center justify-center gap-0.5">
             <i class="fa-solid fa-car-shield text-emerald-600 text-xs"></i>
-            <span>🚗</span> <span>Motor</span>
+            <span>Motor</span>
           </button>
           <button id="mobileNavHealth" onclick="switchMainTab('health')" class="py-2 rounded-xl text-[11px] font-bold text-slate-700 hover:text-rose-700 transition flex flex-col items-center justify-center gap-0.5">
             <i class="fa-solid fa-heart-pulse text-rose-600 text-xs"></i>
@@ -320,38 +418,38 @@
                 <h3 class="font-black text-lg text-brand-navy flex items-center gap-2">
                   <i class="fa-solid fa-bolt text-brand-gold"></i> Quick Plan Recommendation
                 </h3>
-                <p class="text-xs text-slate-500">Umar, term aur budget ke anusaar filter karein</p>
+                <p class="text-xs text-slate-500">उम्र, अवधि और बजट से खोजें / Filter by age & budget</p>
               </div>
               <span id="quickPlanTypeBadge" class="text-[11px] bg-blue-100 text-brand-navy px-2 py-0.5 rounded font-black">LIC Plans</span>
             </div>
             <div class="mt-4 space-y-3.5">
               <div>
                 <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
-                  <span>Aapki Umar (Age):</span>
-                  <span id="quickAgeDisplay" class="text-brand-lightBlue font-black">28 Varsh</span>
+                  <span>आपकी उम्र / Your Age:</span>
+                  <span id="quickAgeDisplay" class="text-brand-lightBlue font-black">28 वर्ष / Yrs</span>
                 </div>
-                <input type="number" id="quickAgeInput" min="0" max="100" value="28" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="syncAgeFromHero(this.value)" />
+                <input type="number" id="quickAgeInput" min="0" max="100" value="28" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="syncAgeFromHero(this.value)" placeholder="अपनी उम्र दर्ज करें / Enter Age" />
               </div>
               <div>
                 <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
-                  <span>Aapka Budget (Premium):</span>
-                  <span id="quickBudgetDisplay" class="text-brand-lightBlue font-black">₹ 28,000 / Month</span>
+                  <span>आपका बजट / Premium Budget:</span>
+                  <span id="quickBudgetDisplay" class="text-brand-lightBlue font-black">Premium Mode : Monthly (₹)</span>
                 </div>
-                <input type="number" id="quickBudgetInput" min="500" step="500" value="28000" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="syncBudgetFromHero(this.value)" />
+                <input type="number" id="quickBudgetInput" min="500" step="500" value="5000" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="syncBudgetFromHero(this.value)" placeholder="प्रीमियम राशि / Enter Budget" />
               </div>
               <div class="grid grid-cols-2 gap-2">
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1">Policy Term (Saal):</label>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">पॉलिसी अवधि / Policy Term:</label>
                   <input type="number" id="quickTermInput" min="5" max="100" value="25" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="syncTermFromHero(this.value)" />
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1">Paying Term / PPT:</label>
-                  <input type="number" id="quickPptInput" min="1" max="100" value="12" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="syncPptFromHero(this.value)" />
+                  <label class="block text-xs font-bold text-slate-700 mb-1">प्रीमियम भुगतान / Paying Term (PPT):</label>
+                  <input type="number" id="quickPptInput" min="1" max="100" value="20" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800 focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" oninput="syncPptFromHero(this.value)" />
                 </div>
               </div>
               <button onclick="scrollToAndFilterFromHero()" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 rounded-xl text-sm transition shadow-md flex items-center justify-center gap-2">
                 <i class="fa-solid fa-magnifying-glass text-brand-gold"></i>
-                <span>Plans Dekhein & Print Nikalein</span>
+                <span>प्लान्स देखें एवं प्रिंट निकालें / View Plans</span>
               </button>
             </div>
           </div>
@@ -369,11 +467,11 @@
                 <span id="portalBadgeTitle" class="bg-brand-gold text-brand-dark px-2.5 py-0.5 rounded text-xs font-black uppercase tracking-wider">Life Insurance Engine</span>
                 <span id="portalBadgeSubtitle" class="text-xs text-sky-200">Official Benefit Schedule With Separate Par & Non-Par Logic</span>
               </div>
-              <h2 id="calcSectionHeading" class="text-2xl sm:text-3xl font-black mt-2">Apni Details Bharein & Plan Customize Karein</h2>
-              <p class="text-slate-200 text-xs sm:text-sm mt-1">Umar aur budget ke anusaar accurate riders, actual returns aur refund schedule turant calculate hota hai[cite: 1].</p>
+              <h2 id="calcSectionHeading" class="text-2xl sm:text-3xl font-black mt-2">विवरण भरें और प्लान बनाएं / Enter Details & Customize Plan</h2>
+              <p class="text-slate-200 text-xs sm:text-sm mt-1">उम्र और बजट के अनुसार सही राइडर्स, रिटर्न और रिफंड शेड्यूल तुरंत कैलकुलेट होता है।</p>
             </div>
             <button onclick="resetCalculatorForm()" class="self-start sm:self-center text-xs bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-1.5 rounded-xl text-white font-semibold transition flex items-center gap-1.5">
-              <i class="fa-solid fa-arrows-rotate"></i> Reset
+              <i class="fa-solid fa-arrows-rotate"></i> रीसेट / Reset
             </button>
           </div>
         </div>
@@ -381,54 +479,54 @@
         <div class="p-6 sm:p-8">
           <form id="policyCalculatorForm" onsubmit="event.preventDefault(); applyPolicyFilters();" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Customer Name</label>
-              <input type="text" id="custName" value="Your Name" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" />
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">ग्राहक का नाम / Customer Name</label>
+              <input type="text" id="custName" value="Your Name" placeholder="उदा. मनोहर सिंह / E.g. Manoher Singh" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" />
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Mobile Number</label>
-              <input type="tel" id="custPhone" value="Mobile Number" maxlength="10" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" />
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">मोबाइल नंबर / Mobile Number</label>
+              <input type="tel" id="custPhone" value="8440096343" maxlength="10" placeholder="10 अंकों का मोबाइल नंबर / 10-digit Mobile" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" />
             </div>
             <div>
               <div class="flex justify-between items-center mb-1.5">
-                <label class="block text-xs font-black text-slate-700 uppercase tracking-wider">Age (Umar)</label>
-                <span id="selectedAgeBadge" class="bg-blue-100 text-brand-navy text-xs font-black px-2.5 py-0.5 rounded-md">28 Saal</span>
+                <label class="block text-xs font-black text-slate-700 uppercase tracking-wider">उम्र / Age (Years)</label>
+                <span id="selectedAgeBadge" class="bg-blue-100 text-brand-navy text-xs font-black px-2.5 py-0.5 rounded-md">28 वर्ष / Saal</span>
               </div>
               <input type="number" id="calcAgeInput" min="0" max="100" value="28" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-black text-slate-800" oninput="handleInputsChange()" />
             </div>
             
             <div id="companySelectContainer" class="hidden">
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Insurer Company</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">बीमा कंपनी / Insurer Company</label>
               <select id="calcCompany" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" onchange="applyPolicyFilters()">
-                <option value="all">🌟 Sabhi CSC Partners</option>
-                <option value="IndiaFirst">🇮🇳 IndiaFirst Life Insurance</option>
-                <option value="SBI Life">🏦 SBI Life Insurance</option>
-                <option value="Shriram Life">🚚 Shriram Life Insurance</option>
+                <option value="all">🌟 सभी पार्टनर्स / All CSC Partners</option>
+                <option value="IndiaFirst">🇮🇳 इंडियाफर्स्ट / IndiaFirst Life</option>
+                <option value="SBI Life">🏦 एसबीआई लाइफ / SBI Life</option>
+                <option value="Shriram Life">🚚 श्रीराम लाइफ / Shriram Life</option>
               </select>
             </div>
 
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Premium Mode</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">प्रीमियम का प्रकार / Premium Mode</label>
               <select id="calcMode" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" onchange="handleInputsChange()">
-                <option value="monthly" selected>Monthly (Masik)</option>
-                <option value="yearly">Yearly (Saalana)</option>
-                <option value="half_yearly">Half-Yearly (Chhamahi)</option>
-                <option value="quarterly">Quarterly (Traimasik)</option>
+                <option value="monthly" selected>मासिक / Monthly (₹/Mahina)</option>
+                <option value="yearly">वार्षिक / Yearly (₹/Saal)</option>
+                <option value="half_yearly">छमाही / Half-Yearly (₹/6 Mahine)</option>
+                <option value="quarterly">त्रैमासिक / Quarterly (₹/3 Mahine)</option>
               </select>
             </div>
             <div>
               <div class="flex justify-between items-center mb-1.5">
-                <label class="block text-xs font-black text-slate-700 uppercase tracking-wider">Premium Budget (₹)</label>
-                <span id="selectedBudgetBadge" class="bg-amber-100 text-amber-900 text-xs font-black px-2 py-0.5 rounded-md">₹ 28,000 / Month</span>
+                <label class="block text-xs font-black text-slate-700 uppercase tracking-wider">प्रीमियम बजट / Budget (₹)</label>
+                <span id="selectedBudgetBadge" class="bg-amber-100 text-amber-900 text-xs font-black px-2 py-0.5 rounded-md">₹ 5,000 / Month</span>
               </div>
-              <input type="number" id="calcBudgetInput" min="500" step="500" value="28000" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-black text-slate-800" oninput="handleInputsChange()" />
+              <input type="number" id="calcBudgetInput" min="500" step="500" value="5000" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-black text-slate-800" oninput="handleInputsChange()" />
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Policy Term (Saal)</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">पॉलिसी अवधि / Policy Term (वर्ष)</label>
               <input type="number" id="calcTermInput" min="5" max="100" value="25" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" oninput="applyPolicyFilters()" />
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Paying Term / PPT (Saal)</label>
-              <input type="number" id="calcPptInput" min="1" max="100" value="12" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" oninput="applyPolicyFilters()" />
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">प्रीमियम भुगतान वर्ष / Paying Term (PPT)</label>
+              <input type="number" id="calcPptInput" min="1" max="100" value="20" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" oninput="applyPolicyFilters()" />
             </div>
 
             <!-- RIDERS SECTION -->
@@ -436,10 +534,10 @@
               <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3 pb-2 border-b border-slate-200">
                 <div class="flex items-center gap-2">
                   <span class="bg-brand-navy text-white text-[11px] font-black px-2.5 py-0.5 rounded">Riders Engine</span>
-                  <span class="text-xs font-bold text-slate-700"><i class="fa-solid fa-wand-magic-sparkles text-brand-gold mr-1"></i> Auto-Calculated Based on Age & Plan Category</span>
+                  <span class="text-xs font-bold text-slate-700"><i class="fa-solid fa-wand-magic-sparkles text-brand-gold mr-1"></i> उम्र व प्लान के अनुसार स्वतः सेट / Auto-Calculated</span>
                 </div>
                 <button type="button" onclick="autoApplyRiders()" class="text-[11px] font-bold text-brand-lightBlue hover:underline flex items-center gap-1">
-                  <i class="fa-solid fa-rotate-left"></i> Re-Calculate Auto Riders
+                  <i class="fa-solid fa-rotate-left"></i> पुनः राइडर्स सेट करें / Re-Calculate Riders
                 </button>
               </div>
 
@@ -449,12 +547,12 @@
                   <div class="flex items-center justify-between">
                     <label class="font-bold text-slate-800 flex items-center gap-1.5 cursor-pointer">
                       <input type="checkbox" id="riderAddbCheck" checked onchange="applyPolicyFilters()" class="w-4 h-4 rounded text-brand-navy focus:ring-brand-gold" />
-                      <span>ADDB Rider Cover</span>
+                      <span>दुर्घटना कवर / ADDB Rider</span>
                     </label>
                     <span class="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold">Accidental</span>
                   </div>
                   <input type="number" id="riderAddbValue" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800" oninput="applyPolicyFilters()" />
-                  <p class="text-[10px] text-slate-500">Auto set to Sum Assured value.</p>
+                  <p class="text-[10px] text-slate-500">बीमाधन के अनुसार स्वतः तय / Auto set to Sum Assured.</p>
                 </div>
 
                 <!-- Term Rider -->
@@ -462,12 +560,12 @@
                   <div class="flex items-center justify-between">
                     <label class="font-bold text-slate-800 flex items-center gap-1.5 cursor-pointer">
                       <input type="checkbox" id="riderTrCheck" checked onchange="applyPolicyFilters()" class="w-4 h-4 rounded text-brand-navy focus:ring-brand-gold" />
-                      <span>Term Rider (TR Cover)</span>
+                      <span>टर्म राइडर / TR Cover</span>
                     </label>
                     <span class="text-[10px] bg-blue-100 text-brand-navy px-1.5 py-0.5 rounded font-bold">Pure Life</span>
                   </div>
                   <input type="number" id="riderTrValue" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800" oninput="applyPolicyFilters()" />
-                  <p class="text-[10px] text-slate-500">Auto set for Age 18-50.</p>
+                  <p class="text-[10px] text-slate-500">18-50 उम्र के लिए स्वतः सक्रिय / Auto set 18-50 Yrs.</p>
                 </div>
 
                 <!-- Critical Illness -->
@@ -475,12 +573,12 @@
                   <div class="flex items-center justify-between">
                     <label class="font-bold text-slate-800 flex items-center gap-1.5 cursor-pointer">
                       <input type="checkbox" id="riderCirCheck" onchange="applyPolicyFilters()" class="w-4 h-4 rounded text-brand-navy focus:ring-brand-gold" />
-                      <span>Critical Illness (CIR)</span>
+                      <span>गंभीर बीमारी / CIR Cover</span>
                     </label>
                     <span class="text-[10px] bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded font-bold">Health Benefit</span>
                   </div>
                   <input type="number" id="riderCirValue" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800" oninput="applyPolicyFilters()" />
-                  <p class="text-[10px] text-slate-500">Optional major illness protection.</p>
+                  <p class="text-[10px] text-slate-500">ऐच्छिक गंभीर बीमारी सुरक्षा / Optional major illness.</p>
                 </div>
               </div>
             </div>
@@ -488,7 +586,7 @@
             <div class="lg:col-span-4 flex items-end">
               <button type="button" onclick="applyPolicyFilters()" class="w-full bg-brand-gold hover:bg-amber-400 text-brand-dark font-black py-3.5 px-4 rounded-xl text-base shadow-lg transition flex items-center justify-center gap-2">
                 <i class="fa-solid fa-calculator"></i>
-                <span>Calculate & Show Plans (<span id="btnMatchCount">0</span>)</span>
+                <span>गणना करें और प्लान देखें / Calculate & Show Plans (<span id="btnMatchCount">0</span>)</span>
               </button>
             </div>
           </form>
@@ -499,8 +597,8 @@
                 <i class="fa-solid fa-receipt"></i>
               </div>
               <div>
-                <p class="font-extrabold text-slate-800">Current Calculation Snapshot:</p>
-                <p class="text-slate-500">Customer: <strong id="summaryCustomerName" class="text-slate-800">Your Name</strong> (Age: <span id="summaryAge" class="font-bold text-brand-navy">28</span> yrs) | Budget: <strong id="summaryBudget">₹ 3,36,000 Yearly (₹ 28,000/mo)</strong> | Term: <strong id="summaryTerm">25</strong> Yrs | PPT: <strong id="summaryPpt">12</strong> Yrs</p>
+                <p class="font-extrabold text-slate-800">वर्तमान गणना विवरण / Current Calculation Snapshot:</p>
+                <p class="text-slate-500">ग्राहक / Customer: <strong id="summaryCustomerName" class="text-slate-800">Your Name</strong> (उम्र / Age: <span id="summaryAge" class="font-bold text-brand-navy">28</span> वर्ष) | बजट / Budget: <strong id="summaryBudget">₹ 60,000 Yearly (₹ 5,000/mo)</strong> | अवधि / Term: <strong id="summaryTerm">25</strong> Yrs | भुगतान / PPT: <strong id="summaryPpt">20</strong> Yrs</p>
               </div>
             </div>
             <span class="text-blue-900 bg-blue-50 px-2.5 py-1 rounded border border-blue-200 font-bold"><i class="fa-solid fa-circle-info mr-1"></i> Non-Par Guaranteed Income & Par Bonus Rules Compliant</span>
@@ -513,36 +611,36 @@
         <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-white p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-sm">
           <div>
             <div class="flex items-center gap-2">
-              <h3 id="schemesListHeading" class="text-xl sm:text-2xl font-black text-brand-navy tracking-tight">Available LIC Plans</h3>
+              <h3 id="schemesListHeading" class="text-xl sm:text-2xl font-black text-brand-navy tracking-tight">उपलब्ध प्लान्स / Available Plans</h3>
               <span id="resultsCountBadge" class="bg-brand-navy text-white text-xs font-bold px-2.5 py-1 rounded-full">Plans Found</span>
             </div>
-            <p id="filterStatusText" class="text-xs text-slate-500 mt-1 font-medium">Matching Selected Term & PPT</p>
+            <p id="filterStatusText" class="text-xs text-slate-500 mt-1 font-medium">चुनी गई अवधि के अनुसार / Matching Selected Term & PPT</p>
           </div>
           
           <div class="flex flex-wrap items-center gap-2">
             <div class="inline-flex p-1 bg-slate-100 rounded-2xl border border-slate-200 text-xs font-bold">
               <button id="viewFilteredBtn" onclick="toggleViewMode('filtered')" class="px-3.5 py-2 rounded-xl bg-brand-navy text-white shadow-sm transition flex items-center gap-1.5">
-                <i class="fa-solid fa-filter text-brand-gold"></i> <span>Selected Term & PPT Only</span>
+                <i class="fa-solid fa-filter text-brand-gold"></i> <span>चुनी गई अवधि केवल / Selected Term & PPT Only</span>
               </button>
               <button id="viewAllBtn" onclick="toggleViewMode('all')" class="px-3.5 py-2 rounded-xl text-slate-700 hover:text-brand-navy transition flex items-center gap-1.5">
-                <i class="fa-solid fa-layer-group text-blue-600"></i> <span id="toggleAllBtnLabel">Sabhi Plans Dekhein</span>
+                <i class="fa-solid fa-layer-group text-blue-600"></i> <span id="toggleAllBtnLabel">सभी प्लान देखें / View All Plans</span>
               </button>
             </div>
 
             <button onclick="sortPolicies('return')" class="bg-white border border-slate-300 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold hover:border-brand-gold transition shadow-sm">
-              <i class="fa-solid fa-arrow-up-wide-short mr-1"></i> Return
+              <i class="fa-solid fa-arrow-up-wide-short mr-1"></i> रिटर्न के अनुसार / Return
             </button>
           </div>
         </div>
 
         <!-- Category Filter Tabs -->
         <div class="flex flex-wrap items-center gap-2 pt-1 pb-1">
-          <button id="catFilterBtn_all" onclick="selectQuickCategory('all')" class="px-3.5 py-1.5 rounded-xl text-xs font-black transition border bg-brand-navy text-white border-brand-navy shadow-sm">🌟 Sabhi Categories (All)</button>
-          <button id="catFilterBtn_endowment" onclick="selectQuickCategory('endowment')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">💰 Savings & Endowment</button>
-          <button id="catFilterBtn_money_back" onclick="selectQuickCategory('money_back')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">🔄 Money Back & Cash Back</button>
-          <button id="catFilterBtn_whole_life" onclick="selectQuickCategory('whole_life')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">♾️ Whole Life / Guaranteed Income</button>
-          <button id="catFilterBtn_term" onclick="selectQuickCategory('term')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">🛡️ Pure Term & ROP Plans</button>
-          <button id="catFilterBtn_pension" onclick="selectQuickCategory('pension')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">👴 Pension / Annuity</button>
+          <button id="catFilterBtn_all" onclick="selectQuickCategory('all')" class="px-3.5 py-1.5 rounded-xl text-xs font-black transition border bg-brand-navy text-white border-brand-navy shadow-sm">🌟 सभी / All Plans</button>
+          <button id="catFilterBtn_endowment" onclick="selectQuickCategory('endowment')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">💰 बचत व एंडोमेंट / Endowment</button>
+          <button id="catFilterBtn_money_back" onclick="selectQuickCategory('money_back')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">🔄 मनी बैक / Money Back</button>
+          <button id="catFilterBtn_whole_life" onclick="selectQuickCategory('whole_life')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">♾️ आजीवन आय / Whole Life</button>
+          <button id="catFilterBtn_term" onclick="selectQuickCategory('term')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">🛡️ टर्म प्लान / Pure Term</button>
+          <button id="catFilterBtn_pension" onclick="selectQuickCategory('pension')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">👴 पेंशन प्लान / Pension</button>
         </div>
 
         <div id="policiesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
@@ -553,11 +651,11 @@
         <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-6 border-b border-slate-200">
           <div>
             <span class="text-xs font-bold text-brand-lightBlue uppercase tracking-wider bg-blue-50 px-2.5 py-1 rounded">Side-by-Side Comparison</span>
-            <h3 class="text-2xl font-black text-brand-navy mt-1">Schemes Compare Karein (Tulna Matrix Table)</h3>
-            <p class="text-xs text-slate-500">2 ya 3 plans aamne-saamne rakh kar unka premium aur return compare karein[cite: 1].</p>
+            <h3 class="text-2xl font-black text-brand-navy mt-1">प्लान तुलना तालिका / Schemes Comparison Matrix</h3>
+            <p class="text-xs text-slate-500">2 या 3 प्लान्स को आमने-सामने रखकर तुलना करें / Compare 2-3 plans side-by-side[cite: 1].</p>
           </div>
           <button onclick="clearCompareSelection()" class="text-xs font-bold text-rose-600 hover:text-rose-700 transition">
-            <i class="fa-solid fa-trash-can mr-1"></i> Clear Comparison
+            <i class="fa-solid fa-trash-can mr-1"></i> तुलना हटाएं / Clear Comparison
           </button>
         </div>
         <div id="comparisonContainer" class="mt-6 overflow-x-auto"></div>
@@ -597,7 +695,7 @@
             <i class="fa-solid fa-truck-pickup"></i>
           </div>
           <h3 class="text-lg font-black text-white">Quick Motor Renewal</h3>
-          <p class="text-xs text-slate-300">RC photo WhatsApp par bhejein aur instant policy lein</p>
+          <p class="text-xs text-slate-300">RC फोटो व्हाट्सएप पर भेजें और तत्काल बीमा पाएं / Send RC on WhatsApp</p>
           <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20mujhe%20apni%20Gaadi%20ka%20Insurance%20renew%20karwana%20hai" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black py-3 px-4 rounded-xl text-xs block transition shadow">
             <i class="fa-brands fa-whatsapp text-sm mr-1"></i> WhatsApp Par RC Bhejein
           </a>
@@ -610,73 +708,73 @@
         <div class="p-6 sm:p-8 border-b border-slate-200 bg-slate-50/70">
           <div class="mb-6">
             <span class="text-xs font-black uppercase tracking-wider bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded-md">Search & Compare Engine</span>
-            <h3 class="text-2xl font-black text-brand-navy mt-2">Apni Gaadi ki Details Daalein</h3>
+            <h3 class="text-2xl font-black text-brand-navy mt-2">वाहन का विवरण भरें / Enter Vehicle Details</h3>
           </div>
 
           <form id="motorSearchForm" onsubmit="event.preventDefault(); searchMotorPolicies();" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">1. Vehicle Type</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">1. वाहन प्रकार / Vehicle Type</label>
               <select id="motorVehicleType" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="adjustEngineSlabs()">
-                <option value="car" selected>🚗 Private Car (Four Wheeler)</option>
-                <option value="bike">🏍️ Two Wheeler (Bike / Scooter)</option>
-                <option value="commercial">🚚 Commercial / Goods Vehicle</option>
+                <option value="car" selected>🚗 कार (चार पहिया) / Private Car</option>
+                <option value="bike">🏍️ बाइक (दो पहिया) / Two Wheeler</option>
+                <option value="commercial">🚚 कमर्शियल वाहन / Commercial Vehicle</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">2. Cover Type</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">2. बीमा प्रकार / Cover Type</label>
               <select id="motorCoverType" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="searchMotorPolicies()">
-                <option value="comprehensive" selected>Comprehensive (1st Party + 3rd Party)</option>
-                <option value="zero_dep">Zero Depreciation (0-Dep / Bumper-to-Bumper)</option>
-                <option value="third_party">Third Party (TP Only - Govt Mandatory)</option>
-                <option value="od_only">Standalone Own Damage (OD Only)</option>
+                <option value="comprehensive" selected>फुल बीमा / Comprehensive (1st + 3rd Party)</option>
+                <option value="zero_dep">जीरो डेप / Zero Depreciation (0-Dep)</option>
+                <option value="third_party">थर्ड पार्टी / Third Party (TP Only)</option>
+                <option value="od_only">केवल अपना नुकसान / Standalone Own Damage</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">3. Engine Capacity / Slab</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">3. इंजन क्षमता / Engine CC</label>
               <select id="motorCcSlab" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="searchMotorPolicies()">
-                <option value="1000">Up to 1000 cc (Alto, Kwid)</option>
+                <option value="1000">1000 cc तक / Up to 1000 cc (Alto, Kwid)</option>
                 <option value="1500" selected>1000 cc - 1500 cc (Swift, Brezza, Creta)</option>
-                <option value="above1500">Above 1500 cc (Scorpio, Thar, Safari)</option>
+                <option value="above1500">1500 cc से ऊपर / Above 1500 cc (Scorpio, Thar)</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">4. Policy Tenure</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">4. बीमा अवधि / Policy Tenure</label>
               <select id="motorTenure" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="searchMotorPolicies()">
-                <option value="1" selected>1 Saal (Annual Renewal)</option>
-                <option value="2">2 Saal (Multi-Year Long Term)</option>
-                <option value="3">3 Saal (New Car Standard)</option>
-                <option value="5">5 Saal (New Bike Standard)</option>
+                <option value="1" selected>1 वर्ष / 1 Year Renewal</option>
+                <option value="2">2 वर्ष / 2 Years (Long Term)</option>
+                <option value="3">3 वर्ष / 3 Years (New Car)</option>
+                <option value="5">5 वर्ष / 5 Years (New Bike)</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Existing NCB Discount</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">पिछला क्लेम डिस्काउंट / NCB Discount</label>
               <select id="motorNcb" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="searchMotorPolicies()">
-                <option value="0">0% (New / Claim in last year)</option>
-                <option value="20" selected>20% (1 Year Claim Free)</option>
-                <option value="25">25% (2 Years Claim Free)</option>
-                <option value="35">35% (3 Years Claim Free)</option>
-                <option value="45">45% (4 Years Claim Free)</option>
-                <option value="50">50% (Max 5 Years Claim Free)</option>
+                <option value="0">0% (नया / पिछला क्लेम लिया था)</option>
+                <option value="20" selected>20% (1 वर्ष कोई क्लेम नहीं)</option>
+                <option value="25">25% (2 वर्ष क्लेम फ्री)</option>
+                <option value="35">35% (3 वर्ष क्लेम फ्री)</option>
+                <option value="45">45% (4 वर्ष क्लेम फ्री)</option>
+                <option value="50">50% (अधिकतम 5 वर्ष क्लेम फ्री)</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Estimated IDV (Value)</label>
-              <input type="number" id="motorIdv" min="20000" step="10000" value="500000" class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm font-black" oninput="searchMotorPolicies()" />
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">गाड़ी की कीमत / Estimated IDV (₹)</label>
+              <input type="number" id="motorIdv" min="20000" step="10000" value="500000" class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-sm font-black" oninput="searchMotorPolicies()" placeholder="गाड़ी का मूल्य दर्ज करें" />
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">PA Owner Driver (₹15L)</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">चालक सुरक्षा / PA Driver Cover (₹15L)</label>
               <select id="motorPaCover" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="searchMotorPolicies()">
-                <option value="yes" selected>Yes, Add PA Cover (₹330/yr)</option>
-                <option value="no">Already have standalone PA (₹0)</option>
+                <option value="yes" selected>हाँ, जोड़ें / Add PA Cover (₹330/yr)</option>
+                <option value="no">पहले से उपलब्ध है / Already Have (₹0)</option>
               </select>
             </div>
             <div class="flex items-end">
-              <button type="button" onclick="searchMotorPolicies()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3.5 px-4 rounded-xl text-sm shadow-lg transition">Search Quotes</button>
+              <button type="button" onclick="searchMotorPolicies()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3.5 px-4 rounded-xl text-sm shadow-lg transition">दरें खोजें / Search Quotes</button>
             </div>
           </form>
 
           <div class="mt-4 bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 text-xs font-bold text-emerald-950">
-            Active Selection: <span id="motorSummaryText">PRIVATE CAR | COMPREHENSIVE | 1 Yr</span>
+            सक्रिय चयन / Active Selection: <span id="motorSummaryText">PRIVATE CAR | COMPREHENSIVE | 1 Yr</span>
           </div>
         </div>
 
@@ -718,7 +816,7 @@
             <i class="fa-solid fa-user-doctor"></i>
           </div>
           <h3 class="text-lg font-black text-white">Emergency Health Cover</h3>
-          <p class="text-xs text-slate-300">Family ke liye bina kisi waiting delay ke sahi plan paramarsh</p>
+          <p class="text-xs text-slate-300">परिवार के लिए सही स्वास्थ्य बीमा परामर्श लें / Health Consultation</p>
           <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20mujhe%20Health%20Insurance%20Mediclaim%20chahiye" target="_blank" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-black py-3 px-4 rounded-xl text-xs block transition shadow">
             <i class="fa-brands fa-whatsapp text-sm mr-1"></i> WhatsApp Par Paramarsh Lein
           </a>
@@ -731,76 +829,76 @@
         <div class="p-6 sm:p-8 border-b border-slate-200 bg-slate-50/70">
           <div class="mb-6">
             <span class="text-xs font-black uppercase tracking-wider bg-rose-100 text-rose-900 px-2.5 py-1 rounded-md">Health Coverage Customizer</span>
-            <h3 class="text-2xl font-black text-brand-navy mt-2">Apni Family & Health Requirements Chunein</h3>
+            <h3 class="text-2xl font-black text-brand-navy mt-2">स्वास्थ्य आवश्यकताएं चुनें / Select Health Requirements</h3>
           </div>
 
           <form id="healthSearchForm" onsubmit="event.preventDefault(); searchHealthPolicies();" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">1. Plan Type</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">1. प्लान प्रकार / Plan Type</label>
               <select id="healthPlanType" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="searchHealthPolicies()">
-                <option value="family" selected>Family Floater (Self + Spouse + Kids)</option>
-                <option value="individual">Individual (Single Person Only)</option>
-                <option value="parents">Senior Citizen / Parents Only</option>
+                <option value="family" selected>पूरा परिवार / Family Floater (Self + Spouse + Kids)</option>
+                <option value="individual">एक व्यक्ति / Individual (Single Person)</option>
+                <option value="parents">माता-पिता / Senior Citizen Parents</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">2. Eldest Member Age</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">2. बड़े सदस्य की उम्र / Eldest Age</label>
               <select id="healthEldestAge" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="searchHealthPolicies()">
-                <option value="25">18 - 35 Varsh (Young Family)</option>
-                <option value="40" selected>36 - 45 Varsh</option>
-                <option value="50">46 - 55 Varsh</option>
-                <option value="60">56 - 65 Varsh (Senior)</option>
-                <option value="70">Above 65 Varsh</option>
+                <option value="25">18 - 35 वर्ष / Years (युवा परिवार)</option>
+                <option value="40" selected>36 - 45 वर्ष / Years</option>
+                <option value="50">46 - 55 वर्ष / Years</option>
+                <option value="60">56 - 65 वर्ष / Years</option>
+                <option value="70">65 वर्ष से अधिक / Above 65</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">3. Sum Insured (Cover)</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">3. बीमा कवर / Sum Insured</label>
               <select id="healthSumInsured" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="searchHealthPolicies()">
-                <option value="500000">₹ 5 Lakh (Standard Base Cover)</option>
-                <option value="1000000" selected>₹ 10 Lakh (Most Popular)</option>
-                <option value="1500000">₹ 15 Lakh (Comfort Cover)</option>
-                <option value="2500000">₹ 25 Lakh (High Protection)</option>
-                <option value="5000000">₹ 50 Lakh (Ultra Cover)</option>
-                <option value="10000000">₹ 1 Crore (Unlimited Peace)</option>
+                <option value="500000">₹ 5 लाख / 5 Lakh</option>
+                <option value="1000000" selected>₹ 10 लाख / 10 Lakh (लोकप्रिय)</option>
+                <option value="1500000">₹ 15 लाख / 15 Lakh</option>
+                <option value="2500000">₹ 25 लाख / 25 Lakh</option>
+                <option value="5000000">₹ 50 लाख / 50 Lakh</option>
+                <option value="10000000">₹ 1 करोड़ / 1 Crore</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">4. Policy Tenure</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">4. बीमा अवधि / Policy Tenure</label>
               <select id="healthTenure" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="searchHealthPolicies()">
-                <option value="1" selected>1 Saal (Annual Premium)</option>
-                <option value="2">2 Saal (7.5% Multi-Year Discount)</option>
-                <option value="3">3 Saal (12% Multi-Year Discount)</option>
+                <option value="1" selected>1 वर्ष / 1 Year</option>
+                <option value="2">2 वर्ष / 2 Years (7.5% छूट)</option>
+                <option value="3">3 वर्ष / 3 Years (12% छूट)</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Room Rent Capping</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">कमरा सीमा / Room Rent Capping</label>
               <select id="healthRoomRent" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="searchHealthPolicies()">
-                <option value="no_cap" selected>No Room Rent Capping (Any Room)</option>
-                <option value="single_pvt">Single Private AC Room Allowed</option>
+                <option value="no_cap" selected>कोई सीमा नहीं / No Capping (Any Room)</option>
+                <option value="single_pvt">सिंगल प्राइवेट रूम / Single Private AC Room</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Existing Disease</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">पहले से कोई बीमारी / Existing Disease</label>
               <select id="healthPed" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm font-bold" onchange="searchHealthPolicies()">
-                <option value="none" selected>No Pre-existing Disease</option>
-                <option value="bp_sugar">BP or Diabetes</option>
+                <option value="none" selected>कोई बीमारी नहीं / No Existing Disease</option>
+                <option value="bp_sugar">बीपी या शुगर / BP or Diabetes</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Section 80D Tax Benefit</label>
+              <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">टैक्स छूट / Tax Benefit (80D)</label>
               <div class="bg-rose-50 border border-rose-200 rounded-xl p-2.5 text-xs text-rose-900 font-bold">
-                Tax Rebate Up to ₹25,000 / ₹50,000 u/s 80D
+                धारा 80D के तहत ₹25,000 / ₹50,000 तक टैक्स छूट
               </div>
             </div>
             <div class="flex items-end">
               <button type="button" onclick="searchHealthPolicies()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-black py-3.5 px-4 rounded-xl text-sm shadow-lg transition">
-                Show Health Plans
+                प्लान देखें / Show Health Plans
               </button>
             </div>
           </form>
 
           <div class="mt-4 bg-rose-50 border border-rose-200 rounded-2xl p-3.5 text-xs font-bold text-rose-950">
-            Selection: <span id="healthSummaryText">Family Floater | Cover: ₹ 10 Lakh | Eldest Age: 36-45 Yrs</span>
+            चयन / Selection: <span id="healthSummaryText">Family Floater | Cover: ₹ 10 Lakh | Eldest Age: 36-45 Yrs</span>
           </div>
         </div>
 
@@ -835,7 +933,7 @@
           </div>
           <div>
             <h4 class="font-extrabold text-lg text-white">Contact Manohar Singh</h4>
-            <p class="text-xs text-slate-300">Call ya WhatsApp par paramarsh lein</p>
+            <p class="text-xs text-slate-300">कॉल या व्हाट्सएप पर सलाह लें / Call or WhatsApp</p>
           </div>
           <div class="space-y-2.5">
             <a href="tel:8440096343" class="w-full bg-white hover:bg-slate-100 text-brand-navy font-black py-3 px-4 rounded-xl text-sm transition shadow flex items-center justify-center gap-2">
@@ -882,68 +980,47 @@
     </div>
   </footer>
 
-  <!-- ========================================================================= -->
-  <!-- VIRTUAL ASSISTANT: KDS MITRA (Floating Assistant) -->
-  <!-- ========================================================================= -->
-  <div id="kdsMitraWidget" class="fixed bottom-5 right-5 z-50 select-none">
-    <div id="kdsMitraTrigger" onclick="toggleMitraChat()" class="flex items-center gap-2 cursor-pointer group">
-      <div class="bg-white/95 backdrop-blur-md shadow-2xl border-2 border-brand-gold text-brand-navy px-3.5 py-1.5 rounded-2xl hidden sm:flex flex-col text-right transition group-hover:scale-105">
-        <span class="text-[11px] font-black tracking-wide flex items-center gap-1 justify-end">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          केडीएस मित्र • KDS MITRA
-        </span>
-        <span class="text-[9px] text-slate-500 font-bold">Ask Questions & Get Quotes</span>
-      </div>
-      <div class="relative w-14 h-14 rounded-full bg-gradient-to-tr from-brand-navy to-brand-lightBlue border-2 border-brand-gold shadow-2xl flex items-center justify-center text-white transition group-hover:scale-110 active:scale-95">
-        <i class="fa-solid fa-headset text-2xl text-brand-gold"></i>
-        <span class="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white rounded-full"></span>
-      </div>
-    </div>
-
-    <!-- Chat Box Window -->
-    <div id="kdsMitraWindow" class="hidden absolute bottom-16 right-0 w-[92vw] sm:w-[400px] h-[550px] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden transition-all duration-300">
-      <div class="bg-gradient-to-r from-brand-dark via-brand-navy to-brand-lightBlue p-4 text-white flex justify-between items-center border-b border-brand-gold/40">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-2xl bg-brand-gold text-brand-dark flex items-center justify-center font-black text-lg shadow">
-            <i class="fa-solid fa-robot"></i>
-          </div>
-          <div>
-            <div class="flex items-center gap-1.5">
-              <h4 class="font-black text-sm text-white">केडीएस मित्र (KDS MITRA)</h4>
-              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            </div>
-            <p class="text-[10px] text-slate-300">Virtual Assistant • KDS Insurance</p>
-          </div>
+  <!-- Lead Modal -->
+  <div id="leadModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 p-6">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-100">
+        <div>
+          <h3 class="font-black text-lg text-brand-navy">बीमा सहायता अनुरोध / Callback Request</h3>
+          <p class="text-xs text-slate-500">Manoher Singh (Authorized Agent) Contact Karenge</p>
         </div>
-        <div class="flex items-center gap-1">
-          <button onclick="resetMitraFlow()" title="Restart" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xs">
-            <i class="fa-solid fa-rotate-right"></i>
-          </button>
-          <button onclick="toggleMitraChat()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xs">
-            <i class="fa-solid fa-xmark text-sm"></i>
-          </button>
+        <button onclick="closeLeadModal()" class="text-slate-400 hover:text-slate-600">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <form onsubmit="handleLeadSubmit(event)" class="mt-4 space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">आपका नाम / Your Name</label>
+          <input type="text" id="leadName" required placeholder="श्री / Sh. Your Name" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold" />
         </div>
-      </div>
-
-      <div id="kdsMitraMessages" class="flex-grow overflow-y-auto p-4 space-y-3 bg-slate-50 text-xs"></div>
-
-      <div class="p-3 bg-white border-t border-slate-200">
-        <form onsubmit="handleMitraUserMessage(event)" class="flex items-center gap-2">
-          <input type="text" id="kdsMitraInput" placeholder="Plan name ya sawal likhein..." class="flex-1 bg-slate-100 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none" />
-          <button type="submit" class="w-10 h-8 rounded-xl bg-brand-navy text-brand-gold flex items-center justify-center shadow">
-            <i class="fa-solid fa-paper-plane text-xs"></i>
-          </button>
-        </form>
-      </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">मोबाइल नंबर / Mobile Number</label>
+          <input type="tel" id="leadPhone" required placeholder="84XXXXXXXX" maxlength="10" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">बीमा श्रेणी / Insurance Category</label>
+          <select id="leadCategory" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold">
+            <option value="LIC Life Savings Policy">एलआईसी जीवन बीमा / LIC Life Savings</option>
+            <option value="CSC IndiaFirst / SBI / Shriram Life">सीएससी जीवन बीमा / CSC Life (SBI/IndiaFirst)</option>
+            <option value="Car / Bike Insurance">गाड़ी बीमा / Car / Bike Insurance</option>
+            <option value="Commercial Vehicle Insurance">कमर्शियल वाहन बीमा / Commercial Vehicle</option>
+            <option value="Health Insurance (Mediclaim)">स्वास्थ्य बीमा / Health Mediclaim</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full mt-3 bg-brand-gold hover:bg-amber-400 text-brand-dark font-black py-3 rounded-xl text-sm shadow transition">
+          अनुरोध भेजें / Send Callback Request
+        </button>
+      </form>
     </div>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- MODAL: BENEFIT ILLUSTRATION PREVIEW (100% ORIGINAL A4 TABLE RESTORED) -->
-  <!-- ========================================================================= -->
+  <!-- Quotation Modals (LIC, Motor, Health) -->
   <div id="quotationModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[96vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
-      
       <div class="bg-brand-navy text-white p-4 sm:p-5 flex justify-between items-center z-10 border-b border-brand-lightBlue no-print">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-brand-gold text-brand-dark font-black flex items-center justify-center text-lg">
@@ -982,7 +1059,7 @@
         <div class="flex items-center gap-3 w-full sm:w-auto">
           <button onclick="window.print()" class="flex-1 sm:flex-none bg-blue-900 hover:bg-blue-800 text-white font-black px-6 py-3 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow">
             <i class="fa-solid fa-print text-brand-gold text-base"></i>
-            <span>Print Quotation / Save as PDF</span>
+            <span>प्रिंट या पीडीएफ डाउनलोड / Print / Save PDF</span>
           </button>
 
           <button onclick="shareQuoteOnWhatsApp()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-4 py-3 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow" title="Share on WhatsApp">
@@ -991,11 +1068,9 @@
           </button>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- MOTOR PRINT / QUOTATION MODAL -->
   <div id="generalQuotationModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[96vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
       <div class="bg-emerald-950 text-white p-4 sm:p-5 flex justify-between items-center z-10 border-b border-emerald-800 no-print">
@@ -1023,7 +1098,6 @@
     </div>
   </div>
 
-  <!-- HEALTH PRINT / QUOTATION MODAL -->
   <div id="healthQuotationModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[96vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
       <div class="bg-rose-950 text-white p-4 sm:p-5 flex justify-between items-center z-10 border-b border-rose-800 no-print">
@@ -1051,44 +1125,6 @@
     </div>
   </div>
 
-  <!-- Lead Modal -->
-  <div id="leadModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 p-6">
-      <div class="flex justify-between items-center pb-3 border-b border-slate-100">
-        <div>
-          <h3 class="font-black text-lg text-brand-navy">Insurance Inquiry & Assistance</h3>
-          <p class="text-xs text-slate-500">Manoher Singh (Authorized Agent) Contact Karenge</p>
-        </div>
-        <button onclick="closeLeadModal()" class="text-slate-400 hover:text-slate-600">
-          <i class="fa-solid fa-xmark text-lg"></i>
-        </button>
-      </div>
-      <form onsubmit="handleLeadSubmit(event)" class="mt-4 space-y-3 text-xs">
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Aapka Naam</label>
-          <input type="text" id="leadName" required placeholder="Shri Your Name" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold" />
-        </div>
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Mobile Number</label>
-          <input type="tel" id="leadPhone" required placeholder="84XXXXXXXX" maxlength="10" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold" />
-        </div>
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Category</label>
-          <select id="leadCategory" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold">
-            <option value="LIC Life Savings Policy">LIC Life Savings Policy</option>
-            <option value="CSC IndiaFirst / SBI / Shriram Life">CSC IndiaFirst / SBI / Shriram Life</option>
-            <option value="Car / Bike Insurance">Car / Bike Insurance</option>
-            <option value="Commercial Vehicle Insurance">Commercial Vehicle Insurance</option>
-            <option value="Health Insurance (Mediclaim)">Health Insurance (Mediclaim)</option>
-          </select>
-        </div>
-        <button type="submit" class="w-full mt-3 bg-brand-gold hover:bg-amber-400 text-brand-dark font-black py-3 rounded-xl text-sm shadow transition">
-          Callback Request Bhejein
-        </button>
-      </form>
-    </div>
-  </div>
-
   <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 text-xs font-bold hidden flex items-center gap-3">
     <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
     <span id="toastMessage">Success</span>
@@ -1101,6 +1137,76 @@
     let comparedPlanIds = ['jeevan_labh', 'sbi_platina_plus'];
     let currentLifeTab = 'lic';
     let currentViewMode = 'filtered';
+
+    // LANGUAGE SWITCHER & AUTO-POPUP LOGIC
+    const langNames = {
+      'hi': 'हिंदी / Hindi',
+      'en': 'English',
+      'gu': 'ગુજરાતી / Gujarati',
+      'mr': 'मराठी / Marathi',
+      'pa': 'ਪੰਜਾਬੀ / Punjabi',
+      'bn': 'বাংলা / Bengali',
+      'ta': 'தமிழ் / Tamil',
+      'te': 'తెలుగు / Telugu',
+      'kn': 'ಕನ್ನಡ / Kannada',
+      'ml': 'മലയാളം / Malayalam',
+      'or': 'ଓଡ଼ିଆ / Odia',
+      'ur': 'اردو / Urdu'
+    };
+
+    function openSiteLanguageModal() {
+      document.getElementById('siteLanguageModal').classList.remove('hidden');
+    }
+
+    function closeSiteLanguageModal() {
+      document.getElementById('siteLanguageModal').classList.add('hidden');
+    }
+
+    function applySiteLanguage(langCode) {
+      localStorage.setItem('kds_selected_lang', langCode);
+      const label = langNames[langCode] || langCode;
+      const lblEl = document.getElementById('currentLangLabel');
+      if (lblEl) lblEl.innerText = label;
+
+      if (langCode === 'hi') {
+        const iframe = document.querySelector('iframe.goog-te-banner-frame');
+        if (iframe) {
+          const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+          const restoreBtn = innerDoc.getElementById(':1.restore');
+          if (restoreBtn) restoreBtn.click();
+        }
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=." + location.hostname + "; path=/;";
+      } else {
+        const select = document.querySelector('select.goog-te-combo');
+        if (select) {
+          select.value = langCode;
+          select.dispatchEvent(new Event('change'));
+        }
+      }
+      closeSiteLanguageModal();
+    }
+
+    function checkInitialLanguagePrompt() {
+      const savedLang = localStorage.getItem('kds_selected_lang');
+      if (!savedLang) {
+        setTimeout(() => {
+          openSiteLanguageModal();
+        }, 600);
+      } else {
+        const lblEl = document.getElementById('currentLangLabel');
+        if (lblEl && langNames[savedLang]) lblEl.innerText = langNames[savedLang];
+        if (savedLang !== 'hi') {
+          setTimeout(() => {
+            const select = document.querySelector('select.goog-te-combo');
+            if (select) {
+              select.value = savedLang;
+              select.dispatchEvent(new Event('change'));
+            }
+          }, 1000);
+        }
+      }
+    }
 
     function switchMainTab(tab) {
       const lifeWrapper = document.getElementById('lifeInsuranceWrapper');
@@ -1146,7 +1252,7 @@
           document.getElementById('heroPortalHeading').innerText = "LIC Policy";
           document.getElementById('quickPlanTypeBadge').innerText = "LIC Plans";
           document.getElementById('portalBadgeTitle').innerText = "LIC Illustration Engine";
-          document.getElementById('calcSectionHeading').innerText = "LIC Details Bharein & Plan Customize Karein";
+          document.getElementById('calcSectionHeading').innerText = "एलआईसी विवरण भरें / LIC Details & Customization";
           document.getElementById('companySelectContainer').classList.add('hidden');
           document.getElementById('schemesListHeading').innerText = "Available LIC Plans";
           document.getElementById('toggleAllBtnLabel').innerText = "Sabhi LIC Plans";
@@ -1158,7 +1264,7 @@
           document.getElementById('heroPortalHeading').innerText = "CSC Life Insurance";
           document.getElementById('quickPlanTypeBadge').innerText = "CSC Life Plans";
           document.getElementById('portalBadgeTitle').innerText = "CSC Life Engine (Guaranteed Income + 110% Return)";
-          document.getElementById('calcSectionHeading').innerText = "CSC Insurer Chunein & Details Bharein";
+          document.getElementById('calcSectionHeading').innerText = "सीएससी विवरण भरें / CSC Life Details";
           document.getElementById('companySelectContainer').classList.remove('hidden');
           document.getElementById('schemesListHeading').innerText = "Available CSC Life Plans";
           document.getElementById('toggleAllBtnLabel').innerText = "Sabhi CSC Plans";
@@ -1195,10 +1301,10 @@
       { id: 'new_pension_plus', company: 'LIC', planNo: '867', name: "LIC's New Pension Plus (867)", nameHi: "एलआईसी न्यू पेंशन प्लस (867)", tagline: 'Retirement corpus build karne hetu pension product.', category: 'pension', minSumAssured: 100000, isAnnuity: true, isFlexible: true, minTerm: 10, maxTerm: 42, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(42, term || 20)), ppt: Math.min(term, ppt || 15) }) },
 
       // CSC / OTHER LIFE INSURERS
-      { id: 'sbi_platina_plus', company: 'SBI Life', planNo: 'SBI-01', name: "SBI Life - Smart Platina Plus", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना प्लस", tagline: 'Guaranteed regular income post PPT + 110% Return of Premium at maturity.', category: 'whole_life', minSumAssured: 250000, isWholeLifeIncome: true, incomePercent: 0.09, allowedPptOptions: [7, 8, 10, 12, 15], enforceRules: (term, ppt) => ({ term: Math.max(15, Math.min(35, term || 25)), ppt: Math.min(15, ppt || 10) }) },
-      { id: 'sbi_platina_supreme', company: 'SBI Life', planNo: 'SBI-02', name: "SBI Life - Smart Platina Supreme", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना सुप्रीम", tagline: 'High financial corpus generation with guaranteed maturity additions.', category: 'endowment', minSumAssured: 300000, allowedPptOptions: [7, 8, 10, 12, 15], isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(30, term || 20)), ppt: Math.min(15, ppt || 10) }) },
-      { id: 'indiafirst_gold', company: 'IndiaFirst', planNo: 'CSC-02', name: "IndiaFirst G.O.L.D (Guarantee of Life Dreams)", nameHi: "इंडियाफर्स्ट गोल्ड (लाइफ ड्रीम्स)", tagline: 'Pay for limited years and get guaranteed regular income + 100% premium back.', category: 'whole_life', minSumAssured: 150000, isWholeLifeIncome: true, incomePercent: 0.085, allowedPptOptions: [5, 6, 8, 10, 12], enforceRules: (term, ppt) => ({ term: Math.max(20, Math.min(40, term || 30)), ppt: Math.min(12, ppt || 10) }) },
-      { id: 'shriram_assured_income', company: 'Shriram Life', planNo: 'SH-01', name: "Shriram Life Assured Income Plan", nameHi: "श्रीराम लाइफ अश्योर्ड इनकम प्लान", tagline: 'Assured continuous income benefit + Total Premium Refund.', category: 'whole_life', minSumAssured: 150000, isWholeLifeIncome: true, incomePercent: 0.085, allowedPptOptions: [8, 10, 12, 15], enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(25, term || 20)), ppt: Math.min(15, ppt || 10) }) },
+      { id: 'sbi_platina_plus', company: 'SBI Life', planNo: 'SBI-01', name: "SBI Life - Smart Platina Plus", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना प्लस", tagline: 'Guaranteed regular income post PPT + 110% Return of Premium at maturity.', category: 'whole_life', minSumAssured: 250000, isWholeLifeIncome: true, incomePercent: 0.09, allowedPptOptions: [7, 8, 10, 12, 15, 20], enforceRules: (term, ppt) => ({ term: Math.max(15, Math.min(35, term || 25)), ppt: Math.min(20, ppt || 15) }) },
+      { id: 'sbi_platina_supreme', company: 'SBI Life', planNo: 'SBI-02', name: "SBI Life - Smart Platina Supreme", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना सुप्रीम", tagline: 'High financial corpus generation with guaranteed maturity additions.', category: 'endowment', minSumAssured: 300000, allowedPptOptions: [7, 8, 10, 12, 15, 20], isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(30, term || 20)), ppt: Math.min(20, ppt || 15) }) },
+      { id: 'indiafirst_gold', company: 'IndiaFirst', planNo: 'CSC-02', name: "IndiaFirst G.O.L.D (Guarantee of Life Dreams)", nameHi: "इंडियाफर्स्ट गोल्ड (लाइफ ड्रीम्स)", tagline: 'Pay for limited years and get guaranteed regular income + 100% premium back.', category: 'whole_life', minSumAssured: 150000, isWholeLifeIncome: true, incomePercent: 0.085, allowedPptOptions: [5, 6, 8, 10, 12, 15, 20], enforceRules: (term, ppt) => ({ term: Math.max(20, Math.min(40, term || 30)), ppt: Math.min(20, ppt || 15) }) },
+      { id: 'shriram_assured_income', company: 'Shriram Life', planNo: 'SH-01', name: "Shriram Life Assured Income Plan", nameHi: "श्रीराम लाइफ अश्योर्ड इनकम प्लान", tagline: 'Assured continuous income benefit + Total Premium Refund.', category: 'whole_life', minSumAssured: 150000, isWholeLifeIncome: true, incomePercent: 0.085, allowedPptOptions: [8, 10, 12, 15, 20], enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(25, term || 20)), ppt: Math.min(20, ppt || 15) }) },
       { id: 'shriram_assured_saving', company: 'Shriram Life', planNo: 'SH-02', name: "Shriram Life Assured Saving Plan", nameHi: "श्रीराम लाइफ अश्योर्ड सेविंग प्लान", tagline: 'Guaranteed lump sum corpus at maturity with high return safety.', category: 'endowment', minSumAssured: 100000, isFlexible: true, minTerm: 10, maxTerm: 20, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(20, term || 15)), ppt: Math.min(term, ppt || 10) }) },
       { id: 'indiafirst_khata', company: 'IndiaFirst', planNo: 'CSC-01', name: "IndiaFirst CSC Insurance Khata", nameHi: "इंडियाफर्स्ट सीएससी इंश्योरेंस खाता", tagline: 'CSC Portal special micro-savings with flexible premium deposits.', category: 'endowment', minSumAssured: 10000, isFlexible: true, minTerm: 5, maxTerm: 15, enforceRules: (term, ppt) => ({ term: Math.max(5, Math.min(15, term || 10)), ppt: Math.min(term, ppt || term) }) },
       { id: 'sbi_smart_samriddhi', company: 'SBI Life', planNo: 'SBI-05', name: "SBI Life - New Smart Samriddhi", nameHi: "एसबीआई लाइफ - न्यू स्मार्ट समृद्धि", tagline: 'Pay for just 5 years and get uninterrupted financial security for 10 years.', category: 'endowment', minSumAssured: 30000, allowedCombinations: [{ term: 10, ppt: 5 }], enforceRules: () => ({ term: 10, ppt: 5 }) },
@@ -1210,7 +1316,7 @@
     function autoApplyRiders() {
       const age = Number(document.getElementById('calcAgeInput').value) || 28;
       const budget = getAnnualBudget();
-      const ppt = Number(document.getElementById('calcPptInput').value) || 12;
+      const ppt = Number(document.getElementById('calcPptInput').value) || 20;
 
       let estimatedBaseSa = Math.max(200000, Math.round((budget * ppt * 1.1) / 25000) * 25000);
 
@@ -1232,7 +1338,7 @@
       const budget = document.getElementById('calcBudgetInput').value;
       const mode = document.getElementById('calcMode').value;
 
-      document.getElementById('selectedAgeBadge').innerText = `${age} Saal`;
+      document.getElementById('selectedAgeBadge').innerText = `${age} वर्ष / Saal`;
       document.getElementById('selectedBudgetBadge').innerText = `₹ ${Number(budget).toLocaleString('en-IN')} / ${mode}`;
       
       autoApplyRiders();
@@ -1246,9 +1352,9 @@
 
     function resetCalculatorForm() {
       document.getElementById('calcAgeInput').value = '28';
-      document.getElementById('calcBudgetInput').value = '28000';
+      document.getElementById('calcBudgetInput').value = '5000';
       document.getElementById('calcTermInput').value = '25';
-      document.getElementById('calcPptInput').value = '12';
+      document.getElementById('calcPptInput').value = '20';
       document.getElementById('calcMode').value = 'monthly';
       document.getElementById('calcCompany').value = 'all';
       selectQuickCategory('all');
@@ -1276,7 +1382,7 @@
     }
 
     function getAnnualBudget() {
-      const raw = Number(document.getElementById('calcBudgetInput').value) || 28000;
+      const raw = Number(document.getElementById('calcBudgetInput').value) || 5000;
       const mode = document.getElementById('calcMode').value;
       return mode === 'monthly' ? raw * 12 : (mode === 'quarterly' ? raw * 4 : (mode === 'half_yearly' ? raw * 2 : raw));
     }
@@ -1314,10 +1420,9 @@
       return enforced.term === inputTerm && enforced.ppt === inputPpt;
     }
 
-    // ACCURATE CALCULATION ENGINE
     function calculateFullPlanDetails(scheme, userAge, annualBudget, inputTerm, inputPpt) {
       let reqTerm = Number(inputTerm) || 25;
-      let reqPpt = Number(inputPpt) || 12;
+      let reqPpt = Number(inputPpt) || 20;
 
       let validated = scheme.enforceRules ? scheme.enforceRules(reqTerm, reqPpt, userAge) : { term: reqTerm, ppt: reqPpt };
       let term = validated.term;
@@ -1462,11 +1567,11 @@
       const age = Number(document.getElementById('calcAgeInput').value) || 28;
       const quickCat = window.activeQuickCat || 'all';
       const annualBudget = getAnnualBudget();
-      const rawBudget = Number(document.getElementById('calcBudgetInput').value) || 28000;
+      const rawBudget = Number(document.getElementById('calcBudgetInput').value) || 5000;
       const mode = document.getElementById('calcMode').value;
       const custName = document.getElementById('custName').value || 'Customer';
       const term = Number(document.getElementById('calcTermInput').value) || 25;
-      const ppt = Number(document.getElementById('calcPptInput').value) || 12;
+      const ppt = Number(document.getElementById('calcPptInput').value) || 20;
 
       document.getElementById('summaryCustomerName').innerText = custName;
       document.getElementById('summaryAge').innerText = age;
@@ -1549,25 +1654,20 @@
               
               <div class="mt-4 bg-slate-50 rounded-2xl p-4 border border-slate-100 space-y-2 text-xs">
                 <div class="flex justify-between pb-1.5 border-b border-slate-200">
-                  <span class="text-slate-500">Term / Paying Term:</span>
+                  <span class="text-slate-500">अवधि / Term (PPT):</span>
                   <span class="font-bold text-slate-800">${calc.term} Saal (Pay: ${calc.ppt} Saal)</span>
                 </div>
                 <div class="flex justify-between pb-1.5 border-b border-slate-200">
-                  <span class="text-slate-500">Kool Jama:</span>
+                  <span class="text-slate-500">कुल जमा / Total Paid:</span>
                   <span class="font-bold text-slate-800">₹ ${calc.totalInvestment.toLocaleString('en-IN')}</span>
                 </div>
                 <div class="flex justify-between items-center text-emerald-700 font-bold">
-                  <span>Maturity / Return*:</span>
+                  <span>रिटर्न / Return*:</span>
                   <span class="text-sm font-black">${displayReturn}</span>
                 </div>
                 <div class="flex justify-between text-[11px] text-slate-500 pt-1">
                   <span>Normal Cover: ₹${(calc.yearRows[0].normalCover/100000).toFixed(1)}L</span>
                   <span>Accidental Cover: ₹${(calc.yearRows[0].accidentalCover/100000).toFixed(1)}L</span>
-                </div>
-                <div class="flex justify-between text-[10px] text-blue-800 font-semibold pt-1 border-t border-slate-200">
-                  <span>ADDB: ${calc.addbCover > 0 ? '₹' + (calc.addbCover/100000).toFixed(1) + 'L' : 'No'}</span>
-                  <span>TR Cover: ${calc.trCover > 0 ? '₹' + (calc.trCover/100000).toFixed(1) + 'L' : 'No'}</span>
-                  <span>CIR: ${calc.cirCover > 0 ? '₹' + (calc.cirCover/100000).toFixed(1) + 'L' : 'No'}</span>
                 </div>
               </div>
             </div>
@@ -1575,11 +1675,11 @@
             <div class="mt-6 pt-4 border-t border-slate-100 space-y-2">
               <button onclick="openQuotationPreviewModal('${scheme.id}')" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 px-4 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-sm">
                 <i class="fa-solid fa-print text-brand-gold text-sm"></i>
-                <span>Preview & Print (${calc.term} Saal Schedule)</span>
+                <span>शेड्यूल देखें व प्रिंट निकालें / Preview & Print</span>
               </button>
               <button onclick="toggleCompareScheme('${scheme.id}')" class="w-full py-1.5 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition ${isCompared ? 'bg-amber-100 text-amber-900' : 'text-slate-600 hover:bg-slate-100'}">
                 <i class="fa-solid ${isCompared ? 'fa-square-check text-brand-deepGold' : 'fa-square'} text-sm"></i>
-                <span>${isCompared ? 'Comparison me shamil hai' : '+ Compare me jodein'}</span>
+                <span>${isCompared ? 'तुलना में शामिल / In Comparison' : '+ तुलना में जोड़ें / Compare'}</span>
               </button>
             </div>
           </div>
@@ -1593,7 +1693,7 @@
       const age = Number(document.getElementById('calcAgeInput').value) || 28;
       const budget = getAnnualBudget();
       const term = Number(document.getElementById('calcTermInput').value) || 25;
-      const ppt = Number(document.getElementById('calcPptInput').value) || 12;
+      const ppt = Number(document.getElementById('calcPptInput').value) || 20;
 
       if (criterion === 'return') {
         currentSchemesList.sort((a, b) => calculateFullPlanDetails(b, age, budget, term, ppt).estimatedMaturity - calculateFullPlanDetails(a, age, budget, term, ppt).estimatedMaturity);
@@ -1609,7 +1709,7 @@
         comparedPlanIds.splice(idx, 1);
       } else {
         if (comparedPlanIds.length >= 3) {
-          showToast('Ek baar me अधिकतम 3 plans compare kar sakte hain.');
+          showToast('अधिकतम 3 प्लान्स की तुलना कर सकते हैं / Max 3 plans.');
           return;
         }
         comparedPlanIds.push(id);
@@ -1627,12 +1727,12 @@
       const age = Number(document.getElementById('calcAgeInput').value) || 28;
       const budget = getAnnualBudget();
       const term = Number(document.getElementById('calcTermInput').value) || 25;
-      const ppt = Number(document.getElementById('calcPptInput').value) || 12;
+      const ppt = Number(document.getElementById('calcPptInput').value) || 20;
 
       if (comparedPlanIds.length === 0) {
         container.innerHTML = `
           <div class="text-center py-8 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
-            <p class="text-xs text-slate-500 font-bold">Koi scheme compare ke liye select nahi hai. Upar diye gaye plans se '+ Compare me jodein' click karein[cite: 1].</p>
+            <p class="text-xs text-slate-500 font-bold">कोई स्कीम तुलना के लिए नहीं चुनी गई। ऊपर दिए गए प्लान्स से '+ तुलना में जोड़ें' पर क्लिक करें[cite: 1]!</p>
           </div>
         `;
         return;
@@ -1644,7 +1744,7 @@
         <table class="w-full text-left border-collapse min-w-[650px] text-xs">
           <thead>
             <tr class="border-b-2 border-slate-200 bg-slate-50">
-              <th class="p-3.5 font-black text-slate-700">Scheme Parameters</th>
+              <th class="p-3.5 font-black text-slate-700">पैरामीटर / Parameter</th>
               ${schemes.map(s => `
                 <th class="p-3.5 font-black text-brand-navy border-l border-slate-200">
                   <div class="flex justify-between items-center">
@@ -1657,38 +1757,32 @@
           </thead>
           <tbody class="divide-y divide-slate-200">
             <tr>
-              <td class="p-3 font-bold text-slate-600">Paying Term / Policy Term</td>
+              <td class="p-3 font-bold text-slate-600">अवधि / Term & PPT</td>
               ${schemes.map(s => {
                 const c = calculateFullPlanDetails(s, age, budget, term, ppt);
                 return `<td class="p-3 border-l border-slate-200 font-bold text-brand-lightBlue">Pay ${c.ppt} Saal / Term ${c.term} Saal</td>`;
               }).join('')}
             </tr>
             <tr class="bg-slate-50/50">
-              <td class="p-3 font-bold text-slate-600">Total Premium Paid</td>
+              <td class="p-3 font-bold text-slate-600">कुल जमा / Total Paid</td>
               ${schemes.map(s => {
                 const c = calculateFullPlanDetails(s, age, budget, term, ppt);
                 return `<td class="p-3 border-l border-slate-200 font-black">₹ ${c.totalInvestment.toLocaleString('en-IN')}</td>`;
               }).join('')}
             </tr>
             <tr class="bg-emerald-50/40">
-              <td class="p-3 font-bold text-emerald-900">Maturity / Returns*</td>
+              <td class="p-3 font-bold text-emerald-900">अनुमानित लाभ / Return*</td>
               ${schemes.map(s => {
                 const c = calculateFullPlanDetails(s, age, budget, term, ppt);
-                if (s.company !== 'LIC' && c.regularAnnualIncome > 0) {
-                  return `<td class="p-3 border-l border-slate-200 font-black text-emerald-700">₹ ${c.regularAnnualIncome.toLocaleString('en-IN')}/yr + 110\% Refund (Total: ₹${c.estimatedMaturity.toLocaleString('en-IN')})</td>`;
-                }
-                if (c.regularAnnualIncome > 0) {
-                  return `<td class="p-3 border-l border-slate-200 font-black text-emerald-700">₹ ${c.regularAnnualIncome.toLocaleString('en-IN')}/yr (Lifelong)</td>`;
-                }
                 return `<td class="p-3 border-l border-slate-200 font-black text-emerald-700">₹ ${c.estimatedMaturity.toLocaleString('en-IN')}*</td>`;
               }).join('')}
             </tr>
             <tr>
-              <td class="p-3 font-bold text-slate-600">Print View</td>
+              <td class="p-3 font-bold text-slate-600">प्रिंट दृश्य / Print</td>
               ${schemes.map(s => `
                 <td class="p-3 border-l border-slate-200">
                   <button onclick="openQuotationPreviewModal('${s.id}')" class="bg-brand-navy text-white font-black px-3 py-1.5 rounded-lg text-[11px] hover:bg-brand-lightBlue transition flex items-center gap-1">
-                    <i class="fa-solid fa-print text-brand-gold"></i> Open & Print
+                    <i class="fa-solid fa-print text-brand-gold"></i> देखें / View
                   </button>
                 </td>
               `).join('')}
@@ -1704,7 +1798,7 @@
       const age = Number(document.getElementById('calcAgeInput').value) || 28;
       const budget = getAnnualBudget();
       const term = Number(document.getElementById('calcTermInput').value) || 25;
-      const ppt = Number(document.getElementById('calcPptInput').value) || 12;
+      const ppt = Number(document.getElementById('calcPptInput').value) || 20;
 
       activeQuotationData = calculateFullPlanDetails(scheme, age, budget, term, ppt);
       renderQuotationContent();
@@ -1723,7 +1817,6 @@
       renderQuotationContent();
     }
 
-    // ORIGINAL COMPLETE A4 TABLE LAYOUT (RESTORED EXACTLY AS USER HAD)
     function renderQuotationContent() {
       if (!activeQuotationData) return;
       const d = activeQuotationData;
@@ -1744,7 +1837,6 @@
 
       document.getElementById('quotationPrintableTarget').innerHTML = `
         <div style="width: 100%; color: #0f172a; font-family: 'Inter', sans-serif;">
-          
           <div style="border-bottom: 2px solid #002B49; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
             <div style="display: flex; align-items: center; gap: 10px;">
               <img src="logo.png" onerror="this.style.display='none';" style="height: 48px; width: auto; object-fit: contain;" alt="KDS INSURANCE" />
@@ -1864,9 +1956,8 @@
           </div>
 
           <p style="font-size: 7.5px; color: #64748b; text-align: center; margin: 6px 0 0 0; line-height: 1.2;">
-            *Statutory Disclaimer: This illustration is prepared by an authorized insurance agent for guidance. Non-guaranteed projection values (at 4% & 8%) conform to standard IRDAI guidelines and are subject to future bonus declarations. Non-par CSC products guarantee income and premium refund terms[cite: 1].
+            *Statutory Disclaimer: This illustration is prepared by an authorized insurance agent for guidance. Non-guaranteed projection values (at 4% & 8%) conform to standard IRDAI guidelines and are subject to future bonus declarations[cite: 1].
           </p>
-
         </div>
       `;
     }
@@ -1908,24 +1999,24 @@
       const ccSelect = document.getElementById('motorCcSlab');
       if (vType === 'bike') {
         ccSelect.innerHTML = `
-          <option value="75">Up to 75 cc (Mopeds)</option>
+          <option value="75">75 cc तक (Mopeds)</option>
           <option value="150" selected>75 cc - 150 cc (Splendor, Shine, Platina, Pulsar 125)</option>
           <option value="350">150 cc - 350 cc (Apache, Bullet 350, Classic 350)</option>
-          <option value="above350">Above 350 cc (Himalayan 450, Superbikes)</option>
+          <option value="above350">350 cc से अधिक (Himalayan 450, Superbikes)</option>
         `;
         document.getElementById('motorIdv').value = 75000;
       } else if (vType === 'car') {
         ccSelect.innerHTML = `
-          <option value="1000">Up to 1000 cc (Alto, WagonR, Kwid, S-Presso)</option>
+          <option value="1000">1000 cc तक (Alto, WagonR, Kwid, S-Presso)</option>
           <option value="1500" selected>1000 cc - 1500 cc (Swift, Dzire, Baleno, Creta, Brezza)</option>
-          <option value="above1500">Above 1500 cc (Scorpio, XUV700, Thar, Fortuner)</option>
+          <option value="above1500">1500 cc से अधिक (Scorpio, XUV700, Thar, Fortuner)</option>
         `;
         document.getElementById('motorIdv').value = 600000;
       } else {
         ccSelect.innerHTML = `
-          <option value="light">Light Commercial Goods (Pick-up, Camper, Tata Ace)</option>
-          <option value="medium" selected>Medium Goods Carrier (6-Tyre Truck, Eicher)</option>
-          <option value="heavy">Heavy Commercial Goods (10-16 Tyre Truck / Trailer)</option>
+          <option value="light">लाइट गुड्स (Pick-up, Camper, Tata Ace)</option>
+          <option value="medium" selected>मीडियम गुड्स (6-Tyre Truck, Eicher)</option>
+          <option value="heavy">भारी मालवाहक (10-16 Tyre Truck / Trailer)</option>
         `;
         document.getElementById('motorIdv').value = 1200000;
       }
@@ -1975,13 +2066,13 @@
               <h4 class="text-base font-black text-brand-navy group-hover:text-emerald-700 transition">${ins.name}</h4>
               <p class="text-[11px] text-slate-500 mt-0.5">Claims: <strong>${ins.claimsRatio}</strong></p>
               <div class="mt-4 bg-slate-50 p-3.5 rounded-xl border border-slate-100">
-                <div class="text-[11px] text-slate-500 font-bold">Estimated Total Premium (Incl. 18% GST):</div>
+                <div class="text-[11px] text-slate-500 font-bold">अनुमानित प्रीमियम (18% GST सहित):</div>
                 <div class="text-2xl font-black text-emerald-700 mt-1">₹ ${estimatedFinal.toLocaleString('en-IN')}</div>
               </div>
             </div>
             <div class="mt-5 pt-3 border-t border-slate-100 flex items-center gap-2">
               <button onclick="openMotorQuotationModal('${ins.name}', ${estimatedFinal}, ${idv}, ${tp}, ${od}, ${zeroDep}, ${pa}, ${gst})" class="w-full bg-brand-navy hover:bg-emerald-700 text-white font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow">
-                <i class="fa-solid fa-print text-brand-gold"></i><span>Print Itemized Breakdown Table</span>
+                <i class="fa-solid fa-print text-brand-gold"></i><span>प्रिंट कोटेशन / Print Table</span>
               </button>
             </div>
           </div>
@@ -2116,14 +2207,14 @@
               <h4 class="text-base font-black text-brand-navy group-hover:text-rose-700 transition">${ins.name}</h4>
               <p class="text-[11px] text-slate-500 font-bold">${ins.plan}</p>
               <div class="mt-4 bg-slate-50 p-3.5 rounded-xl border border-slate-100">
-                <div class="text-[11px] text-slate-500 font-bold">Estimated Annual Premium (Incl. 18% GST):</div>
+                <div class="text-[11px] text-slate-500 font-bold">अनुमानित प्रीमियम (18% GST सहित):</div>
                 <div class="text-2xl font-black text-rose-700 mt-1">₹ ${estimatedFinal.toLocaleString('en-IN')}</div>
                 <div class="text-[10px] text-slate-500 mt-0.5">Approx ₹${monthlyEmi.toLocaleString('en-IN')}/mo | Cover: ₹ ${(sumInsured/100000).toFixed(0)} Lakh</div>
               </div>
             </div>
             <div class="mt-5 pt-3 border-t border-slate-100 flex items-center gap-2">
               <button onclick="openHealthQuotationModal('${ins.name}', '${ins.plan}', ${estimatedFinal}, ${sumInsured}, '${planType}', ${eldestAge}, ${tenure})" class="w-full bg-brand-navy hover:bg-rose-700 text-white font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow">
-                <i class="fa-solid fa-print text-brand-gold"></i><span>Print Breakdown Table</span>
+                <i class="fa-solid fa-print text-brand-gold"></i><span>प्रिंट कोटेशन / Print Table</span>
               </button>
             </div>
           </div>
@@ -2176,10 +2267,6 @@
                 <td style="padding: 5px 6px; text-align: right; border: 1px solid #cbd5e1;">60 Days Pre / 180 Days Post</td>
               </tr>
               <tr>
-                <td style="padding: 5px 6px; border: 1px solid #cbd5e1;">Day Care & Modern Treatments</td>
-                <td style="padding: 5px 6px; text-align: right; border: 1px solid #cbd5e1;">Covered up to Sum Insured</td>
-              </tr>
-              <tr>
                 <td style="padding: 5px 6px; border: 1px solid #cbd5e1;">Base Medical Premium</td>
                 <td style="padding: 5px 6px; text-align: right; border: 1px solid #cbd5e1;">₹ ${baseVal.toLocaleString('en-IN')}</td>
               </tr>
@@ -2215,7 +2302,7 @@
       const submitBtn = e.target.querySelector('button[type="submit"]');
       const originalText = submitBtn.innerText;
       submitBtn.disabled = true;
-      submitBtn.innerText = "Bheja ja rha h...";
+      submitBtn.innerText = "भेजा जा रहा है / Sending...";
 
       const scriptURL = "https://script.google.com/macros/s/AKfycbwnZ5mB_Sj292E5-0gBONxXd_DIcdj6WW1dZNd9Z6Mt2bnZYXAjMqYxghqq7kg__l6Z/exec";
 
@@ -2234,7 +2321,7 @@
       .then(() => {
         closeLeadModal();
         e.target.reset();
-        showToast('Callback request bhej di gayi hai! Manoher Singh ji jaldi call karenge.');
+        showToast('अनुरोध भेज दिया गया है! मनोहर सिंह जी शीघ्र संपर्क करेंगे।');
       })
       .catch((err) => {
         showToast('Error: Request submit nahi hui.');
@@ -2252,217 +2339,11 @@
       setTimeout(() => toast.classList.add('hidden'), 4000);
     }
 
-    // KDS MITRA VIRTUAL ASSISTANT
-    let isMitraInitialized = false;
-
-    function toggleMitraChat() {
-      const win = document.getElementById('kdsMitraWindow');
-      if (win.classList.contains('hidden')) {
-        win.classList.remove('hidden');
-        if (!isMitraInitialized) {
-          resetMitraFlow();
-          isMitraInitialized = true;
-        }
-      } else {
-        win.classList.add('hidden');
-      }
-    }
-
-    function appendMitraMessage(sender, htmlContent) {
-      const container = document.getElementById('kdsMitraMessages');
-      const msgDiv = document.createElement('div');
-      
-      if (sender === 'bot') {
-        msgDiv.className = "flex items-start gap-2.5 animate-fadeIn";
-        msgDiv.innerHTML = `
-          <div class="w-7 h-7 rounded-xl bg-brand-navy text-brand-gold flex items-center justify-center font-black text-xs shrink-0 shadow mt-0.5">
-            <i class="fa-solid fa-robot"></i>
-          </div>
-          <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3.5 shadow-sm text-slate-800 space-y-2 max-w-[85%]">
-            ${htmlContent}
-          </div>
-        `;
-      } else {
-        msgDiv.className = "flex justify-end animate-fadeIn";
-        msgDiv.innerHTML = `
-          <div class="bg-brand-navy text-white rounded-2xl rounded-tr-none px-3.5 py-2 shadow-sm font-semibold max-w-[80%]">
-            ${htmlContent}
-          </div>
-        `;
-      }
-      container.appendChild(msgDiv);
-      container.scrollTop = container.scrollHeight;
-    }
-
-    function resetMitraFlow() {
-      const container = document.getElementById('kdsMitraMessages');
-      container.innerHTML = '';
-      
-      const welcomeHtml = `
-        <p class="font-bold text-slate-800">Namaste! Mai <strong>केडीएस मित्र (KDS MITRA)</strong> hu, Manoher Singh ji ka authorized insurance assistant[cite: 1, 2].</p>
-        <p class="text-slate-600">Aapko kis tarah ki insurance jaankari chahiye? Kripya select karein:</p>
-        <div class="grid grid-cols-1 gap-1.5 pt-1">
-          <button onclick="handleMitraProductSelect('lic')" class="w-full text-left bg-blue-50 hover:bg-blue-100 text-brand-navy border border-blue-200 font-bold px-3 py-2 rounded-xl transition flex items-center justify-between">
-            <span>🛡️ Life Insurance (LIC of India)</span>
-            <i class="fa-solid fa-angle-right text-[10px]"></i>
-          </button>
-          <button onclick="handleMitraProductSelect('csc')" class="w-full text-left bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 font-bold px-3 py-2 rounded-xl transition flex items-center justify-between">
-            <span>🏛️ CSC Life (SBI / IndiaFirst / Shriram)</span>
-            <i class="fa-solid fa-angle-right text-[10px]"></i>
-          </button>
-          <button onclick="handleMitraProductSelect('motor')" class="w-full text-left bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 font-bold px-3 py-2 rounded-xl transition flex items-center justify-between">
-            <span>🚗 Motor Insurance (Car, Bike, Truck)</span>
-            <i class="fa-solid fa-angle-right text-[10px]"></i>
-          </button>
-          <button onclick="handleMitraProductSelect('health')" class="w-full text-left bg-rose-50 hover:bg-rose-100 text-rose-900 border border-rose-200 font-bold px-3 py-2 rounded-xl transition flex items-center justify-between">
-            <span>❤️ Health Mediclaim (Family Floater)</span>
-            <i class="fa-solid fa-angle-right text-[10px]"></i>
-          </button>
-        </div>
-      `;
-      appendMitraMessage('bot', welcomeHtml);
-    }
-
-    function handleMitraProductSelect(product) {
-      if (product === 'lic') {
-        appendMitraMessage('user', 'LIC Life Insurance Plans');
-        const catHtml = `
-          <p class="font-bold text-slate-800">LIC of India ke antargat category chunein:</p>
-          <div class="grid grid-cols-1 gap-1.5 pt-1">
-            <button onclick="handleMitraCategorySelect('lic', 'endowment')" class="text-left bg-slate-100 hover:bg-blue-50 border border-slate-200 font-bold px-3 py-2 rounded-xl">💰 Savings & Endowment (Jeevan Labh, Anand)</button>
-            <button onclick="handleMitraCategorySelect('lic', 'money_back')" class="text-left bg-slate-100 hover:bg-blue-50 border border-slate-200 font-bold px-3 py-2 rounded-xl">🔄 Money Back (Har 5 Saal Cashback)</button>
-            <button onclick="handleMitraCategorySelect('lic', 'whole_life')" class="text-left bg-slate-100 hover:bg-blue-50 border border-slate-200 font-bold px-3 py-2 rounded-xl">♾️ Whole Life (Jeevan Umang 8%, Utsav 10%)</button>
-            <button onclick="handleMitraCategorySelect('lic', 'term')" class="text-left bg-slate-100 hover:bg-blue-50 border border-slate-200 font-bold px-3 py-2 rounded-xl">🛡️ Pure Term Plan (Digi Term)</button>
-          </div>
-        `;
-        appendMitraMessage('bot', catHtml);
-      } else if (product === 'csc') {
-        appendMitraMessage('user', 'CSC Portal Life Insurance');
-        const catHtml = `
-          <p class="font-bold text-slate-800">CSC Partners ke Guaranteed Regular Income + 110% Return plans:</p>
-          <div class="grid grid-cols-1 gap-1.5 pt-1">
-            <button onclick="handleMitraPlanDetail('sbi_platina_plus')" class="text-left bg-purple-50 hover:bg-purple-100 border border-purple-200 font-bold px-3 py-2 rounded-xl">🏦 SBI Life - Smart Platina Plus</button>
-            <button onclick="handleMitraPlanDetail('indiafirst_gold')" class="text-left bg-orange-50 hover:bg-orange-100 border border-orange-200 font-bold px-3 py-2 rounded-xl">🇮🇳 IndiaFirst G.O.L.D (Guaranteed Income)</button>
-            <button onclick="handleMitraPlanDetail('shriram_assured_income')" class="text-left bg-red-50 hover:bg-red-100 border border-red-200 font-bold px-3 py-2 rounded-xl">🚚 Shriram Life - Assured Income</button>
-          </div>
-        `;
-        appendMitraMessage('bot', catHtml);
-      } else if (product === 'motor') {
-        appendMitraMessage('user', 'Motor / Vehicle Insurance');
-        const motorHtml = `
-          <p class="font-bold text-slate-800">Gaadi ke bime ke liye instant quote:</p>
-          <div class="space-y-1.5 pt-1">
-            <button onclick="mitraGoToTab('motor')" class="w-full text-left bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 font-bold px-3 py-2 rounded-xl">🚗 Motor Calculator Kholein</button>
-            <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20ji%2C%20ye%20meri%20RC%20hai%20gaadi%20ka%20insurance%20karna%20hai" target="_blank" class="block text-center bg-emerald-600 text-white font-bold px-3 py-2 rounded-xl shadow mt-2">
-              <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp par RC bhejein (Direct Rate)
-            </a>
-          </div>
-        `;
-        appendMitraMessage('bot', motorHtml);
-      } else if (product === 'health') {
-        appendMitraMessage('user', 'Health Insurance / Mediclaim');
-        const healthHtml = `
-          <p class="font-bold text-slate-800">Mediclaim me Star Health, Care Health aur HDFC ERGO uplabdh hain:</p>
-          <div class="pt-2 flex flex-col gap-1.5">
-            <button onclick="mitraGoToTab('health')" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 rounded-xl">
-              🏥 Health Calculator Open Karein
-            </button>
-          </div>
-        `;
-        appendMitraMessage('bot', healthHtml);
-      }
-    }
-
-    function handleMitraCategorySelect(type, cat) {
-      const filtered = officialLifeSchemes.filter(s => s.company === 'LIC' && s.category === cat);
-      appendMitraMessage('user', `${cat.toUpperCase()} Category Plans`);
-      
-      let html = `<p class="font-bold text-slate-800">Chunein jiske baare me jaankari chahiye:</p><div class="space-y-1.5 pt-1">`;
-      filtered.forEach(p => {
-        html += `
-          <button onclick="handleMitraPlanDetail('${p.id}')" class="w-full text-left bg-white hover:bg-blue-50 border border-slate-200 font-bold px-3 py-2 rounded-xl shadow-xs transition flex justify-between items-center">
-            <span>${p.name}</span>
-            <i class="fa-solid fa-circle-info text-brand-lightBlue"></i>
-          </button>
-        `;
-      });
-      html += `</div>`;
-      appendMitraMessage('bot', html);
-    }
-
-    function handleMitraPlanDetail(planId) {
-      const plan = officialLifeSchemes.find(s => s.id === planId);
-      if (!plan) return;
-
-      appendMitraMessage('user', `${plan.name}`);
-
-      let detailHtml = `
-        <div class="border-b border-slate-200 pb-2 mb-2">
-          <span class="text-[10px] bg-brand-navy text-white px-2 py-0.5 rounded font-black uppercase">${plan.company} • Plan ${plan.planNo}</span>
-          <h5 class="text-sm font-black text-brand-navy mt-1">${plan.name}</h5>
-          <p class="text-[11px] text-slate-600 mt-1">${plan.tagline}</p>
-        </div>
-
-        <div class="pt-2 flex flex-col gap-1.5">
-          <button onclick="mitraLoadInCalculator('${plan.id}')" class="w-full bg-brand-gold hover:bg-amber-400 text-brand-dark font-black py-2 rounded-xl transition shadow flex items-center justify-center gap-1.5">
-            <i class="fa-solid fa-calculator"></i>
-            <span>Is Plan Ka Premium & Return Calculate Karein</span>
-          </button>
-        </div>
-      `;
-      appendMitraMessage('bot', detailHtml);
-    }
-
-    function mitraLoadInCalculator(planId) {
-      const plan = officialLifeSchemes.find(s => s.id === planId);
-      if (!plan) return;
-
-      if (plan.company === 'LIC') {
-        switchMainTab('lic');
-      } else {
-        switchMainTab('csc');
-      }
-
-      toggleMitraChat();
-      document.getElementById('calculator-section').scrollIntoView({ behavior: 'smooth' });
-      openQuotationPreviewModal(planId);
-    }
-
-    function mitraGoToTab(tab) {
-      switchMainTab(tab);
-      toggleMitraChat();
-    }
-
-    function handleMitraUserMessage(e) {
-      e.preventDefault();
-      const input = document.getElementById('kdsMitraInput');
-      const query = input.value.trim().toLowerCase();
-      if (!query) return;
-
-      appendMitraMessage('user', input.value);
-      input.value = '';
-
-      setTimeout(() => {
-        if (query.includes('lic') || query.includes('jeevan') || query.includes('labh')) {
-          handleMitraPlanDetail('jeevan_labh');
-        } else if (query.includes('motor') || query.includes('car') || query.includes('bike')) {
-          appendMitraMessage('bot', `<p>Motor calculation ke liye niche click karein:</p><button onclick="mitraGoToTab('motor')" class="w-full bg-emerald-600 text-white font-bold py-1.5 rounded-xl mt-1">Motor Calculator</button>`);
-        } else {
-          appendMitraMessage('bot', `
-            <p>Manoher Singh ji se direct paramarsh ke liye contact karein[cite: 1]:</p>
-            <div class="flex gap-2 pt-1">
-              <a href="tel:8440096343" class="flex-1 bg-brand-navy text-white text-center py-1.5 rounded-xl font-bold">Call</a>
-              <a href="https://wa.me/918440096343" class="flex-1 bg-emerald-600 text-white text-center py-1.5 rounded-xl font-bold">WhatsApp</a>
-            </div>
-          `);
-        }
-      }, 400);
-    }
-
     window.addEventListener('DOMContentLoaded', () => {
       adjustEngineSlabs();
       autoApplyRiders();
       switchMainTab('lic');
+      checkInitialLanguagePrompt();
     });
   </script>
 
