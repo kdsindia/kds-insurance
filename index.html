@@ -1145,46 +1145,72 @@
     <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
     <span id="toastMessage">Success</span>
   </div>
-<!-- 1. LOGIN & SIGNUP POPUP -->
-  <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 p-6 sm:p-8">
-      <div class="flex justify-between items-center pb-3 border-b border-slate-100">
-        <div>
-          <h3 id="authModalTitle" class="font-black text-xl text-brand-navy">Login to Account</h3>
-          <p id="authModalSubtitle" class="text-xs text-slate-500">Apne saved quotations aur policy dashboard dekhein</p>
-        </div>
-        <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600">
-          <i class="fa-solid fa-xmark text-lg"></i>
-        </button>
+<!-- 1. LOGIN, SIGNUP & FORGOT PASSWORD MODAL -->
+<div id="authModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 p-6 sm:p-8">
+    <div class="flex justify-between items-center pb-3 border-b border-slate-100">
+      <div>
+        <h3 id="authModalTitle" class="font-black text-xl text-brand-navy">Login to Account</h3>
+        <p id="authModalSubtitle" class="text-xs text-slate-500">Apne saved quotations aur policy dashboard dekhein</p>
       </div>
-
-      <div class="flex bg-slate-100 p-1 rounded-2xl border border-slate-200 mt-4 text-xs font-bold">
-        <button id="authTabLogin" onclick="switchAuthMode('login')" class="flex-1 py-2 rounded-xl bg-brand-navy text-white shadow-xs">Login</button>
-        <button id="authTabSignup" onclick="switchAuthMode('signup')" class="flex-1 py-2 rounded-xl text-slate-700 hover:text-brand-navy">Create Account</button>
-      </div>
-
-      <form id="authForm" onsubmit="handleAuthSubmit(event)" class="mt-4 space-y-3.5 text-xs">
-        <div id="authNameField" class="hidden">
-          <label class="block font-bold text-slate-700 mb-1">Poora Naam / Full Name</label>
-          <input type="text" id="authName" placeholder="Apna naam darj karein" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
-        </div>
-
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Mobile Number / Email</label>
-          <input type="text" id="authIdentity" required placeholder="Mobile number ya email" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
-        </div>
-
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Password</label>
-          <input type="password" id="authPassword" required placeholder="Apna password darj karein" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
-        </div>
-
-        <button type="submit" id="authSubmitBtn" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 rounded-xl text-sm transition shadow mt-2">
-          Login Karein
-        </button>
-      </form>
+      <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
     </div>
+
+    <!-- Mode Switcher Buttons -->
+    <div id="authTabSwitcher" class="flex bg-slate-100 p-1 rounded-2xl border border-slate-200 mt-4 text-xs font-bold">
+      <button id="authTabLogin" type="button" onclick="switchAuthMode('login')" class="flex-1 py-2 rounded-xl bg-brand-navy text-white shadow-xs">Login</button>
+      <button id="authTabSignup" type="button" onclick="switchAuthMode('signup')" class="flex-1 py-2 rounded-xl text-slate-700 hover:text-brand-navy">Create Account</button>
+    </div>
+
+    <!-- Main Login / Signup Form -->
+    <form id="authForm" onsubmit="handleAuthSubmit(event)" class="mt-4 space-y-3.5 text-xs">
+      <div id="authNameField" class="hidden">
+        <label class="block font-bold text-slate-700 mb-1">Poora Naam / Full Name *</label>
+        <input type="text" id="authName" placeholder="Apna naam darj karein" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+      </div>
+
+      <div>
+        <label class="block font-bold text-slate-700 mb-1">Mobile Number *</label>
+        <input type="tel" id="authIdentity" maxlength="10" required placeholder="10-digit Mobile Number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+      </div>
+
+      <div id="authPasswordFieldBlock">
+        <div class="flex justify-between items-center mb-1">
+          <label class="block font-bold text-slate-700">Password *</label>
+          <button type="button" onclick="switchAuthMode('forgot')" class="text-[11px] font-bold text-brand-lightBlue hover:underline">Forgot Password?</button>
+        </div>
+        <input type="password" id="authPassword" placeholder="Apna password darj karein" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+      </div>
+
+      <button type="submit" id="authSubmitBtn" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 rounded-xl text-sm transition shadow mt-2">
+        Login Karein
+      </button>
+    </form>
+
+    <!-- Forgot Password View (Hidden by default) -->
+    <div id="forgotPasswordBlock" class="hidden mt-4 space-y-3.5 text-xs">
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-amber-900 text-[11px] leading-relaxed">
+        <i class="fa-solid fa-circle-info mr-1 text-amber-600"></i> Apna registered mobile number daalein. Password reset request seedha <strong>Manoher Singh ji (8440096343)</strong> ke paas chali jayegi aur aapko SMS/WhatsApp par password mil jayega[cite: 1].
+      </div>
+
+      <div>
+        <label class="block font-bold text-slate-700 mb-1">Registered Mobile Number *</label>
+        <input type="tel" id="forgotMobileInput" maxlength="10" placeholder="10-digit Mobile Number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+      </div>
+
+      <button type="button" onclick="submitForgotPasswordRequest()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black py-3 rounded-xl text-sm transition shadow">
+        Password Request Bhejein
+      </button>
+
+      <button type="button" onclick="switchAuthMode('login')" class="w-full py-1 text-center font-bold text-slate-500 hover:text-brand-navy">
+        &larr; Wapas Login Par Jayein
+      </button>
+    </div>
+
   </div>
+</div>
 
   <!-- 2. POLICYHOLDER DETAILS POPUP (QUOTATION SAVE KRTE WAQT) -->
   <div id="saveQuotationModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
@@ -1300,7 +1326,7 @@
   <!-- JAVASCRIPT LOGIC -->
   <script>
     // GOOGLE SHEET WEB APP URL
-    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbypJinoei90FSB_oISVfPIDfY3lnnH1jXk1mGnLg-N1I1lYjSufvDfiDfr7x-dDLIh2/exec";
+    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwMJOgO-FJFf9zOxHrilfkLM5CNqo8cR2HzLZNsozG5QlAN7rDEnv1ZG1AzMj6ig_Nw/exec";
 
     let currentPdfLang = 'hi';
     let activeQuotationData = null;
@@ -2613,70 +2639,177 @@ function renderMotorQuotes(baseTotal, coverType, tenure, idv, tp, od, zeroDep, p
       document.getElementById('authModal').classList.add('hidden');
     }
 
-    function switchAuthMode(mode) {
+function switchAuthMode(mode) {
       currentAuthMode = mode;
       const nameField = document.getElementById('authNameField');
       const btnLogin = document.getElementById('authTabLogin');
       const btnSignup = document.getElementById('authTabSignup');
       const submitBtn = document.getElementById('authSubmitBtn');
       const title = document.getElementById('authModalTitle');
+      const authForm = document.getElementById('authForm');
+      const forgotBlock = document.getElementById('forgotPasswordBlock');
+      const tabSwitcher = document.getElementById('authTabSwitcher');
+      const passFieldBlock = document.getElementById('authPasswordFieldBlock');
+      const passInput = document.getElementById('authPassword');
+
+      if (mode === 'forgot') {
+        if (authForm) authForm.classList.add('hidden');
+        if (tabSwitcher) tabSwitcher.classList.add('hidden');
+        if (forgotBlock) forgotBlock.classList.remove('hidden');
+        if (title) title.innerText = 'Forgot Password';
+        const identVal = document.getElementById('authIdentity') ? document.getElementById('authIdentity').value : '';
+        if (document.getElementById('forgotMobileInput')) document.getElementById('forgotMobileInput').value = identVal;
+        return;
+      }
+
+      if (authForm) authForm.classList.remove('hidden');
+      if (tabSwitcher) tabSwitcher.classList.remove('hidden');
+      if (forgotBlock) forgotBlock.classList.add('hidden');
+      if (passFieldBlock) passFieldBlock.classList.remove('hidden');
+      if (passInput) passInput.required = true;
 
       if (mode === 'signup') {
-        nameField.classList.remove('hidden');
-        btnLogin.className = 'flex-1 py-2 rounded-xl text-slate-700 hover:text-brand-navy';
-        btnSignup.className = 'flex-1 py-2 rounded-xl bg-brand-navy text-white shadow-xs';
-        submitBtn.innerText = 'Account Banayein (Sign Up)';
-        title.innerText = 'Naya Account Banayein';
+        if (nameField) nameField.classList.remove('hidden');
+        if (btnLogin) btnLogin.className = 'flex-1 py-2 rounded-xl text-slate-700 hover:text-brand-navy';
+        if (btnSignup) btnSignup.className = 'flex-1 py-2 rounded-xl bg-brand-navy text-white shadow-xs';
+        if (submitBtn) submitBtn.innerText = 'Account Banayein (Sign Up)';
+        if (title) title.innerText = 'Naya Account Banayein';
       } else {
-        nameField.classList.add('hidden');
-        btnLogin.className = 'flex-1 py-2 rounded-xl bg-brand-navy text-white shadow-xs';
-        btnSignup.className = 'flex-1 py-2 rounded-xl text-slate-700 hover:text-brand-navy';
-        submitBtn.innerText = 'Login Karein';
-        title.innerText = 'Login to Account';
+        if (nameField) nameField.classList.add('hidden');
+        if (btnLogin) btnLogin.className = 'flex-1 py-2 rounded-xl bg-brand-navy text-white shadow-xs';
+        if (btnSignup) btnSignup.className = 'flex-1 py-2 rounded-xl text-slate-700 hover:text-brand-navy';
+        if (submitBtn) submitBtn.innerText = 'Login Karein';
+        if (title) title.innerText = 'Login to Account';
       }
     }
 
-    function handleAuthSubmit(e) {
+    async function handleAuthSubmit(e) {
       e.preventDefault();
       const identity = document.getElementById('authIdentity').value.trim();
       const password = document.getElementById('authPassword').value.trim();
-      const users = JSON.parse(localStorage.getItem('kds_registered_users') || '[]');
+      const submitBtn = document.getElementById('authSubmitBtn');
+      const originalText = submitBtn ? submitBtn.innerText : 'Submit';
+
+      if (!identity || !password) {
+        showToast('Kripya Mobile aur Password dono bharein!');
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Kripya intezar karein...';
+      }
+
+      let localUsers = JSON.parse(localStorage.getItem('kds_registered_users') || '[]');
 
       if (currentAuthMode === 'signup') {
         const name = document.getElementById('authName').value.trim();
         if (!name) {
           showToast('Kripya apna poora naam bharein!');
-          return;
-        }
-        const exists = users.find(u => u.identity === identity);
-        if (exists) {
-          showToast('Ye Mobile/Email pehle se registered hai! Login karein.');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = originalText;
+          }
           return;
         }
 
-        const newUser = { id: 'USR-' + Date.now(), name, identity, password };
-        users.push(newUser);
-        localStorage.setItem('kds_registered_users', JSON.stringify(users));
-        
-        currentLoggedInUser = newUser;
-        localStorage.setItem('kds_logged_user', JSON.stringify(newUser));
-        showToast('Account successfully ban gaya hai!');
+        const newUser = {
+          action: "signupUser",
+          name: name,
+          mobile: identity,
+          password: password,
+          createdDate: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+        };
+
+        // 1. Google Sheet ke 'Users' tab me data bhejna
+        if (typeof GOOGLE_SHEET_API_URL !== 'undefined' && GOOGLE_SHEET_API_URL) {
+          fetch(GOOGLE_SHEET_API_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newUser)
+          }).catch(err => console.log(err));
+        }
+
+        // 2. Local storage me save
+        localUsers.push({ name: name, identity: identity, password: password, id: 'USR-' + Date.now() });
+        localStorage.setItem('kds_registered_users', JSON.stringify(localUsers));
+
+        currentLoggedInUser = { name: name, identity: identity, id: 'USR-' + Date.now() };
+        localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+
+        showToast('Account successfully ban gaya hai aur Sheet me save ho gaya!');
         closeAuthModal();
         updateAuthNavUI();
       } else {
-        const user = users.find(u => u.identity === identity && u.password === password);
-        if (!user) {
-          showToast('Galat ID ya Password! Kripya check karein.');
+        // LOGIN: Pehle Localstorage check karega
+        let matchedUser = localUsers.find(u => String(u.identity).trim() === identity && String(u.password).trim() === password);
+
+        // Agar local me nahi mila to Google Sheet ke Users tab se check karega
+        if (!matchedUser && typeof GOOGLE_SHEET_API_URL !== 'undefined' && GOOGLE_SHEET_API_URL) {
+          try {
+            const res = await fetch(GOOGLE_SHEET_API_URL + "?type=getUsers");
+            const sheetUsers = await res.json();
+            if (Array.isArray(sheetUsers)) {
+              matchedUser = sheetUsers.find(u => String(u.mobile).trim() === identity && String(u.password).trim() === password);
+              if (matchedUser) {
+                localUsers.push({ name: matchedUser.name, identity: matchedUser.mobile, password: matchedUser.password, id: 'USR-' + Date.now() });
+                localStorage.setItem('kds_registered_users', JSON.stringify(localUsers));
+              }
+            }
+          } catch (err) {
+            console.log('Error verifying user from sheet:', err);
+          }
+        }
+
+        if (!matchedUser) {
+          showToast('Galat Mobile ya Password! Check karein ya Forgot Password dabayein.');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = originalText;
+          }
           return;
         }
 
-        currentLoggedInUser = user;
-        localStorage.setItem('kds_logged_user', JSON.stringify(user));
-        showToast(`Swagat hai, ${user.name}!`);
+        currentLoggedInUser = { name: matchedUser.name, identity: matchedUser.mobile || matchedUser.identity, id: 'USR-' + Date.now() };
+        localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+
+        showToast(`Swagat hai, ${matchedUser.name}!`);
         closeAuthModal();
         updateAuthNavUI();
         openDashboardModal();
       }
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerText = originalText;
+      }
+    }
+
+    function submitForgotPasswordRequest() {
+      const mob = document.getElementById('forgotMobileInput').value.trim();
+      if (!mob || mob.length < 10) {
+        showToast('Kripya 10-digit mobile number darj karein!');
+        return;
+      }
+
+      const reqPayload = {
+        action: "forgotPassword",
+        mobile: mob,
+        date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) + " " + new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+      };
+
+      if (typeof GOOGLE_SHEET_API_URL !== 'undefined' && GOOGLE_SHEET_API_URL) {
+        fetch(GOOGLE_SHEET_API_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(reqPayload)
+        }).catch(err => console.log(err));
+      }
+
+      closeAuthModal();
+      showToast('Password Reset Request Manoher Singh ji ke paas bhej di gayi hai!');
     }
 
     function handleLogout() {
