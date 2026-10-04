@@ -356,6 +356,11 @@
             <span class="hidden sm:inline">Callback Request</span>
             <span class="sm:hidden">Call</span>
           </button>
+<!-- Login / Dashboard Button -->
+          <button id="authBtn" onclick="handleAuthButtonClick()" class="bg-brand-gold hover:bg-amber-400 text-brand-dark font-black px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-user-circle text-base"></i>
+            <span id="authBtnLabel">Login / Sign Up</span>
+          </button>
         </div>
       </div>
 
@@ -1066,6 +1071,11 @@
             <i class="fa-brands fa-whatsapp text-base"></i>
             <span class="hidden sm:inline">WhatsApp</span>
           </button>
+<!-- Save Quotation Button -->
+          <button onclick="triggerSaveQuotationFlow()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-3 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow">
+            <i class="fa-solid fa-floppy-disk text-base"></i>
+            <span>Quotation Save Karein</span>
+          </button>
         </div>
       </div>
     </div>
@@ -1091,7 +1101,10 @@
         <div id="generalPrintableTarget" class="bg-white p-6 rounded-2xl border border-slate-200 max-w-3xl mx-auto"></div>
       </div>
       <div class="bg-white p-4 border-t border-slate-200 flex justify-end gap-3 no-print">
-        <button onclick="window.print()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-black px-6 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2">
+        <button onclick="triggerCurrentMotorModalSave()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow">
+          <i class="fa-solid fa-floppy-disk"></i> Save Quotation
+        </button>
+        <button onclick="window.print()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-black px-6 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow">
           <i class="fa-solid fa-print"></i> Print Motor Quotation
         </button>
       </div>
@@ -1118,7 +1131,10 @@
         <div id="healthPrintableTarget" class="bg-white p-6 rounded-2xl border border-slate-200 max-w-3xl mx-auto"></div>
       </div>
       <div class="bg-white p-4 border-t border-slate-200 flex justify-end gap-3 no-print">
-        <button onclick="window.print()" class="bg-rose-700 hover:bg-rose-800 text-white font-black px-6 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2">
+        <button onclick="triggerCurrentHealthModalSave()" class="bg-rose-600 hover:bg-rose-700 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow">
+          <i class="fa-solid fa-floppy-disk"></i> Save Quotation
+        </button>
+        <button onclick="window.print()" class="bg-rose-700 hover:bg-rose-800 text-white font-black px-6 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow">
           <i class="fa-solid fa-print"></i> Print Health Quotation
         </button>
       </div>
@@ -1129,9 +1145,163 @@
     <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
     <span id="toastMessage">Success</span>
   </div>
+<!-- 1. LOGIN & SIGNUP POPUP -->
+  <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 p-6 sm:p-8">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-100">
+        <div>
+          <h3 id="authModalTitle" class="font-black text-xl text-brand-navy">Login to Account</h3>
+          <p id="authModalSubtitle" class="text-xs text-slate-500">Apne saved quotations aur policy dashboard dekhein</p>
+        </div>
+        <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
 
+      <div class="flex bg-slate-100 p-1 rounded-2xl border border-slate-200 mt-4 text-xs font-bold">
+        <button id="authTabLogin" onclick="switchAuthMode('login')" class="flex-1 py-2 rounded-xl bg-brand-navy text-white shadow-xs">Login</button>
+        <button id="authTabSignup" onclick="switchAuthMode('signup')" class="flex-1 py-2 rounded-xl text-slate-700 hover:text-brand-navy">Create Account</button>
+      </div>
+
+      <form id="authForm" onsubmit="handleAuthSubmit(event)" class="mt-4 space-y-3.5 text-xs">
+        <div id="authNameField" class="hidden">
+          <label class="block font-bold text-slate-700 mb-1">Poora Naam / Full Name</label>
+          <input type="text" id="authName" placeholder="Apna naam darj karein" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Mobile Number / Email</label>
+          <input type="text" id="authIdentity" required placeholder="Mobile number ya email" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Password</label>
+          <input type="password" id="authPassword" required placeholder="Apna password darj karein" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+        </div>
+
+        <button type="submit" id="authSubmitBtn" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 rounded-xl text-sm transition shadow mt-2">
+          Login Karein
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. POLICYHOLDER DETAILS POPUP (QUOTATION SAVE KRTE WAQT) -->
+  <div id="saveQuotationModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 p-6 sm:p-7">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-100">
+        <div>
+          <div class="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded text-[11px] font-black uppercase">
+            <i class="fa-solid fa-floppy-disk"></i> Save Quotation
+          </div>
+          <h3 class="font-black text-lg text-brand-navy mt-1">Jisko Policy Karni Hai Unka Vivaran</h3>
+          <p class="text-xs text-slate-500">Ye jankari policy quotation record me save hogi</p>
+        </div>
+        <button onclick="closeSaveQuotationModal()" class="text-slate-400 hover:text-slate-600">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+<!-- Active Plan Auto-captured Info Preview -->
+    <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 mt-3 text-xs space-y-1">
+      <div class="flex justify-between font-bold text-slate-700">
+        <span>Selected Plan:</span>
+        <span id="saveAutoPlanName" class="text-brand-navy font-black">-</span>
+      </div>
+      <div class="flex justify-between text-[11px] text-slate-500 font-bold">
+        <span>Term / PPT:</span>
+        <span id="saveAutoTermPpt" class="text-slate-800">-</span>
+      </div>
+      <div class="flex justify-between text-[11px] text-slate-500 font-bold">
+        <span>Saalana Premium:</span>
+        <span id="saveAutoPremium" class="text-emerald-700 font-black">-</span>
+      </div>
+    </div>
+
+    <form id="policyHolderSaveForm" onsubmit="handleSaveQuotationSubmit(event)" class="mt-4 space-y-3.5 text-xs">
+      <div>
+        <label class="block font-bold text-slate-700 mb-1">Policyholder ka Naam *</label>
+        <input type="text" id="saveHolderName" required placeholder="Jiske naam se policy banegi" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+      </div>
+
+      <div>
+        <label class="block font-bold text-slate-700 mb-1">Mobile Number *</label>
+        <input type="tel" id="saveHolderPhone" maxlength="10" required placeholder="10-digit number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+      </div>
+
+      <div>
+        <label class="block font-bold text-slate-700 mb-1">Pata / Address *</label>
+        <textarea id="saveHolderAddress" rows="2" required placeholder="Shehar / Gaon, Tehsil, Jila" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 font-bold"></textarea>
+      </div>
+
+      <button type="submit" id="btnConfirmSavePolicy" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl text-sm transition shadow mt-3 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Confirm & Save Quotation</span>
+      </button>
+    </form>
+    </div>
+  </div>
+
+  <!-- 3. USER DASHBOARD POPUP (SAVED QUOTATIONS & PRINT POLICY) -->
+  <div id="userDashboardModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="bg-brand-navy text-white p-5 flex justify-between items-center border-b border-brand-lightBlue">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-brand-gold text-brand-dark flex items-center justify-center text-xl font-black">
+            <i class="fa-solid fa-folder-open"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="text-lg font-black text-white">Client Policy Dashboard</h3>
+              <span id="dashboardUserBadge" class="bg-blue-900 text-brand-gold text-[10px] font-bold px-2 py-0.5 rounded border border-brand-gold/30">User</span>
+            </div>
+            <p class="text-xs text-slate-300">Aapke sabhi saved quotations, payment status aur policy numbers</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="handleLogout()" class="bg-rose-500 hover:bg-rose-600 text-white font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+          </button>
+          <button onclick="closeDashboardModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex-grow overflow-y-auto p-4 sm:p-6 bg-slate-50">
+        <div id="dashboardEmptyState" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-300 p-8 space-y-3">
+          <div class="w-14 h-14 rounded-2xl bg-slate-100 text-slate-400 mx-auto flex items-center justify-center text-2xl">
+            <i class="fa-solid fa-file-circle-question"></i>
+          </div>
+          <h4 class="font-bold text-slate-700 text-sm">Koi Saved Quotation Nahi Mila</h4>
+          <p class="text-xs text-slate-500">Plan select karke 'Save Quotation' par click karein.</p>
+        </div>
+
+        <div id="dashboardTableWrapper" class="overflow-x-auto bg-white rounded-2xl border border-slate-200 shadow-sm">
+          <table class="w-full text-left text-xs border-collapse min-w-[750px]">
+            <thead class="bg-slate-100 text-slate-700 border-b border-slate-200 font-black">
+              <tr>
+                <th class="p-3">Quotation No.</th>
+                <th class="p-3">Policyholder</th>
+                <th class="p-3">Plan / Scheme</th>
+                <th class="p-3">Premium Amount</th>
+                <th class="p-3">Payment Status</th>
+                <th class="p-3">Policy No.</th>
+                <th class="p-3 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody id="dashboardTableBody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- JAVASCRIPT LOGIC -->
   <script>
+    // GOOGLE SHEET WEB APP URL
+    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbypJinoei90FSB_oISVfPIDfY3lnnH1jXk1mGnLg-N1I1lYjSufvDfiDfr7x-dDLIh2/exec";
+
     let currentPdfLang = 'hi';
     let activeQuotationData = null;
     let comparedPlanIds = ['jeevan_labh', 'sbi_platina_plus'];
@@ -2103,34 +2273,40 @@ container.innerHTML = currentSchemesList.map(scheme => {
       renderMotorQuotes(totalEstimated, coverType, tenure, idv, totalTp, netOd, zeroDepCost, paCoverCost, gst);
     }
 
-    function renderMotorQuotes(baseTotal, coverType, tenure, idv, tp, od, zeroDep, pa, gst) {
+function renderMotorQuotes(baseTotal, coverType, tenure, idv, tp, od, zeroDep, pa, gst) {
       const container = document.getElementById('motorResultsContainer');
+      container.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
+
       container.innerHTML = generalInsurers.map((ins, idx) => {
         const estimatedFinal = Math.round(baseTotal * (1 + ((idx - 2.5) * 0.022)));
         return `
-          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-xl transition flex flex-col justify-between group">
+          <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
             <div>
               <div class="flex justify-between items-start mb-2">
-                <span class="text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded">${ins.badge}</span>
+                <span class="text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded-md">${ins.badge}</span>
                 <span class="text-xs font-bold text-amber-600"><i class="fa-solid fa-star text-amber-500"></i> ${ins.rating}</span>
               </div>
-              <h4 class="text-base font-black text-brand-navy group-hover:text-emerald-700 transition">${ins.name}</h4>
+              <h4 class="text-base font-black text-brand-navy mt-1">${ins.name}</h4>
               <p class="text-[11px] text-slate-500 mt-0.5">Claims: <strong>${ins.claimsRatio}</strong></p>
-              <div class="mt-4 bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+              
+              <div class="mt-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
                 <div class="text-[11px] text-slate-500 font-bold">अनुमानित प्रीमियम (18% GST सहित):</div>
                 <div class="text-2xl font-black text-emerald-700 mt-1">₹ ${estimatedFinal.toLocaleString('en-IN')}</div>
               </div>
             </div>
-            <div class="mt-5 pt-3 border-t border-slate-100 flex items-center gap-2">
-              <button onclick="openMotorQuotationModal('${ins.name}', ${estimatedFinal}, ${idv}, ${tp}, ${od}, ${zeroDep}, ${pa}, ${gst})" class="w-full bg-brand-navy hover:bg-emerald-700 text-white font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow">
+
+            <div class="mt-5 pt-3 border-t border-slate-100 space-y-2">
+              <button onclick="openMotorQuotationModal('${ins.name}', ${estimatedFinal}, ${idv}, ${tp}, ${od}, ${zeroDep}, ${pa}, ${gst})" class="w-full bg-brand-navy hover:bg-emerald-700 text-white font-black py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow">
                 <i class="fa-solid fa-print text-brand-gold"></i><span>प्रिंट कोटेशन / Print Table</span>
+              </button>
+              <button onclick="triggerQuickMotorSave('${ins.name}', ${estimatedFinal}, ${idv})" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow">
+                <i class="fa-solid fa-floppy-disk text-sm"></i><span>कोटेशन सेव करें / Save Quotation</span>
               </button>
             </div>
           </div>
         `;
       }).join('');
     }
-
     function openMotorQuotationModal(company, total, idv, tp, od, zeroDep, pa, gst) {
       const vType = document.getElementById('motorVehicleType').value.toUpperCase();
       const coverType = document.getElementById('motorCoverType').value.toUpperCase();
@@ -2263,9 +2439,12 @@ container.innerHTML = currentSchemesList.map(scheme => {
                 <div class="text-[10px] text-slate-500 mt-0.5">Approx ₹${monthlyEmi.toLocaleString('en-IN')}/mo | Cover: ₹ ${(sumInsured/100000).toFixed(0)} Lakh</div>
               </div>
             </div>
-            <div class="mt-5 pt-3 border-t border-slate-100 flex items-center gap-2">
+            <div class="mt-5 pt-3 border-t border-slate-100 flex flex-col gap-2">
               <button onclick="openHealthQuotationModal('${ins.name}', '${ins.plan}', ${estimatedFinal}, ${sumInsured}, '${planType}', ${eldestAge}, ${tenure})" class="w-full bg-brand-navy hover:bg-rose-700 text-white font-bold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow">
                 <i class="fa-solid fa-print text-brand-gold"></i><span>प्रिंट कोटेशन / Print Table</span>
+              </button>
+              <button onclick="triggerQuickHealthSave('${ins.name}', '${ins.plan}', ${estimatedFinal}, ${sumInsured})" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow">
+                <i class="fa-solid fa-floppy-disk text-sm"></i><span>Save Health Quotation</span>
               </button>
             </div>
           </div>
@@ -2390,13 +2569,431 @@ container.innerHTML = currentSchemesList.map(scheme => {
       setTimeout(() => toast.classList.add('hidden'), 4000);
     }
 
+// ... aapka purana script ka code ...
+
+    // =========================================================================
+    // STEP 4: AUTHENTICATION & QUOTATION STORAGE ENGINE
+    // =========================================================================
+    let currentAuthMode = 'login';
+    let currentLoggedInUser = null;
+
+    function checkAuthStatus() {
+      const savedUser = localStorage.getItem('kds_logged_user');
+      if (savedUser) {
+        currentLoggedInUser = JSON.parse(savedUser);
+        updateAuthNavUI();
+      }
+    }
+
+    function updateAuthNavUI() {
+      const lbl = document.getElementById('authBtnLabel');
+      if (currentLoggedInUser) {
+        lbl.innerText = `${currentLoggedInUser.name} (Dashboard)`;
+        const badge = document.getElementById('dashboardUserBadge');
+        if (badge) badge.innerText = currentLoggedInUser.name;
+      } else {
+        lbl.innerText = 'Login / Sign Up';
+      }
+    }
+
+    function handleAuthButtonClick() {
+      if (currentLoggedInUser) {
+        openDashboardModal();
+      } else {
+        openAuthModal('login');
+      }
+    }
+
+    function openAuthModal(mode = 'login') {
+      switchAuthMode(mode);
+      document.getElementById('authModal').classList.remove('hidden');
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.add('hidden');
+    }
+
+    function switchAuthMode(mode) {
+      currentAuthMode = mode;
+      const nameField = document.getElementById('authNameField');
+      const btnLogin = document.getElementById('authTabLogin');
+      const btnSignup = document.getElementById('authTabSignup');
+      const submitBtn = document.getElementById('authSubmitBtn');
+      const title = document.getElementById('authModalTitle');
+
+      if (mode === 'signup') {
+        nameField.classList.remove('hidden');
+        btnLogin.className = 'flex-1 py-2 rounded-xl text-slate-700 hover:text-brand-navy';
+        btnSignup.className = 'flex-1 py-2 rounded-xl bg-brand-navy text-white shadow-xs';
+        submitBtn.innerText = 'Account Banayein (Sign Up)';
+        title.innerText = 'Naya Account Banayein';
+      } else {
+        nameField.classList.add('hidden');
+        btnLogin.className = 'flex-1 py-2 rounded-xl bg-brand-navy text-white shadow-xs';
+        btnSignup.className = 'flex-1 py-2 rounded-xl text-slate-700 hover:text-brand-navy';
+        submitBtn.innerText = 'Login Karein';
+        title.innerText = 'Login to Account';
+      }
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const identity = document.getElementById('authIdentity').value.trim();
+      const password = document.getElementById('authPassword').value.trim();
+      const users = JSON.parse(localStorage.getItem('kds_registered_users') || '[]');
+
+      if (currentAuthMode === 'signup') {
+        const name = document.getElementById('authName').value.trim();
+        if (!name) {
+          showToast('Kripya apna poora naam bharein!');
+          return;
+        }
+        const exists = users.find(u => u.identity === identity);
+        if (exists) {
+          showToast('Ye Mobile/Email pehle se registered hai! Login karein.');
+          return;
+        }
+
+        const newUser = { id: 'USR-' + Date.now(), name, identity, password };
+        users.push(newUser);
+        localStorage.setItem('kds_registered_users', JSON.stringify(users));
+        
+        currentLoggedInUser = newUser;
+        localStorage.setItem('kds_logged_user', JSON.stringify(newUser));
+        showToast('Account successfully ban gaya hai!');
+        closeAuthModal();
+        updateAuthNavUI();
+      } else {
+        const user = users.find(u => u.identity === identity && u.password === password);
+        if (!user) {
+          showToast('Galat ID ya Password! Kripya check karein.');
+          return;
+        }
+
+        currentLoggedInUser = user;
+        localStorage.setItem('kds_logged_user', JSON.stringify(user));
+        showToast(`Swagat hai, ${user.name}!`);
+        closeAuthModal();
+        updateAuthNavUI();
+        openDashboardModal();
+      }
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('kds_logged_user');
+      currentLoggedInUser = null;
+      updateAuthNavUI();
+      closeDashboardModal();
+      showToast('Aap logout ho chuke hain.');
+    }
+// Active Motor/Health Data track karne ke liye variables
+    let activeMotorSaveData = null;
+    let activeHealthSaveData = null;
+
+    // 1. Motor Card Save Trigger
+    function triggerQuickMotorSave(company, premium, idv) {
+      const vType = document.getElementById('motorVehicleType').value.toUpperCase();
+      const coverType = document.getElementById('motorCoverType').value.toUpperCase();
+
+      activeQuotationData = {
+        scheme: { name: company + ' (' + vType + ' - ' + coverType + ')' },
+        term: Number(document.getElementById('motorTenure').value) || 1,
+        ppt: Number(document.getElementById('motorTenure').value) || 1,
+        annualBudget: premium
+      };
+      activeMotorSaveData = activeQuotationData;
+      triggerSaveQuotationFlow();
+    }
+
+    function triggerCurrentMotorModalSave() {
+      if (!activeMotorSaveData) {
+        const vType = document.getElementById('motorVehicleType').value.toUpperCase();
+        activeQuotationData = {
+          scheme: { name: 'Motor Insurance (' + vType + ')' },
+          term: 1,
+          ppt: 1,
+          annualBudget: 0
+        };
+      } else {
+        activeQuotationData = activeMotorSaveData;
+      }
+      triggerSaveQuotationFlow();
+    }
+
+    // 2. Health Card Save Trigger
+    function triggerQuickHealthSave(company, plan, premium, sumInsured) {
+      activeQuotationData = {
+        scheme: { name: company + ' - ' + plan + ' (Cover: ₹' + (sumInsured/100000) + 'L)' },
+        term: Number(document.getElementById('healthTenure').value) || 1,
+        ppt: Number(document.getElementById('healthTenure').value) || 1,
+        annualBudget: premium
+      };
+      activeHealthSaveData = activeQuotationData;
+      triggerSaveQuotationFlow();
+    }
+
+    function triggerCurrentHealthModalSave() {
+      if (!activeHealthSaveData) {
+        activeQuotationData = {
+          scheme: { name: 'Health Insurance Plan' },
+          term: 1,
+          ppt: 1,
+          annualBudget: 0
+        };
+      } else {
+        activeQuotationData = activeHealthSaveData;
+      }
+      triggerSaveQuotationFlow();
+    }
+    function triggerQuickCardSave(schemeId) {
+      const scheme = officialLifeSchemes.find(s => s.id === schemeId);
+      if (!scheme) return;
+      const age = Number(document.getElementById('calcAgeInput').value) || 28;
+      const budget = getAnnualBudget();
+      const term = Number(document.getElementById('calcTermInput').value) || 25;
+      const ppt = Number(document.getElementById('calcPptInput').value) || 20;
+
+      activeQuotationData = calculateFullPlanDetails(scheme, age, budget, term, ppt);
+      triggerSaveQuotationFlow();
+    }
+
+    function triggerSaveQuotationFlow() {
+      if (!currentLoggedInUser) {
+        showToast('Quotation save karne ke liye pehle Login / Create Account karein.');
+        openAuthModal('login');
+        return;
+      }
+      if (!activeQuotationData) {
+        showToast('Koi quotation select nahi hai!');
+        return;
+      }
+
+      document.getElementById('saveAutoPlanName').innerText = activeQuotationData.scheme.name;
+      document.getElementById('saveAutoTermPpt').innerText = `${activeQuotationData.term} Yrs (Pay: ${activeQuotationData.ppt} Yrs)`;
+      document.getElementById('saveAutoPremium').innerText = `₹ ${activeQuotationData.annualBudget.toLocaleString('en-IN')}/Yr`;
+
+      const custName = document.getElementById('custName').value;
+      const custPhone = document.getElementById('custPhone').value;
+      if (custName && custName !== 'Your Name') document.getElementById('saveHolderName').value = custName;
+      if (custPhone && custPhone !== '8440096343') document.getElementById('saveHolderPhone').value = custPhone;
+
+      document.getElementById('saveQuotationModal').classList.remove('hidden');
+    }
+
+    function closeSaveQuotationModal() {
+      document.getElementById('saveQuotationModal').classList.add('hidden');
+    }
+
+function handleSaveQuotationSubmit(e) {
+      if (e) e.preventDefault();
+
+      if (!currentLoggedInUser) {
+        showToast('Kripya pehle Login karein!');
+        openAuthModal('login');
+        return;
+      }
+
+      const holderName = document.getElementById('saveHolderName').value.trim();
+      const holderPhone = document.getElementById('saveHolderPhone').value.trim();
+      const holderAddress = document.getElementById('saveHolderAddress').value.trim();
+
+      if (!holderName || !holderPhone) {
+        showToast('Naam aur Mobile number zaroori hai!');
+        return;
+      }
+
+      const qNum = 'KDS-Q' + Math.floor(100000 + Math.random() * 900000);
+
+      const record = {
+        action: "saveQuotation",
+        date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }),
+        quotationNumber: qNum,
+        userPhone: currentLoggedInUser.identity || '',
+        holder: {
+          name: holderName,
+          phone: holderPhone,
+          address: holderAddress
+        },
+        planData: {
+          schemeName: activeQuotationData.scheme.name,
+          term: activeQuotationData.term,
+          ppt: activeQuotationData.ppt,
+          annualBudget: activeQuotationData.annualBudget
+        }
+      };
+
+      // 1. Google Sheet me data bhejna
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(record)
+      }).catch(err => console.log(err));
+
+      // 2. Offline / Quick display ke liye LocalStorage me bhi rakhna
+      let list = [];
+      try {
+        list = JSON.parse(localStorage.getItem('kds_saved_quotations') || '[]');
+      } catch (err) {
+        list = [];
+      }
+      list.unshift({
+        date: record.date,
+        quotationNumber: qNum,
+        userPhone: record.userPhone,
+        holderName: holderName,
+        holderPhone: holderPhone,
+        address: holderAddress,
+        planName: record.planData.schemeName + " (" + record.planData.term + " Yrs)",
+        premium: record.planData.annualBudget,
+        paymentStatus: "Pending Verification",
+        policyNumber: "Under Process",
+        downloadLink: ""
+      });
+      localStorage.setItem('kds_saved_quotations', JSON.stringify(list));
+
+      closeSaveQuotationModal();
+      if (document.getElementById('quotationModal')) {
+        document.getElementById('quotationModal').classList.add('hidden');
+      }
+
+      showToast(`कोटेशन नंबर ${qNum} सेव हो गया!`);
+      openDashboardModal();
+    }
+
+    function openDashboardModal() {
+      if (!currentLoggedInUser) {
+        openAuthModal('login');
+        return;
+      }
+      renderUserDashboard();
+      document.getElementById('userDashboardModal').classList.remove('hidden');
+    }
+
+    function closeDashboardModal() {
+      document.getElementById('userDashboardModal').classList.add('hidden');
+    }
+
+function renderUserDashboard() {
+      try {
+        const emptyBox = document.getElementById('dashboardEmptyState');
+        const tableWrapper = document.getElementById('dashboardTableWrapper');
+        const tbody = document.getElementById('dashboardTableBody');
+        const userBadge = document.getElementById('dashboardUserBadge');
+
+        if (!currentLoggedInUser) {
+          return;
+        }
+
+        // 1. Pehle LocalStorage se turant load karo taaki site atke nahi
+        let myQuotations = [];
+        try {
+          const localData = JSON.parse(localStorage.getItem('kds_saved_quotations') || '[]');
+          myQuotations = localData.filter(function(q) {
+            return String(q.userPhone || q.userId || '').trim() === String(currentLoggedInUser.identity || currentLoggedInUser.id || '').trim();
+          });
+        } catch (e) {
+          myQuotations = [];
+        }
+
+        if (userBadge) {
+          userBadge.innerText = currentLoggedInUser.name + ' • (' + myQuotations.length + ' Saved)';
+        }
+
+        if (myQuotations.length === 0) {
+          if (emptyBox) emptyBox.classList.remove('hidden');
+          if (tableWrapper) tableWrapper.classList.add('hidden');
+        } else {
+          if (emptyBox) emptyBox.classList.add('hidden');
+          if (tableWrapper) tableWrapper.classList.remove('hidden');
+          if (tbody) renderDashboardRows(myQuotations, tbody);
+        }
+
+        // 2. Background me Google Sheet check karo bina website ko freeze kiye
+        if (typeof GOOGLE_SHEET_API_URL !== 'undefined' && GOOGLE_SHEET_API_URL) {
+          fetch(GOOGLE_SHEET_API_URL)
+            .then(function(res) { return res.json(); })
+            .then(function(sheetData) {
+              if (Array.isArray(sheetData) && sheetData.length > 0) {
+                const sheetFiltered = sheetData.filter(function(q) {
+                  const phone = String(currentLoggedInUser.identity || '').trim();
+                  return String(q.userPhone || '').trim() === phone || String(q.holderPhone || '').trim() === phone;
+                });
+
+                if (sheetFiltered.length > 0) {
+                  if (userBadge) {
+                    userBadge.innerText = currentLoggedInUser.name + ' • (' + sheetFiltered.length + ' Policies)';
+                  }
+                  if (emptyBox) emptyBox.classList.add('hidden');
+                  if (tableWrapper) tableWrapper.classList.remove('hidden');
+                  if (tbody) renderDashboardRows(sheetFiltered, tbody);
+                }
+              }
+            })
+            .catch(function(err) {
+              console.log('Google sheet offline/sync issue:', err);
+            });
+        }
+      } catch (mainErr) {
+        console.error('Dashboard render error:', mainErr);
+      }
+    }
+
+    // Table rows draw karne ka safe helper function
+    function renderDashboardRows(dataList, tbodyElement) {
+      let html = '';
+      for (let i = 0; i < dataList.length; i++) {
+        const item = dataList[i];
+        const isPaid = item.paymentStatus && (item.paymentStatus.toLowerCase().indexOf('success') > -1 || item.paymentStatus.toLowerCase().indexOf('paid') > -1);
+        const badgeColor = isPaid ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-amber-100 text-amber-800 border-amber-300';
+        const isReady = item.policyNumber && item.policyNumber !== 'Under Process' && item.downloadLink && String(item.downloadLink).trim() !== '';
+
+        html += '<tr class="hover:bg-slate-50 border-b border-slate-100 transition">' +
+          '<td class="p-3">' +
+            '<span class="inline-block bg-slate-900 text-amber-400 font-mono font-black text-xs px-2.5 py-1 rounded-md shadow-xs">' + (item.quotationNumber || 'N/A') + '</span>' +
+            '<div class="text-[10px] text-slate-500 font-bold mt-1"><i class="fa-regular fa-calendar-days mr-1"></i>' + (item.date || '') + '</div>' +
+          '</td>' +
+          '<td class="p-3">' +
+            '<div class="font-black text-slate-900 text-xs">' + (item.holderName || (item.holder ? item.holder.name : 'Client')) + '</div>' +
+            '<div class="text-[11px] text-slate-500 font-bold mt-0.5"><i class="fa-solid fa-phone text-emerald-600 mr-1"></i>' + (item.holderPhone || (item.holder ? item.holder.phone : '')) + '</div>' +
+            '<div class="text-[10px] text-slate-400 truncate max-w-[140px]">' + (item.address || (item.holder ? item.holder.address : '')) + '</div>' +
+          '</td>' +
+          '<td class="p-3">' +
+            '<div class="font-black text-brand-navy">' + (item.planName || (item.planData ? item.planData.schemeName : 'Life Insurance Plan')) + '</div>' +
+          '</td>' +
+          '<td class="p-3 font-black text-slate-900 text-xs">' +
+            '₹ ' + Number(item.premium || (item.planData ? item.planData.annualBudget : 0)).toLocaleString('en-IN') + '<span class="text-[10px] font-normal text-slate-500">/Yr</span>' +
+          '</td>' +
+          '<td class="p-3">' +
+            '<span class="px-2.5 py-1 rounded-full text-[10.5px] font-black border ' + badgeColor + '">' +
+              '<i class="fa-solid fa-circle-dot mr-1 text-[9px]"></i>' + (item.paymentStatus || 'Pending Verification') +
+            '</span>' +
+          '</td>' +
+          '<td class="p-3">' +
+            (item.policyNumber && item.policyNumber !== 'Under Process' 
+              ? '<span class="font-mono font-black text-blue-900 bg-blue-50 border border-blue-200 px-2 py-1 rounded">' + item.policyNumber + '</span>'
+              : '<span class="text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded text-[11px] font-bold inline-flex items-center gap-1"><i class="fa-solid fa-clock-rotate-left"></i> Under Process</span>') +
+          '</td>' +
+          '<td class="p-3 text-center">' +
+            (isReady 
+              ? '<a href="' + item.downloadLink + '" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-3.5 py-2 rounded-xl text-xs transition inline-flex items-center gap-1.5 shadow-sm">' +
+                  '<i class="fa-solid fa-file-arrow-down text-sm"></i><span>Download Policy</span>' +
+                '</a>'
+              : '<button disabled class="bg-slate-100 text-slate-400 font-bold px-3 py-1.5 rounded-xl text-xs cursor-not-allowed border border-slate-200 inline-flex items-center gap-1.5" title="Google Sheet se update hone ke baad active hoga">' +
+                  '<i class="fa-solid fa-lock text-[11px]"></i><span>Download Policy</span>' +
+                '</button>') +
+          '</td>' +
+        '</tr>';
+      }
+      tbodyElement.innerHTML = html;
+    }
     window.addEventListener('DOMContentLoaded', () => {
       adjustEngineSlabs();
       autoApplyRiders();
       switchMainTab('lic');
       checkInitialLanguagePrompt();
+      checkAuthStatus();
     });
   </script>
-
 </body>
 </html>
