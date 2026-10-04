@@ -1921,11 +1921,20 @@ container.innerHTML = currentSchemesList.map(scheme => {
             </div>
 
             <div class="mt-5 pt-3 border-t border-slate-100 space-y-2">
-              <button onclick="openQuotationPreviewModal('${scheme.id}')" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 px-4 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-sm">
+              <!-- Print / Preview Button -->
+              <button onclick="openQuotationPreviewModal('${scheme.id}')" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-2.5 px-4 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-sm">
                 <i class="fa-solid fa-print text-brand-gold text-sm"></i>
                 <span>शेड्यूल देखें व प्रिंट निकालें / Preview & Print</span>
               </button>
-              <button onclick="toggleCompareScheme('${scheme.id}')" class="w-full py-1.5 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition ${isCompared ? 'bg-amber-100 text-amber-900' : 'text-slate-600 hover:bg-slate-100'}">
+
+              <!-- Save Quotation Green Button -->
+              <button onclick="triggerQuickCardSave('${scheme.id}')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-4 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-sm">
+                <i class="fa-solid fa-floppy-disk text-sm"></i>
+                <span>कोटेशन सेव करें / Save Quotation</span>
+              </button>
+
+              <!-- Compare Checkbox Button -->
+              <button onclick="toggleCompareScheme('${scheme.id}')" class="w-full py-1 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition ${isCompared ? 'bg-amber-100 text-amber-900' : 'text-slate-600 hover:bg-slate-100'}">
                 <i class="fa-solid ${isCompared ? 'fa-square-check text-brand-deepGold' : 'fa-square'} text-sm"></i>
                 <span>${isCompared ? 'तुलना में शामिल / In Comparison' : '+ तुलना में जोड़ें / Compare'}</span>
               </button>
