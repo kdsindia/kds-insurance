@@ -1,0 +1,19 @@
+{
+  "background_color": "#ffffff",
+  "description": "Complete Insurance Solutions - Life, Health, Motor",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "KDS Insurance Services",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "KDS Insurance",
+  "start_url": "https://kdsinsurance.in/",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "https://kdsinsurance.in/favicon.ico?v=2",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
