@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "in.kdsinsurance.twa",
+        "sha256_cert_fingerprints": ["6F:D1:28:DC:C6:19:17:38:F2:A5:91:4C:16:46:57:BB:4A:93:F0:70:19:16:62:78:7F:FB:8B:20:F7:B9:A5:45"]
+      }
+    }]
