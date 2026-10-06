@@ -2726,6 +2726,7 @@ function switchAuthMode(mode) {
 
       let localUsers = JSON.parse(localStorage.getItem('kds_registered_users') || '[]');
 
+      // 1. SIGNUP PROCESS
       if (currentAuthMode === 'signup') {
         const name = document.getElementById('authName').value.trim();
         if (!name) {
@@ -2745,68 +2746,86 @@ function switchAuthMode(mode) {
           createdDate: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
         };
 
-        // 1. Google Sheet ke 'Users' tab me data bhejna
-        if (typeof GOOGLE_SHEET_API_URL !== 'undefined' && GOOGLE_SHEET_API_URL) {
-          fetch(GOOGLE_SHEET_API_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newUser)
-          }).catch(err => console.log(err));
-        }
+        fetch(GOOGLE_SHEET_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(newUser)
+        }).catch(err => console.log(err));
 
-        // 2. Local storage me save
         localUsers.push({ name: name, identity: identity, password: password, id: 'USR-' + Date.now() });
         localStorage.setItem('kds_registered_users', JSON.stringify(localUsers));
 
         currentLoggedInUser = { name: name, identity: identity, id: 'USR-' + Date.now() };
         localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
 
-        showToast('Account successfully ban gaya hai aur Sheet me save ho gaya!');
-        closeAuthModal();
-        updateAuthNavUI();
-      } else {
-        // LOGIN: Pehle Localstorage check karega
-        let matchedUser = localUsers.find(u => String(u.identity).trim() === identity && String(u.password).trim() === password);
-
-        // Agar local me nahi mila to Google Sheet ke Users tab se check karega
-        if (!matchedUser && typeof GOOGLE_SHEET_API_URL !== 'undefined' && GOOGLE_SHEET_API_URL) {
-          try {
-            const res = await fetch(GOOGLE_SHEET_API_URL + "?type=getUsers");
-            const sheetUsers = await res.json();
-            if (Array.isArray(sheetUsers)) {
-              matchedUser = sheetUsers.find(u => String(u.mobile).trim() === identity && String(u.password).trim() === password);
-              if (matchedUser) {
-                localUsers.push({ name: matchedUser.name, identity: matchedUser.mobile, password: matchedUser.password, id: 'USR-' + Date.now() });
-                localStorage.setItem('kds_registered_users', JSON.stringify(localUsers));
-              }
-            }
-          } catch (err) {
-            console.log('Error verifying user from sheet:', err);
-          }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = originalText;
         }
 
-        if (!matchedUser) {
-          showToast('Galat Mobile ya Password! Check karein ya Forgot Password dabayein.');
+        showToast('Account successfully ban gaya!');
+        closeAuthModal();
+        updateAuthNavUI();
+
+      } else {
+        // 2. FAST LOGIN (2-3 SECONDS) + AUTO FETCH QUOTATIONS
+        const cleanLoginMob = String(identity).replace(/[^0-9]/g, '').slice(-10);
+
+        fetch(GOOGLE_SHEET_API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            action: "loginUser",
+            mobile: cleanLoginMob,
+            password: password
+          })
+        })
+        .then(r => r.json())
+        .then(result => {
           if (submitBtn) {
             submitBtn.disabled = false;
             submitBtn.innerText = originalText;
           }
-          return;
-        }
 
-        currentLoggedInUser = { name: matchedUser.name, identity: matchedUser.mobile || matchedUser.identity, id: 'USR-' + Date.now() };
-        localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+          if (result && result.status === "success") {
+            currentLoggedInUser = {
+              name: result.user.name,
+              identity: cleanLoginMob,
+              id: 'USR-' + Date.now()
+            };
+            localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
 
-        showToast(`Swagat hai, ${matchedUser.name}!`);
-        closeAuthModal();
-        updateAuthNavUI();
-        openDashboardModal();
-      }
+            if (result.quotations && Array.isArray(result.quotations)) {
+              window.serverFetchedQuotations = result.quotations;
+              localStorage.setItem('kds_saved_quotations', JSON.stringify(result.quotations));
+            }
 
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerText = originalText;
+            showToast(`Swagat hai, ${result.user.name}!`);
+            closeAuthModal();
+            updateAuthNavUI();
+            openDashboardModal();
+          } else {
+            showToast(result.message || 'Galat Mobile ya Password! Check karein ya Forgot Password dabayein.');
+          }
+        })
+        .catch(err => {
+          let matchedUser = localUsers.find(u => String(u.identity).slice(-10) === cleanLoginMob && String(u.password).trim() === password);
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = originalText;
+          }
+
+          if (matchedUser) {
+            currentLoggedInUser = { name: matchedUser.name, identity: cleanLoginMob, id: 'USR-' + Date.now() };
+            localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+            showToast(`Swagat hai, ${matchedUser.name}!`);
+            closeAuthModal();
+            updateAuthNavUI();
+            openDashboardModal();
+          } else {
+            showToast('Server connect karne me samasya aayi. Kripya punah prayas karein.');
+          }
+        });
       }
     }
 
@@ -2826,8 +2845,7 @@ function switchAuthMode(mode) {
       if (typeof GOOGLE_SHEET_API_URL !== 'undefined' && GOOGLE_SHEET_API_URL) {
         fetch(GOOGLE_SHEET_API_URL, {
           method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(reqPayload)
         }).catch(err => console.log(err));
       }
@@ -2838,219 +2856,38 @@ function switchAuthMode(mode) {
 
     function handleLogout() {
       localStorage.removeItem('kds_logged_user');
+      window.serverFetchedQuotations = null;
       currentLoggedInUser = null;
       updateAuthNavUI();
       closeDashboardModal();
       showToast('Aap logout ho chuke hain.');
     }
-// Active Motor/Health Data track karne ke liye variables
-    let activeMotorSaveData = null;
-    let activeHealthSaveData = null;
 
-    // 1. Motor Card Save Trigger
-    function triggerQuickMotorSave(company, premium, idv) {
-      const vType = document.getElementById('motorVehicleType').value.toUpperCase();
-      const coverType = document.getElementById('motorCoverType').value.toUpperCase();
-
-      activeQuotationData = {
-        scheme: { name: company + ' (' + vType + ' - ' + coverType + ')' },
-        term: Number(document.getElementById('motorTenure').value) || 1,
-        ppt: Number(document.getElementById('motorTenure').value) || 1,
-        annualBudget: premium
-      };
-      activeMotorSaveData = activeQuotationData;
-      triggerSaveQuotationFlow();
-    }
-
-    function triggerCurrentMotorModalSave() {
-      if (!activeMotorSaveData) {
-        const vType = document.getElementById('motorVehicleType').value.toUpperCase();
-        activeQuotationData = {
-          scheme: { name: 'Motor Insurance (' + vType + ')' },
-          term: 1,
-          ppt: 1,
-          annualBudget: 0
-        };
-      } else {
-        activeQuotationData = activeMotorSaveData;
-      }
-      triggerSaveQuotationFlow();
-    }
-
-    // 2. Health Card Save Trigger
-    function triggerQuickHealthSave(company, plan, premium, sumInsured) {
-      activeQuotationData = {
-        scheme: { name: company + ' - ' + plan + ' (Cover: ₹' + (sumInsured/100000) + 'L)' },
-        term: Number(document.getElementById('healthTenure').value) || 1,
-        ppt: Number(document.getElementById('healthTenure').value) || 1,
-        annualBudget: premium
-      };
-      activeHealthSaveData = activeQuotationData;
-      triggerSaveQuotationFlow();
-    }
-
-    function triggerCurrentHealthModalSave() {
-      if (!activeHealthSaveData) {
-        activeQuotationData = {
-          scheme: { name: 'Health Insurance Plan' },
-          term: 1,
-          ppt: 1,
-          annualBudget: 0
-        };
-      } else {
-        activeQuotationData = activeHealthSaveData;
-      }
-      triggerSaveQuotationFlow();
-    }
-    function triggerQuickCardSave(schemeId) {
-      const scheme = officialLifeSchemes.find(s => s.id === schemeId);
-      if (!scheme) return;
-      const age = Number(document.getElementById('calcAgeInput').value) || 28;
-      const budget = getAnnualBudget();
-      const term = Number(document.getElementById('calcTermInput').value) || 25;
-      const ppt = Number(document.getElementById('calcPptInput').value) || 20;
-
-      activeQuotationData = calculateFullPlanDetails(scheme, age, budget, term, ppt);
-      triggerSaveQuotationFlow();
-    }
-
-    function triggerSaveQuotationFlow() {
-      if (!currentLoggedInUser) {
-        showToast('Quotation save karne ke liye pehle Login / Create Account karein.');
-        openAuthModal('login');
-        return;
-      }
-      if (!activeQuotationData) {
-        showToast('Koi quotation select nahi hai!');
-        return;
-      }
-
-      document.getElementById('saveAutoPlanName').innerText = activeQuotationData.scheme.name;
-      document.getElementById('saveAutoTermPpt').innerText = `${activeQuotationData.term} Yrs (Pay: ${activeQuotationData.ppt} Yrs)`;
-      document.getElementById('saveAutoPremium').innerText = `₹ ${activeQuotationData.annualBudget.toLocaleString('en-IN')}/Yr`;
-
-      const custName = document.getElementById('custName').value;
-      const custPhone = document.getElementById('custPhone').value;
-      if (custName && custName !== 'Your Name') document.getElementById('saveHolderName').value = custName;
-      if (custPhone && custPhone !== '8440096343') document.getElementById('saveHolderPhone').value = custPhone;
-
-      document.getElementById('saveQuotationModal').classList.remove('hidden');
-    }
-
-    function closeSaveQuotationModal() {
-      document.getElementById('saveQuotationModal').classList.add('hidden');
-    }
-
-function handleSaveQuotationSubmit(e) {
-      if (e) e.preventDefault();
-
-      if (!currentLoggedInUser) {
-        showToast('Kripya pehle Login karein!');
-        openAuthModal('login');
-        return;
-      }
-
-      const holderName = document.getElementById('saveHolderName').value.trim();
-      const holderPhone = document.getElementById('saveHolderPhone').value.trim();
-      const holderAddress = document.getElementById('saveHolderAddress').value.trim();
-
-      if (!holderName || !holderPhone) {
-        showToast('Naam aur Mobile number zaroori hai!');
-        return;
-      }
-
-      const qNum = 'KDS-Q' + Math.floor(100000 + Math.random() * 900000);
-
-      const record = {
-        action: "saveQuotation",
-        date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }),
-        quotationNumber: qNum,
-        userPhone: currentLoggedInUser.identity || '',
-        holder: {
-          name: holderName,
-          phone: holderPhone,
-          address: holderAddress
-        },
-        planData: {
-          schemeName: activeQuotationData.scheme.name,
-          term: activeQuotationData.term,
-          ppt: activeQuotationData.ppt,
-          annualBudget: activeQuotationData.annualBudget
-        }
-      };
-
-      // 1. Google Sheet me data bhejna
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(record)
-      }).catch(err => console.log(err));
-
-      // 2. Offline / Quick display ke liye LocalStorage me bhi rakhna
-      let list = [];
-      try {
-        list = JSON.parse(localStorage.getItem('kds_saved_quotations') || '[]');
-      } catch (err) {
-        list = [];
-      }
-      list.unshift({
-        date: record.date,
-        quotationNumber: qNum,
-        userPhone: record.userPhone,
-        holderName: holderName,
-        holderPhone: holderPhone,
-        address: holderAddress,
-        planName: record.planData.schemeName + " (" + record.planData.term + " Yrs)",
-        premium: record.planData.annualBudget,
-        paymentStatus: "Pending Verification",
-        policyNumber: "Under Process",
-        downloadLink: ""
-      });
-      localStorage.setItem('kds_saved_quotations', JSON.stringify(list));
-
-      closeSaveQuotationModal();
-      if (document.getElementById('quotationModal')) {
-        document.getElementById('quotationModal').classList.add('hidden');
-      }
-
-      showToast(`कोटेशन नंबर ${qNum} सेव हो गया!`);
-      openDashboardModal();
-    }
-
-    function openDashboardModal() {
-      if (!currentLoggedInUser) {
-        openAuthModal('login');
-        return;
-      }
-      renderUserDashboard();
-      document.getElementById('userDashboardModal').classList.remove('hidden');
-    }
-
-    function closeDashboardModal() {
-      document.getElementById('userDashboardModal').classList.add('hidden');
-    }
-
-function renderUserDashboard() {
+    // INSTANT DASHBOARD RENDERER
+    function renderUserDashboard() {
       try {
         const emptyBox = document.getElementById('dashboardEmptyState');
         const tableWrapper = document.getElementById('dashboardTableWrapper');
         const tbody = document.getElementById('dashboardTableBody');
         const userBadge = document.getElementById('dashboardUserBadge');
 
-        if (!currentLoggedInUser) {
-          return;
-        }
+        if (!currentLoggedInUser) return;
 
-        // 1. Pehle LocalStorage se turant load karo taaki site atke nahi
+        const currentMob10 = String(currentLoggedInUser.identity || '').replace(/[^0-9]/g, '').slice(-10);
+
         let myQuotations = [];
-        try {
-          const localData = JSON.parse(localStorage.getItem('kds_saved_quotations') || '[]');
-          myQuotations = localData.filter(function(q) {
-            return String(q.userPhone || q.userId || '').trim() === String(currentLoggedInUser.identity || currentLoggedInUser.id || '').trim();
-          });
-        } catch (e) {
-          myQuotations = [];
+        if (window.serverFetchedQuotations && Array.isArray(window.serverFetchedQuotations)) {
+          myQuotations = window.serverFetchedQuotations;
+        } else {
+          try {
+            const localData = JSON.parse(localStorage.getItem('kds_saved_quotations') || '[]');
+            myQuotations = localData.filter(function(q) {
+              const qPhone = String(q.userPhone || q.holderPhone || q.userId || '').replace(/[^0-9]/g, '').slice(-10);
+              return qPhone === currentMob10;
+            });
+          } catch (e) {
+            myQuotations = [];
+          }
         }
 
         if (userBadge) {
@@ -3066,38 +2903,12 @@ function renderUserDashboard() {
           if (tbody) renderDashboardRows(myQuotations, tbody);
         }
 
-        // 2. Background me Google Sheet check karo bina website ko freeze kiye
-        if (typeof GOOGLE_SHEET_API_URL !== 'undefined' && GOOGLE_SHEET_API_URL) {
-          fetch(GOOGLE_SHEET_API_URL)
-            .then(function(res) { return res.json(); })
-            .then(function(sheetData) {
-              if (Array.isArray(sheetData) && sheetData.length > 0) {
-                const sheetFiltered = sheetData.filter(function(q) {
-                  const phone = String(currentLoggedInUser.identity || '').trim();
-                  return String(q.userPhone || '').trim() === phone || String(q.holderPhone || '').trim() === phone;
-                });
-
-                if (sheetFiltered.length > 0) {
-                  if (userBadge) {
-                    userBadge.innerText = currentLoggedInUser.name + ' • (' + sheetFiltered.length + ' Policies)';
-                  }
-                  if (emptyBox) emptyBox.classList.add('hidden');
-                  if (tableWrapper) tableWrapper.classList.remove('hidden');
-                  if (tbody) renderDashboardRows(sheetFiltered, tbody);
-                }
-              }
-            })
-            .catch(function(err) {
-              console.log('Google sheet offline/sync issue:', err);
-            });
-        }
       } catch (mainErr) {
         console.error('Dashboard render error:', mainErr);
       }
     }
 
-    // Table rows draw karne ka safe helper function
-    function renderDashboardRows(dataList, tbodyElement) {
+ function renderDashboardRows(dataList, tbodyElement) {
       let html = '';
       for (let i = 0; i < dataList.length; i++) {
         const item = dataList[i];
