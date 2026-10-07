@@ -2685,7 +2685,7 @@
     }
 
     // Quotation save submission handler
-    function handleSaveQuotationSubmit(e) {
+function handleSaveQuotationSubmit(e) {
       e.preventDefault();
 
       if (!currentLoggedInUser) {
@@ -2715,34 +2715,38 @@
         premium: activeQuotationData ? activeQuotationData.annualBudget : 0,
         term: activeQuotationData ? activeQuotationData.term : 0,
         ppt: activeQuotationData ? activeQuotationData.ppt : 0,
-        sumAssured: activeQuotationData ? activeQuotationData.sumAssured : 0,
-        date: new Date().toLocaleDateString('en-IN')
+        sumAssured: activeQuotationData ? activeQuotationData.sumAssured : 0
       };
 
+      // no-cors mode se request bina freeze huye Google Sheet me turant save hoti hai
       fetch(GOOGLE_SHEET_API_URL, {
         method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(quotationPayload)
       })
-      .then(r => r.json())
-      .then(res => {
+      .then(() => {
         if (btn) {
           btn.disabled = false;
           btn.innerText = 'Confirm & Save Quotation';
         }
         closeSaveQuotationModal();
         showToast('Quotation kamyabi se save ho gaya!');
-        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+        
+        // Sheet se updated dashboard list reload karein
+        setTimeout(() => {
+          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+        }, 1200);
       })
       .catch(err => {
         if (btn) {
           btn.disabled = false;
           btn.innerText = 'Confirm & Save Quotation';
         }
-        showToast('Save karne me samasya aayi. Dobara koshish karein.');
+        showToast('Error: Kripya dobara koshish karein.');
       });
     }
-
+    
     function triggerSaveQuotationFlow() {
       if (!currentLoggedInUser) {
         showToast('Kripya pehle Google se login karein!');
