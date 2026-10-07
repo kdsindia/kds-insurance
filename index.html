@@ -2644,51 +2644,7 @@
       }
     }
 
-    function openAuthModal() {
-      document.getElementById('authModal').classList.remove('hidden');
-    }
-
-    function closeAuthModal() {
-      document.getElementById('authModal').classList.add('hidden');
-    }
-
-// GOOGLE CLIENT ID (Aapke project ka official client ID)
-    const GOOGLE_CLIENT_ID = "418446717578-9241s3h4pc44agohfkc8t2ift9jtfpau.apps.googleusercontent.com";
-
-    function parseJwt(token) {
-      try {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        return JSON.parse(jsonPayload);
-      } catch (e) {
-        return null;
-      }
-    }
-
-    function handleGoogleCredentialResponse(response) {
-      const payload = parseJwt(response.credential);
-      if (!payload) {
-        showToast("Login error: Token decode nahi hua.");
-        return;
-      }
-
-      currentLoggedInUser = {
-        name: payload.name || 'Client',
-        email: payload.email,
-        photo: payload.picture || '',
-        id: payload.sub
-      };
-
-      localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-      showToast('Swagat hai, ' + currentLoggedInUser.name + '!');
-      closeAuthModal();
-      updateAuthNavUI();
-      fetchUserQuotationsFromSheet(payload.email);
-    }
-    
+  
     function openAuthModal() {
       document.getElementById('authModal').classList.remove('hidden');
 
