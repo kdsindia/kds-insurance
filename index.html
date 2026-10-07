@@ -319,7 +319,6 @@
   </div>
 
   <!-- Main Navbar -->
-<!-- Main Navbar -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
@@ -357,7 +356,7 @@
         <!-- Right Side Properly Aligned Action Buttons -->
         <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           
-          <!-- Check Premium Due (Highlighted in Middle) -->
+          <!-- Check Premium Due -->
           <a href="premium-check.html" class="bg-amber-100 hover:bg-amber-200 text-amber-950 font-black px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm border border-amber-300">
             <i class="fa-solid fa-receipt text-amber-600"></i>
             <span class="inline">Check Premium Due</span>
@@ -414,6 +413,7 @@
 
     </div>
   </header>
+
   <!-- ========================================================================= -->
   <!-- MAIN SHARED LIFE INSURANCE CALCULATOR SECTION -->
   <!-- ========================================================================= -->
@@ -1086,7 +1086,7 @@
           <span>Subject to policy terms & IRDAI standard guidelines[cite: 1]</span>
         </div>
 
-        <div class="flex items-center gap-3 w-full sm:w-auto">
+        <div class="flex items-center gap-3 w-full sm:auto">
           <button onclick="window.print()" class="flex-1 sm:flex-none bg-blue-900 hover:bg-blue-800 text-white font-black px-6 py-3 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow">
             <i class="fa-solid fa-print text-brand-gold text-base"></i>
             <span>प्रिंट या पीडीएफ डाउनलोड / Print / Save PDF</span>
@@ -1096,7 +1096,8 @@
             <i class="fa-brands fa-whatsapp text-base"></i>
             <span class="hidden sm:inline">WhatsApp</span>
           </button>
-<!-- Save Quotation Button -->
+
+          <!-- Save Quotation Button -->
           <button onclick="triggerSaveQuotationFlow()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-3 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow">
             <i class="fa-solid fa-floppy-disk text-base"></i>
             <span>Quotation Save Karein</span>
@@ -1126,7 +1127,7 @@
         <div id="generalPrintableTarget" class="bg-white p-6 rounded-2xl border border-slate-200 max-w-3xl mx-auto"></div>
       </div>
       <div class="bg-white p-4 border-t border-slate-200 flex justify-end gap-3 no-print">
-        <button onclick="triggerCurrentMotorModalSave()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow">
+        <button onclick="triggerSaveQuotationFlow()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow">
           <i class="fa-solid fa-floppy-disk"></i> Save Quotation
         </button>
         <button onclick="window.print()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-black px-6 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow">
@@ -1156,7 +1157,7 @@
         <div id="healthPrintableTarget" class="bg-white p-6 rounded-2xl border border-slate-200 max-w-3xl mx-auto"></div>
       </div>
       <div class="bg-white p-4 border-t border-slate-200 flex justify-end gap-3 no-print">
-        <button onclick="triggerCurrentHealthModalSave()" class="bg-rose-600 hover:bg-rose-700 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow">
+        <button onclick="triggerSaveQuotationFlow()" class="bg-rose-600 hover:bg-rose-700 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow">
           <i class="fa-solid fa-floppy-disk"></i> Save Quotation
         </button>
         <button onclick="window.print()" class="bg-rose-700 hover:bg-rose-800 text-white font-black px-6 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow">
@@ -1170,72 +1171,36 @@
     <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
     <span id="toastMessage">Success</span>
   </div>
-<!-- 1. LOGIN, SIGNUP & FORGOT PASSWORD MODAL -->
-<div id="authModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-  <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 p-6 sm:p-8">
-    <div class="flex justify-between items-center pb-3 border-b border-slate-100">
-      <div>
-        <h3 id="authModalTitle" class="font-black text-xl text-brand-navy">Login to Account</h3>
-        <p id="authModalSubtitle" class="text-xs text-slate-500">Apne saved quotations aur policy dashboard dekhein</p>
+
+  <!-- 1. GOOGLE ONE-CLICK LOGIN MODAL -->
+  <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full shadow-2xl border border-slate-200 p-6 sm:p-7 text-center space-y-4">
+      <div class="flex justify-end">
+        <button type="button" onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
       </div>
-      <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600">
-        <i class="fa-solid fa-xmark text-lg"></i>
+      
+      <div class="w-14 h-14 rounded-2xl bg-brand-navy text-brand-gold mx-auto flex items-center justify-center text-2xl font-black shadow-md">
+        <i class="fa-brands fa-google text-2xl"></i>
+      </div>
+      
+      <div>
+        <h3 class="font-black text-xl text-brand-navy">KDS Insurance Portal</h3>
+        <p class="text-xs text-slate-500 mt-1">Quotations save karne aur dashboard dekhne ke liye Google se login karein</p>
+      </div>
+
+      <!-- Google Login Button -->
+      <button type="button" onclick="loginWithGoogle()" class="w-full bg-white hover:bg-slate-50 text-slate-700 font-bold py-3.5 px-4 rounded-2xl border-2 border-slate-200 shadow-sm transition flex items-center justify-center gap-3">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5" alt="Google">
+        <span class="text-sm">Sign in with Google</span>
+      </button>
+
+      <button type="button" onclick="closeAuthModal()" class="text-xs text-slate-400 hover:text-slate-600 block mx-auto pt-1">
+        Band karein / Close
       </button>
     </div>
-
-    <!-- Mode Switcher Buttons -->
-    <div id="authTabSwitcher" class="flex bg-slate-100 p-1 rounded-2xl border border-slate-200 mt-4 text-xs font-bold">
-      <button id="authTabLogin" type="button" onclick="switchAuthMode('login')" class="flex-1 py-2 rounded-xl bg-brand-navy text-white shadow-xs">Login</button>
-      <button id="authTabSignup" type="button" onclick="switchAuthMode('signup')" class="flex-1 py-2 rounded-xl text-slate-700 hover:text-brand-navy">Create Account</button>
-    </div>
-
-    <!-- Main Login / Signup Form -->
-    <form id="authForm" onsubmit="handleAuthSubmit(event)" class="mt-4 space-y-3.5 text-xs">
-      <div id="authNameField" class="hidden">
-        <label class="block font-bold text-slate-700 mb-1">Poora Naam / Full Name *</label>
-        <input type="text" id="authName" placeholder="Apna naam darj karein" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
-      </div>
-
-      <div>
-        <label class="block font-bold text-slate-700 mb-1">Mobile Number *</label>
-        <input type="tel" id="authIdentity" maxlength="10" required placeholder="10-digit Mobile Number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
-      </div>
-
-      <div id="authPasswordFieldBlock">
-        <div class="flex justify-between items-center mb-1">
-          <label class="block font-bold text-slate-700">Password *</label>
-          <button type="button" onclick="switchAuthMode('forgot')" class="text-[11px] font-bold text-brand-lightBlue hover:underline">Forgot Password?</button>
-        </div>
-        <input type="password" id="authPassword" placeholder="Apna password darj karein" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
-      </div>
-
-      <button type="submit" id="authSubmitBtn" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 rounded-xl text-sm transition shadow mt-2">
-        Login Karein
-      </button>
-    </form>
-
-    <!-- Forgot Password View (Hidden by default) -->
-    <div id="forgotPasswordBlock" class="hidden mt-4 space-y-3.5 text-xs">
-      <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-amber-900 text-[11px] leading-relaxed">
-        <i class="fa-solid fa-circle-info mr-1 text-amber-600"></i> Apna registered mobile number daalein. Password reset request seedha <strong>Manoher Singh ji (8440096343)</strong> ke paas chali jayegi aur aapko SMS/WhatsApp par password mil jayega[cite: 1].
-      </div>
-
-      <div>
-        <label class="block font-bold text-slate-700 mb-1">Registered Mobile Number *</label>
-        <input type="tel" id="forgotMobileInput" maxlength="10" placeholder="10-digit Mobile Number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
-      </div>
-
-      <button type="button" onclick="submitForgotPasswordRequest()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black py-3 rounded-xl text-sm transition shadow">
-        Password Request Bhejein
-      </button>
-
-      <button type="button" onclick="switchAuthMode('login')" class="w-full py-1 text-center font-bold text-slate-500 hover:text-brand-navy">
-        &larr; Wapas Login Par Jayein
-      </button>
-    </div>
-
   </div>
-</div>
 
   <!-- 2. POLICYHOLDER DETAILS POPUP (QUOTATION SAVE KRTE WAQT) -->
   <div id="saveQuotationModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
@@ -1253,43 +1218,43 @@
         </button>
       </div>
 
-<!-- Active Plan Auto-captured Info Preview -->
-    <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 mt-3 text-xs space-y-1">
-      <div class="flex justify-between font-bold text-slate-700">
-        <span>Selected Plan:</span>
-        <span id="saveAutoPlanName" class="text-brand-navy font-black">-</span>
-      </div>
-      <div class="flex justify-between text-[11px] text-slate-500 font-bold">
-        <span>Term / PPT:</span>
-        <span id="saveAutoTermPpt" class="text-slate-800">-</span>
-      </div>
-      <div class="flex justify-between text-[11px] text-slate-500 font-bold">
-        <span>Saalana Premium:</span>
-        <span id="saveAutoPremium" class="text-emerald-700 font-black">-</span>
-      </div>
-    </div>
-
-    <form id="policyHolderSaveForm" onsubmit="handleSaveQuotationSubmit(event)" class="mt-4 space-y-3.5 text-xs">
-      <div>
-        <label class="block font-bold text-slate-700 mb-1">Policyholder ka Naam *</label>
-        <input type="text" id="saveHolderName" required placeholder="Jiske naam se policy banegi" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+      <!-- Active Plan Auto-captured Info Preview -->
+      <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 mt-3 text-xs space-y-1">
+        <div class="flex justify-between font-bold text-slate-700">
+          <span>Selected Plan:</span>
+          <span id="saveAutoPlanName" class="text-brand-navy font-black">-</span>
+        </div>
+        <div class="flex justify-between text-[11px] text-slate-500 font-bold">
+          <span>Term / PPT:</span>
+          <span id="saveAutoTermPpt" class="text-slate-800">-</span>
+        </div>
+        <div class="flex justify-between text-[11px] text-slate-500 font-bold">
+          <span>Saalana Premium:</span>
+          <span id="saveAutoPremium" class="text-emerald-700 font-black">-</span>
+        </div>
       </div>
 
-      <div>
-        <label class="block font-bold text-slate-700 mb-1">Mobile Number *</label>
-        <input type="tel" id="saveHolderPhone" maxlength="10" required placeholder="10-digit number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
-      </div>
+      <form id="policyHolderSaveForm" onsubmit="handleSaveQuotationSubmit(event)" class="mt-4 space-y-3.5 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Policyholder ka Naam *</label>
+          <input type="text" id="saveHolderName" required placeholder="Jiske naam se policy banegi" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+        </div>
 
-      <div>
-        <label class="block font-bold text-slate-700 mb-1">Pata / Address *</label>
-        <textarea id="saveHolderAddress" rows="2" required placeholder="Shehar / Gaon, Tehsil, Jila" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 font-bold"></textarea>
-      </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Mobile Number *</label>
+          <input type="tel" id="saveHolderPhone" maxlength="10" required placeholder="10-digit number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+        </div>
 
-      <button type="submit" id="btnConfirmSavePolicy" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl text-sm transition shadow mt-3 flex items-center justify-center gap-2">
-        <i class="fa-solid fa-circle-check"></i>
-        <span>Confirm & Save Quotation</span>
-      </button>
-    </form>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Pata / Address *</label>
+          <textarea id="saveHolderAddress" rows="2" required placeholder="Shehar / Gaon, Tehsil, Jila" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 font-bold"></textarea>
+        </div>
+
+        <button type="submit" id="btnConfirmSavePolicy" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl text-sm transition shadow mt-3 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>Confirm & Save Quotation</span>
+        </button>
+      </form>
     </div>
   </div>
 
@@ -1348,12 +1313,13 @@
       </div>
     </div>
   </div>
-<!-- Firebase SDKs -->
+
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 
   <script>
-    // Aapki Project Configuration Keys
+    // Firebase Configuration Keys
     const firebaseConfig = {
       apiKey: "AIzaSyByZCEr6FYkDh3pBOS8wfqi6bQLXCRYDGU",
       authDomain: "kds-insurance.firebaseapp.com",
@@ -1368,6 +1334,7 @@
     }
     const auth = firebase.auth();
   </script>
+
   <!-- JAVASCRIPT LOGIC -->
   <script>
     // GOOGLE SHEET WEB APP URL
@@ -1560,20 +1527,16 @@
       const budget = getAnnualBudget();
       const ppt = Number(document.getElementById('calcPptInput').value) || 20;
 
-      // Base Sum Assured Estimate
       let estimatedBaseSa = Math.max(100000, Math.round((budget * ppt * 1.1) / 25000) * 25000);
 
-      // 1. ADDB Cap: Maximum 1 Crore (1,00,00,000)
       const addbVal = (age >= 18 && age <= 65) ? Math.min(10000000, estimatedBaseSa) : 0;
       document.getElementById('riderAddbCheck').checked = (addbVal > 0);
       document.getElementById('riderAddbValue').value = addbVal;
 
-      // 2. Term Rider (TR) Cap: Maximum 25 Lakh (25,00,000)
       const trVal = (age >= 18 && age <= 50) ? Math.min(2500000, estimatedBaseSa) : 0;
       document.getElementById('riderTrCheck').checked = (trVal > 0);
       document.getElementById('riderTrValue').value = trVal;
 
-      // 3. CIR Cap: Maximum 25 Lakh (25,00,000)
       const cirVal = (age >= 18 && age <= 55) ? Math.min(2500000, Math.max(250000, Math.round(estimatedBaseSa * 0.25))) : 0;
       document.getElementById('riderCirCheck').checked = (cirVal > 0);
       document.getElementById('riderCirValue').value = cirVal;
@@ -1666,7 +1629,6 @@
       return enforced.term === inputTerm && enforced.ppt === inputPpt;
     }
 
-// Har policy ke hisaab se rider limits aur eligibility validate karne ka function
     function getPlanRiderLimits(scheme, baseSumAssured, userAge) {
       const allowTR = !scheme.isPureTerm && userAge >= 18 && userAge <= 50;
       const allowADDB = !scheme.isPureTerm && userAge >= 18 && userAge <= 65;
@@ -1745,7 +1707,6 @@
         }
       }
 
-// Policy rules ke hisaab se limits check karna
       const riderLimits = getPlanRiderLimits(scheme, sumAssured, userAge);
 
       const addbActive = document.getElementById('riderAddbCheck').checked && riderLimits.addb.allowed;
@@ -1900,7 +1861,7 @@
         return;
       }
 
-container.innerHTML = currentSchemesList.map(scheme => {
+      container.innerHTML = currentSchemesList.map(scheme => {
         const calc = calculateFullPlanDetails(scheme, age, annualBudget, term, ppt);
         const isCompared = comparedPlanIds.includes(scheme.id);
         const companyBadge = scheme.company === 'LIC' ? 'bg-blue-100 text-brand-navy' : 
@@ -2354,7 +2315,7 @@ container.innerHTML = currentSchemesList.map(scheme => {
       renderMotorQuotes(totalEstimated, coverType, tenure, idv, totalTp, netOd, zeroDepCost, paCoverCost, gst);
     }
 
-function renderMotorQuotes(baseTotal, coverType, tenure, idv, tp, od, zeroDep, pa, gst) {
+    function renderMotorQuotes(baseTotal, coverType, tenure, idv, tp, od, zeroDep, pa, gst) {
       const container = document.getElementById('motorResultsContainer');
       container.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
 
@@ -2388,6 +2349,7 @@ function renderMotorQuotes(baseTotal, coverType, tenure, idv, tp, od, zeroDep, p
         `;
       }).join('');
     }
+
     function openMotorQuotationModal(company, total, idv, tp, od, zeroDep, pa, gst) {
       const vType = document.getElementById('motorVehicleType').value.toUpperCase();
       const coverType = document.getElementById('motorCoverType').value.toUpperCase();
@@ -2650,12 +2612,9 @@ function renderMotorQuotes(baseTotal, coverType, tenure, idv, tp, od, zeroDep, p
       setTimeout(() => toast.classList.add('hidden'), 4000);
     }
 
-// ... aapka purana script ka code ...
-
     // =========================================================================
-    // STEP 4: AUTHENTICATION & QUOTATION STORAGE ENGINE
+    // STEP 4: GOOGLE AUTHENTICATION & QUOTATION STORAGE ENGINE
     // =========================================================================
-    let currentAuthMode = 'login';
     let currentLoggedInUser = null;
 
     function checkAuthStatus() {
@@ -2681,12 +2640,11 @@ function renderMotorQuotes(baseTotal, coverType, tenure, idv, tp, od, zeroDep, p
       if (currentLoggedInUser) {
         openDashboardModal();
       } else {
-        openAuthModal('login');
+        openAuthModal();
       }
     }
 
-    function openAuthModal(mode = 'login') {
-      switchAuthMode(mode);
+    function openAuthModal() {
       document.getElementById('authModal').classList.remove('hidden');
     }
 
@@ -2694,200 +2652,182 @@ function renderMotorQuotes(baseTotal, coverType, tenure, idv, tp, od, zeroDep, p
       document.getElementById('authModal').classList.add('hidden');
     }
 
-function switchAuthMode(mode) {
-      currentAuthMode = mode;
-      const nameField = document.getElementById('authNameField');
-      const btnLogin = document.getElementById('authTabLogin');
-      const btnSignup = document.getElementById('authTabSignup');
-      const submitBtn = document.getElementById('authSubmitBtn');
-      const title = document.getElementById('authModalTitle');
-      const authForm = document.getElementById('authForm');
-      const forgotBlock = document.getElementById('forgotPasswordBlock');
-      const tabSwitcher = document.getElementById('authTabSwitcher');
-      const passFieldBlock = document.getElementById('authPasswordFieldBlock');
-      const passInput = document.getElementById('authPassword');
-
-      if (mode === 'forgot') {
-        if (authForm) authForm.classList.add('hidden');
-        if (tabSwitcher) tabSwitcher.classList.add('hidden');
-        if (forgotBlock) forgotBlock.classList.remove('hidden');
-        if (title) title.innerText = 'Forgot Password';
-        const identVal = document.getElementById('authIdentity') ? document.getElementById('authIdentity').value : '';
-        if (document.getElementById('forgotMobileInput')) document.getElementById('forgotMobileInput').value = identVal;
+    // 1. ONE-CLICK GOOGLE LOGIN FUNCTION
+    function loginWithGoogle() {
+      if (typeof firebase === 'undefined' || !firebase.auth) {
+        showToast('Firebase connect nahi ho paya. Page refresh karein.');
         return;
       }
 
-      if (authForm) authForm.classList.remove('hidden');
-      if (tabSwitcher) tabSwitcher.classList.remove('hidden');
-      if (forgotBlock) forgotBlock.classList.add('hidden');
-      if (passFieldBlock) passFieldBlock.classList.remove('hidden');
-      if (passInput) passInput.required = true;
-
-      if (mode === 'signup') {
-        if (nameField) nameField.classList.remove('hidden');
-        if (btnLogin) btnLogin.className = 'flex-1 py-2 rounded-xl text-slate-700 hover:text-brand-navy';
-        if (btnSignup) btnSignup.className = 'flex-1 py-2 rounded-xl bg-brand-navy text-white shadow-xs';
-        if (submitBtn) submitBtn.innerText = 'Account Banayein (Sign Up)';
-        if (title) title.innerText = 'Naya Account Banayein';
-      } else {
-        if (nameField) nameField.classList.add('hidden');
-        if (btnLogin) btnLogin.className = 'flex-1 py-2 rounded-xl bg-brand-navy text-white shadow-xs';
-        if (btnSignup) btnSignup.className = 'flex-1 py-2 rounded-xl text-slate-700 hover:text-brand-navy';
-        if (submitBtn) submitBtn.innerText = 'Login Karein';
-        if (title) title.innerText = 'Login to Account';
-      }
-    }
-
-async function handleAuthSubmit(e) {
-      e.preventDefault();
-      const identity = document.getElementById('authIdentity').value.trim();
-      const password = document.getElementById('authPassword').value.trim();
-      const submitBtn = document.getElementById('authSubmitBtn');
-      const originalText = submitBtn ? submitBtn.innerText : 'Submit';
-
-      if (!identity || identity.length < 10 || !password) {
-        showToast('Kripya 10-digit mobile number aur password bharein!');
-        return;
-      }
-
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerText = 'Verify ho raha hai...';
-      }
-
-      // 10-digit mobile number ko secure identity banana
-      const cleanMob = identity.slice(-10);
-      const virtualEmail = `${cleanMob}@kdsinsurance.in`;
-
-      if (currentAuthMode === 'signup') {
-        const fullName = document.getElementById('authName').value.trim();
-        if (!fullName) {
-          showToast('Kripya apna poora naam bharein!');
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.innerText = originalText;
-          }
-          return;
-        }
-
-        try {
-          // 1. Firebase Auth par instant user creation (< 300 ms)
-          const userCred = await auth.createUserWithEmailAndPassword(virtualEmail, password);
-          await userCred.user.updateProfile({ displayName: fullName });
-
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+          const user = result.user;
           currentLoggedInUser = {
-            name: fullName,
-            identity: cleanMob,
-            id: userCred.user.uid
-          };
-          localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-
-          // 2. Google Sheet me Backup Entry (Background sync)
-          fetch(GOOGLE_SHEET_API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({
-              action: "signupUser",
-              name: fullName,
-              mobile: cleanMob,
-              password: password,
-              createdDate: new Date().toLocaleDateString('en-IN')
-            })
-          }).catch(err => console.log('Sheet backup sync error:', err));
-
-          showToast('Account safaltapoorvak ban gaya!');
-          closeAuthModal();
-          updateAuthNavUI();
-
-        } catch (err) {
-          if (err.code === 'auth/email-already-in-use') {
-            showToast('Ye mobile number pehle se registered hai! Kripya Login karein.');
-          } else if (err.code === 'auth/weak-password') {
-            showToast('Password kam se kam 6 aksharo ka rakhein.');
-          } else {
-            showToast('Error: ' + err.message);
-          }
-        } finally {
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.innerText = originalText;
-          }
-        }
-
-      } else {
-        // LOGIN PROCESS - YAHAN MILLISECONDS ME VERIFY HOGA
-        try {
-          const userCred = await auth.signInWithEmailAndPassword(virtualEmail, password);
-          const user = userCred.user;
-          const userName = user.displayName || 'Client';
-
-          currentLoggedInUser = {
-            name: userName,
-            identity: cleanMob,
+            name: user.displayName || 'Client',
+            email: user.email,
+            photo: user.photoURL || '',
             id: user.uid
           };
           localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
 
-          // Background mein Google Sheet se data fetch karein
-          fetch(GOOGLE_SHEET_API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({
-              action: "loginUser",
-              mobile: cleanMob,
-              password: password
-            })
-          })
-          .then(r => r.json())
-          .then(res => {
-            if (res && res.quotations) {
-              window.serverFetchedQuotations = res.quotations;
-              localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
-            }
-          }).catch(e => console.log('Sheet sync:', e));
-
-          showToast(`Swagat hai, ${userName}!`);
+          showToast(`Swagat hai, ${currentLoggedInUser.name}!`);
           closeAuthModal();
           updateAuthNavUI();
-          openDashboardModal();
 
-        } catch (err) {
-          showToast('Galat Mobile number ya Password!');
-        } finally {
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.innerText = originalText;
-          }
-        }
-      }
+          fetchUserQuotationsFromSheet(user.email);
+        })
+        .catch((error) => {
+          console.error("Google Login Error:", error);
+          showToast('Login error: ' + error.message);
+        });
     }
 
-    function submitForgotPasswordRequest() {
-      const mob = document.getElementById('forgotMobileInput').value.trim();
-      if (!mob || mob.length < 10) {
-        showToast('Kripya 10-digit mobile number darj karein!');
+    // 2. GOOGLE SHEET SE USER KE QUOTATIONS NIKALNA
+    function fetchUserQuotationsFromSheet(userEmail) {
+      if (!userEmail || typeof GOOGLE_SHEET_API_URL === 'undefined') return;
+
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          action: "getUserQuotations",
+          email: userEmail
+        })
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res && res.quotations) {
+          window.serverFetchedQuotations = res.quotations;
+          localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
+          renderUserDashboard();
+        }
+      })
+      .catch(err => console.log("Dashboard sync:", err));
+    }
+
+    // 3. QUOTATION SAVE SUBMISSION HANDLER
+    function handleSaveQuotationSubmit(e) {
+      e.preventDefault();
+
+      if (!currentLoggedInUser) {
+        showToast('Quotation save karne ke liye pehle Google se login karein!');
+        openAuthModal();
         return;
       }
 
-      const reqPayload = {
-        action: "forgotPassword",
-        mobile: mob,
-        date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) + " " + new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
-      };
+      const holderName = document.getElementById('saveHolderName').value.trim();
+      const holderPhone = document.getElementById('saveHolderPhone').value.trim();
+      const holderAddress = document.getElementById('saveHolderAddress').value.trim();
+      const btn = document.getElementById('btnConfirmSavePolicy');
 
-      if (typeof GOOGLE_SHEET_API_URL !== 'undefined' && GOOGLE_SHEET_API_URL) {
-        fetch(GOOGLE_SHEET_API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(reqPayload)
-        }).catch(err => console.log(err));
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = 'Save ho raha hai...';
       }
 
-      closeAuthModal();
-      showToast('Password Reset Request Manoher Singh ji ke paas bhej di gayi hai!');
+      const quotationPayload = {
+        action: "saveQuotation",
+        userEmail: currentLoggedInUser.email,
+        userName: currentLoggedInUser.name,
+        holderName: holderName,
+        holderPhone: holderPhone,
+        address: holderAddress,
+        planName: activeQuotationData ? activeQuotationData.scheme.name : "Custom Plan",
+        premium: activeQuotationData ? activeQuotationData.annualBudget : 0,
+        term: activeQuotationData ? activeQuotationData.term : 0,
+        ppt: activeQuotationData ? activeQuotationData.ppt : 0,
+        sumAssured: activeQuotationData ? activeQuotationData.sumAssured : 0,
+        date: new Date().toLocaleDateString('en-IN')
+      };
+
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(quotationPayload)
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = 'Confirm & Save Quotation';
+        }
+        closeSaveQuotationModal();
+        showToast('Quotation kamyabi se save ho gaya!');
+        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+      })
+      .catch(err => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = 'Confirm & Save Quotation';
+        }
+        showToast('Save karne me samasya aayi. Dobara koshish karein.');
+      });
+    }
+
+    function triggerSaveQuotationFlow() {
+      if (!currentLoggedInUser) {
+        showToast('Kripya pehle Google se login karein!');
+        openAuthModal();
+        return;
+      }
+      if (activeQuotationData) {
+        document.getElementById('saveAutoPlanName').innerText = activeQuotationData.scheme.name;
+        document.getElementById('saveAutoTermPpt').innerText = `${activeQuotationData.term} Yrs / Pay ${activeQuotationData.ppt} Yrs`;
+        document.getElementById('saveAutoPremium').innerText = `₹ ${activeQuotationData.annualBudget.toLocaleString('en-IN')}/Yr`;
+      }
+      document.getElementById('saveQuotationModal').classList.remove('hidden');
+    }
+
+    function triggerQuickCardSave(schemeId) {
+      openQuotationPreviewModal(schemeId);
+      triggerSaveQuotationFlow();
+    }
+
+    function triggerQuickMotorSave(name, prem, idv) {
+      activeQuotationData = {
+        scheme: { name: `Motor Insurance: ${name}` },
+        annualBudget: prem,
+        term: 1,
+        ppt: 1,
+        sumAssured: idv
+      };
+      triggerSaveQuotationFlow();
+    }
+
+    function triggerQuickHealthSave(name, plan, prem, si) {
+      activeQuotationData = {
+        scheme: { name: `Health Insurance: ${name} (${plan})` },
+        annualBudget: prem,
+        term: 1,
+        ppt: 1,
+        sumAssured: si
+      };
+      triggerSaveQuotationFlow();
+    }
+
+    function closeSaveQuotationModal() {
+      document.getElementById('saveQuotationModal').classList.add('hidden');
+    }
+
+    function openDashboardModal() {
+      if (!currentLoggedInUser) {
+        openAuthModal();
+        return;
+      }
+      renderUserDashboard();
+      document.getElementById('userDashboardModal').classList.remove('hidden');
+      fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+    }
+
+    function closeDashboardModal() {
+      document.getElementById('userDashboardModal').classList.add('hidden');
     }
 
     function handleLogout() {
+      if (typeof firebase !== 'undefined' && firebase.auth) {
+        firebase.auth().signOut().catch(() => {});
+      }
       localStorage.removeItem('kds_logged_user');
       window.serverFetchedQuotations = null;
       currentLoggedInUser = null;
@@ -2906,8 +2846,6 @@ async function handleAuthSubmit(e) {
 
         if (!currentLoggedInUser) return;
 
-        const currentMob10 = String(currentLoggedInUser.identity || '').replace(/[^0-9]/g, '').slice(-10);
-
         let myQuotations = [];
         if (window.serverFetchedQuotations && Array.isArray(window.serverFetchedQuotations)) {
           myQuotations = window.serverFetchedQuotations;
@@ -2915,8 +2853,7 @@ async function handleAuthSubmit(e) {
           try {
             const localData = JSON.parse(localStorage.getItem('kds_saved_quotations') || '[]');
             myQuotations = localData.filter(function(q) {
-              const qPhone = String(q.userPhone || q.holderPhone || q.userId || '').replace(/[^0-9]/g, '').slice(-10);
-              return qPhone === currentMob10;
+              return q.userEmail === currentLoggedInUser.email;
             });
           } catch (e) {
             myQuotations = [];
@@ -2941,7 +2878,7 @@ async function handleAuthSubmit(e) {
       }
     }
 
- function renderDashboardRows(dataList, tbodyElement) {
+    function renderDashboardRows(dataList, tbodyElement) {
       let html = '';
       for (let i = 0; i < dataList.length; i++) {
         const item = dataList[i];
@@ -2988,6 +2925,7 @@ async function handleAuthSubmit(e) {
       }
       tbodyElement.innerHTML = html;
     }
+
     window.addEventListener('DOMContentLoaded', () => {
       adjustEngineSlabs();
       autoApplyRiders();
