@@ -1175,36 +1175,33 @@
     <span id="toastMessage">Success</span>
   </div>
 
-  <!-- 1. GOOGLE ONE-CLICK LOGIN MODAL -->
-  <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full shadow-2xl border border-slate-200 p-6 sm:p-7 text-center space-y-4">
-      <div class="flex justify-end">
-        <button type="button" onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600">
-          <i class="fa-solid fa-xmark text-lg"></i>
-        </button>
-      </div>
-      
-      <div class="w-14 h-14 rounded-2xl bg-brand-navy text-brand-gold mx-auto flex items-center justify-center text-2xl font-black shadow-md">
-        <i class="fa-brands fa-google text-2xl"></i>
-      </div>
-      
-      <div>
-        <h3 class="font-black text-xl text-brand-navy">KDS Insurance Portal</h3>
-        <p class="text-xs text-slate-500 mt-1">Quotations save karne aur dashboard dekhne ke liye Google se login karein</p>
-      </div>
-
-      <!-- Google Login Button -->
-      <button type="button" onclick="loginWithGoogle()" class="w-full bg-white hover:bg-slate-50 text-slate-700 font-bold py-3.5 px-4 rounded-2xl border-2 border-slate-200 shadow-sm transition flex items-center justify-center gap-3">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5" alt="Google">
-        <span class="text-sm">Sign in with Google</span>
-      </button>
-
-      <button type="button" onclick="closeAuthModal()" class="text-xs text-slate-400 hover:text-slate-600 block mx-auto pt-1">
-        Band karein / Close
+<!-- 1. GOOGLE LOGIN MODAL -->
+<div id="authModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-3xl max-w-sm w-full shadow-2xl border border-slate-200 p-6 sm:p-7 text-center space-y-4">
+    <div class="flex justify-end">
+      <button type="button" onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-xmark text-lg"></i>
       </button>
     </div>
-  </div>
+    
+    <div class="w-14 h-14 rounded-2xl bg-brand-navy text-brand-gold mx-auto flex items-center justify-center text-2xl font-black shadow-md">
+      <i class="fa-brands fa-google text-2xl"></i>
+    </div>
+    
+    <div>
+      <h3 class="font-black text-xl text-brand-navy">KDS Insurance Portal</h3>
+      <p class="text-xs text-slate-500 mt-1">Quotations save karne aur dashboard dekhne ke liye Google se login karein</p>
+    </div>
 
+    <!-- Official Google Button Render Div -->
+    <div id="googleSignInButtonDiv" class="flex justify-center pt-2"></div>
+
+    <button type="button" onclick="closeAuthModal()" class="text-xs text-slate-400 hover:text-slate-600 block mx-auto pt-2">
+      Band karein / Close
+    </button>
+  </div>
+</div>
+  
   <!-- 2. POLICYHOLDER DETAILS POPUP (QUOTATION SAVE KRTE WAQT) -->
   <div id="saveQuotationModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 p-6 sm:p-7">
@@ -2655,48 +2652,69 @@
       document.getElementById('authModal').classList.add('hidden');
     }
 
-// DIRECT CLEAN GOOGLE LOGIN (NO IMMEDIATE CLOSE)
-    function loginWithGoogle() {
-      if (typeof firebase === 'undefined' || !firebase.auth) {
-        showToast('Firebase initialize nahi hua. Kripya page refresh karein.');
+// GOOGLE CLIENT ID (Aapke project ka official client ID)
+    const GOOGLE_CLIENT_ID = "418446717578-9241s3h4pc44agohfkc8t2ift9jtfpau.apps.googleusercontent.com";
+
+    function parseJwt(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function handleGoogleCredentialResponse(response) {
+      const payload = parseJwt(response.credential);
+      if (!payload) {
+        showToast("Login error: Token decode nahi hua.");
         return;
       }
 
-      // 1. Google Provider initiate
-      const provider = new firebase.auth.GoogleAuthProvider();
-      provider.setCustomParameters({ 
-        prompt: 'select_account' 
-      });
+      currentLoggedInUser = {
+        name: payload.name || 'Client',
+        email: payload.email,
+        photo: payload.picture || '',
+        id: payload.sub
+      };
 
-      // 2. Direct Popup Call (Bina kisi intermediate delay ya redirect ke)
-      auth.signInWithPopup(provider)
-        .then((result) => {
-          const user = result.user;
-          currentLoggedInUser = {
-            name: user.displayName || 'Client',
-            email: user.email,
-            photo: user.photoURL || '',
-            id: user.uid
-          };
-          localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+      localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+      showToast('Swagat hai, ' + currentLoggedInUser.name + '!');
+      closeAuthModal();
+      updateAuthNavUI();
+      fetchUserQuotationsFromSheet(payload.email);
+    }
+    
+    function openAuthModal() {
+      document.getElementById('authModal').classList.remove('hidden');
 
-          showToast('Swagat hai, ' + currentLoggedInUser.name + '!');
-          closeAuthModal();
-          updateAuthNavUI();
-
-          // Google Sheet se policy data load karein
-          fetchUserQuotationsFromSheet(user.email);
-        })
-        .catch((error) => {
-          console.error("Firebase Login Detailed Error:", error);
-          if (error.code === 'auth/popup-closed-by-user') {
-            showToast('Login window band ho gayi.');
-          } else if (error.code === 'auth/unauthorized-domain') {
-            showToast('Domain unauthorized hai. Firebase settings check karein.');
-          } else {
-            showToast('Error: ' + error.message);
-          }
+      // Initialize Google Identity Button
+      if (window.google && google.accounts && google.accounts.id) {
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleGoogleCredentialResponse
         });
+
+        const targetDiv = document.getElementById("googleSignInButtonDiv");
+        if (targetDiv) {
+          targetDiv.innerHTML = "";
+          google.accounts.id.renderButton(targetDiv, {
+            theme: "outline",
+            size: "large",
+            width: "280",
+            text: "signin_with",
+            shape: "pill"
+          });
+        }
+      }
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.add('hidden');
     }
     
     // Login successful profile setup handler
