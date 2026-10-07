@@ -2655,7 +2655,7 @@
       document.getElementById('authModal').classList.add('hidden');
     }
 
-// DIRECT GOOGLE IDENTITY SIGN-IN (Bypass Firebase popup issue)
+// DIRECT CLEAN GOOGLE SIGN-IN POPUP
     function loginWithGoogle() {
       if (typeof firebase === 'undefined' || !firebase.auth) {
         showToast('Firebase load nahi hua. Kripya page refresh karein.');
@@ -2663,20 +2663,37 @@
       }
 
       const provider = new firebase.auth.GoogleAuthProvider();
-      provider.addScope('email');
-      provider.addScope('profile');
       provider.setCustomParameters({ prompt: 'select_account' });
 
-      firebase.auth().signInWithRedirect(provider)
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+          const user = result.user;
+          currentLoggedInUser = {
+            name: user.displayName || 'Client',
+            email: user.email,
+            photo: user.photoURL || '',
+            id: user.uid
+          };
+          localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+
+          showToast(`Swagat hai, ${currentLoggedInUser.name}!`);
+          closeAuthModal();
+          updateAuthNavUI();
+
+          fetchUserQuotationsFromSheet(user.email);
+        })
         .catch((error) => {
-          firebase.auth().signInWithPopup(provider)
-            .then(handleSuccessfulAuth)
-            .catch(err => {
-              showToast("Login error: " + err.message);
-            });
+          console.error("Google Login Error:", error);
+          if (error.code === 'auth/unauthorized-domain') {
+            showToast('Firebase Settings me kdsinsurance.in domain add karein!');
+          } else if (error.code === 'auth/popup-closed-by-user') {
+            showToast('Login cancel ho gaya.');
+          } else {
+            showToast('Login error: ' + error.message);
+          }
         });
     }
-
+    
     // Login successful profile setup handler
     function handleSuccessfulAuth(result) {
       if (!result || !result.user) return;
