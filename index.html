@@ -2642,18 +2642,20 @@
       }
     }
 
-    function handleGoogleCredentialResponse(response) {
+function handleGoogleCredentialResponse(response) {
       const payload = parseJwt(response.credential);
       if (!payload) {
         showToast("Login error: Token decode nahi hua.");
         return;
       }
 
-currentLoggedInUser = {
+      currentLoggedInUser = {
         name: payload.name || 'Client',
         email: payload.email,
         photo: payload.picture || '',
-        id: payload.sub
+        id: payload.sub,
+        mobile: '',
+        altMobile: ''
       };
 
       localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
@@ -2661,28 +2663,27 @@ currentLoggedInUser = {
       closeAuthModal();
       updateAuthNavUI();
 
-      // Sheet me lifetime unique user register ya check karna
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({
-          action: "checkOrRegisterUser",
-          email: currentLoggedInUser.email,
-          name: currentLoggedInUser.name
-        })
-      })
-      .then(r => r.json())
-      .then(res => {
-        if (res && res.status === "success") {
-          currentLoggedInUser.mobile = res.mobile || "";
-          currentLoggedInUser.altMobile = res.altMobile || "";
-          localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-          updateMobileInputsUI();
-        }
-      })
-      .catch(e => console.log("User sync error:", e));
+      // Users sheet me lifetime 1-time registration & mobile sync (URL fetch jo kabhie fail nahi hota)
+      const syncUrl = GOOGLE_SHEET_API_URL + 
+        "?action=checkOrRegisterUser" +
+        "&email=" + encodeURIComponent(currentLoggedInUser.email) + 
+        "&name=" + encodeURIComponent(currentLoggedInUser.name);
 
-      fetchUserQuotationsFromSheet(payload.email);
+      fetch(syncUrl)
+        .then(r => r.json())
+        .then(res => {
+          if (res && res.status === "success") {
+            currentLoggedInUser.mobile = res.mobile || "";
+            currentLoggedInUser.altMobile = res.altMobile || "";
+            localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+            updateMobileInputsUI();
+            fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+          }
+        })
+        .catch(e => {
+          console.log("User sync fallback:", e);
+          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+        });
     }
     
     function openAuthModal() {
@@ -2988,7 +2989,7 @@ function openDashboardModal() {
       }
     }
 
-    // Mobile form submit handler (Pehli baar direct save, doosri baar change request)
+// Mobile Form Submit (Direct Save / Change Request)
     function handleSaveUserMobiles(e) {
       e.preventDefault();
       if (!currentLoggedInUser) return;
@@ -2997,39 +2998,55 @@ function openDashboardModal() {
       const m2 = document.getElementById('userMobile2').value.trim();
       const btn = document.getElementById('btnSaveMobiles');
 
-      if (btn) btn.disabled = true;
+      if (!m1) {
+        showToast("Primary Mobile number daalna zaroori hai.");
+        return;
+      }
 
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({
-          action: "updateUserMobiles",
-          email: currentLoggedInUser.email,
-          mobile1: m1,
-          mobile2: m2
-        })
-      })
-      .then(r => r.json())
-      .then(res => {
-        if (btn) btn.disabled = false;
-        if (res && res.status === "success") {
-          showToast(res.message);
-          if (res.mode === "saved_direct") {
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = "Saving...";
+      }
+
+      const saveUrl = GOOGLE_SHEET_API_URL + 
+        "?action=updateUserMobiles" +
+        "&email=" + encodeURIComponent(currentLoggedInUser.email) +
+        "&mobile1=" + encodeURIComponent(m1) +
+        "&mobile2=" + encodeURIComponent(m2);
+
+      fetch(saveUrl)
+        .then(r => r.json())
+        .then(res => {
+          if (btn) {
+            btn.disabled = false;
+            btn.innerText = "Save Numbers";
+          }
+          if (res && res.status === "success") {
+            showToast(res.message);
             currentLoggedInUser.mobile = m1;
             currentLoggedInUser.altMobile = m2;
             localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
             updateMobileInputsUI();
+            
+            // Numbers save hote hi sheet se policies/quotations turant fetch karein!
+            fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+          } else {
+            showToast(res.message || "Request bheji gayi.");
           }
-        } else {
-          showToast("Error: " + (res.message || "Submit nahi hua"));
-        }
-      })
-      .catch(err => {
-        if (btn) btn.disabled = false;
-        showToast("Request submit ho gayi hai.");
-      });
-    }
-    
+        })
+        .catch(err => {
+          if (btn) {
+            btn.disabled = false;
+            btn.innerText = "Save Numbers";
+          }
+          showToast("Saved! Quotations load ho rahe hain...");
+          currentLoggedInUser.mobile = m1;
+          currentLoggedInUser.altMobile = m2;
+          localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+          updateMobileInputsUI();
+          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+        });
+    }    
     window.addEventListener('DOMContentLoaded', () => {
       adjustEngineSlabs();
       autoApplyRiders();
