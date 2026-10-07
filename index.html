@@ -1348,6 +1348,26 @@
       </div>
     </div>
   </div>
+<!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+  <script>
+    // Aapki Project Configuration Keys
+    const firebaseConfig = {
+      apiKey: "AIzaSyByZCEr6FYkDh3pBOS8wfqi6bQLXCRYDGU",
+      authDomain: "kds-insurance.firebaseapp.com",
+      projectId: "kds-insurance",
+      storageBucket: "kds-insurance.firebasestorage.app",
+      messagingSenderId: "418446717578",
+      appId: "1:418446717578:web:74c9722a1f23d22522b373"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+  </script>
   <!-- JAVASCRIPT LOGIC -->
   <script>
     // GOOGLE SHEET WEB APP URL
@@ -2718,29 +2738,30 @@ function switchAuthMode(mode) {
       }
     }
 
-    async function handleAuthSubmit(e) {
+async function handleAuthSubmit(e) {
       e.preventDefault();
       const identity = document.getElementById('authIdentity').value.trim();
       const password = document.getElementById('authPassword').value.trim();
       const submitBtn = document.getElementById('authSubmitBtn');
       const originalText = submitBtn ? submitBtn.innerText : 'Submit';
 
-      if (!identity || !password) {
-        showToast('Kripya Mobile aur Password dono bharein!');
+      if (!identity || identity.length < 10 || !password) {
+        showToast('Kripya 10-digit mobile number aur password bharein!');
         return;
       }
 
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerText = 'Kripya intezar karein...';
+        submitBtn.innerText = 'Verify ho raha hai...';
       }
 
-      let localUsers = JSON.parse(localStorage.getItem('kds_registered_users') || '[]');
+      // 10-digit mobile number ko secure identity banana
+      const cleanMob = identity.slice(-10);
+      const virtualEmail = `${cleanMob}@kdsinsurance.in`;
 
-      // 1. SIGNUP PROCESS
       if (currentAuthMode === 'signup') {
-        const name = document.getElementById('authName').value.trim();
-        if (!name) {
+        const fullName = document.getElementById('authName').value.trim();
+        if (!fullName) {
           showToast('Kripya apna poora naam bharein!');
           if (submitBtn) {
             submitBtn.disabled = false;
@@ -2749,94 +2770,95 @@ function switchAuthMode(mode) {
           return;
         }
 
-        const newUser = {
-          action: "signupUser",
-          name: name,
-          mobile: identity,
-          password: password,
-          createdDate: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
-        };
+        try {
+          // 1. Firebase Auth par instant user creation (< 300 ms)
+          const userCred = await auth.createUserWithEmailAndPassword(virtualEmail, password);
+          await userCred.user.updateProfile({ displayName: fullName });
 
-        fetch(GOOGLE_SHEET_API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(newUser)
-        }).catch(err => console.log(err));
+          currentLoggedInUser = {
+            name: fullName,
+            identity: cleanMob,
+            id: userCred.user.uid
+          };
+          localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
 
-        localUsers.push({ name: name, identity: identity, password: password, id: 'USR-' + Date.now() });
-        localStorage.setItem('kds_registered_users', JSON.stringify(localUsers));
+          // 2. Google Sheet me Backup Entry (Background sync)
+          fetch(GOOGLE_SHEET_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              action: "signupUser",
+              name: fullName,
+              mobile: cleanMob,
+              password: password,
+              createdDate: new Date().toLocaleDateString('en-IN')
+            })
+          }).catch(err => console.log('Sheet backup sync error:', err));
 
-        currentLoggedInUser = { name: name, identity: identity, id: 'USR-' + Date.now() };
-        localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+          showToast('Account safaltapoorvak ban gaya!');
+          closeAuthModal();
+          updateAuthNavUI();
 
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerText = originalText;
+        } catch (err) {
+          if (err.code === 'auth/email-already-in-use') {
+            showToast('Ye mobile number pehle se registered hai! Kripya Login karein.');
+          } else if (err.code === 'auth/weak-password') {
+            showToast('Password kam se kam 6 aksharo ka rakhein.');
+          } else {
+            showToast('Error: ' + err.message);
+          }
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = originalText;
+          }
         }
 
-        showToast('Account successfully ban gaya!');
-        closeAuthModal();
-        updateAuthNavUI();
-
       } else {
-        // 2. FAST LOGIN (2-3 SECONDS) + AUTO FETCH QUOTATIONS
-        const cleanLoginMob = String(identity).replace(/[^0-9]/g, '').slice(-10);
+        // LOGIN PROCESS - YAHAN MILLISECONDS ME VERIFY HOGA
+        try {
+          const userCred = await auth.signInWithEmailAndPassword(virtualEmail, password);
+          const user = userCred.user;
+          const userName = user.displayName || 'Client';
 
-        fetch(GOOGLE_SHEET_API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({
-            action: "loginUser",
-            mobile: cleanLoginMob,
-            password: password
+          currentLoggedInUser = {
+            name: userName,
+            identity: cleanMob,
+            id: user.uid
+          };
+          localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+
+          // Background mein Google Sheet se data fetch karein
+          fetch(GOOGLE_SHEET_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+              action: "loginUser",
+              mobile: cleanMob,
+              password: password
+            })
           })
-        })
-        .then(r => r.json())
-        .then(result => {
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.innerText = originalText;
-          }
-
-          if (result && result.status === "success") {
-            currentLoggedInUser = {
-              name: result.user.name,
-              identity: cleanLoginMob,
-              id: 'USR-' + Date.now()
-            };
-            localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-
-            if (result.quotations && Array.isArray(result.quotations)) {
-              window.serverFetchedQuotations = result.quotations;
-              localStorage.setItem('kds_saved_quotations', JSON.stringify(result.quotations));
+          .then(r => r.json())
+          .then(res => {
+            if (res && res.quotations) {
+              window.serverFetchedQuotations = res.quotations;
+              localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
             }
+          }).catch(e => console.log('Sheet sync:', e));
 
-            showToast(`Swagat hai, ${result.user.name}!`);
-            closeAuthModal();
-            updateAuthNavUI();
-            openDashboardModal();
-          } else {
-            showToast(result.message || 'Galat Mobile ya Password! Check karein ya Forgot Password dabayein.');
-          }
-        })
-        .catch(err => {
-          let matchedUser = localUsers.find(u => String(u.identity).slice(-10) === cleanLoginMob && String(u.password).trim() === password);
+          showToast(`Swagat hai, ${userName}!`);
+          closeAuthModal();
+          updateAuthNavUI();
+          openDashboardModal();
+
+        } catch (err) {
+          showToast('Galat Mobile number ya Password!');
+        } finally {
           if (submitBtn) {
             submitBtn.disabled = false;
             submitBtn.innerText = originalText;
           }
-
-          if (matchedUser) {
-            currentLoggedInUser = { name: matchedUser.name, identity: cleanLoginMob, id: 'USR-' + Date.now() };
-            localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-            showToast(`Swagat hai, ${matchedUser.name}!`);
-            closeAuthModal();
-            updateAuthNavUI();
-            openDashboardModal();
-          } else {
-            showToast('Server connect karne me samasya aayi. Kripya punah prayas karein.');
-          }
-        });
+        }
       }
     }
 
