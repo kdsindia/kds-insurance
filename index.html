@@ -2710,28 +2710,27 @@ function handleGoogleCredentialResponse(response) {
 function fetchUserQuotationsFromSheet(userEmail) {
       if (!userEmail || typeof GOOGLE_SHEET_API_URL === 'undefined') return;
 
-      const inputM1 = document.getElementById('userMobile1') ? document.getElementById('userMobile1').value.trim() : '';
-      const inputM2 = document.getElementById('userMobile2') ? document.getElementById('userMobile2').value.trim() : '';
-      const m1 = (currentLoggedInUser && currentLoggedInUser.mobile) ? currentLoggedInUser.mobile : inputM1;
-      const m2 = (currentLoggedInUser && currentLoggedInUser.altMobile) ? currentLoggedInUser.altMobile : inputM2;
+      const m1 = (currentLoggedInUser && currentLoggedInUser.mobile) ? currentLoggedInUser.mobile : (document.getElementById('userMobile1') ? document.getElementById('userMobile1').value : '');
+      const m2 = (currentLoggedInUser && currentLoggedInUser.altMobile) ? currentLoggedInUser.altMobile : (document.getElementById('userMobile2') ? document.getElementById('userMobile2').value : '');
 
-      const fetchUrl = GOOGLE_SHEET_API_URL + 
-        "?action=getUserQuotations" +
-        "&email=" + encodeURIComponent(userEmail) +
-        "&mobile1=" + encodeURIComponent(m1) +
-        "&mobile2=" + encodeURIComponent(m2);
-
-      fetch(fetchUrl)
-        .then(r => r.json())
-        .then(res => {
-          if (res && res.quotations) {
-            window.serverFetchedQuotations = res.quotations;
-            localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
-            renderUserDashboard();
-          }
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          action: "getUserQuotations",
+          email: userEmail,
+          mobile1: m1,
+          mobile2: m2
         })
-        .catch(err => console.log("Dashboard fetch error:", err));
-    }
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res && res.quotations) {
+          window.serverFetchedQuotations = res.quotations;
+          localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
+          renderUserDashboard();
+        }
+      })
       .catch(err => console.log("Dashboard sync error:", err));
     }
     // Quotation save submission handler
@@ -2982,7 +2981,8 @@ function openDashboardModal() {
       }
     }
 
-function handleSaveUserMobiles(e) {
+// Mobile Form Submit (Direct Save / Change Request)
+    function handleSaveUserMobiles(e) {
       e.preventDefault();
       if (!currentLoggedInUser) return;
 
@@ -2991,7 +2991,7 @@ function handleSaveUserMobiles(e) {
       const btn = document.getElementById('btnSaveMobiles');
 
       if (!m1) {
-        showToast("Primary Mobile daalna zaroori hai.");
+        showToast("Primary Mobile number daalna zaroori hai.");
         return;
       }
 
@@ -3000,40 +3000,45 @@ function handleSaveUserMobiles(e) {
         btn.innerText = "Saving...";
       }
 
-      // Local state update karein
-      currentLoggedInUser.mobile = m1;
-      currentLoggedInUser.altMobile = m2;
-      localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-      updateMobileInputsUI();
+      const saveUrl = GOOGLE_SHEET_API_URL + 
+        "?action=updateUserMobiles" +
+        "&email=" + encodeURIComponent(currentLoggedInUser.email) +
+        "&mobile1=" + encodeURIComponent(m1) +
+        "&mobile2=" + encodeURIComponent(m2);
 
-      // FormData post request (Sheet me fail nahi hota)
-      const formData = new FormData();
-      formData.append("action", "updateUserMobiles");
-      formData.append("email", currentLoggedInUser.email);
-      formData.append("mobile1", m1);
-      formData.append("mobile2", m2);
-
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-      }).then(() => {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerText = "Save Numbers";
-        }
-        showToast("Mobile number save ho gaya! Policies load ho rahi hain...");
-        
-        // Turant dono mobile numbers ke sath policy details reload karein
-        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-      }).catch(() => {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerText = "Save Numbers";
-        }
-        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-      });
-    }
+      fetch(saveUrl)
+        .then(r => r.json())
+        .then(res => {
+          if (btn) {
+            btn.disabled = false;
+            btn.innerText = "Save Numbers";
+          }
+          if (res && res.status === "success") {
+            showToast(res.message);
+            currentLoggedInUser.mobile = m1;
+            currentLoggedInUser.altMobile = m2;
+            localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+            updateMobileInputsUI();
+            
+            // Numbers save hote hi sheet se policies/quotations turant fetch karein!
+            fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+          } else {
+            showToast(res.message || "Request bheji gayi.");
+          }
+        })
+        .catch(err => {
+          if (btn) {
+            btn.disabled = false;
+            btn.innerText = "Save Numbers";
+          }
+          showToast("Saved! Quotations load ho rahe hain...");
+          currentLoggedInUser.mobile = m1;
+          currentLoggedInUser.altMobile = m2;
+          localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+          updateMobileInputsUI();
+          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+        });
+    }    
     window.addEventListener('DOMContentLoaded', () => {
       adjustEngineSlabs();
       autoApplyRiders();
