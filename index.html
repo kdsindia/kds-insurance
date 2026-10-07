@@ -2655,17 +2655,21 @@
       document.getElementById('authModal').classList.add('hidden');
     }
 
-// DIRECT CLEAN GOOGLE SIGN-IN POPUP
+// DIRECT CLEAN GOOGLE LOGIN (NO IMMEDIATE CLOSE)
     function loginWithGoogle() {
       if (typeof firebase === 'undefined' || !firebase.auth) {
-        showToast('Firebase load nahi hua. Kripya page refresh karein.');
+        showToast('Firebase initialize nahi hua. Kripya page refresh karein.');
         return;
       }
 
+      // 1. Google Provider initiate
       const provider = new firebase.auth.GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: 'select_account' });
+      provider.setCustomParameters({ 
+        prompt: 'select_account' 
+      });
 
-      firebase.auth().signInWithPopup(provider)
+      // 2. Direct Popup Call (Bina kisi intermediate delay ya redirect ke)
+      auth.signInWithPopup(provider)
         .then((result) => {
           const user = result.user;
           currentLoggedInUser = {
@@ -2676,20 +2680,21 @@
           };
           localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
 
-          showToast(`Swagat hai, ${currentLoggedInUser.name}!`);
+          showToast('Swagat hai, ' + currentLoggedInUser.name + '!');
           closeAuthModal();
           updateAuthNavUI();
 
+          // Google Sheet se policy data load karein
           fetchUserQuotationsFromSheet(user.email);
         })
         .catch((error) => {
-          console.error("Google Login Error:", error);
-          if (error.code === 'auth/unauthorized-domain') {
-            showToast('Firebase Settings me kdsinsurance.in domain add karein!');
-          } else if (error.code === 'auth/popup-closed-by-user') {
-            showToast('Login cancel ho gaya.');
+          console.error("Firebase Login Detailed Error:", error);
+          if (error.code === 'auth/popup-closed-by-user') {
+            showToast('Login window band ho gayi.');
+          } else if (error.code === 'auth/unauthorized-domain') {
+            showToast('Domain unauthorized hai. Firebase settings check karein.');
           } else {
-            showToast('Login error: ' + error.message);
+            showToast('Error: ' + error.message);
           }
         });
     }
