@@ -2714,15 +2714,20 @@ currentLoggedInUser = {
     }
 
     // Google Sheet se user quotations retrieve karna
-    function fetchUserQuotationsFromSheet(userEmail) {
+function fetchUserQuotationsFromSheet(userEmail) {
       if (!userEmail || typeof GOOGLE_SHEET_API_URL === 'undefined') return;
+
+      const m1 = (currentLoggedInUser && currentLoggedInUser.mobile) ? currentLoggedInUser.mobile : (document.getElementById('userMobile1') ? document.getElementById('userMobile1').value : '');
+      const m2 = (currentLoggedInUser && currentLoggedInUser.altMobile) ? currentLoggedInUser.altMobile : (document.getElementById('userMobile2') ? document.getElementById('userMobile2').value : '');
 
       fetch(GOOGLE_SHEET_API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({
           action: "getUserQuotations",
-          email: userEmail
+          email: userEmail,
+          mobile1: m1,
+          mobile2: m2
         })
       })
       .then(r => r.json())
@@ -2733,9 +2738,8 @@ currentLoggedInUser = {
           renderUserDashboard();
         }
       })
-      .catch(err => console.log("Dashboard sync:", err));
+      .catch(err => console.log("Dashboard sync error:", err));
     }
-
     // Quotation save submission handler
 function handleSaveQuotationSubmit(e) {
       e.preventDefault();
