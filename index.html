@@ -2663,7 +2663,7 @@ function handleGoogleCredentialResponse(response) {
       closeAuthModal();
       updateAuthNavUI();
 
-      // Users sheet me lifetime 1-time registration & mobile sync (URL fetch jo kabhie fail nahi hota)
+      // Users sheet me check karein ya register karein
       const syncUrl = GOOGLE_SHEET_API_URL + 
         "?action=checkOrRegisterUser" +
         "&email=" + encodeURIComponent(currentLoggedInUser.email) + 
@@ -2676,7 +2676,11 @@ function handleGoogleCredentialResponse(response) {
             currentLoggedInUser.mobile = res.mobile || "";
             currentLoggedInUser.altMobile = res.altMobile || "";
             localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+            
+            // Auto-fill mobile number into UI input boxes
             updateMobileInputsUI();
+            
+            // Load policies associated with this email or detected mobile
             fetchUserQuotationsFromSheet(currentLoggedInUser.email);
           }
         })
