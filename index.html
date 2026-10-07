@@ -96,6 +96,9 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Official Google Identity Services SDK -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
   <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -2652,34 +2655,55 @@
       document.getElementById('authModal').classList.add('hidden');
     }
 
-    // 1. ONE-CLICK GOOGLE LOGIN FUNCTION
+// DIRECT GOOGLE IDENTITY SIGN-IN (Bypass Firebase popup issue)
     function loginWithGoogle() {
       if (typeof firebase === 'undefined' || !firebase.auth) {
-        showToast('Firebase connect nahi ho paya. Page refresh karein.');
+        showToast('Firebase load nahi hua. Kripya page refresh karein.');
         return;
       }
 
       const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider)
+      provider.addScope('email');
+      provider.addScope('profile');
+      provider.setCustomParameters({ prompt: 'select_account' });
+
+      firebase.auth().signInWithRedirect(provider)
+        .catch((error) => {
+          firebase.auth().signInWithPopup(provider)
+            .then(handleSuccessfulAuth)
+            .catch(err => {
+              showToast("Login error: " + err.message);
+            });
+        });
+    }
+
+    // Login successful profile setup handler
+    function handleSuccessfulAuth(result) {
+      if (!result || !result.user) return;
+      const user = result.user;
+      currentLoggedInUser = {
+        name: user.displayName || 'Client',
+        email: user.email,
+        photo: user.photoURL || '',
+        id: user.uid
+      };
+      localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+      showToast(`Swagat hai, ${currentLoggedInUser.name}!`);
+      closeAuthModal();
+      updateAuthNavUI();
+      fetchUserQuotationsFromSheet(user.email);
+    }
+
+    // Redirect login complete hone par user capture karne ka listener
+    if (typeof firebase !== 'undefined' && firebase.auth) {
+      firebase.auth().getRedirectResult()
         .then((result) => {
-          const user = result.user;
-          currentLoggedInUser = {
-            name: user.displayName || 'Client',
-            email: user.email,
-            photo: user.photoURL || '',
-            id: user.uid
-          };
-          localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-
-          showToast(`Swagat hai, ${currentLoggedInUser.name}!`);
-          closeAuthModal();
-          updateAuthNavUI();
-
-          fetchUserQuotationsFromSheet(user.email);
+          if (result && result.user) {
+            handleSuccessfulAuth(result);
+          }
         })
         .catch((error) => {
-          console.error("Google Login Error:", error);
-          showToast('Login error: ' + error.message);
+          console.error("Redirect auth error:", error);
         });
     }
 
