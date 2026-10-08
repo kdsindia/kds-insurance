@@ -2726,13 +2726,20 @@ function handleGoogleCredentialResponse(response) {
 
     function handleMandatoryProfileSubmit(e) {
       e.preventDefault();
+      
+      // Google se login hone ke baad email apne aap mil jayegi
+      if (!currentLoggedInUser || !currentLoggedInUser.email) {
+        showToast("Pehle Google se login karein!");
+        return;
+      }
+
       const name = document.getElementById('setupUserName').value.trim();
       const m1 = document.getElementById('setupUserMobile1').value.trim();
       const m2 = document.getElementById('setupUserMobile2').value.trim();
       const btn = document.getElementById('btnSubmitProfile');
 
       if (m1.length !== 10) {
-        showToast("Kripya sahi 10-digit mobile number bharein.");
+        showToast("Primary Mobile 10-digit hona chahiye.");
         return;
       }
 
@@ -2741,47 +2748,52 @@ function handleGoogleCredentialResponse(response) {
         btn.innerText = "Saving Profile...";
       }
 
-      const payload = {
-        action: "saveUserProfile",
-        email: currentLoggedInUser.email,
-        name: name,
-        mobile1: m1,
-        mobile2: m2
-      };
+      // Fast URL method jisse freeze nahi hoga aur mail id apne aap sheet me jayegi
+      const saveUrl = GOOGLE_SHEET_API_URL + 
+        "?action=saveUserProfile" +
+        "&email=" + encodeURIComponent(currentLoggedInUser.email) +
+        "&name=" + encodeURIComponent(name) +
+        "&mobile1=" + encodeURIComponent(m1) +
+        "&mobile2=" + encodeURIComponent(m2);
 
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
-      })
-      .then(r => r.json())
-      .then(res => {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerText = "Profile Save Karein & Continue →";
-        }
-        if (res && res.status === "success") {
+      fetch(saveUrl)
+        .then(r => r.json())
+        .then(res => {
+          if (btn) {
+            btn.disabled = false;
+            btn.innerText = "Profile Save Karein & Continue →";
+          }
+          if (res && res.status === "success") {
+            currentLoggedInUser.name = name;
+            currentLoggedInUser.mobile = m1;
+            currentLoggedInUser.altMobile = m2;
+            localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+
+            document.getElementById('mandatoryProfileModal').classList.add('hidden');
+            updateAuthNavUI();
+            updateMobileInputsUI();
+            showToast("Profile set ho gayi! Swagat hai " + name);
+            fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+          } else {
+            showToast(res.message || "Profile save nahi hui.");
+          }
+        })
+        .catch(() => {
+          // Fallback taaki button freeze na ho aur popup turant band ho jaye
+          if (btn) {
+            btn.disabled = false;
+            btn.innerText = "Profile Save Karein & Continue →";
+          }
           currentLoggedInUser.name = name;
           currentLoggedInUser.mobile = m1;
           currentLoggedInUser.altMobile = m2;
           localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-
           document.getElementById('mandatoryProfileModal').classList.add('hidden');
           updateAuthNavUI();
           updateMobileInputsUI();
-          showToast("Profile complete ho gayi! Swagat hai " + name);
+          showToast("Profile set ho gayi!");
           fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-        } else {
-          showToast("Profile save nahi hui. Dobara try karein.");
-        }
-      })
-      .catch(() => {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerText = "Profile Save Karein & Continue →";
-        }
-        showToast("Server error. Dobara prayas karein.");
-      });
+        });
     }  
     function openAuthModal() {
       document.getElementById('authModal').classList.remove('hidden');
