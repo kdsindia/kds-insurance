@@ -2663,21 +2663,22 @@ function handleGoogleCredentialResponse(response) {
       closeAuthModal();
       updateAuthNavUI();
 
-      // Users sheet me lifetime entry bhejna (no-cors mode se Google sheet direct accept karegi)
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "checkOrRegisterUser",
-          email: currentLoggedInUser.email,
-          name: currentLoggedInUser.name
+      // Users sheet me check karega: duplicate nahi hone dega aur purane mobile fetch karega
+      fetch(GOOGLE_SHEET_API_URL + "?action=checkOrRegisterUser&email=" + encodeURIComponent(currentLoggedInUser.email) + "&name=" + encodeURIComponent(currentLoggedInUser.name))
+        .then(r => r.json())
+        .then(res => {
+          if (res && res.status === "success") {
+            if (res.mobile1) currentLoggedInUser.mobile = res.mobile1;
+            if (res.mobile2) currentLoggedInUser.altMobile = res.mobile2;
+            localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+            updateMobileInputsUI();
+          }
+          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
         })
-      });
-
-      // Dashboard policy records load karein
-      fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-    }    
+        .catch(() => {
+          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+        });
+    }  
     function openAuthModal() {
       document.getElementById('authModal').classList.remove('hidden');
 
@@ -2710,8 +2711,8 @@ function handleGoogleCredentialResponse(response) {
 function fetchUserQuotationsFromSheet(userEmail) {
       if (!userEmail || typeof GOOGLE_SHEET_API_URL === 'undefined') return;
 
-      const m1 = (currentLoggedInUser && currentLoggedInUser.mobile) ? currentLoggedInUser.mobile : (document.getElementById('userMobile1') ? document.getElementById('userMobile1').value : '');
-      const m2 = (currentLoggedInUser && currentLoggedInUser.altMobile) ? currentLoggedInUser.altMobile : (document.getElementById('userMobile2') ? document.getElementById('userMobile2').value : '');
+      const m1 = (currentLoggedInUser && currentLoggedInUser.mobile) ? currentLoggedInUser.mobile : '';
+      const m2 = (currentLoggedInUser && currentLoggedInUser.altMobile) ? currentLoggedInUser.altMobile : '';
 
       fetch(GOOGLE_SHEET_API_URL, {
         method: "POST",
@@ -2725,9 +2726,14 @@ function fetchUserQuotationsFromSheet(userEmail) {
       })
       .then(r => r.json())
       .then(res => {
-        if (res && res.quotations) {
-          window.serverFetchedQuotations = res.quotations;
-          localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
+        if (res) {
+          if (res.quotations) {
+            window.serverFetchedQuotations = res.quotations;
+            localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
+          }
+          if (res.activePolicies) {
+            window.serverFetchedPolicies = res.activePolicies;
+          }
           renderUserDashboard();
         }
       })
@@ -2982,7 +2988,7 @@ function openDashboardModal() {
     }
 
 // Mobile Form Submit (Direct Save / Change Request)
-    function handleSaveUserMobiles(e) {
+function handleSaveUserMobiles(e) {
       e.preventDefault();
       if (!currentLoggedInUser) return;
 
@@ -2997,7 +3003,7 @@ function openDashboardModal() {
 
       if (btn) {
         btn.disabled = true;
-        btn.innerText = "Saving...";
+        btn.innerText = "Processing...";
       }
 
       const saveUrl = GOOGLE_SHEET_API_URL + 
@@ -3015,15 +3021,16 @@ function openDashboardModal() {
           }
           if (res && res.status === "success") {
             showToast(res.message);
-            currentLoggedInUser.mobile = m1;
-            currentLoggedInUser.altMobile = m2;
-            localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+            // Agar pehli baar direct save hua toh hi client storage me save karein
+            if (res.mode === "saved_direct") {
+              currentLoggedInUser.mobile = m1;
+              currentLoggedInUser.altMobile = m2;
+              localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+            }
             updateMobileInputsUI();
-            
-            // Numbers save hote hi sheet se policies/quotations turant fetch karein!
             fetchUserQuotationsFromSheet(currentLoggedInUser.email);
           } else {
-            showToast(res.message || "Request bheji gayi.");
+            showToast(res.message || "Request bhejne me error aayi.");
           }
         })
         .catch(err => {
@@ -3031,12 +3038,7 @@ function openDashboardModal() {
             btn.disabled = false;
             btn.innerText = "Save Numbers";
           }
-          showToast("Saved! Quotations load ho rahe hain...");
-          currentLoggedInUser.mobile = m1;
-          currentLoggedInUser.altMobile = m2;
-          localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-          updateMobileInputsUI();
-          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+          showToast("Network error: Dobara prayas karein.");
         });
     }    
     window.addEventListener('DOMContentLoaded', () => {
