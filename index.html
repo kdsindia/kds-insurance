@@ -2846,8 +2846,8 @@ function handleGoogleCredentialResponse(response) {
       document.getElementById('authModal').classList.add('hidden');
     }
 
-    // Google Sheet se user quotations retrieve karna
-function fetchUserQuotationsFromSheet(userEmail) {
+// Google Sheet se user quotations & Approved status retrieve karna
+    function fetchUserQuotationsFromSheet(userEmail) {
       if (!userEmail || typeof GOOGLE_SHEET_API_URL === 'undefined') return;
 
       const m1 = (currentLoggedInUser && currentLoggedInUser.mobile) ? currentLoggedInUser.mobile : '';
@@ -2862,10 +2862,28 @@ function fetchUserQuotationsFromSheet(userEmail) {
       fetch(fetchUrl)
       .then(r => r.json())
       .then(res => {
-        if (res && res.quotations) {
-          window.serverFetchedQuotations = res.quotations;
-          localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
-          renderUserDashboard();
+        if (res && res.status === "success") {
+          // 1. Sheet se Live Status & Approved Number update karein
+          if (res.mobileRequestStatus) {
+            localStorage.setItem('kds_mob_status_' + userEmail, res.mobileRequestStatus);
+
+            const st = res.mobileRequestStatus.toLowerCase();
+            if (st.indexOf('approved') > -1 || st.indexOf('accept') > -1) {
+              if (res.approvedMobile1) currentLoggedInUser.mobile = res.approvedMobile1;
+              if (res.approvedMobile2) currentLoggedInUser.altMobile = res.approvedMobile2;
+              localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+            }
+          }
+
+          // 2. Dashboard UI par naya number dikhayein
+          updateMobileInputsUI();
+
+          // 3. Quotations List Update
+          if (res.quotations) {
+            window.serverFetchedQuotations = res.quotations;
+            localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
+            renderUserDashboard();
+          }
         }
       })
       .catch(err => console.log("Sync error:", err));
@@ -3107,7 +3125,7 @@ function fetchUserQuotationsFromSheet(userEmail) {
       tbodyElement.innerHTML = html;
     }
 
-    // 2. DASHBOARD CONTACT & EMAIL DISPLAY
+// 2. DASHBOARD CONTACT & EMAIL DISPLAY (WITH LIVE PENDING/APPROVED STATUS)
     function updateMobileInputsUI() {
       const emailInput = document.getElementById('userEmailDisplay');
       const m1 = document.getElementById('userMobile1');
@@ -3122,16 +3140,30 @@ function fetchUserQuotationsFromSheet(userEmail) {
       if (m1) m1.value = currentLoggedInUser.mobile || '';
       if (m2) m2.value = currentLoggedInUser.altMobile || '';
 
-      const isVerified = localStorage.getItem('kds_verified_' + currentLoggedInUser.email) === 'true' || 
-                         (currentLoggedInUser.mobile && currentLoggedInUser.mobile.trim().length === 10);
+      // Live Sheet Status check karein
+      const sheetStatus = (localStorage.getItem('kds_mob_status_' + currentLoggedInUser.email) || '').toLowerCase();
 
+      if (badge) {
+        if (sheetStatus.indexOf('pending') > -1) {
+          badge.className = "text-[10px] font-black px-2.5 py-1 rounded bg-amber-100 text-amber-900 border border-amber-300 animate-pulse";
+          badge.innerHTML = '<i class="fa-solid fa-clock-rotate-left mr-1"></i> Update Request: Pending';
+        } else if (sheetStatus.indexOf('approved') > -1 || sheetStatus.indexOf('accept') > -1) {
+          badge.className = "text-[10px] font-black px-2.5 py-1 rounded bg-emerald-100 text-emerald-900 border border-emerald-300";
+          badge.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> Number Updated & Approved';
+        } else if (currentLoggedInUser.mobile && currentLoggedInUser.mobile.trim().length === 10) {
+          badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200";
+          badge.innerText = "Verified / Active";
+        } else {
+          badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200";
+          badge.innerText = "Not Verified";
+        }
+      }
+
+      // Fields Lock Status
+      const isVerified = (currentLoggedInUser.mobile && currentLoggedInUser.mobile.trim().length === 10);
       if (isVerified) {
         if (m1) m1.disabled = true;
         if (m2) m2.disabled = true;
-        if (badge) {
-          badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200";
-          badge.innerText = "Verified / Active";
-        }
         if (btnVerify) {
           btnVerify.disabled = true;
           btnVerify.className = "w-full bg-emerald-800 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs cursor-not-allowed opacity-80 flex items-center justify-center gap-1.5";
@@ -3140,10 +3172,6 @@ function fetchUserQuotationsFromSheet(userEmail) {
       } else {
         if (m1) m1.disabled = false;
         if (m2) m2.disabled = false;
-        if (badge) {
-          badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200";
-          badge.innerText = "Not Verified";
-        }
         if (btnVerify) {
           btnVerify.disabled = false;
           btnVerify.className = "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5";
