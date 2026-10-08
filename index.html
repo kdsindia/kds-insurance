@@ -2746,7 +2746,6 @@ function handleGoogleCredentialResponse(response) {
         btn.innerText = "Users Sheet me save ho raha hai...";
       }
 
-      // FormData direct sheet me submit hota hai bina ruke
       const formData = new FormData();
       formData.append("action", "saveUserProfile");
       formData.append("email", currentLoggedInUser.email);
@@ -2772,18 +2771,18 @@ function handleGoogleCredentialResponse(response) {
         document.getElementById('mandatoryProfileModal').classList.add('hidden');
         updateAuthNavUI();
         updateMobileInputsUI();
-        showToast("Profile Users tab me save ho gayi!");
+        showToast("Profile New Users tab me save ho gayi!");
         
         setTimeout(() => {
           fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-        }, 1000);
+        }, 1200);
       })
       .catch(() => {
         if (btn) {
           btn.disabled = false;
           btn.innerText = "Profile Save Karein & Continue →";
         }
-        showToast("Dobara try karein.");
+        showToast("Connection issue, dobara try karein.");
       });
     }  
     function openAuthModal() {
