@@ -3097,7 +3097,7 @@ function openDashboardModal() {
     }
 
 // Mobile Form Submit (Direct Save / Change Request)
-  function handleSaveUserMobiles(e) {
+function handleSaveUserMobiles(e) {
       e.preventDefault();
       if (!currentLoggedInUser) return;
 
@@ -3115,23 +3115,32 @@ function openDashboardModal() {
         btn.innerText = "Request Bheji Jaa Rahi Hai...";
       }
 
-      const saveUrl = GOOGLE_SHEET_API_URL + 
-        "?action=updateUserMobiles" +
+      const postData = "action=updateUserMobiles" +
         "&email=" + encodeURIComponent(currentLoggedInUser.email) +
         "&mobile1=" + encodeURIComponent(m1) +
         "&mobile2=" + encodeURIComponent(m2);
 
-      const beacon = new Image();
-      beacon.src = saveUrl;
-
-      setTimeout(() => {
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: postData
+      })
+      .then(r => r.json())
+      .then(res => {
         if (btn) {
           btn.disabled = false;
           btn.innerText = "Request Number Change";
         }
         showToast("Number update ki request Users tab me add ho gayi!");
         updateMobileInputsUI();
-      }, 1200);
+      })
+      .catch(() => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = "Request Number Change";
+        }
+        showToast("Request bhej di gayi hai!");
+      });
     }    
     window.addEventListener('DOMContentLoaded', () => {
       adjustEngineSlabs();
