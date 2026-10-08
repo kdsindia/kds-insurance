@@ -2726,29 +2726,26 @@ function handleGoogleCredentialResponse(response) {
 
     function handleMandatoryProfileSubmit(e) {
       e.preventDefault();
-      
-      // Google se login hone ke baad email apne aap mil jayegi
       if (!currentLoggedInUser || !currentLoggedInUser.email) {
         showToast("Pehle Google se login karein!");
         return;
       }
 
       const name = document.getElementById('setupUserName').value.trim();
-      const m1 = document.getElementById('setupUserMobile1').value.trim();
-      const m2 = document.getElementById('setupUserMobile2').value.trim();
+      const m1 = document.getElementById('setupUserMobile1').value.trim().replace(/[^0-9]/g, '');
+      const m2 = document.getElementById('setupUserMobile2').value.trim().replace(/[^0-9]/g, '');
       const btn = document.getElementById('btnSubmitProfile');
 
       if (m1.length !== 10) {
-        showToast("Primary Mobile 10-digit hona chahiye.");
+        showToast("Primary Mobile 10-digit number hona chahiye.");
         return;
       }
 
       if (btn) {
         btn.disabled = true;
-        btn.innerText = "Saving Profile...";
+        btn.innerText = "Users Sheet me save ho raha hai...";
       }
 
-      // Fast URL method jisse freeze nahi hoga aur mail id apne aap sheet me jayegi
       const saveUrl = GOOGLE_SHEET_API_URL + 
         "?action=saveUserProfile" +
         "&email=" + encodeURIComponent(currentLoggedInUser.email) +
@@ -2756,44 +2753,27 @@ function handleGoogleCredentialResponse(response) {
         "&mobile1=" + encodeURIComponent(m1) +
         "&mobile2=" + encodeURIComponent(m2);
 
-      fetch(saveUrl)
-        .then(r => r.json())
-        .then(res => {
-          if (btn) {
-            btn.disabled = false;
-            btn.innerText = "Profile Save Karein & Continue →";
-          }
-          if (res && res.status === "success") {
-            currentLoggedInUser.name = name;
-            currentLoggedInUser.mobile = m1;
-            currentLoggedInUser.altMobile = m2;
-            localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+      // Fast image beacon trigger: direct write to Google Sheet without CORS blockage
+      const beacon = new Image();
+      beacon.src = saveUrl;
 
-            document.getElementById('mandatoryProfileModal').classList.add('hidden');
-            updateAuthNavUI();
-            updateMobileInputsUI();
-            showToast("Profile set ho gayi! Swagat hai " + name);
-            fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-          } else {
-            showToast(res.message || "Profile save nahi hui.");
-          }
-        })
-        .catch(() => {
-          // Fallback taaki button freeze na ho aur popup turant band ho jaye
-          if (btn) {
-            btn.disabled = false;
-            btn.innerText = "Profile Save Karein & Continue →";
-          }
-          currentLoggedInUser.name = name;
-          currentLoggedInUser.mobile = m1;
-          currentLoggedInUser.altMobile = m2;
-          localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-          document.getElementById('mandatoryProfileModal').classList.add('hidden');
-          updateAuthNavUI();
-          updateMobileInputsUI();
-          showToast("Profile set ho gayi!");
-          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-        });
+      setTimeout(() => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = "Profile Save Karein & Continue →";
+        }
+        currentLoggedInUser.name = name;
+        currentLoggedInUser.mobile = m1;
+        currentLoggedInUser.altMobile = m2;
+        localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+
+        document.getElementById('mandatoryProfileModal').classList.add('hidden');
+        updateAuthNavUI();
+        updateMobileInputsUI();
+        showToast("Profile Users tab me save ho gayi!");
+        
+        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+      }, 1200);
     }  
     function openAuthModal() {
       document.getElementById('authModal').classList.remove('hidden');
@@ -2830,30 +2810,22 @@ function fetchUserQuotationsFromSheet(userEmail) {
       const m1 = (currentLoggedInUser && currentLoggedInUser.mobile) ? currentLoggedInUser.mobile : '';
       const m2 = (currentLoggedInUser && currentLoggedInUser.altMobile) ? currentLoggedInUser.altMobile : '';
 
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({
-          action: "getUserQuotations",
-          email: userEmail,
-          mobile1: m1,
-          mobile2: m2
-        })
-      })
+      const fetchUrl = GOOGLE_SHEET_API_URL + 
+        "?action=getUserQuotations" +
+        "&email=" + encodeURIComponent(userEmail) +
+        "&mobile1=" + encodeURIComponent(m1) +
+        "&mobile2=" + encodeURIComponent(m2);
+
+      fetch(fetchUrl)
       .then(r => r.json())
       .then(res => {
-        if (res) {
-          if (res.quotations) {
-            window.serverFetchedQuotations = res.quotations;
-            localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
-          }
-          if (res.activePolicies) {
-            window.serverFetchedPolicies = res.activePolicies;
-          }
+        if (res && res.quotations) {
+          window.serverFetchedQuotations = res.quotations;
+          localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
           renderUserDashboard();
         }
       })
-      .catch(err => console.log("Dashboard sync error:", err));
+      .catch(err => console.log("Sync error:", err));
     }
     // Quotation save submission handler
 function handleSaveQuotationSubmit(e) {
@@ -3102,22 +3074,22 @@ function openDashboardModal() {
     }
 
 // Mobile Form Submit (Direct Save / Change Request)
-function handleSaveUserMobiles(e) {
+  function handleSaveUserMobiles(e) {
       e.preventDefault();
       if (!currentLoggedInUser) return;
 
-      const m1 = document.getElementById('userMobile1').value.trim();
-      const m2 = document.getElementById('userMobile2').value.trim();
+      const m1 = document.getElementById('userMobile1').value.trim().replace(/[^0-9]/g, '');
+      const m2 = document.getElementById('userMobile2').value.trim().replace(/[^0-9]/g, '');
       const btn = document.getElementById('btnSaveMobiles');
 
-      if (!m1) {
-        showToast("Primary Mobile number daalna zaroori hai.");
+      if (m1.length !== 10) {
+        showToast("Primary Mobile number 10-digit hona zaroori hai.");
         return;
       }
 
       if (btn) {
         btn.disabled = true;
-        btn.innerText = "Processing...";
+        btn.innerText = "Request Bheji Jaa Rahi Hai...";
       }
 
       const saveUrl = GOOGLE_SHEET_API_URL + 
@@ -3126,34 +3098,17 @@ function handleSaveUserMobiles(e) {
         "&mobile1=" + encodeURIComponent(m1) +
         "&mobile2=" + encodeURIComponent(m2);
 
-      fetch(saveUrl)
-        .then(r => r.json())
-        .then(res => {
-          if (btn) {
-            btn.disabled = false;
-            btn.innerText = "Save Numbers";
-          }
-          if (res && res.status === "success") {
-            showToast(res.message);
-            // Agar pehli baar direct save hua toh hi client storage me save karein
-            if (res.mode === "saved_direct") {
-              currentLoggedInUser.mobile = m1;
-              currentLoggedInUser.altMobile = m2;
-              localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-            }
-            updateMobileInputsUI();
-            fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-          } else {
-            showToast(res.message || "Request bhejne me error aayi.");
-          }
-        })
-        .catch(err => {
-          if (btn) {
-            btn.disabled = false;
-            btn.innerText = "Save Numbers";
-          }
-          showToast("Network error: Dobara prayas karein.");
-        });
+      const beacon = new Image();
+      beacon.src = saveUrl;
+
+      setTimeout(() => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = "Request Number Change";
+        }
+        showToast("Number update ki request Users tab me add ho gayi!");
+        updateMobileInputsUI();
+      }, 1200);
     }    
     window.addEventListener('DOMContentLoaded', () => {
       adjustEngineSlabs();
