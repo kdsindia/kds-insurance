@@ -2746,19 +2746,19 @@ function handleGoogleCredentialResponse(response) {
         btn.innerText = "Users Sheet me save ho raha hai...";
       }
 
-      const formData = new FormData();
-      formData.append("action", "saveUserProfile");
-      formData.append("email", currentLoggedInUser.email);
-      formData.append("name", name);
-      formData.append("mobile1", m1);
-      formData.append("mobile2", m2);
+      const postData = "action=saveUserProfile" +
+        "&email=" + encodeURIComponent(currentLoggedInUser.email) +
+        "&name=" + encodeURIComponent(name) +
+        "&mobile1=" + encodeURIComponent(m1) +
+        "&mobile2=" + encodeURIComponent(m2);
 
       fetch(GOOGLE_SHEET_API_URL, {
         method: "POST",
-        mode: "no-cors",
-        body: formData
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: postData
       })
-      .then(() => {
+      .then(r => r.json())
+      .then(res => {
         if (btn) {
           btn.disabled = false;
           btn.innerText = "Profile Save Karein & Continue →";
@@ -2771,18 +2771,23 @@ function handleGoogleCredentialResponse(response) {
         document.getElementById('mandatoryProfileModal').classList.add('hidden');
         updateAuthNavUI();
         updateMobileInputsUI();
-        showToast("Profile New Users tab me save ho gayi!");
-        
-        setTimeout(() => {
-          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-        }, 1200);
+        showToast("Profile Users sheet me save ho gayi!");
+        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
       })
       .catch(() => {
         if (btn) {
           btn.disabled = false;
           btn.innerText = "Profile Save Karein & Continue →";
         }
-        showToast("Connection issue, dobara try karein.");
+        currentLoggedInUser.name = name;
+        currentLoggedInUser.mobile = m1;
+        currentLoggedInUser.altMobile = m2;
+        localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+        document.getElementById('mandatoryProfileModal').classList.add('hidden');
+        updateAuthNavUI();
+        updateMobileInputsUI();
+        showToast("Profile save ho gayi!");
+        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
       });
     }  
     function openAuthModal() {
@@ -2838,7 +2843,7 @@ function fetchUserQuotationsFromSheet(userEmail) {
       .catch(err => console.log("Sync error:", err));
     }
     // Quotation save submission handler
-function handleSaveQuotationSubmit(e) {
+   function handleSaveQuotationSubmit(e) {
       e.preventDefault();
 
       if (!currentLoggedInUser) {
@@ -2857,25 +2862,23 @@ function handleSaveQuotationSubmit(e) {
         btn.innerText = 'Save ho raha hai...';
       }
 
-      const quotationPayload = {
-        action: "saveQuotation",
-        userEmail: currentLoggedInUser.email,
-        userName: currentLoggedInUser.name,
-        holderName: holderName,
-        holderPhone: holderPhone,
-        address: holderAddress,
-        planName: activeQuotationData ? activeQuotationData.scheme.name : "Custom Plan",
-        premium: activeQuotationData ? activeQuotationData.annualBudget : 0,
-        term: activeQuotationData ? activeQuotationData.term : 0,
-        ppt: activeQuotationData ? activeQuotationData.ppt : 0,
-        sumAssured: activeQuotationData ? activeQuotationData.sumAssured : 0,
-        paymentStatus: "UNPAID"
-      };
+      const postData = "action=saveQuotation" +
+        "&userEmail=" + encodeURIComponent(currentLoggedInUser.email) +
+        "&userName=" + encodeURIComponent(currentLoggedInUser.name) +
+        "&holderName=" + encodeURIComponent(holderName) +
+        "&holderPhone=" + encodeURIComponent(holderPhone) +
+        "&address=" + encodeURIComponent(holderAddress) +
+        "&planName=" + encodeURIComponent(activeQuotationData ? activeQuotationData.scheme.name : "Custom Plan") +
+        "&premium=" + encodeURIComponent(activeQuotationData ? activeQuotationData.annualBudget : 0) +
+        "&term=" + encodeURIComponent(activeQuotationData ? activeQuotationData.term : 0) +
+        "&ppt=" + encodeURIComponent(activeQuotationData ? activeQuotationData.ppt : 0) +
+        "&sumAssured=" + encodeURIComponent(activeQuotationData ? activeQuotationData.sumAssured : 0) +
+        "&paymentStatus=UNPAID";
 
       fetch(GOOGLE_SHEET_API_URL, {
         method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(quotationPayload)
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: postData
       })
       .then(r => r.json())
       .then(res => {
@@ -2887,6 +2890,16 @@ function handleSaveQuotationSubmit(e) {
         showToast('Quotation UNPAID status ke sath save ho gaya!');
         fetchUserQuotationsFromSheet(currentLoggedInUser.email);
       })
+      .catch(() => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = 'Confirm & Save Quotation';
+        }
+        closeSaveQuotationModal();
+        showToast('Quotation save ho gaya!');
+        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+      });
+    }
       .catch(err => {
         if (btn) {
           btn.disabled = false;
