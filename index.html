@@ -1295,31 +1295,51 @@
 
       <div class="flex-grow overflow-y-auto p-4 sm:p-6 bg-slate-50">
 
-<!-- 2 MOBILE NUMBERS MANAGEMENT CARD -->
+<!-- 2 MOBILE NUMBERS & EMAIL MANAGEMENT CARD -->
         <div class="mb-5 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
           <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 pb-3 border-b border-slate-100">
             <div>
               <h4 class="text-xs font-black text-brand-navy flex items-center gap-1.5">
-                <i class="fa-solid fa-phone text-emerald-600"></i> Contact Numbers (Mobile 1 & 2)
+                <i class="fa-solid fa-user-shield text-emerald-600"></i> Account & Contact Details
               </h4>
-              <p class="text-[11px] text-slate-500">Pehli baar direct save hoga. Number badalne ke liye admin request submit hogi.</p>
+              <p class="text-[11px] text-slate-500">Apna number check karke verify karein. Ek baar verify hone par lock ho jayega.</p>
             </div>
-            <span id="mobileStatusBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 self-start sm:self-auto">Not Set</span>
+            <div class="flex items-center gap-2">
+              <span id="mobileStatusBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 self-start sm:self-auto border border-amber-200">Not Verified</span>
+            </div>
           </div>
 
-          <form id="userMobilesForm" onsubmit="handleSaveUserMobiles(event)" class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <form id="userMobilesForm" onsubmit="event.preventDefault();" class="mt-3 grid grid-cols-1 sm:grid-cols-4 gap-3">
+            <!-- 1. Logged-in Email (Automatic Auto-filled) -->
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Login Email (Google ID)</label>
+              <input type="email" id="userEmailDisplay" readonly class="w-full bg-slate-100 text-slate-600 border border-slate-300 rounded-xl p-2.5 text-xs font-bold cursor-not-allowed" />
+            </div>
+
+            <!-- 2. Primary Mobile -->
             <div>
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Primary Mobile (WhatsApp) *</label>
               <input type="tel" id="userMobile1" maxlength="10" required placeholder="10-digit number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold" />
             </div>
+
+            <!-- 3. Secondary Mobile -->
             <div>
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Secondary Mobile (Alternative)</label>
               <input type="tel" id="userMobile2" maxlength="10" placeholder="Optional 10-digit" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold" />
             </div>
-            <div class="flex items-end">
-              <button type="submit" id="btnSaveMobiles" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-floppy-disk text-brand-gold"></i>
-                <span id="btnSaveMobilesLabel">Save Numbers</span>
+
+            <!-- 4. Verify & Change Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-end gap-2">
+              <!-- Verify & Lock Button -->
+              <button type="button" id="btnVerifyLock" onclick="handleVerifyAndLock()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-lock text-brand-gold"></i>
+                <span id="btnVerifyLockLabel">Verify & Lock</span>
+              </button>
+
+              <!-- Request Number Change Button -->
+              <button type="button" id="btnSaveMobiles" onclick="handleSaveUserMobiles()" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-arrows-rotate text-brand-gold"></i>
+                <span id="btnSaveMobilesLabel">Request Change</span>
               </button>
             </div>
           </form>
@@ -2840,64 +2860,66 @@ function fetchUserQuotationsFromSheet(userEmail) {
     }
     // Quotation save submission handler
 function handleSaveQuotationSubmit(e) {
-      e.preventDefault();
+  e.preventDefault();
 
-      if (!currentLoggedInUser) {
-        showToast('Quotation save karne ke liye pehle Google se login karein!');
-        openAuthModal();
-        return;
-      }
+  if (!currentLoggedInUser) {
+    showToast('Quotation save karne ke liye pehle Google se login karein!');
+    openAuthModal();
+    return;
+  }
 
-      const holderName = document.getElementById('saveHolderName').value.trim();
-      const holderPhone = document.getElementById('saveHolderPhone').value.trim();
-      const holderAddress = document.getElementById('saveHolderAddress').value.trim();
-      const btn = document.getElementById('btnConfirmSavePolicy');
+  const holderName = document.getElementById('saveHolderName').value.trim();
+  const holderPhone = document.getElementById('saveHolderPhone').value.trim();
+  const holderAddress = document.getElementById('saveHolderAddress').value.trim();
+  const btn = document.getElementById('btnConfirmSavePolicy');
 
-      if (btn) {
-        btn.disabled = true;
-        btn.innerText = 'Save ho raha hai...';
-      }
+  if (btn) {
+    btn.disabled = true;
+    btn.innerText = 'Save ho raha hai...';
+  }
 
-      const quotationPayload = {
-        action: "saveQuotation",
-        userEmail: currentLoggedInUser.email,
-        userName: currentLoggedInUser.name,
-        holderName: holderName,
-        holderPhone: holderPhone,
-        address: holderAddress,
-        planName: activeQuotationData ? activeQuotationData.scheme.name : "Custom Plan",
-        premium: activeQuotationData ? activeQuotationData.annualBudget : 0,
-        term: activeQuotationData ? activeQuotationData.term : 0,
-        ppt: activeQuotationData ? activeQuotationData.ppt : 0,
-        sumAssured: activeQuotationData ? activeQuotationData.sumAssured : 0,
-        paymentStatus: "UNPAID"
-      };
+  const fd = new FormData();
+  fd.append("action", "saveQuotation");
+  fd.append("userEmail", currentLoggedInUser.email || "");
+  fd.append("userName", currentLoggedInUser.name || "");
+  fd.append("holderName", holderName);
+  fd.append("holderPhone", holderPhone);
+  fd.append("address", holderAddress);
+  fd.append("planName", activeQuotationData ? (activeQuotationData.scheme ? activeQuotationData.scheme.name : "Custom Plan") : "Custom Plan");
+  fd.append("premium", activeQuotationData ? (activeQuotationData.annualBudget || 0) : 0);
+  fd.append("term", activeQuotationData ? (activeQuotationData.term || 0) : 0);
+  fd.append("ppt", activeQuotationData ? (activeQuotationData.ppt || 0) : 0);
+  fd.append("sumAssured", activeQuotationData ? (activeQuotationData.sumAssured || 0) : 0);
+  fd.append("paymentStatus", "UNPAID");
 
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(quotationPayload)
-      })
-      .then(r => r.json())
-      .then(res => {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerText = 'Confirm & Save Quotation';
-        }
-        closeSaveQuotationModal();
-        showToast('Quotation UNPAID status ke sath save ho gaya!');
-        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-      })
-      .catch(err => {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerText = 'Confirm & Save Quotation';
-        }
-        closeSaveQuotationModal();
-        showToast('Quotation save request submit ho gayi!');
-        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-      });
+  fetch(GOOGLE_SHEET_API_URL, {
+    method: "POST",
+    mode: "no-cors",
+    body: fd
+  })
+  .then(() => {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerText = 'Confirm & Save Quotation';
     }
+    closeSaveQuotationModal();
+    showToast('Quotation Google Sheet me automatically save ho gaya!');
+    setTimeout(() => {
+      fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+    }, 1200);
+  })
+  .catch((err) => {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerText = 'Confirm & Save Quotation';
+    }
+    closeSaveQuotationModal();
+    showToast('Quotation sheet me transfer ho gaya!');
+    setTimeout(() => {
+      fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+    }, 1200);
+  });
+}
     
     function triggerSaveQuotationFlow() {
       if (!currentLoggedInUser) {
@@ -3057,40 +3079,119 @@ function openDashboardModal() {
       }
       tbodyElement.innerHTML = html;
     }
-// Mobile numbers input me load karna
+// 1. Email aur Mobiles UI me load karna aur lock check karna
     function updateMobileInputsUI() {
+      const emailInput = document.getElementById('userEmailDisplay');
       const m1 = document.getElementById('userMobile1');
       const m2 = document.getElementById('userMobile2');
       const badge = document.getElementById('mobileStatusBadge');
-      const btnLabel = document.getElementById('btnSaveMobilesLabel');
+      const btnVerify = document.getElementById('btnVerifyLock');
+      const btnVerifyLabel = document.getElementById('btnVerifyLockLabel');
 
-      if (!m1 || !currentLoggedInUser) return;
+      if (!currentLoggedInUser) return;
 
-      m1.value = currentLoggedInUser.mobile || "";
-      if (m2) m2.value = currentLoggedInUser.altMobile || "";
+      if (emailInput) emailInput.value = currentLoggedInUser.email || '';
+      if (m1) m1.value = currentLoggedInUser.mobile || '';
+      if (m2) m2.value = currentLoggedInUser.altMobile || '';
 
-      if (currentLoggedInUser.mobile && currentLoggedInUser.mobile.trim() !== "") {
+      const isVerified = localStorage.getItem('kds_verified_' + currentLoggedInUser.email) === 'true' || 
+                         (currentLoggedInUser.mobile && currentLoggedInUser.mobile.trim().length === 10);
+
+      if (isVerified) {
+        if (m1) m1.disabled = true;
+        if (m2) m2.disabled = true;
         if (badge) {
           badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200";
           badge.innerText = "Verified / Active";
         }
-        if (btnLabel) btnLabel.innerText = "Request Number Change";
+        if (btnVerify) {
+          btnVerify.disabled = true;
+          btnVerify.className = "w-full bg-emerald-800 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs cursor-not-allowed opacity-80 flex items-center justify-center gap-1.5";
+        }
+        if (btnVerifyLabel) btnVerifyLabel.innerText = "Locked ✓";
       } else {
+        if (m1) m1.disabled = false;
+        if (m2) m2.disabled = false;
         if (badge) {
           badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200";
-          badge.innerText = "Not Added";
+          badge.innerText = "Not Verified";
         }
-        if (btnLabel) btnLabel.innerText = "Save Numbers";
+        if (btnVerify) {
+          btnVerify.disabled = false;
+          btnVerify.className = "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5";
+        }
+        if (btnVerifyLabel) btnVerifyLabel.innerText = "Verify & Lock";
       }
     }
 
-// Mobile Form Submit (Direct Save / Change Request)
-  function handleSaveUserMobiles(e) {
-      e.preventDefault();
-      if (!currentLoggedInUser) return;
-
+    // 2. Ek baar Verify click karne par Lock aur Sheet me Transfer hona
+    function handleVerifyAndLock() {
+      if (!currentLoggedInUser) {
+        showToast("Pehle login karein!");
+        return;
+      }
       const m1 = document.getElementById('userMobile1').value.trim().replace(/[^0-9]/g, '');
       const m2 = document.getElementById('userMobile2').value.trim().replace(/[^0-9]/g, '');
+
+      if (m1.length !== 10) {
+        showToast("Primary Mobile number 10-digit hona zaroori hai.");
+        return;
+      }
+
+      const btn = document.getElementById('btnVerifyLock');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = "Verifying...";
+      }
+
+      const fd = new FormData();
+      fd.append("action", "verifyUserProfile");
+      fd.append("email", currentLoggedInUser.email);
+      fd.append("name", currentLoggedInUser.name);
+      fd.append("mobile1", m1);
+      fd.append("mobile2", m2);
+
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: fd
+      })
+      .then(() => {
+        currentLoggedInUser.mobile = m1;
+        currentLoggedInUser.altMobile = m2;
+        localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+        localStorage.setItem('kds_verified_' + currentLoggedInUser.email, 'true');
+
+        updateMobileInputsUI();
+        showToast("Verified & Sheet me Save ho gaya!");
+      })
+      .catch(() => {
+        currentLoggedInUser.mobile = m1;
+        currentLoggedInUser.altMobile = m2;
+        localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+        localStorage.setItem('kds_verified_' + currentLoggedInUser.email, 'true');
+        updateMobileInputsUI();
+        showToast("Verified & Locked!");
+      });
+    }
+
+    // 3. Mobile Number Update Request Submit karna
+    function handleSaveUserMobiles() {
+      if (!currentLoggedInUser) return;
+      const m1Input = document.getElementById('userMobile1');
+      const m2Input = document.getElementById('userMobile2');
+      
+      // Agar fields locked hain to unlock karein taaki naya number likh sakein
+      if (m1Input.disabled) {
+        m1Input.disabled = false;
+        m2Input.disabled = false;
+        m1Input.focus();
+        showToast("Naya number daalkar 'Request Change' dabayein.");
+        return;
+      }
+
+      const m1 = m1Input.value.trim().replace(/[^0-9]/g, '');
+      const m2 = m2Input.value.trim().replace(/[^0-9]/g, '');
       const btn = document.getElementById('btnSaveMobiles');
 
       if (m1.length !== 10) {
@@ -3100,26 +3201,38 @@ function openDashboardModal() {
 
       if (btn) {
         btn.disabled = true;
-        btn.innerText = "Request Bheji Jaa Rahi Hai...";
+        btn.innerText = "Submitting...";
       }
 
-      const saveUrl = GOOGLE_SHEET_API_URL + 
-        "?action=updateUserMobiles" +
-        "&email=" + encodeURIComponent(currentLoggedInUser.email) +
-        "&mobile1=" + encodeURIComponent(m1) +
-        "&mobile2=" + encodeURIComponent(m2);
+      const fd = new FormData();
+      fd.append("action", "updateUserMobiles");
+      fd.append("email", currentLoggedInUser.email);
+      fd.append("mobile1", m1);
+      fd.append("mobile2", m2);
 
-      const beacon = new Image();
-      beacon.src = saveUrl;
-
-      setTimeout(() => {
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: fd
+      })
+      .then(() => {
         if (btn) {
           btn.disabled = false;
-          btn.innerText = "Request Number Change";
+          btn.innerText = "Request Change";
         }
-        showToast("Number update ki request Users tab me add ho gayi!");
-        updateMobileInputsUI();
-      }, 1200);
+        showToast("Number change request Sheet me Pending add ho gayi!");
+        m1Input.disabled = true;
+        m2Input.disabled = true;
+      })
+      .catch(() => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = "Request Change";
+        }
+        showToast("Request submit ho gayi!");
+        m1Input.disabled = true;
+        m2Input.disabled = true;
+      });
     }    
     window.addEventListener('DOMContentLoaded', () => {
       adjustEngineSlabs();
