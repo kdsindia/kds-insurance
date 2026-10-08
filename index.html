@@ -2870,7 +2870,7 @@ function fetchUserQuotationsFromSheet(userEmail) {
       })
       .catch(err => console.log("Sync error:", err));
     }
-// 1. QUOTATION SAVE SUBMISSION (QUOTATIONS TAB - COL G & H SYNC)
+// 1. QUOTATION SAVE SUBMISSION (COLUMN G = LIC/MOTOR/HEALTH, COLUMN H = PLAN NAME)
     function handleSaveQuotationSubmit(e) {
       e.preventDefault();
 
@@ -2890,8 +2890,8 @@ function fetchUserQuotationsFromSheet(userEmail) {
         btn.innerText = 'Save ho raha hai...';
       }
 
-      // Column G ke liye category detect karein
-      let insCategory = "LIFE";
+      // Column G: Insurance Category
+      let insCategory = "LIC";
       const motorDiv = document.getElementById('motorInsurancePage');
       const healthDiv = document.getElementById('healthInsurancePage');
       if (motorDiv && !motorDiv.classList.contains('hidden')) {
@@ -2899,10 +2899,10 @@ function fetchUserQuotationsFromSheet(userEmail) {
       } else if (healthDiv && !healthDiv.classList.contains('hidden')) {
         insCategory = "HEALTH";
       } else if (typeof currentLifeTab !== 'undefined' && currentLifeTab === 'csc') {
-        insCategory = "CSC LIFE";
+        insCategory = "CSC";
       }
 
-      // Column H ke liye plan name
+      // Column H: Plan Name
       let pName = "Insurance Plan";
       let pPrem = 0;
       let pTerm = 0;
@@ -2921,7 +2921,6 @@ function fetchUserQuotationsFromSheet(userEmail) {
         pSum = activeQuotationData.sumAssured || 0;
       }
 
-      // Category 'insCategory' Col G me jayegi aur 'planName' Col H me jayega
       const sendUrl = GOOGLE_SHEET_API_URL + 
         "?action=saveQuotation" +
         "&userEmail=" + encodeURIComponent(currentLoggedInUser.email || "") +
@@ -3079,7 +3078,7 @@ function fetchUserQuotationsFromSheet(userEmail) {
             '<div class="text-[10px] text-slate-400 truncate max-w-[140px]">' + (item.address || '') + '</div>' +
           '</td>' +
           '<td class="p-3">' +
-            '<div class="font-black text-brand-navy">' + (item.planName || 'Insurance Plan') + '</div>' +
+            '<div class="font-black text-brand-navy">' + (item.insuranceType ? `<span class="bg-blue-100 text-brand-navy text-[10px] px-1.5 py-0.5 rounded font-black mr-1">${item.insuranceType}</span>` : '') + (item.planName || 'Insurance Plan') + '</div>' +
           '</td>' +
           '<td class="p-3 font-black text-slate-900 text-xs">' +
             '₹ ' + Number(item.premium || 0).toLocaleString('en-IN') + '<span class="text-[10px] font-normal text-slate-500">/Yr</span>' +
@@ -3153,7 +3152,7 @@ function fetchUserQuotationsFromSheet(userEmail) {
       }
     }
 
-    // 3. VERIFY & LOCK BUTTON (USERS TAB ME DIRECT SAVE)
+    // 3. VERIFY & LOCK BUTTON
     function handleVerifyAndLock() {
       if (!currentLoggedInUser) {
         showToast("Pehle login karein!");
@@ -3174,7 +3173,7 @@ function fetchUserQuotationsFromSheet(userEmail) {
       }
 
       const targetUrl = GOOGLE_SHEET_API_URL + 
-        "?action=verifyUserProfile" +
+        "?action=updateUserMobiles" +
         "&email=" + encodeURIComponent(currentLoggedInUser.email) +
         "&name=" + encodeURIComponent(currentLoggedInUser.name) +
         "&mobile1=" + encodeURIComponent(m1) +
@@ -3190,11 +3189,11 @@ function fetchUserQuotationsFromSheet(userEmail) {
         localStorage.setItem('kds_verified_' + currentLoggedInUser.email, 'true');
 
         updateMobileInputsUI();
-        showToast("Verified & Users sheet me data transfer ho gaya!");
+        showToast("Verified & Sheet me Save ho gaya!");
       }, 1000);
     }
 
-    // 4. REQUEST NUMBER CHANGE (USERS TAB KE COLUMNS 6 & 7 ME PENDING STATUS)
+    // 4. REQUEST NUMBER CHANGE
     function handleSaveUserMobiles() {
       if (!currentLoggedInUser) return;
       const m1Input = document.getElementById('userMobile1');
@@ -3237,7 +3236,7 @@ function fetchUserQuotationsFromSheet(userEmail) {
           btn.disabled = false;
           btn.innerText = "Request Change";
         }
-        showToast("Number change request Users tab me add ho gayi!");
+        showToast("Number change request Sheet me Pending add ho gayi!");
         m1Input.disabled = true;
         m2Input.disabled = true;
       }, 1000);
