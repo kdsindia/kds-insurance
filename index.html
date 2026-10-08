@@ -2746,19 +2746,20 @@ function handleGoogleCredentialResponse(response) {
         btn.innerText = "Users Sheet me save ho raha hai...";
       }
 
-      const postData = "action=saveUserProfile" +
-        "&email=" + encodeURIComponent(currentLoggedInUser.email) +
-        "&name=" + encodeURIComponent(name) +
-        "&mobile1=" + encodeURIComponent(m1) +
-        "&mobile2=" + encodeURIComponent(m2);
+      // FormData direct sheet me submit hota hai bina ruke
+      const formData = new FormData();
+      formData.append("action", "saveUserProfile");
+      formData.append("email", currentLoggedInUser.email);
+      formData.append("name", name);
+      formData.append("mobile1", m1);
+      formData.append("mobile2", m2);
 
       fetch(GOOGLE_SHEET_API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: postData
+        mode: "no-cors",
+        body: formData
       })
-      .then(r => r.json())
-      .then(res => {
+      .then(() => {
         if (btn) {
           btn.disabled = false;
           btn.innerText = "Profile Save Karein & Continue →";
@@ -2771,23 +2772,18 @@ function handleGoogleCredentialResponse(response) {
         document.getElementById('mandatoryProfileModal').classList.add('hidden');
         updateAuthNavUI();
         updateMobileInputsUI();
-        showToast("Profile Users sheet me save ho gayi!");
-        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+        showToast("Profile Users tab me save ho gayi!");
+        
+        setTimeout(() => {
+          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+        }, 1000);
       })
       .catch(() => {
         if (btn) {
           btn.disabled = false;
           btn.innerText = "Profile Save Karein & Continue →";
         }
-        currentLoggedInUser.name = name;
-        currentLoggedInUser.mobile = m1;
-        currentLoggedInUser.altMobile = m2;
-        localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-        document.getElementById('mandatoryProfileModal').classList.add('hidden');
-        updateAuthNavUI();
-        updateMobileInputsUI();
-        showToast("Profile save ho gayi!");
-        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+        showToast("Dobara try karein.");
       });
     }  
     function openAuthModal() {
@@ -2843,7 +2839,7 @@ function fetchUserQuotationsFromSheet(userEmail) {
       .catch(err => console.log("Sync error:", err));
     }
     // Quotation save submission handler
-   function handleSaveQuotationSubmit(e) {
+function handleSaveQuotationSubmit(e) {
       e.preventDefault();
 
       if (!currentLoggedInUser) {
@@ -2862,23 +2858,25 @@ function fetchUserQuotationsFromSheet(userEmail) {
         btn.innerText = 'Save ho raha hai...';
       }
 
-      const postData = "action=saveQuotation" +
-        "&userEmail=" + encodeURIComponent(currentLoggedInUser.email) +
-        "&userName=" + encodeURIComponent(currentLoggedInUser.name) +
-        "&holderName=" + encodeURIComponent(holderName) +
-        "&holderPhone=" + encodeURIComponent(holderPhone) +
-        "&address=" + encodeURIComponent(holderAddress) +
-        "&planName=" + encodeURIComponent(activeQuotationData ? activeQuotationData.scheme.name : "Custom Plan") +
-        "&premium=" + encodeURIComponent(activeQuotationData ? activeQuotationData.annualBudget : 0) +
-        "&term=" + encodeURIComponent(activeQuotationData ? activeQuotationData.term : 0) +
-        "&ppt=" + encodeURIComponent(activeQuotationData ? activeQuotationData.ppt : 0) +
-        "&sumAssured=" + encodeURIComponent(activeQuotationData ? activeQuotationData.sumAssured : 0) +
-        "&paymentStatus=UNPAID";
+      const quotationPayload = {
+        action: "saveQuotation",
+        userEmail: currentLoggedInUser.email,
+        userName: currentLoggedInUser.name,
+        holderName: holderName,
+        holderPhone: holderPhone,
+        address: holderAddress,
+        planName: activeQuotationData ? activeQuotationData.scheme.name : "Custom Plan",
+        premium: activeQuotationData ? activeQuotationData.annualBudget : 0,
+        term: activeQuotationData ? activeQuotationData.term : 0,
+        ppt: activeQuotationData ? activeQuotationData.ppt : 0,
+        sumAssured: activeQuotationData ? activeQuotationData.sumAssured : 0,
+        paymentStatus: "UNPAID"
+      };
 
       fetch(GOOGLE_SHEET_API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: postData
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(quotationPayload)
       })
       .then(r => r.json())
       .then(res => {
@@ -2890,16 +2888,6 @@ function fetchUserQuotationsFromSheet(userEmail) {
         showToast('Quotation UNPAID status ke sath save ho gaya!');
         fetchUserQuotationsFromSheet(currentLoggedInUser.email);
       })
-      .catch(() => {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerText = 'Confirm & Save Quotation';
-        }
-        closeSaveQuotationModal();
-        showToast('Quotation save ho gaya!');
-        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-      });
-    }
       .catch(err => {
         if (btn) {
           btn.disabled = false;
@@ -3097,7 +3085,7 @@ function openDashboardModal() {
     }
 
 // Mobile Form Submit (Direct Save / Change Request)
-function handleSaveUserMobiles(e) {
+  function handleSaveUserMobiles(e) {
       e.preventDefault();
       if (!currentLoggedInUser) return;
 
@@ -3115,32 +3103,23 @@ function handleSaveUserMobiles(e) {
         btn.innerText = "Request Bheji Jaa Rahi Hai...";
       }
 
-      const postData = "action=updateUserMobiles" +
+      const saveUrl = GOOGLE_SHEET_API_URL + 
+        "?action=updateUserMobiles" +
         "&email=" + encodeURIComponent(currentLoggedInUser.email) +
         "&mobile1=" + encodeURIComponent(m1) +
         "&mobile2=" + encodeURIComponent(m2);
 
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: postData
-      })
-      .then(r => r.json())
-      .then(res => {
+      const beacon = new Image();
+      beacon.src = saveUrl;
+
+      setTimeout(() => {
         if (btn) {
           btn.disabled = false;
           btn.innerText = "Request Number Change";
         }
         showToast("Number update ki request Users tab me add ho gayi!");
         updateMobileInputsUI();
-      })
-      .catch(() => {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerText = "Request Number Change";
-        }
-        showToast("Request bhej di gayi hai!");
-      });
+      }, 1200);
     }    
     window.addEventListener('DOMContentLoaded', () => {
       adjustEngineSlabs();
