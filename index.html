@@ -1155,6 +1155,34 @@
     <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
     <span id="toastMessage">Success</span>
   </div>
+<!-- COMPULSORY PROFILE SETUP MODAL -->
+  <div id="mandatoryProfileModal" class="fixed inset-0 z-[999] bg-slate-950/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border-2 border-brand-gold p-6 text-center">
+      <div class="w-14 h-14 rounded-2xl bg-brand-navy text-brand-gold mx-auto flex items-center justify-center text-2xl font-black shadow-md mb-2">
+        <i class="fa-solid fa-id-card"></i>
+      </div>
+      <h3 class="text-xl font-black text-brand-navy">Profile Setup Zaroori Hai</h3>
+      <p class="text-xs text-slate-500 mt-1">Aage badhne ke liye kripya apna pura naam aur mobile number darj karein.</p>
+
+      <form id="mandatoryProfileForm" onsubmit="handleMandatoryProfileSubmit(event)" class="mt-4 space-y-3 text-left text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Aapka Pura Naam *</label>
+          <input type="text" id="setupUserName" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Primary Mobile (WhatsApp) *</label>
+          <input type="tel" id="setupUserMobile1" maxlength="10" required placeholder="10-digit number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Secondary Mobile (Alternative)</label>
+          <input type="tel" id="setupUserMobile2" maxlength="10" placeholder="Optional 10-digit" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-bold" />
+        </div>
+        <button type="submit" id="btnSubmitProfile" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3 rounded-xl text-sm transition shadow mt-2">
+          Profile Save Karein & Continue &rarr;
+        </button>
+      </form>
+    </div>
+  </div>
 
   <!-- 1. GOOGLE LOGIN MODAL -->
   <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
@@ -2607,6 +2635,9 @@
       if (savedUser) {
         currentLoggedInUser = JSON.parse(savedUser);
         updateAuthNavUI();
+        if (!currentLoggedInUser.mobile || currentLoggedInUser.mobile.trim() === "") {
+          openMandatoryProfileModal(currentLoggedInUser.name);
+        }
       }
     }
 
@@ -2659,25 +2690,98 @@ function handleGoogleCredentialResponse(response) {
       };
 
       localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-      showToast('Swagat hai, ' + currentLoggedInUser.name + '!');
       closeAuthModal();
       updateAuthNavUI();
 
-      // Users sheet me check karega: duplicate nahi hone dega aur purane mobile fetch karega
-      fetch(GOOGLE_SHEET_API_URL + "?action=checkOrRegisterUser&email=" + encodeURIComponent(currentLoggedInUser.email) + "&name=" + encodeURIComponent(currentLoggedInUser.name))
+      // Check status in sheet: agar profile adhuri hai toh compulsory popup khulega
+      fetch(GOOGLE_SHEET_API_URL + "?action=checkUserStatus&email=" + encodeURIComponent(currentLoggedInUser.email))
         .then(r => r.json())
         .then(res => {
           if (res && res.status === "success") {
-            if (res.mobile1) currentLoggedInUser.mobile = res.mobile1;
-            if (res.mobile2) currentLoggedInUser.altMobile = res.mobile2;
-            localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-            updateMobileInputsUI();
+            if (!res.hasProfile) {
+              openMandatoryProfileModal(currentLoggedInUser.name);
+            } else {
+              currentLoggedInUser.name = res.user.name || currentLoggedInUser.name;
+              currentLoggedInUser.mobile = res.user.mobile || '';
+              currentLoggedInUser.altMobile = res.user.altMobile || '';
+              localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+              updateAuthNavUI();
+              updateMobileInputsUI();
+              showToast('Swagat hai, ' + currentLoggedInUser.name + '!');
+              fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+            }
           }
-          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
         })
         .catch(() => {
-          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+          openMandatoryProfileModal(currentLoggedInUser.name);
         });
+    }
+
+    function openMandatoryProfileModal(defName) {
+      const m = document.getElementById('mandatoryProfileModal');
+      const n = document.getElementById('setupUserName');
+      if (n) n.value = defName || '';
+      if (m) m.classList.remove('hidden');
+    }
+
+    function handleMandatoryProfileSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('setupUserName').value.trim();
+      const m1 = document.getElementById('setupUserMobile1').value.trim();
+      const m2 = document.getElementById('setupUserMobile2').value.trim();
+      const btn = document.getElementById('btnSubmitProfile');
+
+      if (m1.length !== 10) {
+        showToast("Kripya sahi 10-digit mobile number bharein.");
+        return;
+      }
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = "Saving Profile...";
+      }
+
+      const payload = {
+        action: "saveUserProfile",
+        email: currentLoggedInUser.email,
+        name: name,
+        mobile1: m1,
+        mobile2: m2
+      };
+
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = "Profile Save Karein & Continue →";
+        }
+        if (res && res.status === "success") {
+          currentLoggedInUser.name = name;
+          currentLoggedInUser.mobile = m1;
+          currentLoggedInUser.altMobile = m2;
+          localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+
+          document.getElementById('mandatoryProfileModal').classList.add('hidden');
+          updateAuthNavUI();
+          updateMobileInputsUI();
+          showToast("Profile complete ho gayi! Swagat hai " + name);
+          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+        } else {
+          showToast("Profile save nahi hui. Dobara try karein.");
+        }
+      })
+      .catch(() => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = "Profile Save Karein & Continue →";
+        }
+        showToast("Server error. Dobara prayas karein.");
+      });
     }  
     function openAuthModal() {
       document.getElementById('authModal').classList.remove('hidden');
@@ -2770,35 +2874,33 @@ function handleSaveQuotationSubmit(e) {
         premium: activeQuotationData ? activeQuotationData.annualBudget : 0,
         term: activeQuotationData ? activeQuotationData.term : 0,
         ppt: activeQuotationData ? activeQuotationData.ppt : 0,
-        sumAssured: activeQuotationData ? activeQuotationData.sumAssured : 0
+        sumAssured: activeQuotationData ? activeQuotationData.sumAssured : 0,
+        paymentStatus: "UNPAID"
       };
 
-      // no-cors mode se request bina freeze huye Google Sheet me turant save hoti hai
       fetch(GOOGLE_SHEET_API_URL, {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(quotationPayload)
       })
-      .then(() => {
+      .then(r => r.json())
+      .then(res => {
         if (btn) {
           btn.disabled = false;
           btn.innerText = 'Confirm & Save Quotation';
         }
         closeSaveQuotationModal();
-        showToast('Quotation kamyabi se save ho gaya!');
-        
-        // Sheet se updated dashboard list reload karein
-        setTimeout(() => {
-          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-        }, 1200);
+        showToast('Quotation UNPAID status ke sath save ho gaya!');
+        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
       })
       .catch(err => {
         if (btn) {
           btn.disabled = false;
           btn.innerText = 'Confirm & Save Quotation';
         }
-        showToast('Error: Kripya dobara koshish karein.');
+        closeSaveQuotationModal();
+        showToast('Quotation save request submit ho gayi!');
+        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
       });
     }
     
