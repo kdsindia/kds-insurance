@@ -1305,15 +1305,22 @@
               <h4 class="text-xs font-black text-brand-navy flex items-center gap-1.5">
                 <i class="fa-solid fa-user-shield text-emerald-600"></i> Account & Contact Details
               </h4>
-              <p class="text-[11px] text-slate-500">Apna number check karke verify karein. Ek baar verify hone par lock ho jayega.</p>
+              <p class="text-[11px] text-slate-500">Apna number check karein. Badalne par request admin approval ke liye submit hogi.</p>
             </div>
-            <div class="flex items-center gap-2">
-              <span id="mobileStatusBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 self-start sm:self-auto border border-amber-200">Not Verified</span>
+            
+            <!-- Live Status Badge & Refresh/Check Button -->
+            <div class="flex items-center gap-2 flex-wrap">
+              <span id="mobileStatusBadge" class="text-[11px] font-black px-3 py-1 rounded-xl bg-slate-100 text-slate-700 border border-slate-200 flex items-center gap-1">
+                Checking Status...
+              </span>
+              <button type="button" onclick="checkLiveMobileStatus()" class="bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 font-bold px-2.5 py-1 rounded-xl text-[10px] transition flex items-center gap-1" title="Click to refresh status from Sheet">
+                <i class="fa-solid fa-rotate text-xs"></i> Check Status
+              </button>
             </div>
           </div>
 
           <form id="userMobilesForm" onsubmit="event.preventDefault();" class="mt-3 grid grid-cols-1 sm:grid-cols-4 gap-3">
-            <!-- 1. Logged-in Email (Automatic Auto-filled) -->
+            <!-- 1. Logged-in Email -->
             <div>
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Login Email (Google ID)</label>
               <input type="email" id="userEmailDisplay" readonly class="w-full bg-slate-100 text-slate-600 border border-slate-300 rounded-xl p-2.5 text-xs font-bold cursor-not-allowed" />
@@ -1331,15 +1338,13 @@
               <input type="tel" id="userMobile2" maxlength="10" placeholder="Optional 10-digit" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold" />
             </div>
 
-            <!-- 4. Verify & Change Action Buttons -->
+            <!-- 4. Action Buttons -->
             <div class="flex flex-col sm:flex-row items-end gap-2">
-              <!-- Verify & Lock Button -->
               <button type="button" id="btnVerifyLock" onclick="handleVerifyAndLock()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
                 <i class="fa-solid fa-lock text-brand-gold"></i>
                 <span id="btnVerifyLockLabel">Verify & Lock</span>
               </button>
 
-              <!-- Request Number Change Button -->
               <button type="button" id="btnSaveMobiles" onclick="handleSaveUserMobiles()" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
                 <i class="fa-solid fa-arrows-rotate text-brand-gold"></i>
                 <span id="btnSaveMobilesLabel">Request Change</span>
@@ -3125,7 +3130,7 @@ function handleGoogleCredentialResponse(response) {
       tbodyElement.innerHTML = html;
     }
 
-// 2. DASHBOARD CONTACT & EMAIL DISPLAY (WITH LIVE PENDING/APPROVED STATUS)
+// 2. DASHBOARD CONTACT & EMAIL DISPLAY
     function updateMobileInputsUI() {
       const emailInput = document.getElementById('userEmailDisplay');
       const m1 = document.getElementById('userMobile1');
@@ -3140,30 +3145,16 @@ function handleGoogleCredentialResponse(response) {
       if (m1) m1.value = currentLoggedInUser.mobile || '';
       if (m2) m2.value = currentLoggedInUser.altMobile || '';
 
-      // Live Sheet Status check karein
-      const sheetStatus = (localStorage.getItem('kds_mob_status_' + currentLoggedInUser.email) || '').toLowerCase();
+      const isVerified = localStorage.getItem('kds_verified_' + currentLoggedInUser.email) === 'true' || 
+                         (currentLoggedInUser.mobile && currentLoggedInUser.mobile.trim().length === 10);
 
-      if (badge) {
-        if (sheetStatus.indexOf('pending') > -1) {
-          badge.className = "text-[10px] font-black px-2.5 py-1 rounded bg-amber-100 text-amber-900 border border-amber-300 animate-pulse";
-          badge.innerHTML = '<i class="fa-solid fa-clock-rotate-left mr-1"></i> Update Request: Pending';
-        } else if (sheetStatus.indexOf('approved') > -1 || sheetStatus.indexOf('accept') > -1) {
-          badge.className = "text-[10px] font-black px-2.5 py-1 rounded bg-emerald-100 text-emerald-900 border border-emerald-300";
-          badge.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> Number Updated & Approved';
-        } else if (currentLoggedInUser.mobile && currentLoggedInUser.mobile.trim().length === 10) {
-          badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200";
-          badge.innerText = "Verified / Active";
-        } else {
-          badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200";
-          badge.innerText = "Not Verified";
-        }
-      }
-
-      // Fields Lock Status
-      const isVerified = (currentLoggedInUser.mobile && currentLoggedInUser.mobile.trim().length === 10);
       if (isVerified) {
         if (m1) m1.disabled = true;
         if (m2) m2.disabled = true;
+        if (badge) {
+          badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200";
+          badge.innerText = "Verified / Active";
+        }
         if (btnVerify) {
           btnVerify.disabled = true;
           btnVerify.className = "w-full bg-emerald-800 text-slate-200 font-bold py-2.5 px-3 rounded-xl text-xs cursor-not-allowed opacity-80 flex items-center justify-center gap-1.5";
@@ -3172,6 +3163,10 @@ function handleGoogleCredentialResponse(response) {
       } else {
         if (m1) m1.disabled = false;
         if (m2) m2.disabled = false;
+        if (badge) {
+          badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200";
+          badge.innerText = "Not Verified";
+        }
         if (btnVerify) {
           btnVerify.disabled = false;
           btnVerify.className = "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5";
@@ -3268,7 +3263,8 @@ function handleGoogleCredentialResponse(response) {
         m1Input.disabled = true;
         m2Input.disabled = true;
       }, 1000);
-    }    
+    }
+    
     window.addEventListener('DOMContentLoaded', () => {
       adjustEngineSlabs();
       autoApplyRiders();
