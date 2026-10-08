@@ -97,7 +97,10 @@
 
   <!-- Official Google Identity Services SDK -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-
+<!-- Firebase App & Authentication SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  
   <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -2700,6 +2703,16 @@ function handleGoogleCredentialResponse(response) {
         return;
       }
 
+      // Firebase Console me User ID add karne ke liye
+      try {
+        if (typeof firebase !== 'undefined' && firebase.auth) {
+          const cred = firebase.auth.GoogleAuthProvider.credential(response.credential);
+          firebase.auth().signInWithCredential(cred).catch(err => console.log("Firebase sync note:", err));
+        }
+      } catch (fbErr) {
+        console.log("Firebase Auth:", fbErr);
+      }
+
       currentLoggedInUser = {
         name: payload.name || 'Client',
         email: payload.email,
@@ -2713,7 +2726,6 @@ function handleGoogleCredentialResponse(response) {
       closeAuthModal();
       updateAuthNavUI();
 
-      // Check status in sheet: agar profile adhuri hai toh compulsory popup khulega
       fetch(GOOGLE_SHEET_API_URL + "?action=checkUserStatus&email=" + encodeURIComponent(currentLoggedInUser.email))
         .then(r => r.json())
         .then(res => {
@@ -2858,7 +2870,7 @@ function fetchUserQuotationsFromSheet(userEmail) {
       })
       .catch(err => console.log("Sync error:", err));
     }
-// 1. QUOTATION SAVE SUBMISSION (QUOTATIONS TAB)
+// 1. QUOTATION SAVE SUBMISSION (QUOTATIONS TAB - COL G & H SYNC)
     function handleSaveQuotationSubmit(e) {
       e.preventDefault();
 
@@ -2878,6 +2890,19 @@ function fetchUserQuotationsFromSheet(userEmail) {
         btn.innerText = 'Save ho raha hai...';
       }
 
+      // Column G ke liye category detect karein
+      let insCategory = "LIFE";
+      const motorDiv = document.getElementById('motorInsurancePage');
+      const healthDiv = document.getElementById('healthInsurancePage');
+      if (motorDiv && !motorDiv.classList.contains('hidden')) {
+        insCategory = "MOTOR";
+      } else if (healthDiv && !healthDiv.classList.contains('hidden')) {
+        insCategory = "HEALTH";
+      } else if (typeof currentLifeTab !== 'undefined' && currentLifeTab === 'csc') {
+        insCategory = "CSC LIFE";
+      }
+
+      // Column H ke liye plan name
       let pName = "Insurance Plan";
       let pPrem = 0;
       let pTerm = 0;
@@ -2896,6 +2921,7 @@ function fetchUserQuotationsFromSheet(userEmail) {
         pSum = activeQuotationData.sumAssured || 0;
       }
 
+      // Category 'insCategory' Col G me jayegi aur 'planName' Col H me jayega
       const sendUrl = GOOGLE_SHEET_API_URL + 
         "?action=saveQuotation" +
         "&userEmail=" + encodeURIComponent(currentLoggedInUser.email || "") +
@@ -2903,6 +2929,7 @@ function fetchUserQuotationsFromSheet(userEmail) {
         "&holderName=" + encodeURIComponent(holderName) +
         "&holderPhone=" + encodeURIComponent(holderPhone) +
         "&address=" + encodeURIComponent(holderAddress) +
+        "&insuranceType=" + encodeURIComponent(insCategory) +
         "&planName=" + encodeURIComponent(pName) +
         "&premium=" + encodeURIComponent(pPrem) +
         "&term=" + encodeURIComponent(pTerm) +
@@ -2918,7 +2945,7 @@ function fetchUserQuotationsFromSheet(userEmail) {
           btn.innerText = 'Confirm & Save Quotation';
         }
         closeSaveQuotationModal();
-        showToast('Quotation Sheet me automatic save ho gaya!');
+        showToast('Quotation ' + insCategory + ' Category me save ho gaya!');
         fetchUserQuotationsFromSheet(currentLoggedInUser.email);
       }, 1200);
     }
