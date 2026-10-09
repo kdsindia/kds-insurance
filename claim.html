@@ -125,7 +125,7 @@
       </div>
       <div>
         <h3 class="font-black text-xl text-brand-navy">Client Verification Login</h3>
-        <p class="text-xs text-slate-500 mt-1">Claim portal access karne ke liye Google se login karein[cite: 14]!</p>
+        <p class="text-xs text-slate-500 mt-1">Claim portal access karne ke liye Google se login karein!</p>
       </div>
 
       <!-- Google Official Button Container -->
@@ -169,4 +169,579 @@
         </div>
       </button>
 
-      <button onclick="switchCategory('motor')" id="tab-motor" class="service-tab bg-white text-slate-800 p-4 rounded
+      <button onclick="switchCategory('motor')" id="tab-motor" class="service-tab bg-white text-slate-800 p-4 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-400 flex flex-col justify-between shadow-xs">
+        <i class="fa-solid fa-car text-emerald-600 text-2xl mb-3"></i>
+        <div>
+          <div class="font-black text-sm">Motor Insurance</div>
+          <div class="text-[11px] text-slate-500">Accident, Theft & Glass Damage</div>
+        </div>
+      </button>
+
+      <button onclick="switchCategory('health')" id="tab-health" class="service-tab bg-white text-slate-800 p-4 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-400 flex flex-col justify-between shadow-xs">
+        <i class="fa-solid fa-heart-pulse text-rose-600 text-2xl mb-3"></i>
+        <div>
+          <div class="font-black text-sm">Health Insurance</div>
+          <div class="text-[11px] text-slate-500">Cashless & Hospital Bills</div>
+        </div>
+      </button>
+    </div>
+
+    <!-- MAIN TWO COLUMN GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- LEFT COLUMN: Guidelines & Required Docs -->
+      <div class="lg:col-span-1 bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span id="serviceBadge" class="bg-amber-100 text-amber-900 text-xs font-black uppercase px-2.5 py-1 rounded-md">LIC OF INDIA</span>
+            <span class="text-xs text-slate-400 font-bold"><i class="fa-solid fa-file-shield text-brand-gold"></i> Checklist</span>
+          </div>
+
+          <h3 id="serviceTitle" class="text-xl font-black text-brand-navy mb-2">Life (LIC) Claim Checklist</h3>
+          <p id="serviceDesc" class="text-xs text-slate-500 mb-6 leading-relaxed">
+            Maturity claim, money back returns, death claim aur bond loan ki aasan suvidha.
+          </p>
+
+          <h4 class="text-xs font-black text-slate-700 uppercase tracking-wider mb-3">Zaroori Dastawej (Documents):</h4>
+          <ul id="serviceDocs" class="space-y-3 text-xs text-slate-600">
+            <!-- Populated dynamically via JS -->
+          </ul>
+        </div>
+
+        <div class="mt-8 pt-5 border-t border-slate-100 bg-slate-50 -mx-6 sm:-mx-7 -mb-6 sm:-mb-7 p-6 rounded-b-3xl">
+          <div class="text-xs font-bold text-brand-navy flex items-center gap-2 mb-1.5">
+            <i class="fa-solid fa-headset text-brand-gold text-base"></i>
+            <span>Doorstep Document Verification</span>
+          </div>
+          <p class="text-[11px] text-slate-500 leading-normal">
+            Dastawej samajh na aaye toh form submit karein, hum WhatsApp par documents magwa lenge।
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Verification Card & Auto-Filled Claim Form -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- STEP 1: SHEET RECORD VERIFICATION CARD -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-sm">
+          <div class="flex items-center gap-2 text-brand-navy font-black text-sm uppercase tracking-wide mb-3">
+            <span class="w-6 h-6 rounded-full bg-brand-navy text-brand-gold text-xs flex items-center justify-center font-black">1</span>
+            Client Sheet Record Verification
+          </div>
+
+          <p class="text-xs text-slate-600 mb-4 font-medium">
+            Apna <strong>Policy Number</strong> ya sheet me darj <strong>Mobile Number</strong> dalkar verify karein[cite: 12]:
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-2.5">
+            <div class="relative flex-1">
+              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+              <input type="text" id="verifyInput" placeholder="eg. 167254505 ya 8104975523" 
+                class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-4 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-brand-navy uppercase" />
+            </div>
+            <button onclick="verifyClientFromSheet()" id="btnVerify" 
+              class="bg-brand-navy hover:bg-brand-lightBlue text-white font-black px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shadow shrink-0">
+              <i class="fa-solid fa-shield-check text-brand-gold"></i>
+              <span>Verify Karein</span>
+            </button>
+          </div>
+
+          <!-- Alert / Status Notice -->
+          <div id="verifyAlert" class="hidden mt-4 p-4 rounded-2xl text-xs font-bold"></div>
+        </div>
+
+        <!-- STEP 2: CLAIM REGISTRATION FORM (Sheet Verified Hone Par Khulega) -->
+        <form id="claimActualForm" onsubmit="handleClaimSubmission(event)" class="hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-sm space-y-5">
+          
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div class="flex items-center gap-2 text-brand-navy font-black text-sm uppercase tracking-wide">
+              <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs flex items-center justify-center font-black">2</span>
+              Claim Registration Form
+            </div>
+            <span class="text-xs bg-emerald-50 text-emerald-800 font-black px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-check text-emerald-600"></i> Sheet Verified
+            </span>
+          </div>
+
+          <!-- Master Data Auto-Populated Inputs -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+            <div class="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2.5">Auto-Retrieved Client Details (Read-only)</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 uppercase">Holder Name</label>
+                <input type="text" id="custName" readonly class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black text-brand-navy cursor-not-allowed" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 uppercase">Policy / Reg No</label>
+                <input type="text" id="custPolicy" readonly class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black text-brand-navy cursor-not-allowed" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 uppercase">Mobile Number</label>
+                <input type="text" id="custPhone" readonly class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 cursor-not-allowed" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 uppercase">Address / Gaon</label>
+                <input type="text" id="custAddress" readonly class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 cursor-not-allowed" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase">Current Product / Plan</label>
+                <input type="text" id="custProduct" readonly class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 cursor-not-allowed" />
+              </div>
+            </div>
+          </div>
+
+          <input type="hidden" id="selectedCategoryVal" value="Life (LIC)" />
+
+          <!-- Dynamic Claim Subtype Dropdown -->
+          <div>
+            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Claim Type / Prakar *</label>
+            <select id="claimSubType" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-navy">
+              <!-- Dynamically populated -->
+            </select>
+          </div>
+
+          <!-- Description Note -->
+          <div>
+            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Claim Vivaran / Ghatna (Description) *</label>
+            <textarea id="claimRemarks" rows="3" required placeholder="Ghatna ka samay, sthan, ya claim ke baare me thoda vivaran likhein..."
+              class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-brand-navy"></textarea>
+          </div>
+
+          <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 text-xs text-amber-900 flex items-start gap-2.5">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-0.5 text-sm shrink-0"></i>
+            <span>Yeh entry aapki workbook ki <strong>'Claim'</strong> sheet me save hogi aur humari team turant call karegi।</span>
+          </div>
+
+          <button type="submit" id="btnSubmitClaim" 
+            class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2">
+            <i class="fa-solid fa-paper-plane text-brand-gold"></i>
+            <span>Claim Sheet Me Darj Karein</span>
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ================= AGENT CONTACT BANNER ================= -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 w-full">
+    <section class="relative bg-gradient-to-r from-brand-dark via-brand-navy to-slate-950 rounded-3xl p-6 sm:p-10 text-white shadow-2xl overflow-hidden border-2 border-brand-gold/40">
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 space-y-4">
+          <div class="inline-flex items-center gap-2 bg-brand-gold text-brand-dark px-3 py-1 rounded-md text-xs font-black uppercase">
+            <i class="fa-solid fa-user-check"></i> CSC & Authorized Insurance Advisor
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-black tracking-tight leading-snug">
+            KDS INSURANCE CONSULTATION & CUSTOMER POINT
+          </h3>
+          <div class="bg-white/10 rounded-2xl p-4 border border-white/15 space-y-1.5 text-xs text-slate-200">
+            <p><strong class="text-brand-gold text-sm">MANOHER SINGH</strong> (Authorized Insurance Advisor)[cite: 12]</p>
+            <p><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i> <strong>Office Address:</strong> BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039[cite: 12]</p>
+            <p><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> <strong>Helpline:</strong> 8440096343 | LIC, CSC & General Insurance Guidance[cite: 12]</p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 text-center space-y-4">
+          <div class="w-16 h-16 rounded-full bg-brand-gold text-brand-dark mx-auto flex items-center justify-center text-2xl font-black shadow-lg">
+            <i class="fa-solid fa-phone-volume"></i>
+          </div>
+          <div>
+            <h4 class="font-extrabold text-lg text-white">Contact Manohar Singh</h4>
+            <p class="text-xs text-slate-300">कॉल या व्हाट्सएप पर सलाह लें / Call or WhatsApp[cite: 12]</p>
+          </div>
+          <div class="space-y-2.5">
+            <a href="tel:8440096343" class="w-full bg-white hover:bg-slate-100 text-brand-navy font-black py-3 px-4 rounded-xl text-sm transition shadow flex items-center justify-center gap-2">
+              <i class="fa-solid fa-phone text-brand-lightBlue"></i>
+              <span>Call: 8440096343</span>
+            </a>
+            <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20mujhe%20Claim%20Sahayata%20chahiye" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black py-3 px-4 rounded-xl text-sm transition shadow flex items-center justify-center gap-2">
+              <i class="fa-brands fa-whatsapp text-lg"></i>
+              <span>WhatsApp Chat</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= REGULATORY COMPLIANT FOOTER ================= -->
+  <footer class="bg-brand-dark text-slate-400 text-xs border-t border-brand-lightBlue/40 py-8 px-4 sm:px-6 lg:px-8 mt-12">
+    <div class="max-w-7xl mx-auto space-y-4">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+        <div>
+          <span class="text-lg font-black text-white">KDS <span class="text-brand-gold">INSURANCE</span> SERVICES</span>
+          <p class="text-slate-300 text-xs mt-0.5">Authorized Insurance Agent: <strong>MANOHER SINGH</strong> (Malwara, Raniwara)[cite: 12]</p>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-300 font-bold">
+          <a href="/" class="hover:text-brand-gold transition">Life (LIC)</a>
+          <a href="/" class="hover:text-brand-gold transition">Life (CSC/Other)</a>
+          <a href="/" class="hover:text-brand-gold transition">Motor Insurance</a>
+          <a href="/" class="hover:text-brand-gold transition">Health Insurance</a>
+          <a href="about.html" class="hover:text-brand-gold transition">About Us</a>
+        </div>
+      </div>
+
+      <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700/80 text-[11px] text-slate-300 leading-relaxed">
+        <p class="font-bold text-amber-400 mb-1">REGULATORY & STATUTORY DISCLAIMER (GOVT / IRDAI GUIDELINES):</p>
+        <p>
+          This is an informational facilitation portal operated by <strong>MANOHER SINGH</strong>, an authorized insurance advisor[cite: 12]. Life insurance illustrations shown at 4% & 8% conform to standard IRDAI projection guidelines and are not guaranteed[cite: 12]. Non-Participating CSC plans offer guaranteed income and 100%-110% Return of Premium[cite: 12]. Health insurance premiums, waiting periods for pre-existing diseases, sub-limits and room rent norms are strictly governed by the policy prospectus of the respective insurance company[cite: 12]. Motor third-party rates are notified under the Motor Vehicles Act, 1988 by MoRTH/IRDAI[cite: 12]. Tax benefits are subject to provisions under Section 80C, 80D, and 10(10D) of the Income Tax Act[cite: 12].
+        </p>
+      </div>
+
+      <div class="text-center text-slate-500 text-[11px] pt-2">
+        &copy; 2026 Manoher Singh (Authorized Insurance Agent) • All Rights Reserved.[cite: 12]
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= TOAST NOTIFICATION ================= -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 text-xs font-bold hidden flex items-center gap-3">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+    <span id="toastMessage">Success</span>
+  </div>
+
+  <!-- ================= JAVASCRIPT ENGINE ================= -->
+  <script>
+    // AAPKA NAYA APPS SCRIPT URL & GOOGLE CLIENT ID
+    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzSh9jQ_VuFtn3daHDIFetGRjtwbxnIZe_CqwL_S-0b3e5IqD3MUZL9KPzj13RJBfTq/exec";
+    const GOOGLE_CLIENT_ID = "418446717578-9241s3h4pc44agohfkc8t2ift9jtpfau.apps.googleusercontent.com";
+
+    let currentLoggedInUser = null;
+    let currentVerifiedClient = null;
+    let activeCategory = 'lic';
+
+    const servicesData = {
+      lic: {
+        badge: "LIC OF INDIA",
+        title: "Life (LIC) Claim Checklist",
+        desc: "LIC policy maturity, money back returns, death claim aur bond loan ki suvidha.",
+        categoryName: "Life (LIC)",
+        subTypes: [
+          "Maturity Claim (अवधि पूर्ण होने पर)",
+          "Survival Benefit (Money Back)",
+          "Death Claim (मृत्यु दावा)",
+          "Policy Loan / Surrender Sahayata"
+        ],
+        docs: [
+          "Mool Policy Bond (Original Bond)",
+          "Bank Passbook / Cancelled Cheque (NEFT ke liye)",
+          "Policyholder ka Aadhar Card & PAN Card",
+          "Death Claim mamle me: Death Certificate & Form 3783"
+        ]
+      },
+      csc: {
+        badge: "CSC & PRIVATE LIFE",
+        title: "Life (CSC / Private) Claims",
+        desc: "SBI Life, IndiaFirst, Shriram Life ya PMJJBY/PMSBY ke tahat claims.",
+        categoryName: "Life (CSC/Other)",
+        subTypes: [
+          "PMJJBY Death Claim (₹2 Lakh)",
+          "PMSBY Accidental Claim",
+          "Private Life Maturity Settlement",
+          "Nominee Update / KYC Change"
+        ],
+        docs: [
+          "Bank Passbook (Jisme se auto-debit premium kata tha)",
+          "Aadhar Card (Bimadharak & Nominee)",
+          "Company Claim Application Form",
+          "Death Certificate (Mamle anusaar)"
+        ]
+      },
+      motor: {
+        badge: "VEHICLE INSURANCE",
+        title: "Motor (Gadi) Bima Claims",
+        desc: "Car, Bike, Tractor aur Commercial gadiyo ke accident, kanch tootne ya chori ke daave.",
+        categoryName: "Motor Insurance",
+        subTypes: [
+          "Accident / Own Damage Claim",
+          "Windshield / Kanch Tootna Damage",
+          "Gadi Chori (Theft Claim)",
+          "Third Party Nuksan Sahayata"
+        ],
+        docs: [
+          "R.C. Copy (Registration Certificate)",
+          "Chalak ka Driving Licence (D.L.)",
+          "Bima Policy Copy",
+          "Accident spot ki photo ya video",
+          "Chori ya police mamlo me: FIR Copy"
+        ]
+      },
+      health: {
+        badge: "MEDICLAIM & HEALTH",
+        title: "Health (Swasthya) Bima Claims",
+        desc: "Hospital me bharti hone par cashless ilaj aur reimbursement claim sahayata.",
+        categoryName: "Health Insurance",
+        subTypes: [
+          "Cashless Hospitalization Assistance",
+          "Hospital Bill Reimbursement (पैसा वापस)",
+          "Pre & Post Hospitalization Dawayi Bill"
+        ],
+        docs: [
+          "Health Card / Policy Copy",
+          "Hospital Discharge Summary Report",
+          "Hospital ke Final Bills & Payment Receipts",
+          "Doctor Prescription & Test Reports"
+        ]
+      }
+    };
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastMessage').innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 4000);
+    }
+
+    // 1. Switch Tabs Logic
+    function switchCategory(key) {
+      activeCategory = key;
+      const data = servicesData[key];
+
+      document.querySelectorAll('.service-tab').forEach(b => {
+        b.className = "service-tab bg-white text-slate-800 p-4 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-400 flex flex-col justify-between shadow-xs";
+      });
+      const activeBtn = document.getElementById(`tab-${key}`);
+      if (activeBtn) {
+        activeBtn.className = "service-tab bg-brand-navy text-white p-4 rounded-2xl border-2 border-brand-navy text-left transition shadow-md flex flex-col justify-between";
+      }
+
+      document.getElementById('serviceBadge').innerText = data.badge;
+      document.getElementById('serviceTitle').innerText = data.title;
+      document.getElementById('serviceDesc').innerText = data.desc;
+
+      const docsUl = document.getElementById('serviceDocs');
+      docsUl.innerHTML = data.docs.map(doc => `
+        <li class="flex items-start gap-2.5">
+          <i class="fa-solid fa-file-lines text-brand-gold mt-0.5 text-xs shrink-0"></i>
+          <span>${doc}</span>
+        </li>
+      `).join('');
+
+      document.getElementById('selectedCategoryVal').value = data.categoryName;
+      const select = document.getElementById('claimSubType');
+      select.innerHTML = data.subTypes.map(st => `<option value="${st}">${st}</option>`).join('');
+    }
+
+    // 2. Google Authentication Logic
+    function parseJwt(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+        return JSON.parse(jsonPayload);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function handleGoogleCredentialResponse(response) {
+      const payload = parseJwt(response.credential);
+      if (!payload) {
+        showToast("Login error: Token decode nahi hua.");
+        return;
+      }
+
+      currentLoggedInUser = {
+        name: payload.name || 'Client',
+        email: payload.email,
+        photo: payload.picture || '',
+        id: payload.sub
+      };
+
+      localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+      closeAuthModal();
+      updateAuthNavUI();
+      showToast("Swagat hai, " + currentLoggedInUser.name + "!");
+    }
+
+    function openAuthModal() {
+      document.getElementById('authModal').classList.remove('hidden');
+
+      if (window.google && google.accounts && google.accounts.id) {
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleGoogleCredentialResponse
+        });
+
+        const targetDiv = document.getElementById("googleSignInButtonDiv");
+        if (targetDiv) {
+          targetDiv.innerHTML = "";
+          google.accounts.id.renderButton(targetDiv, {
+            theme: "outline",
+            size: "large",
+            width: "280",
+            text: "signin_with",
+            shape: "pill"
+          });
+        }
+      }
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.add('hidden');
+    }
+
+    function handleAuthButtonClick() {
+      if (currentLoggedInUser) {
+        window.location.href = "/";
+      } else {
+        openAuthModal();
+      }
+    }
+
+    function checkAuthStatus() {
+      const savedUser = localStorage.getItem('kds_logged_user');
+      if (savedUser) {
+        try {
+          currentLoggedInUser = JSON.parse(savedUser);
+          updateAuthNavUI();
+        } catch (e) {
+          localStorage.removeItem('kds_logged_user');
+        }
+      }
+    }
+
+    function updateAuthNavUI() {
+      const container = document.getElementById('authContainer');
+      if (currentLoggedInUser) {
+        container.innerHTML = `
+          <div class="flex items-center gap-2 bg-amber-50 border border-brand-gold/50 px-3 py-1.5 rounded-xl">
+            <img src="${currentLoggedInUser.photo || 'favicon.png'}" class="w-6 h-6 rounded-full border border-brand-gold" />
+            <span class="text-xs font-black text-brand-navy">${currentLoggedInUser.name}</span>
+            <button onclick="handleLogout()" title="Logout" class="text-slate-400 hover:text-rose-600 text-xs ml-1">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <button id="authBtn" onclick="handleAuthButtonClick()" class="bg-brand-gold hover:bg-amber-400 text-brand-dark font-black px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-user-circle text-base"></i>
+            <span>Google Login</span>
+          </button>
+        `;
+      }
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('kds_logged_user');
+      currentLoggedInUser = null;
+      updateAuthNavUI();
+      showToast("Aap logout ho gaye hain.");
+    }
+
+    // 3. Client Sheet Verification
+    async function verifyClientFromSheet() {
+      const key = document.getElementById('verifyInput').value.trim();
+      const alertBox = document.getElementById('verifyAlert');
+      const form = document.getElementById('claimActualForm');
+      const btn = document.getElementById('btnVerify');
+
+      if (!key) {
+        alertBox.className = "mt-4 p-3.5 rounded-2xl text-xs bg-amber-50 text-amber-900 border border-amber-300 block";
+        alertBox.innerText = "Kripya apna Policy Number ya Mobile Number dalein!";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Checking...`;
+      alertBox.className = "hidden";
+
+      try {
+        const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=verify&key=${encodeURIComponent(key)}`);
+        const result = await response.json();
+
+        if (result.found) {
+          currentVerifiedClient = result.client;
+
+          document.getElementById('custName').value = result.client.name || '-';
+          document.getElementById('custPolicy').value = result.client.policyNo || '-';
+          document.getElementById('custPhone').value = result.client.phone || '-';
+          document.getElementById('custAddress').value = result.client.address || '-';
+          document.getElementById('custProduct').value = result.client.product || '-';
+
+          alertBox.className = "mt-4 p-4 rounded-2xl text-xs sm:text-sm bg-emerald-50 text-emerald-900 border border-emerald-300 block";
+          alertBox.innerHTML = `<strong>Kamyab!</strong> Swagat hai, <b>${result.client.name}</b>. Niche diye gaye form me apna claim darj karein[cite: 12]।`;
+          form.classList.remove('hidden');
+        } else {
+          currentVerifiedClient = null;
+          form.classList.add('hidden');
+          alertBox.className = "mt-4 p-4 rounded-2xl text-xs sm:text-sm bg-rose-50 text-rose-900 border border-rose-300 block";
+          alertBox.innerHTML = `<strong>Sorry!</strong> Yeh Policy / Mobile Number client database me nahi mila. Sirf registered KDS clients hi is portal se claim darj kar sakte hain[cite: 12]।`;
+        }
+      } catch (err) {
+        alertBox.className = "mt-4 p-4 rounded-2xl text-xs bg-rose-50 text-rose-900 border border-rose-200 block";
+        alertBox.innerText = "Error: Database se sampark nahi ho saka. Kripya punah koshish karein.";
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-shield-check text-brand-gold"></i> <span>Verify Karein</span>`;
+      }
+    }
+
+    // Enter key par verify chalana
+    document.addEventListener("DOMContentLoaded", () => {
+      const vInput = document.getElementById('verifyInput');
+      if (vInput) {
+        vInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            verifyClientFromSheet();
+          }
+        });
+      }
+    });
+
+    // 4. Form Submit directly to 'claim' Tab
+    async function handleClaimSubmission(e) {
+      e.preventDefault();
+      if (!currentVerifiedClient) return;
+
+      const submitBtn = document.getElementById('btnSubmitClaim');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Claim Sheet Me Save Ho Raha Hai...`;
+
+      const payload = {
+        policyNo: document.getElementById('custPolicy').value,
+        name: document.getElementById('custName').value,
+        phone: document.getElementById('custPhone').value,
+        address: document.getElementById('custAddress').value,
+        product: document.getElementById('custProduct').value,
+        serviceCategory: document.getElementById('selectedCategoryVal').value,
+        claimSubType: document.getElementById('claimSubType').value,
+        remarks: document.getElementById('claimRemarks').value
+      };
+
+      try {
+        await fetch(GOOGLE_SHEET_API_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        alert("Aapka claim safaltapoorvak 'Claim' sheet me darj kar diya gaya hai! KDS Insurance team jald aapse sampark karegi.");
+
+        document.getElementById('claimActualForm').reset();
+        document.getElementById('claimActualForm').classList.add('hidden');
+        document.getElementById('verifyInput').value = '';
+        document.getElementById('verifyAlert').className = "hidden";
+        currentVerifiedClient = null;
+
+      } catch (err) {
+        showToast("Claim darj karte waqt samasya aayi.");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane text-brand-gold"></i> <span>Claim Sheet Me Darj Karein</span>`;
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      switchCategory('lic');
+      checkAuthStatus();
+    });
+  </script>
+
+</body>
+</html>
