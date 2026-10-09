@@ -32,21 +32,33 @@
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between selection:bg-brand-gold selection:text-brand-dark">
 
   <!-- Header -->
-  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30 shadow-xs">
-    <div class="max-w-6xl mx-auto px-4 h-16 sm:h-20 flex justify-between items-center">
-              <img src="logo.png" class="h-10 sm:h-12 w-auto" alt="KDS Insurance" onerror="this.style.display='none'" />
-        <div>
-      <a href="index.html" class="flex items-center gap-2">
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex justify-between items-center gap-4">
+      
+      <!-- Clickable Logo Section -->
+      <a href="index.html" class="flex items-center gap-3 py-1 group shrink-0" title="Home Page Par Jayein">
+        <img src="logo.png" class="h-11 sm:h-14 w-auto object-contain rounded-lg transition-transform group-hover:scale-105" alt="KDS Insurance" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" />
+        <div id="logoFallback" class="hidden items-center gap-2">
+          <div class="w-10 h-10 rounded-xl bg-brand-navy flex items-center justify-center text-brand-gold font-black text-xl">KDS</div>
+          <div>
+            <span class="text-lg sm:text-xl font-black text-brand-navy leading-none block">KDS <span class="text-brand-gold">INSURANCE</span></span>
+            <p class="text-[10px] text-slate-500 font-bold mt-0.5">Manoher Singh • Malwara</p>
+          </div>
         </div>
       </a>
-      <div class="flex items-center gap-2 sm:gap-3">
-        <a href="index.html" class="text-xs font-black text-slate-700 hover:text-brand-navy bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-2xs">
-          <i class="fa-solid fa-house text-brand-gold"></i> Home
+
+      <!-- Right Action Buttons (Proper Size & Alignment) -->
+      <div class="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
+        <a href="index.html" class="text-xs sm:text-sm font-black text-slate-700 hover:text-white bg-slate-100 hover:bg-brand-navy border border-slate-200 px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-sm">
+          <i class="fa-solid fa-house text-brand-gold text-sm sm:text-base"></i>
+          <span>Home</span>
         </a>
-        <a href="about.html" class="text-xs font-bold text-slate-600 hover:text-brand-navy px-3 py-2 rounded-xl transition">
-          About Us
+        <a href="about.html" class="text-xs sm:text-sm font-bold text-brand-navy hover:text-white bg-white hover:bg-brand-lightBlue border border-slate-200 px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-sm">
+          <i class="fa-solid fa-user-tie text-brand-gold text-sm sm:text-base"></i>
+          <span>About Us</span>
         </a>
       </div>
+
     </div>
   </header>
 
@@ -59,11 +71,12 @@
       </span>
       <h1 class="text-2xl sm:text-4xl font-black text-brand-navy tracking-tight">Check Due Premium & Pay Online</h1>
       <p class="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto font-medium">
-  Apna <strong>Policy Number</strong> ya <strong>Registered Mobile Number</strong> darj karein aur turant due premium check karke direct jama karein.
-  <span class="block text-[11px] text-slate-400 font-normal mt-1">
-    (Note: Yadi aap pehle hi premium pay kar chuke hain, toh kripya ise ignore karein.)
-  </span>
-</p>
+        Apna <strong>Policy Number</strong> ya <strong>Registered Mobile Number</strong> darj karein aur turant due premium check karke direct jama karein.
+        <span class="block text-[11px] text-slate-400 font-normal mt-1">
+          (Note: Yadi aap pehle hi premium pay kar chuke hain, toh kripya ise ignore karein.)
+        </span>
+      </p>
+    </div>
 
     <!-- Search Box Card -->
     <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 sm:p-8 relative overflow-hidden">
