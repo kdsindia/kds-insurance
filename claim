@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services & Claim Portal | KDS Insurance</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    .service-btn-active {
+      background-color: #0f172a !important;
+      color: #ffffff !important;
+      border-color: #0f172a !important;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between">
+
+  <!-- ================= TOP HEADER (Screenshot Match) ================= -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Brand Logo -->
+      <a href="/" class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-full bg-amber-500 text-white font-black flex items-center justify-center text-sm shadow">
+          KDS
+        </div>
+        <div>
+          <span class="font-extrabold text-slate-900 tracking-tight text-sm md:text-base block leading-none">KDS INSURANCE</span>
+          <span class="text-[10px] text-slate-500 font-medium">Manoher Singh • Malwara, Raniwara</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="flex flex-wrap items-center gap-1.5 md:gap-2">
+        <button onclick="switchTab('lic')" id="nav-lic" class="nav-btn bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 transition">
+          <i class="fa-solid fa-shield-halved text-amber-400"></i> Life (LIC)
+        </button>
+        <button onclick="switchTab('csc')" id="nav-csc" class="nav-btn bg-white border border-slate-300 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 hover:bg-slate-100 transition">
+          <i class="fa-solid fa-landmark text-amber-600"></i> Life (CSC/Other)
+        </button>
+        <button onclick="switchTab('motor')" id="nav-motor" class="nav-btn bg-white border border-slate-300 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 hover:bg-slate-100 transition">
+          <i class="fa-solid fa-car text-emerald-600"></i> Motor
+        </button>
+        <button onclick="switchTab('health')" id="nav-health" class="nav-btn bg-white border border-slate-300 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 hover:bg-slate-100 transition">
+          <i class="fa-solid fa-heart-pulse text-rose-500"></i> Health
+        </button>
+
+        <a href="#" class="bg-amber-100/70 text-amber-900 text-xs font-bold px-3 py-1.5 rounded-lg border border-amber-300 flex items-center gap-1 hover:bg-amber-100 transition ml-1">
+          <i class="fa-solid fa-receipt text-amber-600"></i> Check Premium Due
+        </a>
+        <a href="#" class="bg-white border border-slate-300 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-slate-100 transition">
+          About Us
+        </a>
+        <a href="tel:8440096343" class="bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-slate-800 transition">
+          <i class="fa-solid fa-phone"></i> Callback
+        </a>
+
+        <!-- User / Auth Profile -->
+        <div id="userProfile" class="hidden items-center gap-2 bg-amber-400 text-slate-950 px-3 py-1.5 rounded-xl font-bold text-xs shadow-sm">
+          <img id="userAvatar" src="" class="w-5 h-5 rounded-full border border-slate-900">
+          <span id="userName">Client</span>
+          <button onclick="handleLogout()" title="Logout" class="ml-1 text-slate-900 hover:text-rose-700">
+            <i class="fa-solid fa-power-off"></i>
+          </button>
+        </div>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- ================= GOOGLE AUTH LOCK MODAL ================= -->
+  <div id="authGateModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center border border-slate-200">
+      <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h2 class="text-2xl font-black text-slate-900 mb-1">KDS Client Portal</h2>
+      <p class="text-xs text-slate-600 mb-6 leading-relaxed">
+        Services dekhne aur claim darj karne ke liye apne <strong>Google Account</strong> se sign in karein.
+      </p>
+
+      <div class="flex justify-center mb-4">
+        <div id="g_id_onload"
+             data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+             data-callback="handleCredentialResponse"
+             data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-shape="pill" data-text="signin_with"></div>
+      </div>
+
+      <button onclick="bypassForTesting()" class="text-[11px] text-slate-400 hover:text-slate-700 underline mt-2 block mx-auto">
+        [Quick Test Login]
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= MAIN DASHBOARD (Protected) ================= -->
+  <main id="portalContent" class="max-w-6xl mx-auto px-4 py-8 opacity-20 pointer-events-none transition-all duration-300 w-full flex-1">
+    
+    <div class="text-center mb-8">
+      <span class="inline-block bg-amber-100 text-amber-900 text-xs font-black uppercase px-3 py-1 rounded-full mb-2">
+        KDS Customer Service Point
+      </span>
+      <h2 class="text-2xl md:text-3xl font-black text-slate-900">Services & Online Claim Sahayata</h2>
+      <p class="text-xs md:text-sm text-slate-500 mt-1 max-w-xl mx-auto">
+        Apna registered Mobile Number ya Policy Number dalkar verify karein aur claim request darj karein.
+      </p>
+    </div>
+
+    <!-- 4 TABS SELECTOR -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+      <button onclick="switchTab('lic')" id="tab-lic" class="tab-card service-btn-active bg-white border-2 border-slate-300 p-4 rounded-2xl text-left transition shadow-sm">
+        <i class="fa-solid fa-shield-halved text-amber-400 text-lg mb-2 block"></i>
+        <div class="font-bold text-sm">Life (LIC)</div>
+        <div class="text-[11px] opacity-75">Endowment, Term, Pension</div>
+      </button>
+
+      <button onclick="switchTab('csc')" id="tab-csc" class="tab-card bg-white border-2 border-slate-200 text-slate-800 p-4 rounded-2xl text-left transition shadow-sm hover:border-slate-400">
+        <i class="fa-solid fa-landmark text-blue-500 text-lg mb-2 block"></i>
+        <div class="font-bold text-sm">Life (CSC/Other)</div>
+        <div class="text-[11px] opacity-75">PMJJBY, PMSBY, Private</div>
+      </button>
+
+      <button onclick="switchTab('motor')" id="tab-motor" class="tab-card bg-white border-2 border-slate-200 text-slate-800 p-4 rounded-2xl text-left transition shadow-sm hover:border-slate-400">
+        <i class="fa-solid fa-car text-emerald-500 text-lg mb-2 block"></i>
+        <div class="font-bold text-sm">Motor Insurance</div>
+        <div class="text-[11px] opacity-75">Car, Bike, Commercial</div>
+      </button>
+
+      <button onclick="switchTab('health')" id="tab-health" class="tab-card bg-white border-2 border-slate-200 text-slate-800 p-4 rounded-2xl text-left transition shadow-sm hover:border-slate-400">
+        <i class="fa-solid fa-heart-pulse text-rose-500 text-lg mb-2 block"></i>
+        <div class="font-bold text-sm">Health Insurance</div>
+        <div class="text-[11px] opacity-75">Mediclaim & Cashless</div>
+      </button>
+    </div>
+
+    <!-- 2 COLUMN: DETAILS & FORM -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- LEFT: Dynamic Documents Info -->
+      <div class="lg:col-span-1 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+        <div>
+          <span id="serviceBadge" class="bg-amber-100 text-amber-800 text-[10px] font-black uppercase px-2.5 py-1 rounded">LIC OF INDIA</span>
+          <h3 id="serviceTitle" class="text-lg font-bold text-slate-900 mt-2 mb-2">Life (LIC) Services</h3>
+          <p id="serviceDesc" class="text-xs text-slate-600 mb-5 leading-relaxed"></p>
+
+          <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider mb-2.5">Zaroori Dastawej Checklist:</h4>
+          <ul id="serviceDocs" class="space-y-2 text-xs text-slate-600"></ul>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-slate-100 bg-slate-50 -mx-6 -mb-6 p-4 rounded-b-2xl">
+          <div class="text-xs font-bold text-slate-800 flex items-center gap-1.5 mb-1">
+            <i class="fa-solid fa-headset text-amber-500"></i> Direct Support:
+          </div>
+          <p class="text-[11px] text-slate-500">
+            Dastawej samajh na aane par WhatsApp Helpline (+91 8440096343) par call ya message karein[cite: 4].
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT: Client Verification & Claim Form -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- STEP 1: VERIFICATION -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="flex items-center gap-2 text-slate-900 font-extrabold text-sm mb-3">
+            <span class="w-5 h-5 rounded-full bg-slate-900 text-white text-[11px] flex items-center justify-center">1</span>
+            Client Sheet Record Verification
+          </div>
+          
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input type="text" id="verifyInput" placeholder="Policy Number ya Registered Mobile Number dalein..." 
+              class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-slate-900 uppercase">
+            <button onclick="verifyClient()" id="btnVerify" 
+              class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shrink-0">
+              <i class="fa-solid fa-magnifying-glass"></i> Verify
+            </button>
+          </div>
+
+          <div id="verifyAlert" class="hidden mt-3 p-3.5 rounded-xl text-xs font-semibold"></div>
+        </div>
+
+        <!-- STEP 2: AUTO-FILLED FORM -->
+        <form id="claimActualForm" onsubmit="handleClaimSubmit(event)" class="hidden bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div class="flex items-center gap-2 text-slate-900 font-extrabold text-sm">
+              <span class="w-5 h-5 rounded-full bg-emerald-600 text-white text-[11px] flex items-center justify-center">2</span>
+              Claim Registration Form
+            </div>
+            <span class="text-[11px] bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1 rounded-full border border-emerald-200">
+              Verified Client
+            </span>
+          </div>
+
+          <!-- Read-only auto filled details -->
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-[10px] font-bold text-slate-500 uppercase">Holder Name</label>
+              <input type="text" id="custName" readonly class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-800">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-500 uppercase">Policy / Reg No</label>
+              <input type="text" id="custPolicy" readonly class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-800">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-500 uppercase">Mobile Number</label>
+              <input type="text" id="custPhone" readonly class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-800">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-500 uppercase">Address / Gaon</label>
+              <input type="text" id="custAddress" readonly class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-800">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-[10px] font-bold text-slate-500 uppercase">Current Product / Plan</label>
+              <input type="text" id="custProduct" readonly class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-800">
+            </div>
+          </div>
+
+          <input type="hidden" id="selectedServiceCategory" value="Life (LIC)">
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Claim Type / Prakar *</label>
+            <select id="claimSubType" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900"></select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Claim ka Vivaran (Description) *</label>
+            <textarea id="claimRemarks" rows="3" required placeholder="Ghatna ka sthan, tarikh ya zaroori vivaran likhein..."
+              class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900"></textarea>
+          </div>
+
+          <button type="submit" id="btnSubmit" 
+            class="w-full bg-slate-900 hover:bg-slate-800 text-white font-extrabold py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow flex items-center justify-center gap-2">
+            <i class="fa-solid fa-paper-plane"></i> Claim 'claim' Sheet Me Submit Karein
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ================= FOOTER (Screenshot Exact Match) ================= -->
+  <footer class="bg-[#0b192c] text-white pt-10 pb-6 border-t border-slate-800 mt-12">
+    <div class="max-w-7xl mx-auto px-4">
+      
+      <!-- Top Row -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between pb-8 border-b border-slate-800 gap-4">
+        <div>
+          <h3 class="text-base font-extrabold tracking-wide">
+            KDS <span class="text-amber-400">INSURANCE SERVICES</span>
+          </h3>
+          <p class="text-xs text-slate-400 mt-1">
+            Authorized Insurance Agent: <strong>MANOHER SINGH</strong> (Malwara, Raniwara)[cite: 4]
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-300">
+          <a href="#" class="hover:text-amber-400 transition">Life (LIC)</a>
+          <a href="#" class="hover:text-amber-400 transition">Life (CSC/Other)</a>
+          <a href="#" class="hover:text-amber-400 transition">Motor Insurance</a>
+          <a href="#" class="hover:text-amber-400 transition">Health Insurance</a>
+          <a href="#" class="hover:text-amber-400 transition">About Us</a>
+        </div>
+      </div>
+
+      <!-- Regulatory Disclaimer Box -->
+      <div class="mt-6 p-4 rounded-xl bg-[#081220] border border-slate-800 text-[11px] leading-relaxed text-slate-400">
+        <div class="font-bold text-amber-400 text-xs uppercase mb-1">
+          Regulatory & Statutory Disclaimer (Govt / IRDAI Guidelines):
+        </div>
+        This is an informational facilitation portal operated by <strong>MANOHER SINGH</strong>, an authorized insurance advisor[cite: 4]. Life insurance illustrations shown at 4% & 8% conform to standard IRDAI projection guidelines and are not guaranteed[cite: 4]. Non-Participating CSC plans offer guaranteed income and 100%-110% Return of Premium[cite: 4]. Health insurance premiums, waiting periods for pre-existing diseases, sub-limits and room rent norms are strictly governed by the policy prospectus of the respective insurance company[cite: 4]. Motor third-party rates are notified under the Motor Vehicles Act, 1988 by MoRTH/IRDAI[cite: 4]. Tax benefits are subject to provisions under Section 80C, 80D, and 10(10D) of the Income Tax Act[cite: 4].
+      </div>
+
+      <!-- Copyright -->
+      <div class="text-center text-[11px] text-slate-500 mt-6">
+        © 2026 Manoher Singh (Authorized Insurance Agent) • All Rights Reserved.[cite: 4]
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================= SCRIPT LOGIC ================= -->
+  <script>
+    const SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+    let currentVerifiedData = null;
+    let activeTabKey = 'lic';
+
+    const services = {
+      lic: {
+        badge: "LIC OF INDIA",
+        title: "Life (LIC) Services & Claims",
+        desc: "LIC policy maturity, money-back returns, death claim aur bond loan ki suvidha.",
+        subTypes: [
+          "Maturity Claim (अवधि पूर्ण)",
+          "Survival Benefit (Money Back)",
+          "Death Claim (मृत्यु दावा)",
+          "Policy Loan / Surrender Sahayata"
+        ],
+        docs: [
+          "Original Policy Bond",
+          "Bank Passbook / Cancelled Cheque (NEFT ke liye)",
+          "Policyholder ka Aadhar Card & PAN Card",
+          "Death Claim me: Death Certificate & Form 3783"
+        ]
+      },
+      csc: {
+        badge: "CSC & PRIVATE LIFE",
+        title: "Life (CSC / Private) Services",
+        desc: "PM Jeevan Jyoti Bima Yojana, PM Suraksha Bima ya anya private life companies ke daave.",
+        subTypes: [
+          "PMJJBY Death Claim (₹2 Lakh)",
+          "PMSBY Accidental Claim",
+          "Private Life Maturity Settlement",
+          "Nominee Update / KYC Change"
+        ],
+        docs: [
+          "Bank Passbook (Jisme se premium kata tha)",
+          "Aadhar Card (Bima dharak & Nominee)",
+          "Claim Form & Aavedan Patra",
+          "Hospital ya Death Certificate (mamle anusaar)"
+        ]
+      },
+      motor: {
+        badge: "VEHICLE INSURANCE",
+        title: "Motor (Gadi) Bima Claims",
+        desc: "Car, Bike, Tractor aur Commercial gadiyo ke accident, kanch tootne ya chori ke daave.",
+        subTypes: [
+          "Accident / Own Damage Claim",
+          "Windshield / Kanch Tootna",
+          "Gadi Chori (Theft Claim)",
+          "Third Party Nuksan Sahayata"
+        ],
+        docs: [
+          "R.C. Copy (Registration Certificate)",
+          "Chalak ka Driving Licence (D.L.)",
+          "Bima Policy Copy",
+          "Accident sthal ki photo ya spot video",
+          "Chori ya police case me: FIR Copy"
+        ]
+      },
+      health: {
+        badge: "MEDICLAIM & HEALTH",
+        title: "Health (Swasthya) Bima Claims",
+        desc: "Hospital me bharti hone par cashless ilaj aur reimbursement claim sahayata.",
+        subTypes: [
+          "Cashless Hospitalization Assistance",
+          "Hospital Bill Reimbursement (पैसा वापस)",
+          "Pre & Post Hospitalization Dawayi Bill"
+        ],
+        docs: [
+          "Health Card / Policy Copy",
+          "Hospital Discharge Summary Report",
+          "Hospital ke Final Bills & Payment Receipts",
+          "Doctors Prescription & Dawaiyo ke Original Parcha"
+        ]
+      }
+    };
+
+    function switchTab(key) {
+      activeTabKey = key;
+      const data = services[key];
+
+      // Update Top Nav
+      document.querySelectorAll('.nav-btn').forEach(b => {
+        b.className = "nav-btn bg-white border border-slate-300 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 hover:bg-slate-100 transition";
+      });
+      const currentNav = document.getElementById(`nav-${key}`);
+      if(currentNav) {
+        currentNav.className = "nav-btn bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 transition";
+      }
+
+      // Update Tab Cards
+      document.querySelectorAll('.tab-card').forEach(c => {
+        c.classList.remove('service-btn-active', 'text-white');
+        c.classList.add('bg-white', 'text-slate-800');
+      });
+      const currentCard = document.getElementById(`tab-${key}`);
+      if(currentCard) {
+        currentCard.classList.add('service-btn-active');
+        currentCard.classList.remove('bg-white', 'text-slate-800');
+      }
+
+      // Update Left Side Info
+      document.getElementById('serviceBadge').innerText = data.badge;
+      document.getElementById('serviceTitle').innerText = data.title;
+      document.getElementById('serviceDesc').innerText = data.desc;
+
+      const docsUl = document.getElementById('serviceDocs');
+      docsUl.innerHTML = data.docs.map(doc => `
+        <li class="flex items-start gap-2">
+          <i class="fa-solid fa-file-lines text-amber-500 mt-0.5 shrink-0"></i>
+          <span>${doc}</span>
+        </li>
+      `).join('');
+
+      // Update Form fields
+      const categoryNames = { lic: 'Life (LIC)', csc: 'Life (CSC/Other)', motor: 'Motor Insurance', health: 'Health Insurance' };
+      document.getElementById('selectedServiceCategory').value = categoryNames[key];
+
+      const select = document.getElementById('claimSubType');
+      select.innerHTML = data.subTypes.map(st => `<option value="${st}">${st}</option>`).join('');
+    }
+
+    // Google Sign-In & Auth
+    function parseJwt(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+      return JSON.parse(jsonPayload);
+    }
+
+    function handleCredentialResponse(response) {
+      const userObj = parseJwt(response.credential);
+      unlockPortal(userObj.name, userObj.picture);
+    }
+
+    function bypassForTesting() {
+      unlockPortal("Manoher Singh", "https://api.dicebear.com/7.x/bottts/svg?seed=KDS");
+    }
+
+    function unlockPortal(name, picture) {
+      document.getElementById('authGateModal').classList.add('hidden');
+      const portal = document.getElementById('portalContent');
+      portal.classList.remove('opacity-20', 'pointer-events-none');
+
+      const userProfile = document.getElementById('userProfile');
+      userProfile.classList.remove('hidden');
+      userProfile.classList.add('flex');
+      document.getElementById('userName').innerText = name;
+      document.getElementById('userAvatar').src = picture;
+
+      switchTab('lic');
+    }
+
+    function handleLogout() {
+      location.reload();
+    }
+
+    // Client Sheet Verification
+    async function verifyClient() {
+      const key = document.getElementById('verifyInput').value.trim();
+      const alertBox = document.getElementById('verifyAlert');
+      const form = document.getElementById('claimActualForm');
+      const btn = document.getElementById('btnVerify');
+
+      if (!key) {
+        alertBox.className = "mt-3 p-3 rounded-xl text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 block";
+        alertBox.innerText = "Kripya apna Policy Number ya Mobile Number dalein!";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Checking...`;
+      alertBox.className = "hidden";
+
+      try {
+        const response = await fetch(`${SCRIPT_URL}?action=verify&key=${encodeURIComponent(key)}`);
+        const result = await response.json();
+
+        if (result.found) {
+          currentVerifiedData = result.client;
+
+          document.getElementById('custName').value = result.client.name || '-';
+          document.getElementById('custPolicy').value = result.client.policyNo || '-';
+          document.getElementById('custPhone').value = result.client.phone || '-';
+          document.getElementById('custAddress').value = result.client.address || '-';
+          document.getElementById('custProduct').value = result.client.product || '-';
+
+          alertBox.className = "mt-3 p-3.5 rounded-xl text-xs bg-emerald-50 text-emerald-800 border border-emerald-300 block";
+          alertBox.innerHTML = `<strong>Kamyab!</strong> Swagat hai, <b>${result.client.name}</b>. Niche apni claim request bharein.`;
+          form.classList.remove('hidden');
+        } else {
+          currentVerifiedData = null;
+          form.classList.add('hidden');
+          alertBox.className = "mt-3 p-3.5 rounded-xl text-xs bg-rose-50 text-rose-800 border border-rose-300 block";
+          alertBox.innerHTML = `<strong>Sorry!</strong> Yeh Policy / Mobile Number client sheet me nahi mila.`;
+        }
+      } catch (err) {
+        alertBox.className = "mt-3 p-3 rounded-xl text-xs bg-rose-50 text-rose-800 border border-rose-200 block";
+        alertBox.innerText = "Error: Database se sampark nahi ho saka. Apps Script URL check karein.";
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i> Verify`;
+      }
+    }
+
+    // Form Submit to 'claim' Sheet
+    async function handleClaimSubmit(e) {
+      e.preventDefault();
+      if (!currentVerifiedData) return;
+
+      const submitBtn = document.getElementById('btnSubmit');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Submitting...`;
+
+      const payload = {
+        policyNo: document.getElementById('custPolicy').value,
+        name: document.getElementById('custName').value,
+        phone: document.getElementById('custPhone').value,
+        address: document.getElementById('custAddress').value,
+        product: document.getElementById('custProduct').value,
+        serviceCategory: document.getElementById('selectedServiceCategory').value,
+        claimSubType: document.getElementById('claimSubType').value,
+        remarks: document.getElementById('claimRemarks').value
+      };
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        alert("Aapka claim safaltapoorvak 'claim' sheet me darj kar diya gaya hai!");
+        document.getElementById('claimActualForm').reset();
+        document.getElementById('claimActualForm').classList.add('hidden');
+        document.getElementById('verifyInput').value = '';
+        document.getElementById('verifyAlert').className = "hidden";
+        currentVerifiedData = null;
+      } catch (err) {
+        alert("Claim darj karte waqt takneeki samasya aayi.");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Claim 'claim' Sheet Me Submit Karein`;
+      }
+    }
+  </script>
+</body>
+</html>
