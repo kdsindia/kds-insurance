@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LIC Premium Due Check & Pay | KDS Insurance Services</title>
+  <title>LIC Premium Due Check & Pay Online | KDS Insurance Services</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="icon" href="favicon.ico" />
@@ -18,11 +18,21 @@
       }
     }
   </script>
+  <style>
+    @keyframes pulseRing {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 174, 0, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 16px rgba(255, 174, 0, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 174, 0, 0); }
+    }
+    .advance-loader-ring {
+      animation: pulseRing 1.8s infinite cubic-bezier(0.45, 0, 0.55, 1);
+    }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between">
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between selection:bg-brand-gold selection:text-brand-dark">
 
   <!-- Header -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30 shadow-xs">
     <div class="max-w-6xl mx-auto px-4 h-16 sm:h-20 flex justify-between items-center">
       <a href="index.html" class="flex items-center gap-2">
         <img src="logo.png" class="h-10 sm:h-12 w-auto" alt="KDS Insurance" onerror="this.style.display='none'" />
@@ -32,8 +42,8 @@
         </div>
       </a>
       <div class="flex items-center gap-2 sm:gap-3">
-        <a href="index.html" class="text-xs font-bold text-slate-600 hover:text-brand-navy px-3 py-2 rounded-xl transition">
-          <i class="fa-solid fa-house mr-1"></i> Home
+        <a href="index.html" class="text-xs font-black text-slate-700 hover:text-brand-navy bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-2xs">
+          <i class="fa-solid fa-house text-brand-gold"></i> Home
         </a>
         <a href="about.html" class="text-xs font-bold text-slate-600 hover:text-brand-navy px-3 py-2 rounded-xl transition">
           About Us
@@ -45,41 +55,51 @@
   <!-- Main Container -->
   <main class="max-w-3xl mx-auto px-4 py-8 sm:py-12 w-full flex-grow">
     
-    <div class="text-center space-y-2 mb-8">
-      <span class="bg-amber-100 text-amber-900 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1.5 border border-amber-300">
-        <i class="fa-solid fa-receipt"></i> KDS Premium Portal (LIC)
+    <div class="text-center space-y-2.5 mb-8">
+      <span class="bg-amber-100 text-amber-950 text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1.5 border border-amber-300 shadow-2xs">
+        <i class="fa-solid fa-receipt text-amber-600"></i> KDS Premium Due Portal (LIC)
       </span>
-      <h1 class="text-2xl sm:text-4xl font-black text-brand-navy">Check Due Premium & Pay Online</h1>
-      <p class="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto">
-        Apna <strong>Policy Number</strong> ya <strong>Mobile Number</strong> daal kar check karein ki kitna premium baaki hai aur turant jama karein.
+      <h1 class="text-2xl sm:text-4xl font-black text-brand-navy tracking-tight">Check Due Premium & Pay Online</h1>
+      <p class="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto font-medium">
+        Apna <strong>Policy Number</strong> ya <strong>Registered Mobile Number</strong> darj karein aur turant due premium check karke direct jama karein.
       </p>
     </div>
 
     <!-- Search Box Card -->
-    <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 sm:p-8">
-      <form onsubmit="handleDueSearch(event)" class="space-y-4">
+    <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 sm:p-8 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-amber-100/50 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+
+      <form onsubmit="handleDueSearch(event)" class="space-y-4 relative z-10">
         <div>
-          <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
-            Policy Number ya Mobile Number Darj Karein:
+          <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2 flex items-center justify-between">
+            <span>Policy Number ya Mobile Number Darj Karein:</span>
+            <span class="text-[10px] text-slate-400 font-normal">उदा. 9636506144 / 568321931</span>
           </label>
           <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
-              <i class="fa-solid fa-magnifying-glass"></i>
+            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400">
+              <i class="fa-solid fa-magnifying-glass text-brand-gold"></i>
             </span>
-            <input type="text" id="dueSearchInput" required placeholder="पॉलिसी नंबर या मोबाइल नंबर दर्ज करें" class="w-full bg-slate-50 border border-slate-300 rounded-2xl pl-10 pr-4 py-3.5 text-sm sm:text-base font-black text-slate-800 focus:ring-2 focus:ring-brand-gold focus:outline-none" />
+            <input type="text" id="dueSearchInput" required placeholder="9 अंकों का पॉलिसी नंबर या 10 अंकों का मोबाइल नंबर" class="w-full bg-slate-50 border border-slate-300 rounded-2xl pl-11 pr-4 py-3.5 text-sm sm:text-base font-black text-slate-800 focus:ring-2 focus:ring-brand-gold focus:border-brand-gold focus:outline-none transition shadow-inner" />
           </div>
         </div>
 
-        <button type="submit" id="btnSearchDue" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3.5 px-6 rounded-2xl text-sm transition shadow-md flex items-center justify-center gap-2">
-          <i class="fa-solid fa-search text-brand-gold"></i>
-          <span>Premium Check Karein</span>
+        <button type="submit" id="btnSearchDue" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-4 px-6 rounded-2xl text-sm transition shadow-lg flex items-center justify-center gap-2 group">
+          <i class="fa-solid fa-bolt text-brand-gold group-hover:scale-110 transition"></i>
+          <span>Check Due Premium & Status</span>
         </button>
       </form>
 
-      <!-- Loader -->
-      <div id="dueSearchLoader" class="hidden text-center py-6 text-slate-500 text-xs font-bold">
-        <i class="fa-solid fa-spinner fa-spin text-brand-gold text-lg mb-2 block"></i>
-        <span>LIC Portal se details khoji ja rahi hain...</span>
+      <!-- ADVANCE GLOW LOADER -->
+      <div id="dueSearchLoader" class="hidden text-center py-10 space-y-4">
+        <div class="relative inline-flex items-center justify-center">
+          <div class="w-16 h-16 rounded-full bg-amber-500/10 border-2 border-brand-gold advance-loader-ring flex items-center justify-center">
+            <i class="fa-solid fa-shield-halved text-brand-navy text-2xl animate-spin"></i>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-black text-brand-navy text-sm">LIC Database Se Records Khoje Ja Rahe Hain...</h4>
+          <p class="text-xs text-slate-400 mt-0.5">Kripya pratiksha karein, realtime status fetch ho raha hai</p>
+        </div>
       </div>
 
       <!-- Results Container -->
@@ -87,44 +107,32 @@
     </div>
 
     <!-- Help Banner -->
-    <div class="mt-8 bg-gradient-to-r from-brand-navy to-brand-lightBlue rounded-2xl p-4 sm:p-5 text-white flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
-      <div>
-        <p class="font-black text-sm text-brand-gold">Online Payment Sahayata / Receipt Problem?</p>
-        <p class="text-slate-200 mt-0.5">Manoher Singh (Authorized LIC Advisor) - Mo: 8440096343</p>
+    <div class="mt-8 bg-gradient-to-r from-brand-navy via-brand-lightBlue to-brand-navy rounded-3xl p-5 sm:p-6 text-white flex flex-col sm:flex-row justify-between items-center gap-4 text-xs shadow-lg border border-brand-gold/30">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-brand-gold text-brand-dark flex items-center justify-center text-xl font-black shrink-0 shadow-md">
+          <i class="fa-solid fa-headset"></i>
+        </div>
+        <div>
+          <p class="font-black text-sm text-brand-gold">Online Payment Sahayata / Receipt Problem?</p>
+          <p class="text-slate-200 text-[11px] mt-0.5">Authorized LIC Advisor: <strong>MANOHER SINGH</strong> - Mo: 8440096343</p>
+        </div>
       </div>
-      <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20mujhe%20LIC%20premium%20jama%20karne%20me%20help%20chahiye" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white font-black px-4 py-2.5 rounded-xl transition inline-flex items-center gap-1.5 shadow-sm">
-        <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Support
+      <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20mujhe%20LIC%20premium%20jama%20karne%20me%20help%20chahiye" target="_blank" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white font-black px-5 py-3 rounded-xl transition inline-flex items-center justify-center gap-2 shadow-md shrink-0">
+        <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp Sahayata
       </a>
     </div>
 
   </main>
 
   <footer class="bg-brand-dark text-slate-400 text-[11px] py-4 text-center border-t border-brand-lightBlue/30">
-    &copy; 2026 KDS Insurance Services • Authorized Insurance Advisory Point
+    &copy; 2026 KDS Insurance Services • Authorized Insurance Advisory Point (Manoher Singh)
   </footer>
 
   <script>
     const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwMJOgO-FJFf9zOxHrilfkLM5CNqo8cR2HzLZNsozG5QlAN7rDEnv1ZG1AzMj6ig_Nw/exec";
-
-    function fetchJSONP(url) {
-      return new Promise((resolve, reject) => {
-        const callbackName = 'jsonp_due_' + Math.round(100000 * Math.random());
-        const script = document.createElement('script');
-        window[callbackName] = function(data) {
-          delete window[callbackName];
-          if (document.body.contains(script)) document.body.removeChild(script);
-          resolve(data);
-        };
-        script.onerror = function() {
-          delete window[callbackName];
-          if (document.body.contains(script)) document.body.removeChild(script);
-          reject(new Error('Network error'));
-        };
-        const sep = url.includes('?') ? '&' : '?';
-        script.src = url + sep + 'callback=' + callbackName;
-        document.body.appendChild(script);
-      });
-    }
+    
+    // OFFICIAL LIC DIRECT PAY EXACT PORTAL LINK
+    const OFFICIAL_LIC_PAY_LINK = "https://ebiz.licindia.in/D2CPM/?_ga=2.109876677.1538151736.1791531060-1854929625.1773065359#DirectPay";
 
     async function handleDueSearch(e) {
       e.preventDefault();
@@ -140,16 +148,28 @@
       btn.disabled = true;
 
       try {
-        const data = await fetchJSONP(GOOGLE_SHEET_API_URL + "?type=checkDue&query=" + encodeURIComponent(query));
+        const fetchUrl = GOOGLE_SHEET_API_URL + "?action=checkDue&query=" + encodeURIComponent(query);
+        const response = await fetch(fetchUrl);
+        const data = await response.json();
+
         loader.classList.add('hidden');
         btn.disabled = false;
 
-        if (!data || data.length === 0) {
+        if (!data || !Array.isArray(data) || data.length === 0) {
           resultBox.innerHTML = `
-            <div class="bg-rose-50 border border-rose-200 rounded-2xl p-4 text-center text-xs text-rose-900 space-y-1">
-              <i class="fa-solid fa-circle-exclamation text-rose-500 text-lg"></i>
-              <p class="font-bold">Is Policy / Mobile number par koi Due Premium nahi mila!</p>
-              <p class="text-slate-500 text-[11px]">Kripya number check karein ya Manoher Singh ji (8440096343) se sampark karein.</p>
+            <div class="bg-rose-50 border border-rose-200 rounded-2xl p-5 text-center text-xs text-rose-950 space-y-2 animate-fadeIn">
+              <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 mx-auto flex items-center justify-center text-lg">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </div>
+              <h4 class="font-black text-sm">Is Policy / Mobile Number Par Koi Due Premium Nahi Mila!</h4>
+              <p class="text-slate-500 text-[11px] max-w-md mx-auto">
+                Agar aapki policy chalu hai aur yahan show nahi ho rahi, to kripya seedha Manoher Singh ji (8440096343) se WhatsApp par confirm karein.
+              </p>
+              <div class="pt-2">
+                <a href="${OFFICIAL_LIC_PAY_LINK}" target="_blank" class="inline-flex items-center gap-1.5 bg-brand-navy text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-brand-lightBlue transition">
+                  <i class="fa-solid fa-arrow-up-right-from-square text-brand-gold"></i> LIC Direct Pay Portal Kholein
+                </a>
+              </div>
             </div>
           `;
           resultBox.classList.remove('hidden');
@@ -157,51 +177,51 @@
         }
 
         resultBox.innerHTML = data.map(item => {
-          const licPayUrl = "https://ebiz.licindia.in/D2CPM/#directpay/Premium/PremiumLanding";
+          const totAmount = Number(item.totPrem || 0);
 
           return `
-            <div class="border-2 border-emerald-500 bg-emerald-50/40 rounded-2xl p-5 space-y-3">
-              <div class="flex justify-between items-start border-b border-emerald-200 pb-2.5">
+            <div class="border-2 border-emerald-500/80 bg-gradient-to-br from-emerald-50/50 via-white to-emerald-50/30 rounded-3xl p-5 sm:p-6 space-y-4 shadow-sm hover:shadow-md transition">
+              <div class="flex flex-col sm:flex-row justify-between sm:items-start gap-2 border-b border-emerald-200 pb-3">
                 <div>
-                  <span class="text-[10px] font-black uppercase tracking-wider bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded">
-                    Active Policy Due Found
+                  <span class="text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-900 border border-emerald-300 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+                    <i class="fa-solid fa-circle-check text-emerald-600"></i> Active Policy Due Found
                   </span>
-                  <h3 class="text-lg font-black text-brand-navy mt-1">${item.name}</h3>
-                  <p class="text-xs font-mono font-bold text-blue-900">Policy No: <strong>${item.policyNo}</strong></p>
+                  <h3 class="text-lg font-black text-brand-navy mt-1.5">${item.name}</h3>
+                  <p class="text-xs font-mono font-black text-blue-900">Policy No: <strong>${item.policyNo}</strong></p>
                 </div>
-                <div class="text-right">
-                  <span class="text-xs text-slate-500 font-bold">Total Due:</span>
-                  <div class="text-2xl font-black text-emerald-700">₹ ${Number(item.totPrem).toLocaleString('en-IN')}</div>
+                <div class="sm:text-right bg-white p-2.5 rounded-2xl border border-emerald-100 shadow-2xs">
+                  <span class="text-[11px] text-slate-500 font-bold block">Kul Due Premium Rashi:</span>
+                  <div class="text-2xl font-black text-emerald-700 leading-tight">₹ ${totAmount.toLocaleString('en-IN')}</div>
                 </div>
               </div>
 
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                <div class="bg-white p-2.5 rounded-xl border border-slate-200">
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
                   <span class="text-slate-500 text-[10.5px] block font-bold">Plan / Term:</span>
-                  <span class="font-black text-slate-800">${item.planTerm || 'N/A'}</span>
+                  <span class="font-black text-brand-navy text-sm">${item.planTerm || 'N/A'}</span>
                 </div>
-                <div class="bg-white p-2.5 rounded-xl border border-slate-200">
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
                   <span class="text-slate-500 text-[10.5px] block font-bold">Kisht Mode:</span>
-                  <span class="font-black text-slate-800">${item.mode || 'Mly'}</span>
+                  <span class="font-black text-slate-800 text-sm">${item.mode || 'Mly'}</span>
                 </div>
-                <div class="bg-white p-2.5 rounded-xl border border-slate-200">
-                  <span class="text-slate-500 text-[10.5px] block font-bold">Due Mahine/Kisht:</span>
-                  <span class="font-black text-rose-600">${item.dueCount} Kist (Due)</span>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
+                  <span class="text-slate-500 text-[10.5px] block font-bold">Due Kisht / Mahina:</span>
+                  <span class="font-black text-rose-600 text-sm">${item.dueCount} Kisht (Due)</span>
                 </div>
-                <div class="bg-white p-2.5 rounded-xl border border-slate-200">
-                  <span class="text-slate-500 text-[10.5px] block font-bold">FUP Date:</span>
-                  <span class="font-black text-slate-800">${item.fup || '-'}</span>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
+                  <span class="text-slate-500 text-[10.5px] block font-bold">FUP Date (Due Date):</span>
+                  <span class="font-black text-slate-800 text-sm">${item.fup || '-'}</span>
                 </div>
               </div>
 
-              <!-- Pay Now Button -->
-              <div class="pt-2 flex flex-col sm:flex-row gap-2">
-                <a href="${licPayUrl}" target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 px-4 rounded-xl text-center text-xs transition shadow flex items-center justify-center gap-2">
+              <!-- Pay Now Button With Exact User Link -->
+              <div class="pt-2 flex flex-col sm:flex-row gap-2.5">
+                <a href="${OFFICIAL_LIC_PAY_LINK}" target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3.5 px-4 rounded-2xl text-center text-xs sm:text-sm transition shadow-md flex items-center justify-center gap-2">
                   <i class="fa-solid fa-credit-card text-base"></i>
-                  <span>Pay Now (LIC Direct Pay Gateway)</span>
+                  <span>Pay Due Premium (LIC Direct Pay)</span>
                 </a>
-                <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20meri%20Policy%20No%20${item.policyNo}%20ka%20Premium%20₹${item.totPrem}%20due%20h%2C%20mujhe%20pay%20karna%20h" target="_blank" class="bg-slate-900 hover:bg-slate-800 text-brand-gold font-bold py-3 px-4 rounded-xl text-center text-xs transition flex items-center justify-center gap-1.5 shadow">
-                  <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20meri%20Policy%20No%20${item.policyNo}%20ka%20Premium%20₹${totAmount}%20due%20hai%2C%20ise%20online%20jama%20karwana%20hai" target="_blank" class="bg-brand-navy hover:bg-brand-lightBlue text-brand-gold font-bold py-3.5 px-4 rounded-2xl text-center text-xs transition flex items-center justify-center gap-1.5 shadow-md">
+                  <i class="fa-brands fa-whatsapp text-emerald-400 text-base"></i>
                   <span>WhatsApp se Jama Karwayein</span>
                 </a>
               </div>
