@@ -125,7 +125,7 @@
       </div>
       <div>
         <h3 class="font-black text-xl text-brand-navy">Client Verification Login</h3>
-        <p class="text-xs text-slate-500 mt-1">Claim portal access karne ke liye apne Google Account se sign in karein!</p>
+        <p class="text-xs text-slate-500 mt-1">Claim portal access karne ke liye apne Google Account se sign in karein[cite: 14]!</p>
       </div>
 
       <!-- Google Official Button Container -->
@@ -214,7 +214,7 @@
             <span>Doorstep Document Verification</span>
           </div>
           <p class="text-[11px] text-slate-500 leading-normal">
-            Dastawej samajh na aaye toh form submit karein, hum WhatsApp par documents mangwa lenge।
+            Dastawej samajh na aaye toh form submit karein, hum WhatsApp par documents mangwa lenge[cite: 17]।
           </p>
         </div>
       </div>
@@ -404,7 +404,6 @@
 
   <!-- ================= JAVASCRIPT ENGINE ================= -->
   <script>
-    // AAPKA NAYA APPS SCRIPT URL & GOOGLE CLIENT ID
     const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzSh9jQ_VuFtn3daHDIFetGRjtwbxnIZe_CqwL_S-0b3e5IqD3MUZL9KPzj13RJBfTq/exec";
     const GOOGLE_CLIENT_ID = "418446717578-9241s3h4pc44agohfkc8t2ift9jtpfau.apps.googleusercontent.com";
 
@@ -494,7 +493,6 @@
       setTimeout(() => toast.classList.add('hidden'), 4000);
     }
 
-    // 1. Switch Tabs Logic
     function switchCategory(key) {
       activeCategory = key;
       const data = servicesData[key];
@@ -524,7 +522,6 @@
       select.innerHTML = data.subTypes.map(st => `<option value="${st}">${st}</option>`).join('');
     }
 
-    // 2. Google Authentication Logic
     function parseJwt(token) {
       try {
         const base64Url = token.split('.')[1];
@@ -632,14 +629,7 @@
       showToast("Aap logout ho gaye hain.");
     }
 
-    // 3. Client Sheet Verification
     async function verifyClientFromSheet() {
-      if (!currentLoggedInUser) {
-        showToast("Pehle Google se login karein!");
-        openAuthModal();
-        return;
-      }
-
       const key = document.getElementById('verifyInput').value.trim();
       const alertBox = document.getElementById('verifyAlert');
       const form = document.getElementById('claimActualForm');
@@ -686,7 +676,6 @@
       }
     }
 
-    // 4. Form Submit directly to 'Claim' Tab
     async function handleClaimSubmission(e) {
       e.preventDefault();
       if (!currentVerifiedClient) return;
