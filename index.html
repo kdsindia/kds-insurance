@@ -98,7 +98,7 @@
 
   <!-- Official Google Identity Services SDK -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-<!-- Firebase App & Authentication SDKs -->
+  <!-- Firebase App & Authentication SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   
@@ -299,13 +299,13 @@
   </div>
 
   <!-- Top Advisor Bar -->
-  <div class="bg-brand-dark text-white text-xs py-2 px-4 border-b border-brand-lightBlue">
+  <div class="bg-brand-dark text-white text-xs py-2 px-3 sm:px-4 border-b border-brand-lightBlue">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
       <div class="flex items-center gap-2">
         <span class="bg-brand-gold text-brand-dark font-black px-2 py-0.5 rounded text-[10px] tracking-wider uppercase">Authorized Insurance Agent</span>
         <span class="text-slate-200"><i class="fa-solid fa-user-tie text-brand-gold mr-1"></i> <strong>MANOHER SINGH</strong> | Insurance Advisory Point</span>
       </div>
-      <div class="flex items-center gap-3 text-slate-200">
+      <div class="flex items-center gap-2 sm:gap-3 text-slate-200 flex-wrap justify-center">
         <button onclick="openSiteLanguageModal()" class="bg-white/10 hover:bg-white/20 text-brand-gold px-2.5 py-1 rounded-lg font-bold text-xs flex items-center gap-1.5 transition">
           <i class="fa-solid fa-language"></i> <span id="currentLangLabel">भाषा / Language</span>
         </button>
@@ -323,18 +323,18 @@
     </div>
   </div>
 
-  <!-- Main Navbar -->
+  <!-- Main Navbar (Fixed Left-Padding & Mobile Buttons Overflow) -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
       
-      <div class="flex justify-between items-center h-16 sm:h-20 gap-3">
-        <!-- Logo Section -->
-        <a href="javascript:void(0)" onclick="switchMainTab('lic')" class="flex items-center gap-2.5 py-1 shrink-0 group">
-          <img src="logo.png" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" class="h-10 sm:h-12 w-auto max-w-[140px] sm:max-w-[170px] object-contain rounded-lg" alt="KDS INSURANCE" />
+      <div class="flex justify-between items-center min-h-[4rem] sm:min-h-[5rem] py-1.5 gap-2">
+        <!-- Logo Section (Extra Left Space Removed) -->
+        <a href="javascript:void(0)" onclick="switchMainTab('lic')" class="flex items-center gap-2 py-1 shrink-0 group">
+          <img src="logo.png" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" class="h-9 sm:h-12 w-auto max-w-[130px] sm:max-w-[170px] object-contain rounded-lg" alt="KDS INSURANCE" />
           <div id="logoFallback" class="hidden items-center gap-2">
-            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-navy flex items-center justify-center text-brand-gold font-black text-lg sm:text-xl">KDS</div>
+            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-brand-navy flex items-center justify-center text-brand-gold font-black text-base sm:text-xl">KDS</div>
             <div>
-              <span class="text-base sm:text-lg font-black text-brand-navy leading-none block">KDS <span class="text-brand-gold">INSURANCE</span></span>
+              <span class="text-sm sm:text-lg font-black text-brand-navy leading-none block">KDS <span class="text-brand-gold">INSURANCE</span></span>
               <p class="text-[9px] sm:text-[10px] text-slate-500 font-bold mt-0.5">Manoher Singh • Malwara</p>
             </div>
           </div>
@@ -342,52 +342,59 @@
 
         <!-- Desktop Tab Switcher -->
         <div class="hidden lg:flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shrink-0">
-          <button id="navTabLic" onclick="switchMainTab('lic')" class="px-3.5 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm">
+          <button id="navTabLic" onclick="switchMainTab('lic')" class="px-3 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm">
             <i class="fa-solid fa-shield-halved text-brand-gold"></i><span>Life (LIC)</span>
           </button>
-          <button id="navTabCsc" onclick="switchMainTab('csc')" class="px-3.5 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-amber-700 transition flex items-center gap-1.5">
+          <button id="navTabCsc" onclick="switchMainTab('csc')" class="px-3 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-amber-700 transition flex items-center gap-1.5">
             <i class="fa-solid fa-building-columns text-amber-600"></i><span>Life (CSC/Other)</span>
           </button>
-          <button id="navTabMotor" onclick="switchMainTab('motor')" class="px-3.5 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-emerald-700 transition flex items-center gap-1.5">
+          <button id="navTabMotor" onclick="switchMainTab('motor')" class="px-3 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-emerald-700 transition flex items-center gap-1.5">
             <i class="fa-solid fa-car text-emerald-600"></i> <span>Motor</span>
           </button>
-          <button id="navTabHealth" onclick="switchMainTab('health')" class="px-3.5 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-rose-700 transition flex items-center gap-1.5">
+          <button id="navTabHealth" onclick="switchMainTab('health')" class="px-3 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-rose-700 transition flex items-center gap-1.5">
             <i class="fa-solid fa-heart-pulse text-rose-600"></i><span>Health</span>
           </button>
         </div>
 
-        <!-- Right Side Action Buttons -->
-        <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-          <a href="premium-check.html" class="bg-amber-100 hover:bg-amber-200 text-amber-950 font-black px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm border border-amber-300">
-            <i class="fa-solid fa-receipt text-amber-600"></i>
-            <span class="inline">Check Premium Due</span>
+        <!-- Right Side Action Buttons (Mobile-Adaptive, Claim Added) -->
+        <div class="flex items-center gap-1 sm:gap-2 shrink-0 flex-wrap justify-end">
+          
+          <!-- NEW CLAIM BUTTON IN HEADER -->
+          <a href="https://kdsinsurance.in/claim" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl text-[11px] sm:text-sm transition flex items-center gap-1 sm:gap-1.5 shadow-sm">
+            <i class="fa-solid fa-shield-halved text-amber-300"></i>
+            <span>Claim</span>
           </a>
 
-          <a href="about.html" class="hidden md:inline-flex bg-white hover:bg-slate-100 text-brand-navy border border-slate-200 font-bold px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm transition items-center gap-1.5 shadow-sm">
+          <a href="premium-check.html" class="bg-amber-100 hover:bg-amber-200 text-amber-950 font-black px-2 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl text-[11px] sm:text-sm transition flex items-center gap-1 shadow-sm border border-amber-300">
+            <i class="fa-solid fa-receipt text-amber-600"></i>
+            <span class="hidden md:inline">Check Premium Due</span>
+            <span class="md:hidden">Due</span>
+          </a>
+
+          <a href="about.html" class="hidden xl:inline-flex bg-white hover:bg-slate-100 text-brand-navy border border-slate-200 font-bold px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm transition items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-user-tie text-brand-gold"></i>
             <span>About Us</span>
           </a>
 
-          <button onclick="openLeadModal()" class="bg-brand-navy hover:bg-brand-lightBlue text-white font-bold px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm">
+          <button onclick="openLeadModal()" class="hidden sm:inline-flex bg-brand-navy hover:bg-brand-lightBlue text-white font-bold px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl text-[11px] sm:text-sm transition items-center gap-1 shadow-sm">
             <i class="fa-solid fa-headset text-brand-gold"></i>
-            <span class="hidden sm:inline">Callback</span>
-            <span class="sm:hidden">Call</span>
+            <span>Callback</span>
           </button>
 
-          <!-- Login / Dashboard Button -->
-          <button id="authBtn" onclick="handleAuthButtonClick()" class="bg-brand-gold hover:bg-amber-400 text-brand-dark font-black px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm">
-            <i class="fa-solid fa-user-circle text-base"></i>
-            <span id="authBtnLabel" class="hidden sm:inline">Login / Sign Up</span>
+          <!-- Login / Dashboard Button (Never hides on mobile) -->
+          <button id="authBtn" onclick="handleAuthButtonClick()" class="bg-brand-gold hover:bg-amber-400 text-brand-dark font-black px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl text-[11px] sm:text-sm transition flex items-center gap-1 sm:gap-1.5 shadow-sm shrink-0">
+            <i class="fa-solid fa-user-circle text-xs sm:text-base"></i>
+            <span id="authBtnLabel" class="max-w-[95px] sm:max-w-none truncate">Login</span>
           </button>
 
-          <button onclick="openSiteLanguageModal()" class="bg-slate-100 hover:bg-slate-200 text-brand-navy font-bold px-2.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1 border border-slate-200 shadow-sm" title="Change Language">
-            <i class="fa-solid fa-language text-brand-lightBlue text-sm"></i>
+          <button onclick="openSiteLanguageModal()" class="bg-slate-100 hover:bg-slate-200 text-brand-navy font-bold px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl text-xs transition flex items-center gap-1 border border-slate-200 shadow-sm" title="Change Language">
+            <i class="fa-solid fa-language text-brand-lightBlue text-xs sm:text-sm"></i>
           </button>
         </div>
       </div>
 
       <!-- Mobile Dedicated 4-Grid App Bar -->
-      <div class="lg:hidden pb-2.5 pt-0.5">
+      <div class="lg:hidden pb-2 pt-0.5">
         <div class="grid grid-cols-4 gap-1.5 bg-slate-100 p-1 rounded-2xl border border-slate-200">
           <button id="mobileNavLic" onclick="switchMainTab('lic')" class="py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-brand-navy text-white shadow-xs">
             <i class="fa-solid fa-shield-halved text-brand-gold text-xs"></i>
@@ -969,7 +976,7 @@
     </section>
   </div>
 
-  <!-- REGULATORY COMPLIANT FOOTER -->
+  <!-- REGULATORY COMPLIANT FOOTER (Claim Portal Link Added) -->
   <footer class="bg-brand-dark text-slate-400 text-xs border-t border-brand-lightBlue/40 py-8 px-4 sm:px-6 lg:px-8 mt-12">
     <div class="max-w-7xl mx-auto space-y-4">
       <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
@@ -977,11 +984,14 @@
           <span class="text-lg font-black text-white">KDS <span class="text-brand-gold">INSURANCE</span> SERVICES</span>
           <p class="text-slate-300 text-xs mt-0.5">Authorized Insurance Agent: <strong>MANOHER SINGH</strong> (Malwara, Raniwara)[cite: 1]</p>
         </div>
-        <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-300 font-bold">
+        <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-slate-300 font-bold">
           <a href="javascript:void(0)" onclick="switchMainTab('lic')" class="hover:text-brand-gold transition">Life (LIC)</a>
           <a href="javascript:void(0)" onclick="switchMainTab('csc')" class="hover:text-brand-gold transition">Life (CSC/Other)</a>
           <a href="javascript:void(0)" onclick="switchMainTab('motor')" class="hover:text-brand-gold transition">Motor Insurance</a>
           <a href="javascript:void(0)" onclick="switchMainTab('health')" class="hover:text-brand-gold transition">Health Insurance</a>
+          <a href="https://kdsinsurance.in/claim" class="text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1 font-black">
+            <i class="fa-solid fa-shield-halved text-amber-400"></i> Claim Portal
+          </a>
           <a href="about.html" class="hover:text-brand-gold transition">About Us</a>
         </div>
       </div>
@@ -1159,7 +1169,8 @@
     <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
     <span id="toastMessage">Success</span>
   </div>
-<!-- COMPULSORY PROFILE SETUP MODAL -->
+
+  <!-- COMPULSORY PROFILE SETUP MODAL -->
   <div id="mandatoryProfileModal" class="fixed inset-0 z-[999] bg-slate-950/90 backdrop-blur-md hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border-2 border-brand-gold p-6 text-center">
       <div class="w-14 h-14 rounded-2xl bg-brand-navy text-brand-gold mx-auto flex items-center justify-center text-2xl font-black shadow-md mb-2">
@@ -1299,7 +1310,7 @@
 
       <div class="flex-grow overflow-y-auto p-4 sm:p-6 bg-slate-50">
 
-<!-- 2 MOBILE NUMBERS & EMAIL MANAGEMENT CARD -->
+        <!-- 2 MOBILE NUMBERS & EMAIL MANAGEMENT CARD -->
         <div class="mb-5 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
           <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 pb-3 border-b border-slate-100">
             <div>
@@ -1309,7 +1320,6 @@
               <p class="text-[11px] text-slate-500">Apna number check karein. Badalne par request admin approval ke liye submit hogi.</p>
             </div>
             
-            <!-- Live Status Badge & Refresh/Check Button -->
             <div class="flex items-center gap-2 flex-wrap">
               <span id="mobileStatusBadge" class="text-[11px] font-black px-3 py-1 rounded-xl bg-slate-100 text-slate-700 border border-slate-200 flex items-center gap-1">
                 Checking Status...
@@ -1321,25 +1331,21 @@
           </div>
 
           <form id="userMobilesForm" onsubmit="event.preventDefault();" class="mt-3 grid grid-cols-1 sm:grid-cols-4 gap-3">
-            <!-- 1. Logged-in Email -->
             <div>
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Login Email (Google ID)</label>
               <input type="email" id="userEmailDisplay" readonly class="w-full bg-slate-100 text-slate-600 border border-slate-300 rounded-xl p-2.5 text-xs font-bold cursor-not-allowed" />
             </div>
 
-            <!-- 2. Primary Mobile -->
             <div>
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Primary Mobile (WhatsApp) *</label>
               <input type="tel" id="userMobile1" maxlength="10" required placeholder="10-digit number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold" />
             </div>
 
-            <!-- 3. Secondary Mobile -->
             <div>
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Secondary Mobile (Alternative)</label>
               <input type="tel" id="userMobile2" maxlength="10" placeholder="Optional 10-digit" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold" />
             </div>
 
-            <!-- 4. Action Buttons -->
             <div class="flex flex-col sm:flex-row items-end gap-2">
               <button type="button" id="btnVerifyLock" onclick="handleVerifyAndLock()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-3 rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
                 <i class="fa-solid fa-lock text-brand-gold"></i>
@@ -1353,6 +1359,7 @@
             </div>
           </form>
         </div>       
+
         <div id="dashboardEmptyState" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-300 p-8 space-y-3">
           <div class="w-14 h-14 rounded-2xl bg-slate-100 text-slate-400 mx-auto flex items-center justify-center text-2xl">
             <i class="fa-solid fa-file-circle-question"></i>
@@ -1383,7 +1390,6 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    // GOOGLE SHEET WEB APP URL
     const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwMJOgO-FJFf9zOxHrilfkLM5CNqo8cR2HzLZNsozG5QlAN7rDEnv1ZG1AzMj6ig_Nw/exec";
 
     let currentPdfLang = 'hi';
@@ -1392,7 +1398,6 @@
     let currentLifeTab = 'lic';
     let currentViewMode = 'filtered';
 
-    // LANGUAGE SWITCHER & AUTO-POPUP LOGIC
     const langNames = {
       'hi': 'हिंदी / Hindi',
       'en': 'English',
@@ -1481,7 +1486,7 @@
       motorPage.classList.add('hidden');
       healthPage.classList.add('hidden');
 
-      const desktopInactive = 'px-3.5 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-brand-navy transition flex items-center gap-1.5';
+      const desktopInactive = 'px-3 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-brand-navy transition flex items-center gap-1.5';
       const mobileInactive = 'py-2 rounded-xl text-[11px] font-bold text-slate-700 transition flex flex-col items-center justify-center gap-0.5';
 
       btnLic.className = desktopInactive;
@@ -1499,7 +1504,7 @@
         lifeWrapper.classList.remove('hidden');
 
         if (tab === 'lic') {
-          btnLic.className = 'px-3.5 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm';
+          btnLic.className = 'px-3 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm';
           mLic.className = 'py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-brand-navy text-white shadow-xs';
           
           document.getElementById('heroPortalBadge').innerText = "LIC Official Policy Benefits & Premium Illustration Chart";
@@ -1511,7 +1516,7 @@
           document.getElementById('schemesListHeading').innerText = "Available LIC Plans";
           document.getElementById('toggleAllBtnLabel').innerText = "Sabhi LIC Plans";
         } else {
-          btnCsc.className = 'px-3.5 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-amber-600 text-white shadow-sm';
+          btnCsc.className = 'px-3 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-amber-600 text-white shadow-sm';
           mCsc.className = 'py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-amber-600 text-white shadow-xs';
 
           document.getElementById('heroPortalBadge').innerText = "CSC Portal Life Insurance (SBI Life, IndiaFirst, Shriram)";
@@ -1526,19 +1531,18 @@
         applyPolicyFilters();
       } else if (tab === 'motor') {
         motorPage.classList.remove('hidden');
-        btnMotor.className = 'px-3.5 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-emerald-700 text-white shadow-sm';
+        btnMotor.className = 'px-3 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-emerald-700 text-white shadow-sm';
         mMotor.className = 'py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-emerald-700 text-white shadow-xs';
         searchMotorPolicies();
       } else if (tab === 'health') {
         healthPage.classList.remove('hidden');
-        btnHealth.className = 'px-3.5 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-rose-700 text-white shadow-sm';
+        btnHealth.className = 'px-3 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-rose-700 text-white shadow-sm';
         mHealth.className = 'py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-rose-700 text-white shadow-xs';
         searchHealthPolicies();
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // COMPLETE SCHEMES LIST
     const officialLifeSchemes = [
       { id: 'jeevan_labh', company: 'LIC', planNo: '736', name: "LIC's Jeevan Labh Plan (736)", nameHi: "एलआईसी जीवन लाभ (736)", tagline: 'Kam varsh bharein: 10 pay/16 term, 15 pay/21 term, 16 pay/25 term.', category: 'endowment', minSumAssured: 200000, allowedCombinations: [{ term: 16, ppt: 10 }, { term: 21, ppt: 15 }, { term: 25, ppt: 16 }], enforceRules: (term) => (term <= 18 ? { term: 16, ppt: 10 } : (term <= 23 ? { term: 21, ppt: 15 } : { term: 25, ppt: 16 })) },
       { id: 'new_endowment_plan', company: 'LIC', planNo: '714', name: "LIC's New Endowment Plan (714)", nameHi: "एलआईसी न्यू एंडोमेंट प्लान (714)", tagline: 'Niyamit bachat aur financial security ka classic plan.', category: 'endowment', minSumAssured: 100000, isFlexible: true, minTerm: 12, maxTerm: 35, enforceRules: (term, ppt) => { const t = Math.max(12, Math.min(35, term || 20)); return { term: t, ppt: t }; } },
@@ -1555,7 +1559,6 @@
       { id: 'jeevan_raksha', company: 'LIC', planNo: '894', name: "LIC's Jeevan Raksha (894)", nameHi: "एलआईसी जीवन रक्षा (894)", tagline: 'Affordable pure term insurance suraksha cover standard terms ke sath.', category: 'term', minSumAssured: 200000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 40, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(40, term || 25)), ppt: Math.min(term, ppt || term) }) },
       { id: 'new_pension_plus', company: 'LIC', planNo: '867', name: "LIC's New Pension Plus (867)", nameHi: "एलआईसी न्यू पेंशन प्लस (867)", tagline: 'Retirement corpus build karne hetu pension product.', category: 'pension', minSumAssured: 100000, isAnnuity: true, isFlexible: true, minTerm: 10, maxTerm: 42, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(42, term || 20)), ppt: Math.min(term, ppt || 15) }) },
 
-      // CSC / OTHER LIFE INSURERS
       { id: 'sbi_platina_plus', company: 'SBI Life', planNo: 'SBI-01', name: "SBI Life - Smart Platina Plus", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना प्लस", tagline: 'Guaranteed regular income post PPT + 110% Return of Premium at maturity.', category: 'whole_life', minSumAssured: 250000, isWholeLifeIncome: true, incomePercent: 0.09, allowedPptOptions: [7, 8, 10, 12, 15, 20], enforceRules: (term, ppt) => ({ term: Math.max(15, Math.min(35, term || 25)), ppt: Math.min(20, ppt || 15) }) },
       { id: 'sbi_platina_supreme', company: 'SBI Life', planNo: 'SBI-02', name: "SBI Life - Smart Platina Supreme", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना सुप्रीम", tagline: 'High financial corpus generation with guaranteed maturity additions.', category: 'endowment', minSumAssured: 300000, allowedPptOptions: [7, 8, 10, 12, 15, 20], isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(30, term || 20)), ppt: Math.min(20, ppt || 15) }) },
       { id: 'indiafirst_gold', company: 'IndiaFirst', planNo: 'CSC-02', name: "IndiaFirst G.O.L.D (Guarantee of Life Dreams)", nameHi: "इंडियाफर्स्ट गोल्ड (लाइफ ड्रीम्स)", tagline: 'Pay for limited years and get guaranteed regular income + 100% premium back.', category: 'whole_life', minSumAssured: 150000, isWholeLifeIncome: true, incomePercent: 0.085, allowedPptOptions: [5, 6, 8, 10, 12, 15, 20], enforceRules: (term, ppt) => ({ term: Math.max(20, Math.min(40, term || 30)), ppt: Math.min(20, ppt || 15) }) },
@@ -2288,7 +2291,6 @@
       window.open(`https://wa.me/918440096343?text=${text}`, '_blank');
     }
 
-    // 3. MOTOR INSURANCE SECTION
     const generalInsurers = [
       { name: 'New India Assurance (Govt of India)', rating: '4.9 ★', claimsRatio: '98.5%', badge: 'Govt Trust' },
       { name: 'ICICI Lombard General Insurance', rating: '4.8 ★', claimsRatio: '97.2%', badge: 'Fastest Cashless' },
@@ -2467,7 +2469,6 @@
       document.getElementById('generalQuotationModal').classList.add('hidden');
     }
 
-    // 4. HEALTH INSURANCE SECTION
     const healthInsurers = [
       { name: 'Star Health & Allied Insurance', plan: 'Star Comprehensive / Young Star', rating: '4.9 ★', hospitals: '14,000+', badge: 'Standalone Leader' },
       { name: 'Care Health Insurance', plan: 'Care Supreme / Care Advantage', rating: '4.8 ★', hospitals: '11,000+', badge: 'Unlimited Recharges' },
@@ -2702,14 +2703,13 @@
       }
     }
 
-function handleGoogleCredentialResponse(response) {
+    function handleGoogleCredentialResponse(response) {
       const payload = parseJwt(response.credential);
       if (!payload) {
         showToast("Login error: Token decode nahi hua.");
         return;
       }
 
-      // Firebase Console me User ID add karne ke liye
       try {
         if (typeof firebase !== 'undefined' && firebase.auth) {
           const cred = firebase.auth.GoogleAuthProvider.credential(response.credential);
@@ -2784,7 +2784,6 @@ function handleGoogleCredentialResponse(response) {
         btn.innerText = "Users Sheet me save ho raha hai...";
       }
 
-      // FormData direct sheet me submit hota hai bina ruke
       const formData = new FormData();
       formData.append("action", "saveUserProfile");
       formData.append("email", currentLoggedInUser.email);
@@ -2824,10 +2823,10 @@ function handleGoogleCredentialResponse(response) {
         showToast("Dobara try karein.");
       });
     }  
+
     function openAuthModal() {
       document.getElementById('authModal').classList.remove('hidden');
 
-      // Initialize Official Google Identity Button
       if (window.google && google.accounts && google.accounts.id) {
         google.accounts.id.initialize({
           client_id: GOOGLE_CLIENT_ID,
@@ -2852,7 +2851,6 @@ function handleGoogleCredentialResponse(response) {
       document.getElementById('authModal').classList.add('hidden');
     }
 
-// Google Sheet se user quotations & Approved status retrieve karna
     function fetchUserQuotationsFromSheet(userEmail) {
       if (!userEmail || typeof GOOGLE_SHEET_API_URL === 'undefined') return;
 
@@ -2869,7 +2867,6 @@ function handleGoogleCredentialResponse(response) {
       .then(r => r.json())
       .then(res => {
         if (res && res.status === "success") {
-          // 1. Sheet se Live Status & Approved Number update karein
           if (res.mobileRequestStatus) {
             localStorage.setItem('kds_mob_status_' + userEmail, res.mobileRequestStatus);
 
@@ -2881,10 +2878,8 @@ function handleGoogleCredentialResponse(response) {
             }
           }
 
-          // 2. Dashboard UI par naya number dikhayein
           updateMobileInputsUI();
 
-          // 3. Quotations List Update
           if (res.quotations) {
             window.serverFetchedQuotations = res.quotations;
             localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
@@ -2894,7 +2889,7 @@ function handleGoogleCredentialResponse(response) {
       })
       .catch(err => console.log("Sync error:", err));
     }
-// 1. QUOTATION SAVE SUBMISSION (COLUMN G = LIC/MOTOR/HEALTH, COLUMN H = PLAN NAME)
+
     function handleSaveQuotationSubmit(e) {
       e.preventDefault();
 
@@ -2914,7 +2909,6 @@ function handleGoogleCredentialResponse(response) {
         btn.innerText = 'Save ho raha hai...';
       }
 
-      // Column G: Insurance Category
       let insCategory = "LIC";
       const motorDiv = document.getElementById('motorInsurancePage');
       const healthDiv = document.getElementById('healthInsurancePage');
@@ -2926,7 +2920,6 @@ function handleGoogleCredentialResponse(response) {
         insCategory = "CSC";
       }
 
-      // Column H: Plan Name
       let pName = "Insurance Plan";
       let pPrem = 0;
       let pTerm = 0;
@@ -3131,7 +3124,6 @@ function handleGoogleCredentialResponse(response) {
       tbodyElement.innerHTML = html;
     }
 
-// 2. DASHBOARD CONTACT & EMAIL DISPLAY
     function updateMobileInputsUI() {
       const emailInput = document.getElementById('userEmailDisplay');
       const m1 = document.getElementById('userMobile1');
@@ -3176,7 +3168,6 @@ function handleGoogleCredentialResponse(response) {
       }
     }
 
-    // 3. VERIFY & LOCK BUTTON
     function handleVerifyAndLock() {
       if (!currentLoggedInUser) {
         showToast("Pehle login karein!");
@@ -3217,7 +3208,6 @@ function handleGoogleCredentialResponse(response) {
       }, 1000);
     }
 
-    // 4. REQUEST NUMBER CHANGE
     function handleSaveUserMobiles() {
       if (!currentLoggedInUser) return;
       const m1Input = document.getElementById('userMobile1');
