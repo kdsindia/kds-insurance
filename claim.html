@@ -73,7 +73,6 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16 sm:h-20 gap-3">
         
-        <!-- Logo Section -->
         <a href="/" class="flex items-center gap-2.5 py-1 shrink-0 group">
           <img src="logo.png" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" class="h-10 sm:h-12 w-auto max-w-[140px] sm:max-w-[170px] object-contain rounded-lg" alt="KDS INSURANCE" />
           <div id="logoFallback" class="hidden items-center gap-2">
@@ -85,7 +84,6 @@
           </div>
         </a>
 
-        <!-- Navigation Buttons -->
         <div class="flex items-center gap-2 sm:gap-3">
           <a href="/" class="bg-slate-100 hover:bg-slate-200 text-brand-navy font-bold px-3.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 border border-slate-200 shadow-sm">
             <i class="fa-solid fa-house text-brand-lightBlue"></i>
@@ -98,7 +96,6 @@
             <span class="sm:hidden">Due</span>
           </a>
 
-          <!-- Google Auth Button / User Badge -->
           <div id="authContainer">
             <button id="authBtn" onclick="handleAuthButtonClick()" class="bg-brand-gold hover:bg-amber-400 text-brand-dark font-black px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm">
               <i class="fa-solid fa-user-circle text-base"></i>
@@ -128,7 +125,6 @@
         <p class="text-xs text-slate-500 mt-1">Claim portal access karne ke liye apne Google Account se sign in karein[cite: 14]!</p>
       </div>
 
-      <!-- Google Official Button Container -->
       <div id="googleSignInButtonDiv" class="flex justify-center pt-2"></div>
 
       <button type="button" onclick="closeAuthModal()" class="text-xs text-slate-400 hover:text-slate-600 block mx-auto pt-2">
@@ -140,7 +136,6 @@
   <!-- ================= MAIN CONTENT ================= -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
     
-    <!-- Hero / Headline -->
     <div class="text-center mb-10">
       <div class="inline-flex items-center gap-2 bg-amber-100 text-amber-900 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider mb-2 border border-amber-300">
         <i class="fa-solid fa-shield-halved text-amber-600"></i> Authorized Client Claim Desk
@@ -203,9 +198,7 @@
           </p>
 
           <h4 class="text-xs font-black text-slate-700 uppercase tracking-wider mb-3">Zaroori Dastawej (Documents):</h4>
-          <ul id="serviceDocs" class="space-y-3 text-xs text-slate-600">
-            <!-- Populated dynamically via JS -->
-          </ul>
+          <ul id="serviceDocs" class="space-y-3 text-xs text-slate-600"></ul>
         </div>
 
         <div class="mt-8 pt-5 border-t border-slate-100 bg-slate-50 -mx-6 sm:-mx-7 -mb-6 sm:-mb-7 p-6 rounded-b-3xl">
@@ -219,7 +212,7 @@
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: Verification Card & Auto-Filled Claim Form -->
+      <!-- RIGHT COLUMN: Verification Card, Multi-Policies List & Form -->
       <div class="lg:col-span-2 space-y-6">
         
         <!-- STEP 1: SHEET RECORD VERIFICATION CARD -->
@@ -236,7 +229,7 @@
           <div class="flex flex-col sm:flex-row gap-2.5">
             <div class="relative flex-1">
               <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
-              <input type="text" id="verifyInput" placeholder="eg. 167254505 ya 8104975523" 
+              <input type="text" id="verifyInput" placeholder="eg. 9783811887 ya Policy Number" 
                 class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-4 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-brand-navy uppercase" />
             </div>
             <button type="button" onclick="verifyClientFromSheet()" id="btnVerify" 
@@ -246,11 +239,21 @@
             </button>
           </div>
 
-          <!-- Alert / Status Notice -->
           <div id="verifyAlert" class="hidden mt-4 p-4 rounded-2xl text-xs font-bold"></div>
         </div>
 
-        <!-- STEP 2: CLAIM REGISTRATION FORM (Sheet Verified Hone Par Khulega) -->
+        <!-- POLICIES FOUND LIST (Agar 1 se jyada policies ho ya claim status dekhna ho) -->
+        <div id="policiesListSection" class="hidden space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-black text-brand-navy uppercase tracking-wider">
+              <i class="fa-solid fa-folder-open text-brand-gold mr-1.5"></i> Aapke Number Par Mili Policies (<span id="policiesCount">0</span>)
+            </h4>
+            <span class="text-[11px] text-slate-500 font-bold">Claim karne ke liye policy chunein</span>
+          </div>
+          <div id="policiesCardContainer" class="grid grid-cols-1 gap-3"></div>
+        </div>
+
+        <!-- STEP 2: CLAIM REGISTRATION FORM (Policy Select Hone Par Khulega) -->
         <form id="claimActualForm" onsubmit="handleClaimSubmission(event)" class="hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-sm space-y-5">
           
           <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -259,7 +262,7 @@
               Claim Registration Form
             </div>
             <span class="text-xs bg-emerald-50 text-emerald-800 font-black px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
-              <i class="fa-solid fa-circle-check text-emerald-600"></i> Sheet Verified
+              <i class="fa-solid fa-circle-check text-emerald-600"></i> Selected Policy
             </span>
           </div>
 
@@ -295,9 +298,7 @@
           <!-- Dynamic Claim Subtype Dropdown -->
           <div>
             <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Claim Type / Prakar *</label>
-            <select id="claimSubType" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-navy">
-              <!-- Dynamically populated -->
-            </select>
+            <select id="claimSubType" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-navy"></select>
           </div>
 
           <!-- Description Note -->
@@ -309,14 +310,19 @@
 
           <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 text-xs text-amber-900 flex items-start gap-2.5">
             <i class="fa-solid fa-circle-info text-amber-600 mt-0.5 text-sm shrink-0"></i>
-            <span>Yeh entry aapki workbook ki <strong>'Claim'</strong> sheet me save hogi aur humari team turant call karegi।</span>
+            <span>Submit karne par aapko Unique Claim Reference ID milegi jisse aap status track kar sakte hain।</span>
           </div>
 
-          <button type="submit" id="btnSubmitClaim" 
-            class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2">
-            <i class="fa-solid fa-paper-plane text-brand-gold"></i>
-            <span>Claim Sheet Me Darj Karein</span>
-          </button>
+          <div class="flex gap-2">
+            <button type="button" onclick="cancelPolicySelection()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 px-4 rounded-xl text-xs transition">
+              Radd Karein
+            </button>
+            <button type="submit" id="btnSubmitClaim" 
+              class="flex-1 bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2">
+              <i class="fa-solid fa-paper-plane text-brand-gold"></i>
+              <span>Claim Sheet Me Darj Karein</span>
+            </button>
+          </div>
         </form>
 
       </div>
@@ -325,48 +331,7 @@
 
   </main>
 
-  <!-- ================= AGENT CONTACT BANNER ================= -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 w-full">
-    <section class="relative bg-gradient-to-r from-brand-dark via-brand-navy to-slate-950 rounded-3xl p-6 sm:p-10 text-white shadow-2xl overflow-hidden border-2 border-brand-gold/40">
-      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <div class="lg:col-span-8 space-y-4">
-          <div class="inline-flex items-center gap-2 bg-brand-gold text-brand-dark px-3 py-1 rounded-md text-xs font-black uppercase">
-            <i class="fa-solid fa-user-check"></i> CSC & Authorized Insurance Advisor
-          </div>
-          <h3 class="text-2xl sm:text-3xl font-black tracking-tight leading-snug">
-            KDS INSURANCE CONSULTATION & CUSTOMER POINT
-          </h3>
-          <div class="bg-white/10 rounded-2xl p-4 border border-white/15 space-y-1.5 text-xs text-slate-200">
-            <p><strong class="text-brand-gold text-sm">MANOHER SINGH</strong> (Authorized Insurance Advisor)[cite: 17]</p>
-            <p><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i> <strong>Office Address:</strong> BASEMENT HALL MR COMPLEX, MALWARA, near POLICE CHOWKI, RANIWARA, Malwara, Rajasthan 343039[cite: 17]</p>
-            <p><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> <strong>Helpline:</strong> 8440096343 | LIC, CSC & General Insurance Guidance[cite: 17]</p>
-          </div>
-        </div>
-
-        <div class="lg:col-span-4 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 text-center space-y-4">
-          <div class="w-16 h-16 rounded-full bg-brand-gold text-brand-dark mx-auto flex items-center justify-center text-2xl font-black shadow-lg">
-            <i class="fa-solid fa-phone-volume"></i>
-          </div>
-          <div>
-            <h4 class="font-extrabold text-lg text-white">Contact Manohar Singh</h4>
-            <p class="text-xs text-slate-300">कॉल या व्हाट्सएप पर सलाह लें / Call or WhatsApp[cite: 17]</p>
-          </div>
-          <div class="space-y-2.5">
-            <a href="tel:8440096343" class="w-full bg-white hover:bg-slate-100 text-brand-navy font-black py-3 px-4 rounded-xl text-sm transition shadow flex items-center justify-center gap-2">
-              <i class="fa-solid fa-phone text-brand-lightBlue"></i>
-              <span>Call: 8440096343</span>
-            </a>
-            <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20mujhe%20Claim%20Sahayata%20chahiye" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black py-3 px-4 rounded-xl text-sm transition shadow flex items-center justify-center gap-2">
-              <i class="fa-brands fa-whatsapp text-lg"></i>
-              <span>WhatsApp Chat</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ================= REGULATORY COMPLIANT FOOTER ================= -->
+  <!-- ================= FOOTER ================= -->
   <footer class="bg-brand-dark text-slate-400 text-xs border-t border-brand-lightBlue/40 py-8 px-4 sm:px-6 lg:px-8 mt-12">
     <div class="max-w-7xl mx-auto space-y-4">
       <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
@@ -381,13 +346,6 @@
           <a href="/" class="hover:text-brand-gold transition">Health Insurance</a>
           <a href="about.html" class="hover:text-brand-gold transition">About Us</a>
         </div>
-      </div>
-
-      <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700/80 text-[11px] text-slate-300 leading-relaxed">
-        <p class="font-bold text-amber-400 mb-1">REGULATORY & STATUTORY DISCLAIMER (GOVT / IRDAI GUIDELINES):</p>
-        <p>
-          This is an informational facilitation portal operated by <strong>MANOHER SINGH</strong>, an authorized insurance advisor[cite: 17]. Life insurance illustrations shown at 4% & 8% conform to standard IRDAI projection guidelines and are not guaranteed[cite: 17]. Non-Participating CSC plans offer guaranteed income and 100%-110% Return of Premium[cite: 17]. Health insurance premiums, waiting periods for pre-existing diseases, sub-limits and room rent norms are strictly governed by the policy prospectus of the respective insurance company[cite: 17]. Motor third-party rates are notified under the Motor Vehicles Act, 1988 by MoRTH/IRDAI[cite: 17]. Tax benefits are subject to provisions under Section 80C, 80D, and 10(10D) of the Income Tax Act[cite: 17].
-        </p>
       </div>
 
       <div class="text-center text-slate-500 text-[11px] pt-2">
@@ -408,7 +366,8 @@
     const GOOGLE_CLIENT_ID = "418446717578-9241s3h4pc44agohfkc8t2ift9jtpfau.apps.googleusercontent.com";
 
     let currentLoggedInUser = null;
-    let currentVerifiedClient = null;
+    let loadedPolicies = [];
+    let selectedPolicyData = null;
     let activeCategory = 'lic';
 
     const servicesData = {
@@ -535,10 +494,7 @@
 
     function handleGoogleCredentialResponse(response) {
       const payload = parseJwt(response.credential);
-      if (!payload) {
-        showToast("Login error: Token decode nahi hua.");
-        return;
-      }
+      if (!payload) return;
 
       currentLoggedInUser = {
         name: payload.name || 'Client',
@@ -555,13 +511,11 @@
 
     function openAuthModal() {
       document.getElementById('authModal').classList.remove('hidden');
-
       if (window.google && google.accounts && google.accounts.id) {
         google.accounts.id.initialize({
           client_id: GOOGLE_CLIENT_ID,
           callback: handleGoogleCredentialResponse
         });
-
         const targetDiv = document.getElementById("googleSignInButtonDiv");
         if (targetDiv) {
           targetDiv.innerHTML = "";
@@ -629,9 +583,14 @@
       showToast("Aap logout ho gaye hain.");
     }
 
+    // ==========================================
+    // MULTI POLICY VERIFY & SEARCH
+    // ==========================================
     async function verifyClientFromSheet() {
       const key = document.getElementById('verifyInput').value.trim();
       const alertBox = document.getElementById('verifyAlert');
+      const listSection = document.getElementById('policiesListSection');
+      const cardContainer = document.getElementById('policiesCardContainer');
       const form = document.getElementById('claimActualForm');
       const btn = document.getElementById('btnVerify');
 
@@ -644,28 +603,68 @@
       btn.disabled = true;
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Checking...`;
       alertBox.className = "hidden";
+      form.classList.add('hidden');
+      listSection.classList.add('hidden');
 
       try {
         const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=verify&key=${encodeURIComponent(key)}`);
         const result = await response.json();
 
-        if (result.found) {
-          currentVerifiedClient = result.client;
+        if (result.found && result.policies && result.policies.length > 0) {
+          loadedPolicies = result.policies;
+          document.getElementById('policiesCount').innerText = loadedPolicies.length;
 
-          document.getElementById('custName').value = result.client.name || '-';
-          document.getElementById('custPolicy').value = result.client.policyNo || '-';
-          document.getElementById('custPhone').value = result.client.phone || '-';
-          document.getElementById('custAddress').value = result.client.address || '-';
-          document.getElementById('custProduct').value = result.client.product || '-';
-
+          // Alert Message
           alertBox.className = "mt-4 p-4 rounded-2xl text-xs sm:text-sm bg-emerald-50 text-emerald-900 border border-emerald-300 block";
-          alertBox.innerHTML = `<strong>Kamyab!</strong> Swagat hai, <b>${result.client.name}</b>. Niche diye gaye form me apna claim darj karein[cite: 3]।`;
-          form.classList.remove('hidden');
+          alertBox.innerHTML = `<strong>Kamyab!</strong> Is number par <b>${loadedPolicies.length} Policy Records</b> mile hain. Niche apni policy chunein।`;
+
+          // Policies Cards Render Karein
+          cardContainer.innerHTML = loadedPolicies.map((pol, idx) => {
+            const hasClaim = pol.hasClaim;
+            const claimStatus = hasClaim ? pol.claimDetails.status : 'No Claim Filed';
+            const claimId = hasClaim ? pol.claimDetails.claimId : '';
+            
+            return `
+              <div class="bg-white border-2 ${hasClaim ? 'border-amber-300 bg-amber-50/20' : 'border-slate-200'} rounded-2xl p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition hover:border-brand-navy">
+                <div class="space-y-1.5 flex-1">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-xs font-black text-brand-navy uppercase">${pol.name}</span>
+                    <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md border">Policy: ${pol.policyNo}</span>
+                    ${hasClaim 
+                      ? `<span class="text-[10px] font-black bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-full flex items-center gap-1">
+                           <i class="fa-solid fa-clock-rotate-left text-amber-600"></i> Claim Active (${claimId} •${claimStatus})
+                         </span>`
+                      : `<span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full">
+                           <i class="fa-solid fa-circle-check text-emerald-600"></i> Ready for Claim
+                         </span>`
+                    }
+                  </div>
+                  <div class="text-xs font-semibold text-slate-700">Plan: ${pol.product || 'Insurance Plan'}</div>
+                  <div class="text-[11px] text-slate-400"><i class="fa-solid fa-location-dot mr-1"></i>${pol.address} • Mo: ${pol.phone}</div>
+                </div>
+
+                <div class="shrink-0 w-full sm:w-auto">
+                  ${hasClaim 
+                    ? `<button type="button" onclick="showExistingClaimDetails(${idx})" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
+                         <i class="fa-solid fa-receipt"></i> Claim Details Dekhein
+                       </button>`
+                    : `<button type="button" onclick="selectPolicyForClaim(${idx})" class="w-full sm:w-auto bg-brand-navy hover:bg-brand-lightBlue text-white font-black px-4 py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
+                         <i class="fa-solid fa-file-pen text-brand-gold"></i> Claim Darj Karein
+                       </button>`
+                  }
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          listSection.classList.remove('hidden');
+
         } else {
-          currentVerifiedClient = null;
+          loadedPolicies = [];
+          listSection.classList.add('hidden');
           form.classList.add('hidden');
           alertBox.className = "mt-4 p-4 rounded-2xl text-xs sm:text-sm bg-rose-50 text-rose-900 border border-rose-300 block";
-          alertBox.innerHTML = `<strong>Sorry!</strong> Yeh Policy / Mobile Number client database me nahi mila. Sirf registered KDS clients hi is portal se claim darj kar sakte hain[cite: 3]।`;
+          alertBox.innerHTML = `<strong>Sorry!</strong> Yeh Policy / Mobile Number client database me nahi mila[cite: 3]।`;
         }
       } catch (err) {
         alertBox.className = "mt-4 p-4 rounded-2xl text-xs bg-rose-50 text-rose-900 border border-rose-200 block";
@@ -676,15 +675,81 @@
       }
     }
 
+    // Policy Select Karke Claim Form Kholna
+    function selectPolicyForClaim(index) {
+      selectedPolicyData = loadedPolicies[index];
+      if (!selectedPolicyData) return;
+
+      document.getElementById('custName').value = selectedPolicyData.name || '-';
+      document.getElementById('custPolicy').value = selectedPolicyData.policyNo || '-';
+      document.getElementById('custPhone').value = selectedPolicyData.phone || '-';
+      document.getElementById('custAddress').value = selectedPolicyData.address || '-';
+      document.getElementById('custProduct').value = selectedPolicyData.product || '-';
+
+      const form = document.getElementById('claimActualForm');
+      form.classList.remove('hidden');
+      form.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function cancelPolicySelection() {
+      selectedPolicyData = null;
+      document.getElementById('claimActualForm').classList.add('hidden');
+    }
+
+    // Agar Pehle Se Claim Active Hai toh Uski Info Popup
+    function showExistingClaimDetails(index) {
+      const pol = loadedPolicies[index];
+      const cl = pol.claimDetails;
+      
+      const modalHtml = `
+        <div id="claimInfoModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border-2 border-amber-400">
+            <div class="w-14 h-14 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl font-black">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <h3 class="text-lg font-black text-brand-navy">Claim Pehle Se Active Hai</h3>
+            <p class="text-xs text-slate-500 mb-4">${pol.name} (${pol.policyNo})</p>
+
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-left text-xs space-y-2 mb-4">
+              <div class="flex justify-between">
+                <span class="text-slate-400 font-bold">Claim ID:</span>
+                <span class="font-mono font-black text-brand-navy">${cl.claimId}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400 font-bold">Status:</span>
+                <span class="font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">${cl.status}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400 font-bold">Claim Date:</span>
+                <span class="font-bold text-slate-700">${cl.date}</span>
+              </div>
+            </div>
+
+            <button onclick="document.getElementById('claimInfoModal').remove()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition">
+              Band Karein / OK
+            </button>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
+    }
+
+    // ==========================================
+    // CLAIM FORM SUBMIT & UNIQUE ID POPUP
+    // ==========================================
     async function handleClaimSubmission(e) {
       e.preventDefault();
-      if (!currentVerifiedClient) return;
+      if (!selectedPolicyData) return;
 
       const submitBtn = document.getElementById('btnSubmitClaim');
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Claim Sheet Me Save Ho Raha Hai...`;
 
+      // Unique Claim Reference ID generate karein
+      const generatedClaimId = "CLM-" + Math.floor(1000 + Math.random() * 9000);
+
       const payload = {
+        claimId: generatedClaimId,
         policyNo: document.getElementById('custPolicy').value,
         name: document.getElementById('custName').value,
         phone: document.getElementById('custPhone').value,
@@ -703,13 +768,16 @@
           body: JSON.stringify(payload)
         });
 
-        alert("Aapka claim safaltapoorvak 'Claim' sheet me darj kar diya gaya hai! KDS Insurance team jald aapse sampark karegi.");
-
+        // Form reset & Hide
         document.getElementById('claimActualForm').reset();
         document.getElementById('claimActualForm').classList.add('hidden');
+        document.getElementById('policiesListSection').classList.add('hidden');
         document.getElementById('verifyInput').value = '';
         document.getElementById('verifyAlert').className = "hidden";
-        currentVerifiedClient = null;
+        selectedPolicyData = null;
+
+        // User ko Claim ID ka Popup Show Karein
+        showClaimSuccessModal(generatedClaimId, payload.name, payload.policyNo);
 
       } catch (err) {
         showToast("Claim darj karte waqt samasya aayi.");
@@ -717,6 +785,35 @@
         submitBtn.disabled = false;
         submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane text-brand-gold"></i> <span>Claim Sheet Me Darj Karein</span>`;
       }
+    }
+
+    // Success Claim ID Popup Modal
+    function showClaimSuccessModal(claimId, clientName, policyNo) {
+      const modalHtml = `
+        <div id="claimSuccessModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border-2 border-emerald-500">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="text-xl font-black text-slate-900 mb-1">Claim Darj Ho Gaya!</h3>
+            <p class="text-xs text-slate-500 mb-4">Sh. <b>${clientName}</b> (${policyNo})</p>
+            
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4">
+              <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Aapki Claim Reference ID</div>
+              <div class="text-3xl font-black text-emerald-700 tracking-wider font-mono">${claimId}</div>
+            </div>
+
+            <p class="text-[11px] text-slate-500 mb-5 leading-normal">
+              Kripya is Claim ID ko note ya screenshot kar lein. KDS Team jald aapse documents lene hetu sampark karegi.
+            </p>
+
+            <button onclick="document.getElementById('claimSuccessModal').remove()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow">
+              Theek Hai / OK
+            </button>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
