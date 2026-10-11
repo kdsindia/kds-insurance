@@ -2987,11 +2987,37 @@
       document.getElementById('saveQuotationModal').classList.remove('hidden');
     }
 
-    function triggerQuickCardSave(schemeId) {
-      openQuotationPreviewModal(schemeId);
-      triggerSaveQuotationFlow();
-    }
+function triggerQuickCardSave(schemeId) {
+  const scheme = officialLifeSchemes.find(s => s.id === schemeId);
+  const budget = getAnnualBudget();
+  const term = Number(document.getElementById('calcTermInput').value) || 25;
+  const ppt = Number(document.getElementById('calcPptInput').value) || 20;
+  const sa = Math.round((budget * ppt * 1.1) / 25000) * 25000;
 
+  const hasAddb = document.getElementById('riderAddbCheck').checked;
+  const addbVal = hasAddb ? Number(document.getElementById('riderAddbValue').value || sa) : 0;
+
+  const hasTr = document.getElementById('riderTrCheck').checked;
+  const trVal = hasTr ? Number(document.getElementById('riderTrValue').value || sa) : 0;
+
+  const hasCir = document.getElementById('riderCirCheck').checked;
+  const cirVal = hasCir ? Number(document.getElementById('riderCirValue').value || 250000) : 0;
+
+  const pBaseName = scheme ? scheme.name : "Life Policy";
+
+  // Column H format: Plan + Term/PPT + SA + ADDB + TR + CIR
+  const fullDetailsString = `${pBaseName} | Term: ${term} Yrs / Pay ${ppt} Yrs | SA: ₹${sa.toLocaleString('en-IN')} | ADDB: ${hasAddb ? '₹' + addbVal.toLocaleString('en-IN') : 'No'} | TR: ${hasTr ? '₹' + trVal.toLocaleString('en-IN') : 'No'} | CIR: ${hasCir ? '₹' + cirVal.toLocaleString('en-IN') : 'No'}`;
+
+  activeQuotationData = {
+    insuranceCategory: (currentLifeTab === 'lic' ? 'LIC' : 'CSC'),
+    scheme: { name: fullDetailsString },
+    annualBudget: budget,
+    term: term,
+    ppt: ppt,
+    sumAssured: sa
+  };
+  triggerSaveQuotationFlow();
+}
 // Motor Save Button Click Handler (Proper full vehicle specs capture)
 function triggerQuickMotorSave(companyName, prem, idv) {
   const vType = document.getElementById('motorVehicleType').value.toUpperCase();
@@ -3010,21 +3036,6 @@ function triggerQuickMotorSave(companyName, prem, idv) {
     sumAssured: idv,
     vType: vType,
     coverType: coverType
-  };
-  triggerSaveQuotationFlow();
-}
-
-// Health Save Button Click Handler
-function triggerQuickHealthSave(companyName, plan, prem, si) {
-  activeQuotationData = {
-    insuranceCategory: "HEALTH",
-    scheme: { 
-      name: `${companyName} (${plan}) | Cover: ₹${Number(si).toLocaleString('en-IN')}` 
-    },
-    annualBudget: prem,
-    term: 1,
-    ppt: 1,
-    sumAssured: si
   };
   triggerSaveQuotationFlow();
 }
@@ -3154,16 +3165,27 @@ function handleSaveQuotationSubmit(e) {
   });
 }
 
-    function triggerQuickHealthSave(name, plan, prem, si) {
-      activeQuotationData = {
-        scheme: { name: `Health Insurance: ${name} (${plan})` },
-        annualBudget: prem,
-        term: 1,
-        ppt: 1,
-        sumAssured: si
-      };
-      triggerSaveQuotationFlow();
-    }
+// Health Save Button Click Handler
+function triggerQuickHealthSave(companyName, plan, prem, si) {
+  const pType = document.getElementById('healthPlanType').value;
+  const eldestAge = document.getElementById('healthEldestAge').value;
+  const tenure = document.getElementById('healthTenure').value;
+  const roomRent = document.getElementById('healthRoomRent').value;
+  const ped = document.getElementById('healthPed').value;
+
+  // Column H format: Company + Plan + Type + Eldest Age + Cover + Term + Room Rent + PED + Tax 80D
+  const healthDetailsString = `${companyName} (${plan}) | Type: ${pType} | Eldest Age: ${eldestAge} Yrs | Cover: ₹${Number(si).toLocaleString('en-IN')} | Term: ${tenure} Yr | Room Rent: ${roomRent} | PED: ${ped} | Tax: 80D Eligible`;
+
+  activeQuotationData = {
+    insuranceCategory: "HEALTH",
+    scheme: { name: healthDetailsString },
+    annualBudget: prem,
+    term: tenure,
+    ppt: tenure,
+    sumAssured: si
+  };
+  triggerSaveQuotationFlow();
+}
 
     function closeSaveQuotationModal() {
       document.getElementById('saveQuotationModal').classList.add('hidden');
