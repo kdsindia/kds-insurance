@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="hi" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KDS Insurance Services | Executive Admin Dashboard</title>
+  
+  <!-- Tailwind CSS & Font Awesome Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              gold: '#F59E0B',
+              dark: '#0B0F19',
+              card: '#111827',
+              border: '#1F2937',
+              accent: '#3B82F6'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0B0F19; }
+    ::-webkit-scrollbar-thumb { background: #374151; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #4B5563; }
+  </style>
+</head>
+
+<body class="bg-brand-dark text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-gold selection:text-slate-950">
+
+  <!-- ========================================================================= -->
+  <!-- 1. EXECUTIVE LOGIN MODAL (Secure Backend Auth)                           -->
+  <!-- ========================================================================= -->
+  <div id="loginOverlay" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4">
+    <div class="relative bg-gradient-to-b from-slate-900 via-brand-card to-slate-900 border border-slate-800 max-w-md w-full rounded-3xl p-8 shadow-2xl shadow-blue-950/30 overflow-hidden">
+      <!-- Ambient light effect -->
+      <div class="absolute -top-24 -left-24 w-48 h-48 bg-brand-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 text-center space-y-3">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 font-black flex items-center justify-center text-2xl mx-auto shadow-lg shadow-amber-500/20">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div>
+          <h2 class="text-2xl font-black text-white tracking-tight">KDS Executive Portal</h2>
+          <p class="text-xs text-slate-400 font-medium mt-1">Authorized Insurance Advisor Control Center</p>
+        </div>
+      </div>
+
+      <form onsubmit="handleAdminLogin(event)" class="relative z-10 mt-6 space-y-4 text-xs font-bold">
+        <div>
+          <label class="block text-slate-300 mb-1.5 uppercase tracking-wider text-[11px]">Admin Username</label>
+          <div class="relative">
+            <i class="fa-solid fa-user-shield absolute left-3.5 top-3.5 text-slate-500"></i>
+            <input type="text" id="adminUser" required placeholder="Enter username" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-3.5 py-3 text-white focus:ring-2 focus:ring-brand-gold/50 focus:border-brand-gold outline-none transition" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1.5 uppercase tracking-wider text-[11px]">Secret Password</label>
+          <div class="relative">
+            <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-slate-500"></i>
+            <input type="password" id="adminPass" required placeholder="••••••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-3.5 py-3 text-white focus:ring-2 focus:ring-brand-gold/50 focus:border-brand-gold outline-none transition" />
+          </div>
+        </div>
+
+        <div id="loginError" class="hidden bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs p-3 rounded-xl text-center font-semibold"></div>
+
+        <button type="submit" id="btnLogin" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3.5 rounded-xl text-sm transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+          <span>Authorize Access</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </form>
+
+      <div class="mt-6 pt-4 border-t border-slate-800/80 text-center">
+        <p class="text-[11px] text-slate-500">&copy; 2026 KDS Insurance Services • Protected Console</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 2. MAIN ADVANCED DASHBOARD                                              -->
+  <!-- ========================================================================= -->
+  <div id="adminApp" class="hidden min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <header class="bg-brand-card/80 backdrop-blur-md border-b border-brand-border sticky top-0 z-30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 font-black flex items-center justify-center text-lg shadow-md shadow-amber-500/20">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="font-black text-base text-white tracking-tight">KDS INSURANCE SERVICES</h1>
+              <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Super Admin</span>
+            </div>
+            <p class="text-[11px] text-slate-400 font-medium">Authorized Advisor: Manoher Singh | Malwara, Rajasthan</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button onclick="fetchAllQuotations()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-arrows-rotate text-amber-400"></i>
+            <span class="hidden sm:inline">Refresh Data</span>
+          </button>
+          
+          <button onclick="handleAdminLogout()" class="bg-rose-500/10 hover:bg-rose-500 text-rose-400 hover:text-white border border-rose-500/20 font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1.5">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="hidden sm:inline">Logout</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full flex-1 space-y-6">
+      <!-- KPI Stats Grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-brand-card p-5 rounded-2xl border border-brand-border relative overflow-hidden">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-slate-400">Total Quotations</span>
+            <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center text-sm"><i class="fa-solid fa-folder"></i></span>
+          </div>
+          <div id="statTotal" class="text-3xl font-black text-white mt-2">0</div>
+          <p class="text-[10px] text-slate-500 font-medium mt-1">Google Sheet me kul darj records</p>
+        </div>
+
+        <div class="bg-brand-card p-5 rounded-2xl border border-brand-border relative overflow-hidden">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-amber-400">Pending / Unpaid</span>
+            <span class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm"><i class="fa-solid fa-clock-rotate-left"></i></span>
+          </div>
+          <div id="statPending" class="text-3xl font-black text-amber-400 mt-2">0</div>
+          <p class="text-[10px] text-slate-500 font-medium mt-1">Payment verification baaki hai</p>
+        </div>
+
+        <div class="bg-brand-card p-5 rounded-2xl border border-brand-border relative overflow-hidden">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-emerald-400">Payment Success</span>
+            <span class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm"><i class="fa-solid fa-circle-check"></i></span>
+          </div>
+          <div id="statSuccess" class="text-3xl font-black text-emerald-400 mt-2">0</div>
+          <p class="text-[10px] text-slate-500 font-medium mt-1">Premium Jama ho chuka hai</p>
+        </div>
+
+        <div class="bg-brand-card p-5 rounded-2xl border border-brand-border relative overflow-hidden">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-sky-400">Policies Issued</span>
+            <span class="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center text-sm"><i class="fa-solid fa-file-shield"></i></span>
+          </div>
+          <div id="statIssued" class="text-3xl font-black text-sky-400 mt-2">0</div>
+          <p class="text-[10px] text-slate-500 font-medium mt-1">Policy bond/copy download ready</p>
+        </div>
+      </div>
+
+      <!-- Controls: Search & Category Filters -->
+      <div class="bg-brand-card p-4 rounded-2xl border border-brand-border flex flex-col md:flex-row gap-3 justify-between items-center">
+        <!-- Search bar -->
+        <div class="relative w-full md:w-96">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
+          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Search Name, Phone, Quote #, Policy #..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 transition" />
+        </div>
+
+        <!-- Filter Selects -->
+        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end">
+          <select id="filterType" onchange="applyFilters()" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-300 focus:outline-none focus:border-amber-500">
+            <option value="ALL">All Insurance Types</option>
+            <option value="LIC">LIC Life</option>
+            <option value="CSC">CSC Life</option>
+            <option value="MOTOR">Motor Insurance</option>
+            <option value="HEALTH">Health Mediclaim</option>
+          </select>
+
+          <select id="filterStatus" onchange="applyFilters()" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-300 focus:outline-none focus:border-amber-500">
+            <option value="ALL">All Status</option>
+            <option value="UNPAID">UNPAID / Pending</option>
+            <option value="Success">Payment Success</option>
+            <option value="ISSUED">Policy Issued</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Main Records Table -->
+      <div class="bg-brand-card rounded-2xl border border-brand-border overflow-hidden shadow-2xl shadow-black/40">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse min-w-[1050px]">
+            <thead class="bg-slate-950 text-slate-400 uppercase font-black tracking-wider text-[11px] border-b border-brand-border">
+              <tr>
+                <th class="p-3.5">Quotation / Date</th>
+                <th class="p-3.5">Customer & Phone</th>
+                <th class="p-3.5">Category & Complete Details (Col H)</th>
+                <th class="p-3.5">Premium</th>
+                <th class="p-3.5">Payment</th>
+                <th class="p-3.5">Policy Status</th>
+                <th class="p-3.5">Mob Request</th>
+                <th class="p-3.5 text-center">Manage</th>
+              </tr>
+            </thead>
+            <tbody id="quotationTableBody" class="divide-y divide-slate-800/80 font-medium"></tbody>
+          </table>
+        </div>
+
+        <div id="tableEmpty" class="hidden text-center py-16 text-slate-500 space-y-2">
+          <i class="fa-solid fa-inbox text-3xl"></i>
+          <p class="text-xs font-bold">Koi quotation record match nahi hua.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 3. ACTION EDIT MODAL (Update Status, Policy Number, PDF Link)             -->
+  <!-- ========================================================================= -->
+  <div id="editModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-gradient-to-b from-slate-900 via-brand-card to-slate-900 border border-slate-700 max-w-lg w-full rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+        <div>
+          <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">Update Record</span>
+          <h3 class="text-base font-black text-white mt-1">Manage Policy & Payment</h3>
+          <p id="modalQuoteNumber" class="text-xs font-mono text-amber-400 font-bold mt-0.5">-</p>
+        </div>
+        <button onclick="closeEditModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition">✕</button>
+      </div>
+
+      <form onsubmit="handleUpdateSubmit(event)" class="space-y-4 text-xs font-bold">
+        <input type="hidden" id="editRowId" />
+
+        <div>
+          <label class="block text-slate-400 mb-1">Customer / Policyholder</label>
+          <input type="text" id="editHolderName" readonly class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-300 cursor-not-allowed" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-400 mb-1">Payment Status</label>
+            <select id="editPaymentStatus" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-amber-500 outline-none">
+              <option value="UNPAID">UNPAID (Pending)</option>
+              <option value="Success">Success (Paid)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Mobile Request Approval</label>
+            <select id="editReqStatus" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-amber-500 outline-none">
+              <option value="Pending">Pending</option>
+              <option value="Approved">Approved</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-400 mb-1">Policy Number (Agar policy ban chuki hai)</label>
+          <input type="text" id="editPolicyNumber" placeholder="उदा. 337411713 ya Under Process" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white font-mono uppercase focus:border-amber-500 outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-slate-400 mb-1">Policy PDF Drive Link (Download link ke liye)</label>
+          <input type="url" id="editPdfLink" placeholder="https://drive.google.com/file/d/..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-amber-500 outline-none" />
+          <p class="text-[10px] text-slate-500 mt-1">Ye link save karne par user ke dashboard me 'Download Policy' button open ho jayega.</p>
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button type="button" onclick="closeEditModal()" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3 rounded-xl transition">Cancel</button>
+          <button type="submit" id="btnUpdateSubmit" class="w-1/2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>Update Record</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="adminToast" class="fixed bottom-6 right-6 z-50 bg-slate-800 text-white px-5 py-3 rounded-2xl border border-slate-700 text-xs font-bold shadow-2xl hidden flex items-center gap-2.5">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+    <span id="toastMsg">Success</span>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 4. JAVASCRIPT LOGIC (SECURE BACKEND SYNC WITH NEW URL)                     -->
+  <!-- ========================================================================= -->
+  <script>
+    // UPDATED WITH YOUR NEW GOOGLE APPS SCRIPT URL
+    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycby1KWuhyBr9Q3sif4sLuV8fhegmIBca7C1jVXPD0EJUTnUXU_l2S057QK1latcixbdR4g/exec";
+
+    let rawQuotations = [];
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('kds_admin_token');
+      if (token) {
+        showDashboard();
+      }
+    });
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('adminUser').value.trim();
+      const p = document.getElementById('adminPass').value.trim();
+      const btn = document.getElementById('btnLogin');
+      const err = document.getElementById('loginError');
+
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Authorizing...`;
+      err.classList.add('hidden');
+
+      fetch(`${GOOGLE_SHEET_API_URL}?action=adminLogin&username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}`)
+        .then(r => r.json())
+        .then(res => {
+          if (res && res.status === "success") {
+            localStorage.setItem('kds_admin_token', res.token);
+            showDashboard();
+          } else {
+            err.innerText = res.message || "Galat Username ya Password!";
+            err.classList.remove('hidden');
+          }
+        })
+        .catch(() => {
+          err.innerText = "Network / Script response error. Dobara koshish karein.";
+          err.classList.remove('hidden');
+        })
+        .finally(() => {
+          btn.disabled = false;
+          btn.innerHTML = `<span>Authorize Access</span><i class="fa-solid fa-arrow-right"></i>`;
+        });
+    }
+
+    function showDashboard() {
+      document.getElementById('loginOverlay').classList.add('hidden');
+      document.getElementById('adminApp').classList.remove('hidden');
+      fetchAllQuotations();
+    }
+
+    function handleAdminLogout() {
+      localStorage.removeItem('kds_admin_token');
+      document.getElementById('adminApp').classList.add('hidden');
+      document.getElementById('loginOverlay').classList.remove('hidden');
+      document.getElementById('adminPass').value = "";
+    }
+
+    function fetchAllQuotations() {
+      fetch(`${GOOGLE_SHEET_API_URL}?action=adminGetAllQuotations`)
+        .then(r => r.json())
+        .then(res => {
+          if (res && res.status === "success") {
+            rawQuotations = (res.data || []).reverse(); // Latest quotes on top
+            updateKpiCounters();
+            applyFilters();
+          }
+        })
+        .catch(err => console.error("Admin fetch error:", err));
+    }
+
+    function updateKpiCounters() {
+      document.getElementById('statTotal').innerText = rawQuotations.length;
+      const pending = rawQuotations.filter(q => (q.paymentStatus || '').toUpperCase().indexOf('SUCCESS') === -1).length;
+      const success = rawQuotations.filter(q => (q.paymentStatus || '').toUpperCase().indexOf('SUCCESS') > -1).length;
+      const issued = rawQuotations.filter(q => q.policyNumber && q.policyNumber !== 'Under Process' && q.policyNumber.trim() !== '').length;
+
+      document.getElementById('statPending').innerText = pending;
+      document.getElementById('statSuccess').innerText = success;
+      document.getElementById('statIssued').innerText = issued;
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const type = document.getElementById('filterType').value;
+      const status = document.getElementById('filterStatus').value;
+
+      const filtered = rawQuotations.filter(item => {
+        const matchesQ = !q || 
+          (item.holderName || '').toLowerCase().includes(q) ||
+          (item.holderPhone || '').includes(q) ||
+          (item.quotationNumber || '').toLowerCase().includes(q) ||
+          (item.policyNumber || '').toLowerCase().includes(q) ||
+          (item.planName || '').toLowerCase().includes(q);
+
+        const matchesType = (type === 'ALL') || (item.insuranceType || '').toUpperCase() === type;
+
+        let matchesStatus = true;
+        if (status === 'UNPAID') {
+          matchesStatus = (item.paymentStatus || '').toUpperCase().indexOf('SUCCESS') === -1;
+        } else if (status === 'Success') {
+          matchesStatus = (item.paymentStatus || '').toUpperCase().indexOf('SUCCESS') > -1;
+        } else if (status === 'ISSUED') {
+          matchesStatus = item.policyNumber && item.policyNumber !== 'Under Process' && item.policyNumber.trim() !== '';
+        }
+
+        return matchesQ && matchesType && matchesStatus;
+      });
+
+      renderTable(filtered);
+    }
+
+    function renderTable(list) {
+      const tbody = document.getElementById('quotationTableBody');
+      const empty = document.getElementById('tableEmpty');
+
+      if (!list || list.length === 0) {
+        tbody.innerHTML = "";
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+
+      tbody.innerHTML = list.map(item => {
+        const isPaid = (item.paymentStatus || '').toUpperCase().indexOf('SUCCESS') > -1;
+        const isIssued = item.policyNumber && item.policyNumber !== 'Under Process' && item.policyNumber.trim() !== '';
+        
+        let typeBadge = 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+        if (item.insuranceType === 'MOTOR') typeBadge = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+        if (item.insuranceType === 'HEALTH') typeBadge = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
+        if (item.insuranceType === 'CSC') typeBadge = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+
+        return `
+          <tr class="hover:bg-slate-800/40 transition border-b border-slate-800/60">
+            <!-- 1. Quote & Date -->
+            <td class="p-3.5">
+              <span class="font-mono text-amber-400 font-bold bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded text-[11px]">${item.quotationNumber}</span>
+              <div class="text-[10px] text-slate-400 mt-1"><i class="fa-regular fa-calendar mr-1"></i>${item.date}</div>
+            </td>
+
+            <!-- 2. Customer & Contact -->
+            <td class="p-3.5">
+              <div class="font-bold text-white">${item.holderName || 'Client'}</div>
+              <div class="text-[11px] text-emerald-400 font-mono mt-0.5 flex items-center gap-1.5">
+                <a href="tel:${item.holderPhone}" class="hover:underline" title="Direct Call"><i class="fa-solid fa-phone text-[10px]"></i> ${item.holderPhone || '-'}</a>
+                ${item.holderPhone ? `<a href="https://wa.me/91${item.holderPhone.replace(/[^0-9]/g,'')}" target="_blank" class="text-emerald-500 hover:text-emerald-400" title="WhatsApp Chat"><i class="fa-brands fa-whatsapp text-xs"></i></a>` : ''}
+              </div>
+              <div class="text-[10px] text-slate-400 truncate max-w-[140px] mt-0.5">${item.address || ''}</div>
+            </td>
+
+            <!-- 3. Category & Details (Col H) -->
+            <td class="p-3.5 max-w-sm">
+              <span class="border px-2 py-0.5 rounded text-[10px] font-black uppercase ${typeBadge}">${item.insuranceType}</span>
+              <p class="text-slate-300 text-xs mt-1 leading-relaxed break-words">${item.planName}</p>
+            </td>
+
+            <!-- 4. Premium -->
+            <td class="p-3.5 font-bold text-white font-mono text-sm">
+              ₹${Number(item.premium || 0).toLocaleString('en-IN')}
+            </td>
+
+            <!-- 5. Payment Status -->
+            <td class="p-3.5">
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-black border ${isPaid ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/15 text-amber-400 border-amber-500/30'}">
+                <i class="fa-solid fa-circle-dot mr-1 text-[8px]"></i>${item.paymentStatus || 'UNPAID'}
+              </span>
+            </td>
+
+            <!-- 6. Policy Status & Link -->
+            <td class="p-3.5">
+              ${isIssued 
+                ? `<span class="font-mono text-sky-300 bg-sky-950/80 px-2 py-0.5 rounded border border-sky-700/80 font-bold">${item.policyNumber}</span>` 
+                : `<span class="text-amber-500/80 bg-amber-500/10 px-2 py-0.5 rounded text-[10px] font-bold">Under Process</span>`}
+              ${item.downloadLink ? `<a href="${item.downloadLink}" target="_blank" class="block text-[11px] text-amber-400 hover:underline mt-1 font-bold"><i class="fa-solid fa-file-pdf mr-1"></i> Drive PDF</a>` : ''}
+            </td>
+
+            <!-- 7. Mobile Req Status -->
+            <td class="p-3.5">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${item.reqStatus === 'Approved' ? 'bg-emerald-950 text-emerald-400 border-emerald-800' : 'bg-slate-800 text-slate-400 border-slate-700'}">${item.reqStatus || 'Pending'}</span>
+            </td>
+
+            <!-- 8. Action Manage Button -->
+            <td class="p-3.5 text-center">
+              <button onclick="openEditModal(${item.rowId})" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3 py-1.5 rounded-xl font-black text-xs transition shadow flex items-center justify-center gap-1 mx-auto">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>Edit</span>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openEditModal(rowId) {
+      const item = rawQuotations.find(q => q.rowId === rowId);
+      if (!item) return;
+
+      document.getElementById('editRowId').value = item.rowId;
+      document.getElementById('modalQuoteNumber').innerText = `${item.quotationNumber} • ${item.insuranceType}`;
+      document.getElementById('editHolderName').value = `${item.holderName} (Mo: ${item.holderPhone})`;
+      document.getElementById('editPaymentStatus').value = item.paymentStatus || 'UNPAID';
+      document.getElementById('editReqStatus').value = item.reqStatus || 'Pending';
+      document.getElementById('editPolicyNumber').value = (item.policyNumber && item.policyNumber !== 'Under Process') ? item.policyNumber : '';
+      document.getElementById('editPdfLink').value = item.downloadLink || '';
+
+      document.getElementById('editModal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').classList.add('hidden');
+    }
+
+    function handleUpdateSubmit(e) {
+      e.preventDefault();
+      const rowId = document.getElementById('editRowId').value;
+      const payStatus = document.getElementById('editPaymentStatus').value;
+      const reqStatus = document.getElementById('editReqStatus').value;
+      const polNo = document.getElementById('editPolicyNumber').value.trim() || 'Under Process';
+      const pdfLink = document.getElementById('editPdfLink').value.trim();
+
+      const btn = document.getElementById('btnUpdateSubmit');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
+
+      const targetUrl = `${GOOGLE_SHEET_API_URL}?action=adminUpdateQuotation&rowId=${rowId}&paymentStatus=${encodeURIComponent(payStatus)}&reqStatus=${encodeURIComponent(reqStatus)}&policyNumber=${encodeURIComponent(polNo)}&downloadLink=${encodeURIComponent(pdfLink)}`;
+
+      fetch(targetUrl)
+        .then(r => r.json())
+        .then(res => {
+          if (res && res.status === "success") {
+            closeEditModal();
+            showToast("Quotation record Sheet me update ho gaya!");
+            fetchAllQuotations();
+          } else {
+            alert("Error: " + (res.message || "Update fail hua."));
+          }
+        })
+        .catch(err => alert("Network error! Sheet sync fail."))
+        .finally(() => {
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i><span>Update Record</span>`;
+        });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('adminToast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3500);
+    }
+  </script>
+</body>
+</html>
