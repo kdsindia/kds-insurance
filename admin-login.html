@@ -384,19 +384,16 @@
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Authorizing...`;
       err.classList.add('hidden');
 
-      const loginUrl = `${GOOGLE_SHEET_API_URL}?action=adminLogin&username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}`;
+      const formData = new URLSearchParams();
+      formData.append("action", "adminLogin");
+      formData.append("username", u);
+      formData.append("password", p);
 
-      fetch(loginUrl, {
-        method: "GET",
-        mode: "cors",
-        redirect: "follow"
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: "POST",
+        body: formData
       })
-      .then(r => {
-        if (!r.ok) {
-          throw new Error("HTTP " + r.status);
-        }
-        return r.json();
-      })
+      .then(response => response.json())
       .then(res => {
         if (res && res.status === "success") {
           sessionStorage.setItem('kds_admin_session_token', res.token);
@@ -408,9 +405,24 @@
         }
       })
       .catch(error => {
-        console.error("Login Error:", error);
-        err.innerText = "Network / Script response error. Kripya check karein script 'Anyone' par deploy hai ya nahi.";
-        err.classList.remove('hidden');
+        const fallbackUrl = `${GOOGLE_SHEET_API_URL}?action=adminLogin&username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}`;
+        fetch(fallbackUrl)
+          .then(r => r.json())
+          .then(res => {
+            if (res && res.status === "success") {
+              sessionStorage.setItem('kds_admin_session_token', res.token);
+              sessionStorage.setItem('kds_admin_login_time', Date.now());
+              showDashboard();
+            } else {
+              err.innerText = (res && res.message) ? res.message : "Galat Username ya Password!";
+              err.classList.remove('hidden');
+            }
+          })
+          .catch(errFinal => {
+            console.error("Login Error:", errFinal);
+            err.innerText = "Network / Script response error. Kripya check karein script 'Anyone' par deploy hai ya nahi.";
+            err.classList.remove('hidden');
+          });
       })
       .finally(() => {
         btn.disabled = false;
