@@ -434,38 +434,48 @@
       }
     }
 
-    function fetchAllQuotations() {
+function fetchAllQuotations() {
       const refIcon = document.getElementById('refreshIcon');
       if (refIcon) refIcon.classList.add('fa-spin');
 
       const emptyEl = document.getElementById('tableEmpty');
       const emptyText = document.getElementById('tableEmptyText');
       if (emptyEl && emptyText) {
-        emptyText.innerText = "Loading data from Google Sheets...";
+        emptyText.innerText = "Connecting & Loading data...";
         emptyEl.classList.remove('hidden');
       }
 
-      fetch(`${GOOGLE_SHEET_API_URL}?action=adminGetAllQuotations`)
-        .then(r => r.json())
-        .then(res => {
-          if (res && res.status === "success") {
-            rawQuotations = (res.data || []).reverse();
-            updateKpiCounters();
-            applyFilters();
-          } else {
-            console.error("Fetch Data Failure:", res);
-            if (emptyText) emptyText.innerText = "Data load nahi ho saka: " + (res.message || res.error || "Sheet connection error");
-          }
-        })
-        .catch(err => {
-          console.error("Admin fetch network error:", err);
-          if (emptyText) emptyText.innerText = "Network block / Sheet access error. Refresh karke dobara try karein.";
-        })
-        .finally(() => {
-          if (refIcon) refIcon.classList.remove('fa-spin');
-        });
-    }
+      // Unique Callback Function Name (JSONP - 100% CORS & Redirect Safe)
+      const callbackName = "handleAdminDataResponse_" + Date.now();
 
+      // Window Callback Handler
+      window[callbackName] = function(res) {
+        if (refIcon) refIcon.classList.remove('fa-spin');
+        const scriptEl = document.getElementById(callbackName);
+        if (scriptEl) scriptEl.remove();
+        delete window[callbackName];
+
+        if (res && res.status === "success") {
+          rawQuotations = (res.data || []).reverse();
+          updateKpiCounters();
+          applyFilters();
+        } else {
+          console.error("Data error:", res);
+          if (emptyText) emptyText.innerText = "Data error: " + (res.message || "Failed to parse records");
+        }
+      };
+
+      // Create JSONP Script Tag
+      const script = document.createElement("script");
+      script.id = callbackName;
+      script.src = `${GOOGLE_SHEET_API_URL}?action=adminGetAllQuotations&callback=${callbackName}`;
+      script.onerror = function() {
+        if (refIcon) refIcon.classList.remove('fa-spin');
+        console.error("JSONP script load failed");
+        if (emptyText) emptyText.innerText = "Google Script ne connection refuse kiya. Deployment verify karein.";
+      };
+      document.body.appendChild(script);
+    }
     function isPaymentSuccess(statusStr) {
       if (!statusStr) return false;
       const s = statusStr.toString().trim().toUpperCase();
