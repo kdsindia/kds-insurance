@@ -129,7 +129,7 @@
           </span>
 
           <button onclick="fetchAllQuotations()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-arrows-rotate text-amber-400"></i>
+            <i id="refreshIcon" class="fa-solid fa-arrows-rotate text-amber-400"></i>
             <span class="hidden sm:inline">Refresh Data</span>
           </button>
           
@@ -237,9 +237,9 @@
           </table>
         </div>
 
-        <div id="tableEmpty" class="hidden text-center py-16 text-slate-500 space-y-2">
-          <i class="fa-solid fa-inbox text-3xl"></i>
-          <p class="text-xs font-bold">Koi quotation record match nahi hua.</p>
+        <div id="tableEmpty" class="text-center py-16 text-slate-500 space-y-2">
+          <i class="fa-solid fa-spinner fa-spin text-3xl text-amber-400"></i>
+          <p id="tableEmptyText" class="text-xs font-bold text-slate-300 mt-2">Loading data from Google Sheets...</p>
         </div>
       </div>
     </main>
@@ -322,11 +322,10 @@
 
   <!-- 4. JAVASCRIPT LOGIC -->
   <script>
-    // YOUR ACTIVE WEB APP DEPLOYMENT URL
     const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwMJOgO-FJFf9zOxHrilfkLM5CNqo8cR2HzLZNsozG5QlAN7rDEnv1ZG1AzMj6ig_Nw/exec";
 
     let rawQuotations = [];
-    const INACTIVITY_LIMIT_SECONDS = 900; // 15 Min Inactivity Lock
+    const INACTIVITY_LIMIT_SECONDS = 900;
     let secondsLeft = INACTIVITY_LIMIT_SECONDS;
     let timerInterval = null;
 
@@ -384,15 +383,9 @@
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Authorizing...`;
       err.classList.add('hidden');
 
-      const formData = new URLSearchParams();
-      formData.append("action", "adminLogin");
-      formData.append("username", u);
-      formData.append("password", p);
+      const loginUrl = `${GOOGLE_SHEET_API_URL}?action=adminLogin&username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}`;
 
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        body: formData
-      })
+      fetch(loginUrl)
       .then(response => response.json())
       .then(res => {
         if (res && res.status === "success") {
@@ -405,24 +398,9 @@
         }
       })
       .catch(error => {
-        const fallbackUrl = `${GOOGLE_SHEET_API_URL}?action=adminLogin&username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}`;
-        fetch(fallbackUrl)
-          .then(r => r.json())
-          .then(res => {
-            if (res && res.status === "success") {
-              sessionStorage.setItem('kds_admin_session_token', res.token);
-              sessionStorage.setItem('kds_admin_login_time', Date.now());
-              showDashboard();
-            } else {
-              err.innerText = (res && res.message) ? res.message : "Galat Username ya Password!";
-              err.classList.remove('hidden');
-            }
-          })
-          .catch(errFinal => {
-            console.error("Login Error:", errFinal);
-            err.innerText = "Network / Script response error. Kripya check karein script 'Anyone' par deploy hai ya nahi.";
-            err.classList.remove('hidden');
-          });
+        console.error("Login Error:", error);
+        err.innerText = "Network / Script response error. Kripya check karein script 'Anyone' par deploy hai ya nahi.";
+        err.classList.remove('hidden');
       })
       .finally(() => {
         btn.disabled = false;
@@ -457,6 +435,16 @@
     }
 
     function fetchAllQuotations() {
+      const refIcon = document.getElementById('refreshIcon');
+      if (refIcon) refIcon.classList.add('fa-spin');
+
+      const emptyEl = document.getElementById('tableEmpty');
+      const emptyText = document.getElementById('tableEmptyText');
+      if (emptyEl && emptyText) {
+        emptyText.innerText = "Loading data from Google Sheets...";
+        emptyEl.classList.remove('hidden');
+      }
+
       fetch(`${GOOGLE_SHEET_API_URL}?action=adminGetAllQuotations`)
         .then(r => r.json())
         .then(res => {
@@ -464,9 +452,18 @@
             rawQuotations = (res.data || []).reverse();
             updateKpiCounters();
             applyFilters();
+          } else {
+            console.error("Fetch Data Failure:", res);
+            if (emptyText) emptyText.innerText = "Data load nahi ho saka: " + (res.message || res.error || "Sheet connection error");
           }
         })
-        .catch(err => console.error("Admin fetch error:", err));
+        .catch(err => {
+          console.error("Admin fetch network error:", err);
+          if (emptyText) emptyText.innerText = "Network block / Sheet access error. Refresh karke dobara try karein.";
+        })
+        .finally(() => {
+          if (refIcon) refIcon.classList.remove('fa-spin');
+        });
     }
 
     function isPaymentSuccess(statusStr) {
@@ -561,10 +558,14 @@
 
       if (!list || list.length === 0) {
         tbody.innerHTML = "";
-        empty.classList.remove('hidden');
+        if (empty) {
+          const emptyText = document.getElementById('tableEmptyText');
+          if (emptyText) emptyText.innerText = "Koi quotation record match nahi hua.";
+          empty.classList.remove('hidden');
+        }
         return;
       }
-      empty.classList.add('hidden');
+      if (empty) empty.classList.add('hidden');
 
       tbody.innerHTML = list.map(item => {
         const isPaid = isPaymentSuccess(item.paymentStatus);
