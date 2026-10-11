@@ -441,31 +441,34 @@ function fetchAllQuotations() {
       const emptyEl = document.getElementById('tableEmpty');
       const emptyText = document.getElementById('tableEmptyText');
       if (emptyEl && emptyText) {
-        emptyText.innerText = "Connecting & Loading data...";
+        emptyText.innerText = "Connecting & Loading data from sheet...";
         emptyEl.classList.remove('hidden');
       }
 
-      fetch(`${GOOGLE_SHEET_API_URL}?action=adminGetAllQuotations`, {
-        method: "GET",
-        mode: "cors"
+      // POST method with text payload completely avoids Google Apps Script CORS drops
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          action: "adminGetAllQuotations"
+        })
       })
-      .then(r => {
-        if (!r.ok) throw new Error("HTTP Status " + r.status);
-        return r.json();
-      })
+      .then(response => response.json())
       .then(res => {
         if (res && res.status === "success") {
           rawQuotations = (res.data || []).reverse();
           updateKpiCounters();
           applyFilters();
         } else {
-          console.error("Data error:", res);
-          if (emptyText) emptyText.innerText = "Data error: " + (res.message || "Failed to parse records");
+          console.error("Data error from backend:", res);
+          if (emptyText) emptyText.innerText = "Data error: " + (res.message || res.error || "Unable to read records");
         }
       })
       .catch(err => {
-        console.error("Admin fetch error:", err);
-        if (emptyText) emptyText.innerText = "Error: " + err.message + ". Apps Script deployment me 'Who has access: Anyone' check karein.";
+        console.error("Fetch Network Failure:", err);
+        if (emptyText) emptyText.innerText = "Network block: " + err.message + ". Ek baar browser Console (F12) check karein.";
       })
       .finally(() => {
         if (refIcon) refIcon.classList.remove('fa-spin');
