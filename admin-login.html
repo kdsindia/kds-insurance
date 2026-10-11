@@ -373,7 +373,7 @@
       }
     }
 
-function handleAdminLogin(e) {
+    function handleAdminLogin(e) {
       e.preventDefault();
       const u = document.getElementById('adminUser').value.trim();
       const p = document.getElementById('adminPass').value.trim();
@@ -389,8 +389,7 @@ function handleAdminLogin(e) {
       fetch(loginUrl, {
         method: "GET",
         mode: "cors",
-        redirect: "follow",
-        headers: { "Accept": "application/json" }
+        redirect: "follow"
       })
       .then(r => {
         if (!r.ok) {
