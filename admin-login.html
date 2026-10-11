@@ -142,7 +142,7 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full flex-1 space-y-6">
-      <!-- KPI Stats Grid (Clickable) -->
+      <!-- KPI Stats Grid -->
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5">
         <div onclick="setFilter('status', 'ALL')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-blue-500 transition">
           <div class="flex justify-between items-center text-slate-400 text-xs font-bold">
@@ -159,7 +159,7 @@
             <i class="fa-solid fa-clock-rotate-left"></i>
           </div>
           <div id="statPending" class="text-2xl font-black text-amber-400 mt-2">0</div>
-          <p class="text-[10px] text-slate-500 mt-0.5">Click karke filter karein</p>
+          <p class="text-[10px] text-slate-500 mt-0.5">Payment pending</p>
         </div>
 
         <div onclick="setFilter('status', 'SUCCESS')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-emerald-500 transition">
@@ -177,7 +177,7 @@
             <i class="fa-solid fa-file-shield"></i>
           </div>
           <div id="statIssued" class="text-2xl font-black text-sky-400 mt-2">0</div>
-          <p class="text-[10px] text-slate-500 mt-0.5">Policy no. generate hua</p>
+          <p class="text-[10px] text-slate-500 mt-0.5">Policy generated</p>
         </div>
 
         <div onclick="setFilter('status', 'MOB_PENDING')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-rose-500 transition">
@@ -320,15 +320,13 @@
     <span id="toastMsg">Success</span>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- 4. JAVASCRIPT LOGIC (EXACT URL SYNC)                                      -->
-  <!-- ========================================================================= -->
+  <!-- 4. JAVASCRIPT LOGIC -->
   <script>
-    // EXACT WEB APP URL FROM GOOGLE APPS SCRIPT DEPLOYMENT
-    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycby1KWuhyBr9Q3sif4sLuV8fhegmIBca7C1jVXPD0EJUTnUXU_l2S057QK1latcixbdR4g/exec";
+    // YOUR ACTIVE WEB APP DEPLOYMENT URL
+    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwMJOgO-FJFf9zOxHrilfkLM5CNqo8cR2HzLZNsozG5QlAN7rDEnv1ZG1AzMj6ig_Nw/exec";
 
     let rawQuotations = [];
-    const INACTIVITY_LIMIT_SECONDS = 900; // 15 Minutes
+    const INACTIVITY_LIMIT_SECONDS = 900; // 15 Min Inactivity Lock
     let secondsLeft = INACTIVITY_LIMIT_SECONDS;
     let timerInterval = null;
 
@@ -653,7 +651,7 @@
         .then(res => {
           if (res && res.status === "success") {
             closeEditModal();
-            showToast("Quotation record Sheet me update ho gaya!");
+            showToast("Main Sheet me record update ho gaya!");
             fetchAllQuotations();
           } else {
             alert("Error: " + (res.message || "Update fail hua."));
