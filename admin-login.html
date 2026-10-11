@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KDS Insurance Services | Executive Admin Dashboard</title>
   
-  <!-- Favicons matching Homepage -->
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
   <link rel="apple-touch-icon" href="favicon.png" />
@@ -29,7 +28,6 @@
           colors: {
             brand: {
               gold: '#FFAE00',
-              deepGold: '#E69500',
               dark: '#080C14',
               navy: '#002B49',
               card: '#0F172A',
@@ -53,16 +51,14 @@
 <body class="bg-brand-dark text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-gold selection:text-slate-950">
 
   <!-- ========================================================================= -->
-  <!-- 1. LOGIN OVERLAY WITH OFFICIAL BRAND LOGO                                -->
+  <!-- 1. LOGIN OVERLAY WITH LOGO                                                -->
   <!-- ========================================================================= -->
   <div id="loginOverlay" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4">
     <div class="relative bg-gradient-to-b from-slate-900 via-brand-card to-slate-900 border border-slate-800 max-w-md w-full rounded-3xl p-8 shadow-2xl shadow-blue-950/40 overflow-hidden">
-      <!-- Glow ambient light -->
       <div class="absolute -top-20 -left-20 w-44 h-44 bg-brand-gold/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-20 -right-20 w-44 h-44 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <div class="relative z-10 text-center space-y-3">
-        <!-- Brand Logo with Fallback -->
         <div class="flex justify-center items-center">
           <img src="logo.png" alt="KDS Insurance" onerror="this.style.display='none'; document.getElementById('loginFallbackLogo').style.display='flex';" class="h-16 w-auto max-w-[200px] object-contain mx-auto rounded-xl drop-shadow-md" />
           <div id="loginFallbackLogo" class="hidden items-center justify-center gap-2">
@@ -70,7 +66,6 @@
             <span class="text-xl font-black text-white">KDS <span class="text-brand-gold">INSURANCE</span></span>
           </div>
         </div>
-
         <div>
           <h2 class="text-2xl font-black text-white tracking-tight">KDS Executive Portal</h2>
           <p class="text-xs text-slate-400 font-medium mt-1">Authorized Insurance Advisor Control Center</p>
@@ -109,13 +104,11 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- 2. MAIN ADVANCED DASHBOARD                                              -->
+  <!-- 2. MAIN EXECUTIVE ADMIN DASHBOARD                                         -->
   <!-- ========================================================================= -->
   <div id="adminApp" class="hidden min-h-screen flex flex-col">
-    <!-- Navbar with Official Logo -->
     <header class="bg-brand-card/90 backdrop-blur-md border-b border-brand-border sticky top-0 z-30">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex justify-between items-center gap-4">
-        
         <div class="flex items-center gap-3">
           <a href="index.html" class="flex items-center gap-2 group">
             <img src="logo.png" alt="KDS INSURANCE" onerror="this.style.display='none'; document.getElementById('navFallbackLogo').style.display='flex';" class="h-10 sm:h-11 w-auto max-w-[150px] object-contain rounded-lg" />
@@ -131,12 +124,16 @@
         </div>
 
         <div class="flex items-center gap-2 sm:gap-3">
+          <span id="sessionTimerText" class="hidden md:inline text-[11px] font-mono text-slate-400 bg-slate-900/80 px-2.5 py-1.5 rounded-xl border border-slate-800">
+            <i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Auto-Lock: <strong id="timerCountdown" class="text-amber-400">15:00</strong>
+          </span>
+
           <button onclick="fetchAllQuotations()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition">
             <i class="fa-solid fa-arrows-rotate text-amber-400"></i>
             <span class="hidden sm:inline">Refresh Data</span>
           </button>
           
-          <button onclick="handleAdminLogout()" class="bg-rose-500/10 hover:bg-rose-500 text-rose-400 hover:text-white border border-rose-500/20 font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1.5">
+          <button onclick="handleAdminLogout('Manual Logout')" class="bg-rose-500/10 hover:bg-rose-500 text-rose-400 hover:text-white border border-rose-500/20 font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1.5">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span class="hidden sm:inline">Logout</span>
           </button>
@@ -145,68 +142,77 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full flex-1 space-y-6">
-      <!-- KPI Stats Grid -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-brand-card p-5 rounded-2xl border border-brand-border relative overflow-hidden">
-          <div class="flex justify-between items-center">
-            <span class="text-xs font-bold text-slate-400">Total Quotations</span>
-            <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center text-sm"><i class="fa-solid fa-folder"></i></span>
+      <!-- KPI Stats Grid (Clickable) -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5">
+        <div onclick="setFilter('status', 'ALL')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-blue-500 transition">
+          <div class="flex justify-between items-center text-slate-400 text-xs font-bold">
+            <span>Total Records</span>
+            <i class="fa-solid fa-folder text-blue-400"></i>
           </div>
-          <div id="statTotal" class="text-3xl font-black text-white mt-2">0</div>
-          <p class="text-[10px] text-slate-500 font-medium mt-1">Google Sheet me kul darj records</p>
+          <div id="statTotal" class="text-2xl font-black text-white mt-2">0</div>
+          <p class="text-[10px] text-slate-500 mt-0.5">Kul save entries</p>
         </div>
 
-        <div class="bg-brand-card p-5 rounded-2xl border border-brand-border relative overflow-hidden">
-          <div class="flex justify-between items-center">
-            <span class="text-xs font-bold text-amber-400">Pending / Unpaid</span>
-            <span class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm"><i class="fa-solid fa-clock-rotate-left"></i></span>
+        <div onclick="setFilter('status', 'UNPAID')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-amber-500 transition">
+          <div class="flex justify-between items-center text-amber-400 text-xs font-bold">
+            <span>Unpaid / Pending</span>
+            <i class="fa-solid fa-clock-rotate-left"></i>
           </div>
-          <div id="statPending" class="text-3xl font-black text-amber-400 mt-2">0</div>
-          <p class="text-[10px] text-slate-500 font-medium mt-1">Payment verification baaki hai</p>
+          <div id="statPending" class="text-2xl font-black text-amber-400 mt-2">0</div>
+          <p class="text-[10px] text-slate-500 mt-0.5">Click karke filter karein</p>
         </div>
 
-        <div class="bg-brand-card p-5 rounded-2xl border border-brand-border relative overflow-hidden">
-          <div class="flex justify-between items-center">
-            <span class="text-xs font-bold text-emerald-400">Payment Success</span>
-            <span class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm"><i class="fa-solid fa-circle-check"></i></span>
+        <div onclick="setFilter('status', 'SUCCESS')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-emerald-500 transition">
+          <div class="flex justify-between items-center text-emerald-400 text-xs font-bold">
+            <span>Payment Success</span>
+            <i class="fa-solid fa-circle-check"></i>
           </div>
-          <div id="statSuccess" class="text-3xl font-black text-emerald-400 mt-2">0</div>
-          <p class="text-[10px] text-slate-500 font-medium mt-1">Premium Jama ho chuka hai</p>
+          <div id="statSuccess" class="text-2xl font-black text-emerald-400 mt-2">0</div>
+          <p class="text-[10px] text-slate-500 mt-0.5">Paid quotations</p>
         </div>
 
-        <div class="bg-brand-card p-5 rounded-2xl border border-brand-border relative overflow-hidden">
-          <div class="flex justify-between items-center">
-            <span class="text-xs font-bold text-sky-400">Policies Issued</span>
-            <span class="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center text-sm"><i class="fa-solid fa-file-shield"></i></span>
+        <div onclick="setFilter('status', 'ISSUED')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-sky-500 transition">
+          <div class="flex justify-between items-center text-sky-400 text-xs font-bold">
+            <span>Policies Issued</span>
+            <i class="fa-solid fa-file-shield"></i>
           </div>
-          <div id="statIssued" class="text-3xl font-black text-sky-400 mt-2">0</div>
-          <p class="text-[10px] text-slate-500 font-medium mt-1">Policy bond/copy download ready</p>
+          <div id="statIssued" class="text-2xl font-black text-sky-400 mt-2">0</div>
+          <p class="text-[10px] text-slate-500 mt-0.5">Policy no. generate hua</p>
+        </div>
+
+        <div onclick="setFilter('status', 'MOB_PENDING')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-rose-500 transition">
+          <div class="flex justify-between items-center text-rose-400 text-xs font-bold">
+            <span>Mobile Requests</span>
+            <i class="fa-solid fa-mobile-screen-button"></i>
+          </div>
+          <div id="statMobPending" class="text-2xl font-black text-rose-400 mt-2">0</div>
+          <p class="text-[10px] text-slate-500 mt-0.5">Approval pending</p>
         </div>
       </div>
 
       <!-- Controls: Search & Category Filters -->
       <div class="bg-brand-card p-4 rounded-2xl border border-brand-border flex flex-col md:flex-row gap-3 justify-between items-center">
-        <!-- Search bar -->
         <div class="relative w-full md:w-96">
           <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
           <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Search Name, Phone, Quote #, Policy #..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 transition" />
         </div>
 
-        <!-- Filter Selects -->
         <div class="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end">
           <select id="filterType" onchange="applyFilters()" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-300 focus:outline-none focus:border-amber-500">
-            <option value="ALL">All Insurance Types</option>
-            <option value="LIC">LIC Life</option>
-            <option value="CSC">CSC Life</option>
+            <option value="ALL">All Types (LIC, CSC, Motor, Health)</option>
+            <option value="LIC">Life (LIC)</option>
+            <option value="CSC">Life (CSC)</option>
             <option value="MOTOR">Motor Insurance</option>
             <option value="HEALTH">Health Mediclaim</option>
           </select>
 
           <select id="filterStatus" onchange="applyFilters()" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-300 focus:outline-none focus:border-amber-500">
             <option value="ALL">All Status</option>
-            <option value="UNPAID">UNPAID / Pending</option>
-            <option value="Success">Payment Success</option>
-            <option value="ISSUED">Policy Issued</option>
+            <option value="UNPAID">Payment: UNPAID</option>
+            <option value="SUCCESS">Payment: Success</option>
+            <option value="ISSUED">Policy: Issued</option>
+            <option value="UNDER_PROCESS">Policy: Under Process</option>
+            <option value="MOB_PENDING">Mobile Req: Pending</option>
           </select>
         </div>
       </div>
@@ -214,15 +220,15 @@
       <!-- Main Records Table -->
       <div class="bg-brand-card rounded-2xl border border-brand-border overflow-hidden shadow-2xl shadow-black/40">
         <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs border-collapse min-w-[1050px]">
+          <table class="w-full text-left text-xs border-collapse min-w-[1100px]">
             <thead class="bg-slate-950 text-slate-400 uppercase font-black tracking-wider text-[11px] border-b border-brand-border">
               <tr>
                 <th class="p-3.5">Quotation / Date</th>
                 <th class="p-3.5">Customer & Phone</th>
-                <th class="p-3.5">Category & Complete Details (Col H)</th>
+                <th class="p-3.5">Type & Plan Details (Col H)</th>
                 <th class="p-3.5">Premium</th>
                 <th class="p-3.5">Payment</th>
-                <th class="p-3.5">Policy Status</th>
+                <th class="p-3.5">Policy Number</th>
                 <th class="p-3.5">Mob Request</th>
                 <th class="p-3.5 text-center">Manage</th>
               </tr>
@@ -239,15 +245,13 @@
     </main>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- 3. ACTION EDIT MODAL (Update Status, Policy Number, PDF Link)             -->
-  <!-- ========================================================================= -->
+  <!-- 3. ACTION EDIT MODAL -->
   <div id="editModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4">
     <div class="bg-gradient-to-b from-slate-900 via-brand-card to-slate-900 border border-slate-700 max-w-lg w-full rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5">
       <div class="flex justify-between items-center pb-3 border-b border-slate-800">
         <div>
-          <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">Update Record</span>
-          <h3 class="text-base font-black text-white mt-1">Manage Policy & Payment</h3>
+          <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">Manage Policy</span>
+          <h3 class="text-base font-black text-white mt-1">Status & Policy Update</h3>
           <p id="modalQuoteNumber" class="text-xs font-mono text-amber-400 font-bold mt-0.5">-</p>
         </div>
         <button onclick="closeEditModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition">✕</button>
@@ -257,7 +261,7 @@
         <input type="hidden" id="editRowId" />
 
         <div>
-          <label class="block text-slate-400 mb-1">Customer / Policyholder</label>
+          <label class="block text-slate-400 mb-1">Customer / Holder</label>
           <input type="text" id="editHolderName" readonly class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-300 cursor-not-allowed" />
         </div>
 
@@ -265,16 +269,28 @@
           <div>
             <label class="block text-slate-400 mb-1">Payment Status</label>
             <select id="editPaymentStatus" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-amber-500 outline-none">
-              <option value="UNPAID">UNPAID (Pending)</option>
+              <option value="UNPAID">UNPAID</option>
               <option value="Success">Success (Paid)</option>
+              <option value="Done">Done</option>
             </select>
           </div>
           <div>
-            <label class="block text-slate-400 mb-1">Mobile Request Approval</label>
+            <label class="block text-slate-400 mb-1">Mobile Request Status</label>
             <select id="editReqStatus" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-amber-500 outline-none">
               <option value="Pending">Pending</option>
               <option value="Approved">Approved</option>
             </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-400 mb-1">Primary Mobile (Col M)</label>
+            <input type="text" id="editMob1" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white font-mono" />
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Alt Mobile (Col N)</label>
+            <input type="text" id="editMob2" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white font-mono" />
           </div>
         </div>
 
@@ -284,9 +300,8 @@
         </div>
 
         <div>
-          <label class="block text-slate-400 mb-1">Policy PDF Drive Link (Download link ke liye)</label>
+          <label class="block text-slate-400 mb-1">Policy PDF Drive Link</label>
           <input type="url" id="editPdfLink" placeholder="https://drive.google.com/file/d/..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-amber-500 outline-none" />
-          <p class="text-[10px] text-slate-500 mt-1">Ye link save karne par user ke dashboard me 'Download Policy' button open ho jayega.</p>
         </div>
 
         <div class="pt-2 flex gap-3">
@@ -300,26 +315,65 @@
     </div>
   </div>
 
-  <!-- Notification Toast -->
   <div id="adminToast" class="fixed bottom-6 right-6 z-50 bg-slate-800 text-white px-5 py-3 rounded-2xl border border-slate-700 text-xs font-bold shadow-2xl hidden flex items-center gap-2.5">
     <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
     <span id="toastMsg">Success</span>
   </div>
 
   <!-- ========================================================================= -->
-  <!-- 4. JAVASCRIPT LOGIC (SECURE BACKEND SYNC WITH YOUR URL)                    -->
+  <!-- 4. JAVASCRIPT LOGIC (EXACT URL SYNC)                                      -->
   <!-- ========================================================================= -->
   <script>
+    // EXACT WEB APP URL FROM GOOGLE APPS SCRIPT DEPLOYMENT
     const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycby1KWuhyBr9Q3sif4sLuV8fhegmIBca7C1jVXPD0EJUTnUXU_l2S057QK1latcixbdR4g/exec";
 
     let rawQuotations = [];
+    const INACTIVITY_LIMIT_SECONDS = 900; // 15 Minutes
+    let secondsLeft = INACTIVITY_LIMIT_SECONDS;
+    let timerInterval = null;
 
     window.addEventListener('DOMContentLoaded', () => {
-      const token = localStorage.getItem('kds_admin_token');
+      const token = sessionStorage.getItem('kds_admin_session_token');
       if (token) {
         showDashboard();
+      } else {
+        handleAdminLogout('Session Not Found');
       }
+
+      ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evt => {
+        window.addEventListener(evt, resetInactivityTimer, { passive: true });
+      });
     });
+
+    function startInactivityCountdown() {
+      if (timerInterval) clearInterval(timerInterval);
+      secondsLeft = INACTIVITY_LIMIT_SECONDS;
+      updateTimerUI();
+
+      timerInterval = setInterval(() => {
+        secondsLeft--;
+        updateTimerUI();
+        if (secondsLeft <= 0) {
+          clearInterval(timerInterval);
+          handleAdminLogout('Inactivity Timeout (Auto-Locked)');
+        }
+      }, 1000);
+    }
+
+    function resetInactivityTimer() {
+      if (sessionStorage.getItem('kds_admin_session_token')) {
+        secondsLeft = INACTIVITY_LIMIT_SECONDS;
+      }
+    }
+
+    function updateTimerUI() {
+      const el = document.getElementById('timerCountdown');
+      if (el) {
+        const m = Math.floor(secondsLeft / 60).toString().padStart(2, '0');
+        const s = (secondsLeft % 60).toString().padStart(2, '0');
+        el.innerText = `${m}:${s}`;
+      }
+    }
 
     function handleAdminLogin(e) {
       e.preventDefault();
@@ -336,7 +390,8 @@
         .then(r => r.json())
         .then(res => {
           if (res && res.status === "success") {
-            localStorage.setItem('kds_admin_token', res.token);
+            sessionStorage.setItem('kds_admin_session_token', res.token);
+            sessionStorage.setItem('kds_admin_login_time', Date.now());
             showDashboard();
           } else {
             err.innerText = res.message || "Galat Username ya Password!";
@@ -344,7 +399,7 @@
           }
         })
         .catch(() => {
-          err.innerText = "Network / Script response error. Dobara koshish karein.";
+          err.innerText = "Network / Script response error.";
           err.classList.remove('hidden');
         })
         .finally(() => {
@@ -356,14 +411,27 @@
     function showDashboard() {
       document.getElementById('loginOverlay').classList.add('hidden');
       document.getElementById('adminApp').classList.remove('hidden');
+      startInactivityCountdown();
       fetchAllQuotations();
     }
 
-    function handleAdminLogout() {
+    function handleAdminLogout(reason) {
+      if (timerInterval) clearInterval(timerInterval);
+      sessionStorage.removeItem('kds_admin_session_token');
+      sessionStorage.removeItem('kds_admin_login_time');
       localStorage.removeItem('kds_admin_token');
+
       document.getElementById('adminApp').classList.add('hidden');
       document.getElementById('loginOverlay').classList.remove('hidden');
       document.getElementById('adminPass').value = "";
+
+      if (reason && reason !== 'Manual Logout' && reason !== 'Session Not Found') {
+        const err = document.getElementById('loginError');
+        if (err) {
+          err.innerText = reason;
+          err.classList.remove('hidden');
+        }
+      }
     }
 
     function fetchAllQuotations() {
@@ -371,7 +439,7 @@
         .then(r => r.json())
         .then(res => {
           if (res && res.status === "success") {
-            rawQuotations = (res.data || []).reverse(); // Latest quotes on top
+            rawQuotations = (res.data || []).reverse();
             updateKpiCounters();
             applyFilters();
           }
@@ -379,15 +447,54 @@
         .catch(err => console.error("Admin fetch error:", err));
     }
 
+    function isPaymentSuccess(statusStr) {
+      if (!statusStr) return false;
+      const s = statusStr.toString().trim().toUpperCase();
+      return s.includes("SUCCESS") || s.includes("PAID") || s.includes("DONE");
+    }
+
+    function isPolicyIssued(polStr) {
+      if (!polStr) return false;
+      const s = polStr.toString().trim().toUpperCase();
+      return s !== "" && s !== "UNDER PROCESS" && s !== "-";
+    }
+
     function updateKpiCounters() {
       document.getElementById('statTotal').innerText = rawQuotations.length;
-      const pending = rawQuotations.filter(q => (q.paymentStatus || '').toUpperCase().indexOf('SUCCESS') === -1).length;
-      const success = rawQuotations.filter(q => (q.paymentStatus || '').toUpperCase().indexOf('SUCCESS') > -1).length;
-      const issued = rawQuotations.filter(q => q.policyNumber && q.policyNumber !== 'Under Process' && q.policyNumber.trim() !== '').length;
+
+      let pending = 0;
+      let success = 0;
+      let issued = 0;
+      let mobPending = 0;
+
+      rawQuotations.forEach(q => {
+        if (isPaymentSuccess(q.paymentStatus)) {
+          success++;
+        } else {
+          pending++;
+        }
+
+        if (isPolicyIssued(q.policyNumber)) {
+          issued++;
+        }
+
+        const req = (q.reqStatus || '').toString().trim().toUpperCase();
+        if (req === 'PENDING') {
+          mobPending++;
+        }
+      });
 
       document.getElementById('statPending').innerText = pending;
       document.getElementById('statSuccess').innerText = success;
       document.getElementById('statIssued').innerText = issued;
+      document.getElementById('statMobPending').innerText = mobPending;
+    }
+
+    function setFilter(type, val) {
+      if (type === 'status') {
+        document.getElementById('filterStatus').value = val;
+      }
+      applyFilters();
     }
 
     function applyFilters() {
@@ -401,17 +508,23 @@
           (item.holderPhone || '').includes(q) ||
           (item.quotationNumber || '').toLowerCase().includes(q) ||
           (item.policyNumber || '').toLowerCase().includes(q) ||
-          (item.planName || '').toLowerCase().includes(q);
+          (item.planName || '').toLowerCase().includes(q) ||
+          (item.mobile1 || '').includes(q);
 
-        const matchesType = (type === 'ALL') || (item.insuranceType || '').toUpperCase() === type;
+        const itemType = (item.insuranceType || 'LIC').toString().toUpperCase().trim();
+        const matchesType = (type === 'ALL') || (itemType.includes(type));
 
         let matchesStatus = true;
         if (status === 'UNPAID') {
-          matchesStatus = (item.paymentStatus || '').toUpperCase().indexOf('SUCCESS') === -1;
-        } else if (status === 'Success') {
-          matchesStatus = (item.paymentStatus || '').toUpperCase().indexOf('SUCCESS') > -1;
+          matchesStatus = !isPaymentSuccess(item.paymentStatus);
+        } else if (status === 'SUCCESS') {
+          matchesStatus = isPaymentSuccess(item.paymentStatus);
         } else if (status === 'ISSUED') {
-          matchesStatus = item.policyNumber && item.policyNumber !== 'Under Process' && item.policyNumber.trim() !== '';
+          matchesStatus = isPolicyIssued(item.policyNumber);
+        } else if (status === 'UNDER_PROCESS') {
+          matchesStatus = !isPolicyIssued(item.policyNumber);
+        } else if (status === 'MOB_PENDING') {
+          matchesStatus = (item.reqStatus || '').toString().trim().toUpperCase() === 'PENDING';
         }
 
         return matchesQ && matchesType && matchesStatus;
@@ -432,51 +545,47 @@
       empty.classList.add('hidden');
 
       tbody.innerHTML = list.map(item => {
-        const isPaid = (item.paymentStatus || '').toUpperCase().indexOf('SUCCESS') > -1;
-        const isIssued = item.policyNumber && item.policyNumber !== 'Under Process' && item.policyNumber.trim() !== '';
+        const isPaid = isPaymentSuccess(item.paymentStatus);
+        const isIssued = isPolicyIssued(item.policyNumber);
+        const isMobPending = (item.reqStatus || '').toString().trim().toUpperCase() === 'PENDING';
         
         let typeBadge = 'bg-blue-500/10 text-blue-400 border-blue-500/20';
-        if (item.insuranceType === 'MOTOR') typeBadge = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-        if (item.insuranceType === 'HEALTH') typeBadge = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
-        if (item.insuranceType === 'CSC') typeBadge = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+        const t = (item.insuranceType || '').toString().toUpperCase();
+        if (t.includes('MOTOR')) typeBadge = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+        else if (t.includes('HEALTH') || t.includes('HELTH')) typeBadge = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
+        else if (t.includes('CSC')) typeBadge = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
 
         return `
           <tr class="hover:bg-slate-800/40 transition border-b border-slate-800/60">
-            <!-- 1. Quote & Date -->
             <td class="p-3.5">
-              <span class="font-mono text-amber-400 font-bold bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded text-[11px]">${item.quotationNumber}</span>
-              <div class="text-[10px] text-slate-400 mt-1"><i class="fa-regular fa-calendar mr-1"></i>${item.date}</div>
+              <span class="font-mono text-amber-400 font-bold bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded text-[11px]">${item.quotationNumber || 'N/A'}</span>
+              <div class="text-[10px] text-slate-400 mt-1"><i class="fa-regular fa-calendar mr-1"></i>${item.date || '-'}</div>
             </td>
 
-            <!-- 2. Customer & Contact -->
             <td class="p-3.5">
-              <div class="font-bold text-white">${item.holderName || 'Client'}</div>
+              <div class="font-bold text-white text-xs">${item.holderName || item.userEmail || 'Client'}</div>
               <div class="text-[11px] text-emerald-400 font-mono mt-0.5 flex items-center gap-1.5">
                 <a href="tel:${item.holderPhone}" class="hover:underline" title="Direct Call"><i class="fa-solid fa-phone text-[10px]"></i> ${item.holderPhone || '-'}</a>
-                ${item.holderPhone ? `<a href="https://wa.me/91${item.holderPhone.replace(/[^0-9]/g,'')}" target="_blank" class="text-emerald-500 hover:text-emerald-400" title="WhatsApp Chat"><i class="fa-brands fa-whatsapp text-xs"></i></a>` : ''}
+                ${item.holderPhone && item.holderPhone.length >= 10 ? `<a href="https://wa.me/91${item.holderPhone.replace(/[^0-9]/g,'')}" target="_blank" class="text-emerald-500 hover:text-emerald-400" title="WhatsApp Chat"><i class="fa-brands fa-whatsapp text-xs"></i></a>` : ''}
               </div>
               <div class="text-[10px] text-slate-400 truncate max-w-[140px] mt-0.5">${item.address || ''}</div>
             </td>
 
-            <!-- 3. Category & Details (Col H) -->
             <td class="p-3.5 max-w-sm">
-              <span class="border px-2 py-0.5 rounded text-[10px] font-black uppercase ${typeBadge}">${item.insuranceType}</span>
-              <p class="text-slate-300 text-xs mt-1 leading-relaxed break-words">${item.planName}</p>
+              <span class="border px-2 py-0.5 rounded text-[10px] font-black uppercase ${typeBadge}">${item.insuranceType || 'LIC'}</span>
+              <p class="text-slate-300 text-xs mt-1 leading-relaxed break-words">${item.planName || '-'}</p>
             </td>
 
-            <!-- 4. Premium -->
-            <td class="p-3.5 font-bold text-white font-mono text-sm">
+            <td class="p-3.5 font-bold text-white font-mono text-xs">
               ₹${Number(item.premium || 0).toLocaleString('en-IN')}
             </td>
 
-            <!-- 5. Payment Status -->
             <td class="p-3.5">
               <span class="px-2.5 py-1 rounded-full text-[10px] font-black border ${isPaid ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/15 text-amber-400 border-amber-500/30'}">
                 <i class="fa-solid fa-circle-dot mr-1 text-[8px]"></i>${item.paymentStatus || 'UNPAID'}
               </span>
             </td>
 
-            <!-- 6. Policy Status & Link -->
             <td class="p-3.5">
               ${isIssued 
                 ? `<span class="font-mono text-sky-300 bg-sky-950/80 px-2 py-0.5 rounded border border-sky-700/80 font-bold">${item.policyNumber}</span>` 
@@ -484,12 +593,13 @@
               ${item.downloadLink ? `<a href="${item.downloadLink}" target="_blank" class="block text-[11px] text-amber-400 hover:underline mt-1 font-bold"><i class="fa-solid fa-file-pdf mr-1"></i> Drive PDF</a>` : ''}
             </td>
 
-            <!-- 7. Mobile Req Status -->
             <td class="p-3.5">
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${item.reqStatus === 'Approved' ? 'bg-emerald-950 text-emerald-400 border-emerald-800' : 'bg-slate-800 text-slate-400 border-slate-700'}">${item.reqStatus || 'Pending'}</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${isMobPending ? 'bg-rose-950/80 text-rose-300 border-rose-800' : 'bg-slate-800 text-slate-400 border-slate-700'}">
+                ${item.reqStatus || 'Pending'}
+              </span>
+              ${item.mobile1 ? `<div class="text-[10px] font-mono text-slate-400 mt-1">${item.mobile1}</div>` : ''}
             </td>
 
-            <!-- 8. Action Manage Button -->
             <td class="p-3.5 text-center">
               <button onclick="openEditModal(${item.rowId})" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3 py-1.5 rounded-xl font-black text-xs transition shadow flex items-center justify-center gap-1 mx-auto">
                 <i class="fa-solid fa-pen-to-square"></i>
@@ -507,10 +617,12 @@
 
       document.getElementById('editRowId').value = item.rowId;
       document.getElementById('modalQuoteNumber').innerText = `${item.quotationNumber} • ${item.insuranceType}`;
-      document.getElementById('editHolderName').value = `${item.holderName} (Mo: ${item.holderPhone})`;
+      document.getElementById('editHolderName').value = `${item.holderName || item.userEmail} (Mo: ${item.holderPhone || '-'})`;
       document.getElementById('editPaymentStatus').value = item.paymentStatus || 'UNPAID';
       document.getElementById('editReqStatus').value = item.reqStatus || 'Pending';
-      document.getElementById('editPolicyNumber').value = (item.policyNumber && item.policyNumber !== 'Under Process') ? item.policyNumber : '';
+      document.getElementById('editMob1').value = item.mobile1 || item.holderPhone || '';
+      document.getElementById('editMob2').value = item.mobile2 || '';
+      document.getElementById('editPolicyNumber').value = isPolicyIssued(item.policyNumber) ? item.policyNumber : '';
       document.getElementById('editPdfLink').value = item.downloadLink || '';
 
       document.getElementById('editModal').classList.remove('hidden');
@@ -527,12 +639,14 @@
       const reqStatus = document.getElementById('editReqStatus').value;
       const polNo = document.getElementById('editPolicyNumber').value.trim() || 'Under Process';
       const pdfLink = document.getElementById('editPdfLink').value.trim();
+      const mob1 = document.getElementById('editMob1').value.trim();
+      const mob2 = document.getElementById('editMob2').value.trim();
 
       const btn = document.getElementById('btnUpdateSubmit');
       btn.disabled = true;
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
 
-      const targetUrl = `${GOOGLE_SHEET_API_URL}?action=adminUpdateQuotation&rowId=${rowId}&paymentStatus=${encodeURIComponent(payStatus)}&reqStatus=${encodeURIComponent(reqStatus)}&policyNumber=${encodeURIComponent(polNo)}&downloadLink=${encodeURIComponent(pdfLink)}`;
+      const targetUrl = `${GOOGLE_SHEET_API_URL}?action=adminUpdateQuotation&rowId=${rowId}&paymentStatus=${encodeURIComponent(payStatus)}&reqStatus=${encodeURIComponent(reqStatus)}&policyNumber=${encodeURIComponent(polNo)}&downloadLink=${encodeURIComponent(pdfLink)}&mobile1=${encodeURIComponent(mob1)}&mobile2=${encodeURIComponent(mob2)}`;
 
       fetch(targetUrl)
         .then(r => r.json())
