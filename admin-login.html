@@ -373,7 +373,7 @@
       }
     }
 
-    function handleAdminLogin(e) {
+function handleAdminLogin(e) {
       e.preventDefault();
       const u = document.getElementById('adminUser').value.trim();
       const p = document.getElementById('adminPass').value.trim();
@@ -384,26 +384,39 @@
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Authorizing...`;
       err.classList.add('hidden');
 
-      fetch(`${GOOGLE_SHEET_API_URL}?action=adminLogin&username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}`)
-        .then(r => r.json())
-        .then(res => {
-          if (res && res.status === "success") {
-            sessionStorage.setItem('kds_admin_session_token', res.token);
-            sessionStorage.setItem('kds_admin_login_time', Date.now());
-            showDashboard();
-          } else {
-            err.innerText = res.message || "Galat Username ya Password!";
-            err.classList.remove('hidden');
-          }
-        })
-        .catch(() => {
-          err.innerText = "Network / Script response error.";
+      const loginUrl = `${GOOGLE_SHEET_API_URL}?action=adminLogin&username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}`;
+
+      fetch(loginUrl, {
+        method: "GET",
+        mode: "cors",
+        redirect: "follow",
+        headers: { "Accept": "application/json" }
+      })
+      .then(r => {
+        if (!r.ok) {
+          throw new Error("HTTP " + r.status);
+        }
+        return r.json();
+      })
+      .then(res => {
+        if (res && res.status === "success") {
+          sessionStorage.setItem('kds_admin_session_token', res.token);
+          sessionStorage.setItem('kds_admin_login_time', Date.now());
+          showDashboard();
+        } else {
+          err.innerText = (res && res.message) ? res.message : "Galat Username ya Password!";
           err.classList.remove('hidden');
-        })
-        .finally(() => {
-          btn.disabled = false;
-          btn.innerHTML = `<span>Authorize Access</span><i class="fa-solid fa-arrow-right"></i>`;
-        });
+        }
+      })
+      .catch(error => {
+        console.error("Login Error:", error);
+        err.innerText = "Network / Script response error. Kripya check karein script 'Anyone' par deploy hai ya nahi.";
+        err.classList.remove('hidden');
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = `<span>Authorize Access</span><i class="fa-solid fa-arrow-right"></i>`;
+      });
     }
 
     function showDashboard() {
