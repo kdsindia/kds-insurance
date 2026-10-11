@@ -445,16 +445,15 @@ function fetchAllQuotations() {
         emptyEl.classList.remove('hidden');
       }
 
-      // Unique Callback Function Name (JSONP - 100% CORS & Redirect Safe)
-      const callbackName = "handleAdminDataResponse_" + Date.now();
-
-      // Window Callback Handler
-      window[callbackName] = function(res) {
-        if (refIcon) refIcon.classList.remove('fa-spin');
-        const scriptEl = document.getElementById(callbackName);
-        if (scriptEl) scriptEl.remove();
-        delete window[callbackName];
-
+      fetch(`${GOOGLE_SHEET_API_URL}?action=adminGetAllQuotations`, {
+        method: "GET",
+        mode: "cors"
+      })
+      .then(r => {
+        if (!r.ok) throw new Error("HTTP Status " + r.status);
+        return r.json();
+      })
+      .then(res => {
         if (res && res.status === "success") {
           rawQuotations = (res.data || []).reverse();
           updateKpiCounters();
@@ -463,18 +462,14 @@ function fetchAllQuotations() {
           console.error("Data error:", res);
           if (emptyText) emptyText.innerText = "Data error: " + (res.message || "Failed to parse records");
         }
-      };
-
-      // Create JSONP Script Tag
-      const script = document.createElement("script");
-      script.id = callbackName;
-      script.src = `${GOOGLE_SHEET_API_URL}?action=adminGetAllQuotations&callback=${callbackName}`;
-      script.onerror = function() {
+      })
+      .catch(err => {
+        console.error("Admin fetch error:", err);
+        if (emptyText) emptyText.innerText = "Error: " + err.message + ". Apps Script deployment me 'Who has access: Anyone' check karein.";
+      })
+      .finally(() => {
         if (refIcon) refIcon.classList.remove('fa-spin');
-        console.error("JSONP script load failed");
-        if (emptyText) emptyText.innerText = "Google Script ne connection refuse kiya. Deployment verify karein.";
-      };
-      document.body.appendChild(script);
+      });
     }
     function isPaymentSuccess(statusStr) {
       if (!statusStr) return false;
