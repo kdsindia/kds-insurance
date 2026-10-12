@@ -94,7 +94,7 @@
         </div>
 
         <div class="flex items-center gap-2.5">
-          <button onclick="fetchAdminData()" class="bg-white/10 hover:bg-white/20 text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition">
+          <button onclick="refreshCurrentTab()" class="bg-white/10 hover:bg-white/20 text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition">
             <i class="fa-solid fa-rotate text-brand-gold"></i> <span class="hidden sm:inline">Refresh Data</span>
           </button>
           <button onclick="adminLogout()" class="bg-rose-600 hover:bg-rose-700 text-white font-black px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 transition shadow">
@@ -466,6 +466,7 @@
             sessionStorage.setItem('kds_admin_session', res.token);
             showDashboardView();
             fetchAdminData();
+            fetchClaimsData();
           } else {
             showToast("Galat Username ya Password!");
           }
@@ -484,6 +485,7 @@
       if (token && token.startsWith('KDS_SECURE_')) {
         showDashboardView();
         fetchAdminData();
+        fetchClaimsData();
       }
     }
 
