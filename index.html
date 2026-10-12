@@ -3008,7 +3008,26 @@
     return;
   }
 
-  // --- Reset Save Button & Result Box (Dusra quotation bina refresh ke save hoga) ---
+  // Current scheme ka identifier check karein
+  const currentPlanIdentifier = activeQuotationData 
+    ? ((activeQuotationData.scheme && activeQuotationData.scheme.name) ? activeQuotationData.scheme.name : activeQuotationData.scheme)
+    : "";
+
+  // AGAR YAHI SCHEME PEHLE HI SAVE HO CHUKI HAI TO DUSRI BAAR SAVE NA HONE DEIN
+  if (window.lastSavedPlanIdentifier && window.lastSavedPlanIdentifier === currentPlanIdentifier && window.activeSavedQuoteNo) {
+    showToast('Ye Quotation (' + window.activeSavedQuoteNo + ') pehle hi save ho chuka hai!');
+    // Result box dikhayein taaki customer direct print kar sake
+    const qBox = document.getElementById('saveQuoteResultBox');
+    const quoteNoElem = document.getElementById('displaySavedQuoteNo');
+    const saveBtn = document.getElementById('btnConfirmSavePolicy');
+    if (quoteNoElem) quoteNoElem.innerText = window.activeSavedQuoteNo;
+    if (qBox) qBox.style.display = 'block';
+    if (saveBtn) saveBtn.style.display = 'none';
+    document.getElementById('saveQuotationModal').classList.remove('hidden');
+    return;
+  }
+
+  // NAYI SCHEME AANE PAR (JAISI 721 KE BAAD 745): Save button ko fresh dikhayein
   const saveBtn = document.getElementById('btnConfirmSavePolicy');
   const resBox = document.getElementById('saveQuoteResultBox');
   if (saveBtn) {
@@ -3181,6 +3200,7 @@ function handleSaveQuotationSubmit(e) {
   formData.append("altMobile", currentLoggedInUser.altMobile || "");
 const generatedQuoteNo = "KDS-" + Math.floor(10000000 + Math.random() * 90000000);
   window.activeSavedQuoteNo = generatedQuoteNo;
+  window.lastSavedPlanIdentifier = pName;
   formData.append("quotationNumber", generatedQuoteNo);
   fetch(GOOGLE_SHEET_API_URL, {
     method: "POST",
