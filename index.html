@@ -3166,22 +3166,41 @@ function handleSaveQuotationSubmit(e) {
   formData.append("sumAssured", pSum);
   formData.append("mobile1", currentLoggedInUser.mobile || holderPhone);
   formData.append("altMobile", currentLoggedInUser.altMobile || "");
-
+const generatedQuoteNo = "KDS-" + Math.floor(10000000 + Math.random() * 90000000);
+  window.activeSavedQuoteNo = generatedQuoteNo;
+  formData.append("quotationNumber", generatedQuoteNo);
   fetch(GOOGLE_SHEET_API_URL, {
     method: "POST",
     mode: "no-cors",
     body: formData
   })
   .then(() => {
+   
+
+    // 2. Submit button ko chhipa dein taaki customer dobara click na kare
     if (btn) {
-      btn.disabled = false;
-      btn.innerText = 'Confirm & Save Quotation';
+      btn.style.display = 'none';
     }
-    closeSaveQuotationModal();
-    showToast('Quotation ' + insCategory + ' Sheet me poora save ho gaya!');
+
+    // 3. Modal band nahi hoga, balki green box me Quotation Number display hoga
+    const resBox = document.getElementById('saveQuoteResultBox');
+    const quoteNoElem = document.getElementById('displaySavedQuoteNo');
+    if (quoteNoElem) {
+      quoteNoElem.innerText = generatedQuoteNo;
+    }
+    if (resBox) {
+      resBox.style.display = 'block';
+    }
+
+    // 4. Toast me Quotation Number ke sath safalta ka message aayega
+    showToast('Quotation No: ' + generatedQuoteNo + ' Safalta se save ho gaya!');
+
+    // 5. User Dashboard sync karein
     setTimeout(() => {
-      fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-    }, 1200);
+      if (typeof fetchUserQuotationsFromSheet === 'function' && currentLoggedInUser) {
+        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+      }
+    }, 1000);
   })
   .catch(err => {
     if (btn) {
