@@ -3255,13 +3255,38 @@ function triggerQuickHealthSave(companyName, plan, prem, si) {
       }
     }
 
+    function requestPolicyRenewal(quotationNo) {
+      if (!confirm("Kya aap is policy ke renewal ke liye request submit karna chahte hain?")) return;
+
+      const targetUrl = GOOGLE_SHEET_API_URL + 
+        "?action=requestRenewal" +
+        "&quotationNumber=" + encodeURIComponent(quotationNo) +
+        "&userEmail=" + encodeURIComponent(currentLoggedInUser.email || "");
+
+      const sender = new Image();
+      sender.src = targetUrl;
+
+      showToast("Renewal Request submit ho gayi! Hum aapse sampark karenge.");
+      setTimeout(() => {
+        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+      }, 1200);
+    }
+
     function renderDashboardRows(dataList, tbodyElement) {
       let html = '';
       for (let i = 0; i < dataList.length; i++) {
         const item = dataList[i];
         const isPaid = item.paymentStatus && (item.paymentStatus.toLowerCase().indexOf('success') > -1 || item.paymentStatus.toLowerCase().indexOf('paid') > -1);
         const badgeColor = isPaid ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-amber-100 text-amber-800 border-amber-300';
-        const isReady = item.policyNumber && item.policyNumber !== 'Under Process' && item.downloadLink && String(item.downloadLink).trim() !== '';
+        
+        // Agar renew ho chuka hai to naya policy no aur naya link use karein
+        const activePolicyNumber = item.renewedPolicyNumber || item.policyNumber;
+        const activeDownloadLink = item.renewedDownloadLink || item.downloadLink;
+        const isReady = activePolicyNumber && activePolicyNumber !== 'Under Process' && activeDownloadLink && String(activeDownloadLink).trim() !== '';
+
+        // Renewal button sirf Motor aur Health ke liye
+        const isRenewable = (item.insuranceType === 'MOTOR' || item.insuranceType === 'HEALTH');
+        const isRenewalRequested = item.renewalRequest && (item.renewalRequest.toLowerCase() === 'requested' || item.renewalRequest.toLowerCase() === 'pending');
 
         html += '<tr class="hover:bg-slate-50 border-b border-slate-100 transition">' +
           '<td class="p-3">' +
@@ -3275,6 +3300,7 @@ function triggerQuickHealthSave(companyName, plan, prem, si) {
           '</td>' +
           '<td class="p-3">' +
             '<div class="font-black text-brand-navy">' + (item.insuranceType ? `<span class="bg-blue-100 text-brand-navy text-[10px] px-1.5 py-0.5 rounded font-black mr-1">${item.insuranceType}</span>` : '') + (item.planName || 'Insurance Plan') + '</div>' +
+            (item.expDate ? `<div class="text-[10px] text-slate-500 mt-0.5 font-semibold">Expiry: <span class="text-rose-600 font-bold">${item.expDate}</span></div>` : '') +
           '</td>' +
           '<td class="p-3 font-black text-slate-900 text-xs">' +
             '₹ ' + Number(item.premium || 0).toLocaleString('en-IN') + '<span class="text-[10px] font-normal text-slate-500">/Yr</span>' +
@@ -3285,18 +3311,28 @@ function triggerQuickHealthSave(companyName, plan, prem, si) {
             '</span>' +
           '</td>' +
           '<td class="p-3">' +
-            (item.policyNumber && item.policyNumber !== 'Under Process' 
-              ? '<span class="font-mono font-black text-blue-900 bg-blue-50 border border-blue-200 px-2 py-1 rounded">' + item.policyNumber + '</span>'
+            (activePolicyNumber && activePolicyNumber !== 'Under Process' 
+              ? '<span class="font-mono font-black text-blue-900 bg-blue-50 border border-blue-200 px-2 py-1 rounded">' + activePolicyNumber + '</span>' +
+                (item.renewedPolicyNumber ? '<span class="block text-[9px] font-bold text-emerald-700 mt-1">● Renewed</span>' : '')
               : '<span class="text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded text-[11px] font-bold inline-flex items-center gap-1"><i class="fa-solid fa-clock-rotate-left"></i> Under Process</span>') +
           '</td>' +
           '<td class="p-3 text-center">' +
-            (isReady 
-              ? '<a href="' + item.downloadLink + '" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-3.5 py-2 rounded-xl text-xs transition inline-flex items-center gap-1.5 shadow-sm">' +
-                  '<i class="fa-solid fa-file-arrow-down text-sm"></i><span>Download Policy</span>' +
-                '</a>'
-              : '<button disabled class="bg-slate-100 text-slate-400 font-bold px-3 py-1.5 rounded-xl text-xs cursor-not-allowed border border-slate-200 inline-flex items-center gap-1.5">' +
-                  '<i class="fa-solid fa-lock text-[11px]"></i><span>Download Policy</span>' +
-                '</button>') +
+            '<div class="flex items-center justify-center gap-1.5 flex-wrap">' +
+              (isReady 
+                ? '<a href="' + activeDownloadLink + '" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-2.5 py-1.5 rounded-xl text-xs transition inline-flex items-center gap-1 shadow-sm">' +
+                    '<i class="fa-solid fa-file-arrow-down"></i><span>Download</span>' +
+                  '</a>'
+                : '<button disabled class="bg-slate-100 text-slate-400 font-bold px-2.5 py-1.5 rounded-xl text-xs cursor-not-allowed border border-slate-200 inline-flex items-center gap-1">' +
+                    '<i class="fa-solid fa-lock text-[11px]"></i><span>Download</span>' +
+                  '</button>') +
+              (isRenewable && isPaid 
+                ? (isRenewalRequested 
+                    ? '<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-1 rounded-lg border border-amber-300">Requested</span>'
+                    : '<button onclick="requestPolicyRenewal(\'' + (item.quotationNumber || '') + '\')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-2.5 py-1.5 rounded-xl text-[11px] transition shadow-sm flex items-center gap-1">' +
+                        '<i class="fa-solid fa-arrows-rotate"></i> Renew' +
+                      '</button>')
+                : '') +
+            '</div>' +
           '</td>' +
         '</tr>';
       }
