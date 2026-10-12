@@ -1283,6 +1283,26 @@
           <i class="fa-solid fa-circle-check"></i>
           <span>Confirm & Save Quotation</span>
         </button>
+        <!-- Save Hone Ke Baad Quotation Number aur Print Button -->
+        <div id="saveQuoteResultBox" style="display: none; margin-top: 15px; padding: 15px; background: #ecfdf5; border: 1.5px solid #10b981; border-radius: 16px; text-align: center;">
+          <div style="color: #047857; font-weight: 800; font-size: 13px;">
+            <i class="fa-solid fa-circle-check"></i> Quotation Safalta Se Save Ho Gaya!
+          </div>
+          <div style="font-size: 11px; color: #475569; margin-top: 4px; font-weight: bold;">
+            Quotation Number:
+          </div>
+          <div id="displaySavedQuoteNo" style="font-size: 16px; font-weight: 900; font-family: monospace; color: #0f172a; background: #ffffff; padding: 6px 14px; border-radius: 10px; border: 1px solid #10b981; display: inline-block; margin-top: 6px;">
+            KDS-RECORD
+          </div>
+          <div style="margin-top: 12px; display: flex; gap: 8px;">
+            <button type="button" onclick="window.print()" style="flex: 1; background: #002B49; color: #ffffff; font-weight: 800; padding: 10px; border-radius: 12px; font-size: 12px; border: none; cursor: pointer;">
+              <i class="fa-solid fa-print" style="color: #FFAE00;"></i> Print Quotation
+            </button>
+            <button type="button" onclick="closeSaveQuotationModal()" style="background: #e2e8f0; color: #334155; font-weight: bold; padding: 10px 14px; border-radius: 12px; font-size: 12px; border: none; cursor: pointer;">
+              Band Karein
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
@@ -2963,13 +2983,20 @@
 
       setTimeout(() => {
         if (btn) {
-          btn.disabled = false;
-          btn.innerText = 'Confirm & Save Quotation';
+          btn.style.display = 'none'; // Save button chhip jayega
         }
-        closeSaveQuotationModal();
-        showToast('Quotation ' + insCategory + ' Category me save ho gaya!');
-        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-      }, 1200);
+        showToast('Quotation save ho gaya!');
+        
+        // Modal ke andar Quotation No aur Print button dikhayein
+        const resBox = document.getElementById('saveQuoteResultBox');
+        if (resBox) {
+          resBox.style.display = 'block';
+        }
+        
+        if (typeof fetchUserQuotationsFromSheet === 'function' && currentLoggedInUser) {
+          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+        }
+      }, 800);
     }
 
     function triggerSaveQuotationFlow() {
