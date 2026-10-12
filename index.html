@@ -3002,49 +3002,60 @@
     }
 
     function triggerSaveQuotationFlow() {
-      if (!currentLoggedInUser) {
-        showToast('Kripya pehle Google se login karein!');
-        openAuthModal();
-        return;
-      }
-      if (activeQuotationData) {
-        const pName = (activeQuotationData.scheme && activeQuotationData.scheme.name) ? activeQuotationData.scheme.name : (activeQuotationData.scheme || "Custom Plan");
-        document.getElementById('saveAutoPlanName').innerText = pName;
-        document.getElementById('saveAutoTermPpt').innerText = `${activeQuotationData.term || 1} Yrs / Pay ${activeQuotationData.ppt || 1} Yrs`;
-        document.getElementById('saveAutoPremium').innerText = `₹ ${(activeQuotationData.annualBudget || 0).toLocaleString('en-IN')}/Yr`;
-      }
-      document.getElementById('saveQuotationModal').classList.remove('hidden');
-    }
+  if (!currentLoggedInUser) {
+    showToast('Kripya pehle Google se login karein!');
+    openAuthModal();
+    return;
+  }
+
+  // --- Reset Save Button & Result Box (Dusra quotation bina refresh ke save hoga) ---
+  const saveBtn = document.getElementById('btnConfirmSavePolicy');
+  const resBox = document.getElementById('saveQuoteResultBox');
+  if (saveBtn) {
+    saveBtn.style.display = 'flex';
+    saveBtn.disabled = false;
+    saveBtn.innerText = 'Confirm & Save Quotation';
+  }
+  if (resBox) {
+    resBox.style.display = 'none';
+  }
+
+  const vBox = document.getElementById('vehicleDetailBox');
+  if (activeQuotationData && activeQuotationData.insuranceCategory === "MOTOR") {
+    if (vBox) vBox.classList.remove('hidden');
+  } else {
+    if (vBox) vBox.classList.add('hidden');
+  }
+
+  if (activeQuotationData) {
+    const pName = (activeQuotationData.scheme && activeQuotationData.scheme.name) 
+      ? activeQuotationData.scheme.name 
+      : (activeQuotationData.scheme || "Custom Plan");
+    document.getElementById('saveAutoPlanName').innerText = pName;
+    document.getElementById('saveAutoTermPpt').innerText = `${activeQuotationData.term || 1} Yrs / Pay ${activeQuotationData.ppt || 1} Yrs`;
+    document.getElementById('saveAutoPremium').innerText = `₹ ${(activeQuotationData.annualBudget || 0).toLocaleString('en-IN')}/Yr`;
+  }
+  document.getElementById('saveQuotationModal').classList.remove('hidden');
+}
 
 function triggerQuickCardSave(schemeId) {
   const scheme = officialLifeSchemes.find(s => s.id === schemeId);
+  if (!scheme) return;
+
+  const age = Number(document.getElementById('calcAgeInput').value) || 28;
   const budget = getAnnualBudget();
   const term = Number(document.getElementById('calcTermInput').value) || 25;
   const ppt = Number(document.getElementById('calcPptInput').value) || 20;
-  const sa = Math.round((budget * ppt * 1.1) / 25000) * 25000;
 
-  const hasAddb = document.getElementById('riderAddbCheck').checked;
-  const addbVal = hasAddb ? Number(document.getElementById('riderAddbValue').value || sa) : 0;
+  // Poora calculation data generate karein taaki table aur print khali na aaye
+  activeQuotationData = calculateFullPlanDetails(scheme, age, budget, term, ppt);
+  activeQuotationData.insuranceCategory = (currentLifeTab === 'lic' ? 'LIC' : 'CSC');
 
-  const hasTr = document.getElementById('riderTrCheck').checked;
-  const trVal = hasTr ? Number(document.getElementById('riderTrValue').value || sa) : 0;
+  // Background me printable table render kar lein
+  if (typeof renderQuotationContent === 'function') {
+    renderQuotationContent();
+  }
 
-  const hasCir = document.getElementById('riderCirCheck').checked;
-  const cirVal = hasCir ? Number(document.getElementById('riderCirValue').value || 250000) : 0;
-
-  const pBaseName = scheme ? scheme.name : "Life Policy";
-
-  // Column H format: Plan + Term/PPT + SA + ADDB + TR + CIR
-  const fullDetailsString = `${pBaseName} | Term: ${term} Yrs / Pay ${ppt} Yrs | SA: ₹${sa.toLocaleString('en-IN')} | ADDB: ${hasAddb ? '₹' + addbVal.toLocaleString('en-IN') : 'No'} | TR: ${hasTr ? '₹' + trVal.toLocaleString('en-IN') : 'No'} | CIR: ${hasCir ? '₹' + cirVal.toLocaleString('en-IN') : 'No'}`;
-
-  activeQuotationData = {
-    insuranceCategory: (currentLifeTab === 'lic' ? 'LIC' : 'CSC'),
-    scheme: { name: fullDetailsString },
-    annualBudget: budget,
-    term: term,
-    ppt: ppt,
-    sumAssured: sa
-  };
   triggerSaveQuotationFlow();
 }
 // Motor Save Button Click Handler (Proper full vehicle specs capture)
@@ -3236,8 +3247,20 @@ function triggerQuickHealthSave(companyName, plan, prem, si) {
 }
 
     function closeSaveQuotationModal() {
-      document.getElementById('saveQuotationModal').classList.add('hidden');
-    }
+  document.getElementById('saveQuotationModal').classList.add('hidden');
+  
+  // Agle plan ke liye save button wapas activate karein
+  const saveBtn = document.getElementById('btnConfirmSavePolicy');
+  const resBox = document.getElementById('saveQuoteResultBox');
+  if (saveBtn) {
+    saveBtn.style.display = 'flex';
+    saveBtn.disabled = false;
+    saveBtn.innerText = 'Confirm & Save Quotation';
+  }
+  if (resBox) {
+    resBox.style.display = 'none';
+  }
+}
 function printFinalSavedQuotation() {
   const qNo = window.activeSavedQuoteNo || "KDS-RECORD";
   closeSaveQuotationModal();
