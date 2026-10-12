@@ -1,374 +1,301 @@
 <!DOCTYPE html>
-<html lang="hi" class="dark">
+<html lang="hi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KDS Insurance Services | Executive Admin Dashboard</title>
-  
-  <link rel="icon" href="favicon.ico" sizes="any" />
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
-  <link rel="apple-touch-icon" href="favicon.png" />
+  <title>KDS Insurance Admin Workspace</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
   <!-- Tailwind CSS & Font Awesome Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-          },
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
           colors: {
             brand: {
-              gold: '#FFAE00',
-              dark: '#080C14',
+              dark: '#001A33',
               navy: '#002B49',
-              card: '#0F172A',
-              border: '#1E293B',
-              accent: '#0284C7'
+              lightBlue: '#00558F',
+              gold: '#FFAE00'
             }
           }
         }
       }
     }
   </script>
-
-  <style>
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #080C14; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #475569; }
-  </style>
 </head>
 
-<body class="bg-brand-dark text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-gold selection:text-slate-950">
+<body class="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen">
 
-  <!-- ========================================================================= -->
-  <!-- 1. LOGIN OVERLAY WITH LOGO                                                -->
-  <!-- ========================================================================= -->
-  <div id="loginOverlay" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4">
-    <div class="relative bg-gradient-to-b from-slate-900 via-brand-card to-slate-900 border border-slate-800 max-w-md w-full rounded-3xl p-8 shadow-2xl shadow-blue-950/40 overflow-hidden">
-      <div class="absolute -top-20 -left-20 w-44 h-44 bg-brand-gold/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-20 -right-20 w-44 h-44 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-      <div class="relative z-10 text-center space-y-3">
-        <div class="flex justify-center items-center">
-          <img src="logo.png" alt="KDS Insurance" onerror="this.style.display='none'; document.getElementById('loginFallbackLogo').style.display='flex';" class="h-16 w-auto max-w-[200px] object-contain mx-auto rounded-xl drop-shadow-md" />
-          <div id="loginFallbackLogo" class="hidden items-center justify-center gap-2">
-            <div class="w-12 h-12 rounded-2xl bg-brand-navy border border-brand-gold/30 flex items-center justify-center text-brand-gold font-black text-xl shadow-lg">KDS</div>
-            <span class="text-xl font-black text-white">KDS <span class="text-brand-gold">INSURANCE</span></span>
-          </div>
+  <!-- ================= 1. SECURE LOGIN SCREEN ================= -->
+  <div id="loginSection" class="min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 p-8 space-y-6">
+      <div class="text-center space-y-2">
+        <div class="w-16 h-16 rounded-2xl bg-brand-navy text-brand-gold mx-auto flex items-center justify-center text-3xl font-black shadow-lg">
+          <i class="fa-solid fa-user-shield"></i>
         </div>
-        <div>
-          <h2 class="text-2xl font-black text-white tracking-tight">KDS Executive Portal</h2>
-          <p class="text-xs text-slate-400 font-medium mt-1">Authorized Insurance Advisor Control Center</p>
-        </div>
+        <h2 class="text-2xl font-black text-brand-navy">KDS Admin Workspace</h2>
+        <p class="text-xs text-slate-500 font-medium">Authorized Control Panel • Manoher Singh</p>
       </div>
 
-      <form onsubmit="handleAdminLogin(event)" class="relative z-10 mt-6 space-y-4 text-xs font-bold">
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="space-y-4 text-xs font-bold">
         <div>
-          <label class="block text-slate-300 mb-1.5 uppercase tracking-wider text-[11px]">Admin Username</label>
+          <label class="block text-slate-700 mb-1.5 uppercase tracking-wider text-[11px]">Admin Username</label>
           <div class="relative">
-            <i class="fa-solid fa-user-shield absolute left-3.5 top-3.5 text-slate-500"></i>
-            <input type="text" id="adminUser" required placeholder="Enter username" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-3.5 py-3 text-white focus:ring-2 focus:ring-brand-gold/50 focus:border-brand-gold outline-none transition" />
+            <i class="fa-solid fa-user text-slate-400 absolute left-3.5 top-3.5 text-sm"></i>
+            <input type="text" id="adminUser" required placeholder="Enter Username" class="w-full bg-slate-50 border border-slate-300 rounded-xl py-3 pl-10 pr-3 text-sm focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" />
           </div>
         </div>
 
         <div>
-          <label class="block text-slate-300 mb-1.5 uppercase tracking-wider text-[11px]">Secret Password</label>
+          <label class="block text-slate-700 mb-1.5 uppercase tracking-wider text-[11px]">Secure Password</label>
           <div class="relative">
-            <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-slate-500"></i>
-            <input type="password" id="adminPass" required placeholder="••••••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-3.5 py-3 text-white focus:ring-2 focus:ring-brand-gold/50 focus:border-brand-gold outline-none transition" />
+            <i class="fa-solid fa-key text-slate-400 absolute left-3.5 top-3.5 text-sm"></i>
+            <input type="password" id="adminPass" required placeholder="••••••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-xl py-3 pl-10 pr-10 text-sm focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" />
+            <button type="button" onclick="togglePassVisibility()" class="absolute right-3.5 top-3 text-slate-400 hover:text-slate-600">
+              <i id="eyeIcon" class="fa-solid fa-eye text-sm"></i>
+            </button>
           </div>
         </div>
 
-        <div id="loginError" class="hidden bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs p-3 rounded-xl text-center font-semibold"></div>
-
-        <button type="submit" id="btnLogin" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3.5 rounded-xl text-sm transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
-          <span>Authorize Access</span>
-          <i class="fa-solid fa-arrow-right"></i>
+        <button type="submit" id="btnLogin" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3.5 rounded-xl text-sm transition shadow-lg flex items-center justify-center gap-2">
+          <i class="fa-solid fa-lock text-brand-gold"></i>
+          <span>Secure Sign In &rarr;</span>
         </button>
       </form>
 
-      <div class="mt-6 pt-4 border-t border-slate-800/80 text-center">
-        <p class="text-[11px] text-slate-500">&copy; 2026 Manoher Singh • KDS Insurance Services</p>
+      <div class="text-center pt-2 border-t border-slate-100">
+        <a href="index.html" class="text-xs font-bold text-slate-400 hover:text-brand-navy transition">
+          &larr; Wapas Main Website Par Jaayein
+        </a>
       </div>
     </div>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- 2. MAIN EXECUTIVE ADMIN DASHBOARD                                         -->
-  <!-- ========================================================================= -->
-  <div id="adminApp" class="hidden min-h-screen flex flex-col">
-    <header class="bg-brand-card/90 backdrop-blur-md border-b border-brand-border sticky top-0 z-30">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex justify-between items-center gap-4">
+  <!-- ================= 2. ADVANCED ADMIN DASHBOARD ================= -->
+  <div id="dashboardSection" class="hidden min-h-screen flex flex-col">
+    <!-- Top Navbar -->
+    <header class="bg-brand-navy text-white sticky top-0 z-40 border-b border-brand-lightBlue shadow-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center gap-3">
         <div class="flex items-center gap-3">
-          <a href="index.html" class="flex items-center gap-2 group">
-            <img src="logo.png" alt="KDS INSURANCE" onerror="this.style.display='none'; document.getElementById('navFallbackLogo').style.display='flex';" class="h-10 sm:h-11 w-auto max-w-[150px] object-contain rounded-lg" />
-            <div id="navFallbackLogo" class="hidden items-center gap-2">
-              <div class="w-9 h-9 rounded-xl bg-brand-navy flex items-center justify-center text-brand-gold font-black text-base border border-brand-gold/30">KDS</div>
-              <div>
-                <span class="text-sm font-black text-white leading-none block">KDS <span class="text-brand-gold">INSURANCE</span></span>
-                <span class="text-[9px] text-slate-400 font-bold block mt-0.5">Admin Seva Portal</span>
-              </div>
-            </div>
-          </a>
-          <span class="hidden sm:inline bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ml-1">Control Console</span>
+          <div class="w-10 h-10 rounded-xl bg-brand-gold text-brand-dark flex items-center justify-center text-lg font-black shadow">
+            <i class="fa-solid fa-sliders"></i>
+          </div>
+          <div>
+            <h1 class="text-base sm:text-lg font-black leading-tight">KDS Insurance Operations Panel</h1>
+            <p class="text-[11px] text-slate-300">Live Database Connected • Direct Sheet Synchronization</p>
+          </div>
         </div>
 
-        <div class="flex items-center gap-2 sm:gap-3">
-          <span id="sessionTimerText" class="hidden md:inline text-[11px] font-mono text-slate-400 bg-slate-900/80 px-2.5 py-1.5 rounded-xl border border-slate-800">
-            <i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Auto-Lock: <strong id="timerCountdown" class="text-amber-400">15:00</strong>
-          </span>
-
-          <button onclick="fetchAllQuotations()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition">
-            <i id="refreshIcon" class="fa-solid fa-arrows-rotate text-amber-400"></i>
-            <span class="hidden sm:inline">Refresh Data</span>
+        <div class="flex items-center gap-2.5">
+          <button onclick="fetchAdminData()" class="bg-white/10 hover:bg-white/20 text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-rotate text-brand-gold"></i> <span class="hidden sm:inline">Refresh Data</span>
           </button>
-          
-          <button onclick="handleAdminLogout('Manual Logout')" class="bg-rose-500/10 hover:bg-rose-500 text-rose-400 hover:text-white border border-rose-500/20 font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1.5">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span class="hidden sm:inline">Logout</span>
+          <button onclick="adminLogout()" class="bg-rose-600 hover:bg-rose-700 text-white font-black px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 transition shadow">
+            <i class="fa-solid fa-power-off"></i> <span>Logout</span>
           </button>
         </div>
       </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full flex-1 space-y-6">
-      <!-- KPI Stats Grid -->
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5">
-        <div onclick="setFilter('status', 'ALL')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-blue-500 transition">
-          <div class="flex justify-between items-center text-slate-400 text-xs font-bold">
-            <span>Total Records</span>
-            <i class="fa-solid fa-folder text-blue-400"></i>
-          </div>
-          <div id="statTotal" class="text-2xl font-black text-white mt-2">0</div>
-          <p class="text-[10px] text-slate-500 mt-0.5">Kul save entries</p>
-        </div>
+    <!-- Main Workspace -->
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 py-6 w-full flex-grow space-y-6">
 
-        <div onclick="setFilter('status', 'UNPAID')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-amber-500 transition">
-          <div class="flex justify-between items-center text-amber-400 text-xs font-bold">
-            <span>Unpaid / Pending</span>
-            <i class="fa-solid fa-clock-rotate-left"></i>
+      <!-- Stats Metric Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-blue-50 text-brand-lightBlue flex items-center justify-center text-lg"><i class="fa-solid fa-folder-open"></i></div>
+          <div>
+            <p class="text-[11px] font-bold text-slate-500 uppercase">Total Records</p>
+            <h3 id="statTotal" class="text-xl font-black text-slate-800">0</h3>
           </div>
-          <div id="statPending" class="text-2xl font-black text-amber-400 mt-2">0</div>
-          <p class="text-[10px] text-slate-500 mt-0.5">Payment pending</p>
         </div>
-
-        <div onclick="setFilter('status', 'SUCCESS')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-emerald-500 transition">
-          <div class="flex justify-between items-center text-emerald-400 text-xs font-bold">
-            <span>Payment Success</span>
-            <i class="fa-solid fa-circle-check"></i>
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-circle-check"></i></div>
+          <div>
+            <p class="text-[11px] font-bold text-slate-500 uppercase">Paid / Done</p>
+            <h3 id="statPaid" class="text-xl font-black text-emerald-700">0</h3>
           </div>
-          <div id="statSuccess" class="text-2xl font-black text-emerald-400 mt-2">0</div>
-          <p class="text-[10px] text-slate-500 mt-0.5">Paid quotations</p>
         </div>
-
-        <div onclick="setFilter('status', 'ISSUED')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-sky-500 transition">
-          <div class="flex justify-between items-center text-sky-400 text-xs font-bold">
-            <span>Policies Issued</span>
-            <i class="fa-solid fa-file-shield"></i>
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div>
+            <p class="text-[11px] font-bold text-slate-500 uppercase">Under Process</p>
+            <h3 id="statPending" class="text-xl font-black text-amber-600">0</h3>
           </div>
-          <div id="statIssued" class="text-2xl font-black text-sky-400 mt-2">0</div>
-          <p class="text-[10px] text-slate-500 mt-0.5">Policy generated</p>
         </div>
-
-        <div onclick="setFilter('status', 'MOB_PENDING')" class="bg-brand-card p-4 rounded-2xl border border-brand-border cursor-pointer hover:border-rose-500 transition">
-          <div class="flex justify-between items-center text-rose-400 text-xs font-bold">
-            <span>Mobile Requests</span>
-            <i class="fa-solid fa-mobile-screen-button"></i>
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-lg"><i class="fa-solid fa-arrows-rotate"></i></div>
+          <div>
+            <p class="text-[11px] font-bold text-slate-500 uppercase">Renewal Requests</p>
+            <h3 id="statRenewals" class="text-xl font-black text-purple-700">0</h3>
           </div>
-          <div id="statMobPending" class="text-2xl font-black text-rose-400 mt-2">0</div>
-          <p class="text-[10px] text-slate-500 mt-0.5">Approval pending</p>
         </div>
       </div>
 
-      <!-- Controls: Search & Category Filters -->
-      <div class="bg-brand-card p-4 rounded-2xl border border-brand-border flex flex-col md:flex-row gap-3 justify-between items-center">
+      <!-- Filter & Search Toolbar -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-3 justify-between items-center">
         <div class="relative w-full md:w-96">
-          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
-          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Search Name, Phone, Quote #, Policy #..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 transition" />
+          <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3.5 top-3 text-xs"></i>
+          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Naam, Mobile, Policy No ya Quote No se khojein..." class="w-full bg-slate-50 border border-slate-300 rounded-xl py-2 pl-9 pr-3 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-lightBlue" />
         </div>
 
-        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end">
-          <select id="filterType" onchange="applyFilters()" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-300 focus:outline-none focus:border-amber-500">
-            <option value="ALL">All Types (LIC, CSC, Motor, Health)</option>
-            <option value="LIC">Life (LIC)</option>
-            <option value="CSC">Life (CSC)</option>
+        <div class="flex items-center gap-2 w-full md:w-auto flex-wrap justify-end">
+          <select id="typeFilter" onchange="applyFilters()" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 focus:outline-none">
+            <option value="ALL">All Categories</option>
+            <option value="LIC">LIC Life</option>
             <option value="MOTOR">Motor Insurance</option>
             <option value="HEALTH">Health Mediclaim</option>
+            <option value="CSC">CSC Life</option>
           </select>
 
-          <select id="filterStatus" onchange="applyFilters()" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-300 focus:outline-none focus:border-amber-500">
+          <select id="statusFilter" onchange="applyFilters()" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 focus:outline-none">
             <option value="ALL">All Status</option>
-            <option value="UNPAID">Payment: UNPAID</option>
-            <option value="SUCCESS">Payment: Success</option>
-            <option value="ISSUED">Policy: Issued</option>
-            <option value="UNDER_PROCESS">Policy: Under Process</option>
-            <option value="MOB_PENDING">Mobile Req: Pending</option>
+            <option value="PAID">Paid / Success</option>
+            <option value="UNPAID">Unpaid / Pending</option>
+            <option value="RENEWAL">Renewal Requested</option>
           </select>
         </div>
       </div>
 
-      <!-- Main Records Table -->
-      <div class="bg-brand-card rounded-2xl border border-brand-border overflow-hidden shadow-2xl shadow-black/40">
+      <!-- Main Data Table Container -->
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs border-collapse min-w-[1100px]">
-            <thead class="bg-slate-950 text-slate-400 uppercase font-black tracking-wider text-[11px] border-b border-brand-border">
+          <table class="w-full text-left text-xs border-collapse min-w-[950px]">
+            <thead class="bg-slate-50 text-slate-700 border-b border-slate-200 font-black uppercase text-[11px] tracking-wider">
               <tr>
-                <th class="p-3.5">Quotation / Date</th>
-                <th class="p-3.5">Customer & Phone</th>
-                <th class="p-3.5">Type & Plan Details (Col H)</th>
-                <th class="p-3.5">Premium</th>
+                <th class="p-3.5">Quotation No / Date</th>
+                <th class="p-3.5">Customer & Contact</th>
+                <th class="p-3.5">Category & Scheme</th>
                 <th class="p-3.5">Payment</th>
-                <th class="p-3.5">Policy Number</th>
-                <th class="p-3.5">Mob Request</th>
-                <th class="p-3.5 text-center">Manage</th>
+                <th class="p-3.5">Original Policy</th>
+                <th class="p-3.5">Renewal / New Policy</th>
+                <th class="p-3.5 text-center">Action</th>
               </tr>
             </thead>
-            <tbody id="quotationTableBody" class="divide-y divide-slate-800/80 font-medium"></tbody>
+            <tbody id="adminTableBody" class="divide-y divide-slate-100">
+              <tr>
+                <td colspan="7" class="text-center py-12 text-slate-400 font-bold">
+                  <i class="fa-solid fa-spinner fa-spin text-2xl mb-2 block text-brand-navy"></i>
+                  Data load ho raha hai...
+                </td>
+              </tr>
+            </tbody>
           </table>
-        </div>
-
-        <div id="tableEmpty" class="text-center py-16 text-slate-500 space-y-2">
-          <i class="fa-solid fa-spinner fa-spin text-3xl text-amber-400"></i>
-          <p id="tableEmptyText" class="text-xs font-bold text-slate-300 mt-2">Loading data from Google Sheets...</p>
         </div>
       </div>
     </main>
   </div>
 
-  <!-- 3. ACTION EDIT MODAL -->
-  <div id="editModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="bg-gradient-to-b from-slate-900 via-brand-card to-slate-900 border border-slate-700 max-w-lg w-full rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5">
-      <div class="flex justify-between items-center pb-3 border-b border-slate-800">
-        <div>
-          <span class="text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">Manage Policy</span>
-          <h3 class="text-base font-black text-white mt-1">Status & Policy Update</h3>
-          <p id="modalQuoteNumber" class="text-xs font-mono text-amber-400 font-bold mt-0.5">-</p>
+  <!-- ================= 3. EDIT & MANAGE MODAL ================= -->
+  <div id="editPolicyModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="bg-brand-navy text-white p-5 flex justify-between items-center border-b border-brand-lightBlue">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-gold text-brand-dark flex items-center justify-center font-black text-lg">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-black">Manage & Update Record</h3>
+            <p id="modalQuoteNumber" class="text-xs text-slate-300 font-mono">KDS-XXXXX</p>
+          </div>
         </div>
-        <button onclick="closeEditModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition">✕</button>
+        <button onclick="closeEditModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
 
-      <form onsubmit="handleUpdateSubmit(event)" class="space-y-4 text-xs font-bold">
+      <form id="editRecordForm" onsubmit="handleRecordSubmit(event)" class="p-5 sm:p-6 overflow-y-auto space-y-4 text-xs font-bold">
         <input type="hidden" id="editRowId" />
 
-        <div>
-          <label class="block text-slate-400 mb-1">Customer / Holder</label>
-          <input type="text" id="editHolderName" readonly class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-300 cursor-not-allowed" />
+        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 grid grid-cols-2 gap-3 text-slate-700">
+          <div>Client: <span id="modalClientName" class="font-black text-brand-navy">-</span></div>
+          <div>Mobile: <span id="modalClientPhone" class="font-black text-slate-900">-</span></div>
+          <div class="col-span-2">Plan: <span id="modalPlanDetails" class="font-black text-slate-900">-</span></div>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-slate-400 mb-1">Payment Status</label>
-            <select id="editPaymentStatus" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-amber-500 outline-none">
-              <option value="UNPAID">UNPAID</option>
-              <option value="Success">Success (Paid)</option>
-              <option value="Done">Done</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-slate-400 mb-1">Mobile Request Status</label>
-            <select id="editReqStatus" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-amber-500 outline-none">
-              <option value="Pending">Pending</option>
-              <option value="Approved">Approved</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-slate-400 mb-1">Primary Mobile (Col M)</label>
-            <input type="text" id="editMob1" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white font-mono" />
-          </div>
-          <div>
-            <label class="block text-slate-400 mb-1">Alt Mobile (Col N)</label>
-            <input type="text" id="editMob2" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white font-mono" />
+        <!-- Section 1: Payment & Original Policy -->
+        <div class="space-y-3 pt-1">
+          <h4 class="text-[11px] font-black uppercase text-brand-lightBlue tracking-wider border-b pb-1">1. Payment & Primary Policy Details</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-slate-700 mb-1">Payment Status</label>
+              <select id="editPaymentStatus" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5">
+                <option value="UNPAID">UNPAID (Pending Verification)</option>
+                <option value="Success">Success / Paid</option>
+                <option value="Done">Done</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-700 mb-1">Primary Policy Number</label>
+              <input type="text" id="editPolicyNumber" placeholder="उदा. 16725419 ya D2699..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-mono" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-slate-700 mb-1">Primary Policy PDF Link (Google Drive)</label>
+              <input type="url" id="editDownloadLink" placeholder="https://drive.google.com/file/d/..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-normal" />
+            </div>
           </div>
         </div>
 
-        <div>
-          <label class="block text-slate-400 mb-1">Policy Number (Agar policy ban chuki hai)</label>
-          <input type="text" id="editPolicyNumber" placeholder="उदा. 337411713 ya Under Process" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white font-mono uppercase focus:border-amber-500 outline-none" />
+        <!-- Section 2: Renewal Information -->
+        <div class="space-y-3 pt-2">
+          <h4 class="text-[11px] font-black uppercase text-purple-700 tracking-wider border-b pb-1">2. Renewal Management (Motor / Health)</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-slate-700 mb-1">Renewed Policy Number</label>
+              <input type="text" id="editRenewedPolicyNumber" placeholder="Naya Policy Number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-mono" />
+            </div>
+            <div>
+              <label class="block text-slate-700 mb-1">Renewal Request Status</label>
+              <select id="editRenewalRequest" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5">
+                <option value="No">No Request</option>
+                <option value="Requested">Requested</option>
+                <option value="Done">Done / Renewed</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-slate-700 mb-1">Renewed Policy PDF Link (Google Drive)</label>
+              <input type="url" id="editRenewedDownloadLink" placeholder="https://drive.google.com/file/d/... (Nayi Policy Link)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-normal" />
+            </div>
+          </div>
         </div>
 
-        <div>
-          <label class="block text-slate-400 mb-1">Policy PDF Drive Link</label>
-          <input type="url" id="editPdfLink" placeholder="https://drive.google.com/file/d/..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:border-amber-500 outline-none" />
-        </div>
-
-        <div class="pt-2 flex gap-3">
-          <button type="button" onclick="closeEditModal()" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3 rounded-xl transition">Cancel</button>
-          <button type="submit" id="btnUpdateSubmit" class="w-1/2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-1.5">
-            <i class="fa-solid fa-floppy-disk"></i>
-            <span>Update Record</span>
+        <div class="pt-3 border-t border-slate-200 flex justify-end gap-2.5">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 transition">Radd Karein</button>
+          <button type="submit" id="btnSaveRecord" class="px-6 py-2.5 rounded-xl bg-brand-navy hover:bg-brand-lightBlue text-white font-black transition shadow flex items-center gap-1.5">
+            <i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Google Sheet Me Update Karein</span>
           </button>
         </div>
       </form>
     </div>
   </div>
 
-  <div id="adminToast" class="fixed bottom-6 right-6 z-50 bg-slate-800 text-white px-5 py-3 rounded-2xl border border-slate-700 text-xs font-bold shadow-2xl hidden flex items-center gap-2.5">
-    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
-    <span id="toastMsg">Success</span>
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 text-xs font-bold hidden flex items-center gap-3">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+    <span id="toastMessage">Success</span>
   </div>
 
-  <!-- 4. JAVASCRIPT LOGIC -->
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
     const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwMJOgO-FJFf9zOxHrilfkLM5CNqo8cR2HzLZNsozG5QlAN7rDEnv1ZG1AzMj6ig_Nw/exec";
 
-    let rawQuotations = [];
-    const INACTIVITY_LIMIT_SECONDS = 900;
-    let secondsLeft = INACTIVITY_LIMIT_SECONDS;
-    let timerInterval = null;
+    let adminCachedData = [];
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const token = sessionStorage.getItem('kds_admin_session_token');
-      if (token) {
-        showDashboard();
+    function togglePassVisibility() {
+      const p = document.getElementById('adminPass');
+      const icon = document.getElementById('eyeIcon');
+      if (p.type === 'password') {
+        p.type = 'text';
+        icon.className = 'fa-solid fa-eye-slash text-sm';
       } else {
-        handleAdminLogout('Session Not Found');
-      }
-
-      ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evt => {
-        window.addEventListener(evt, resetInactivityTimer, { passive: true });
-      });
-    });
-
-    function startInactivityCountdown() {
-      if (timerInterval) clearInterval(timerInterval);
-      secondsLeft = INACTIVITY_LIMIT_SECONDS;
-      updateTimerUI();
-
-      timerInterval = setInterval(() => {
-        secondsLeft--;
-        updateTimerUI();
-        if (secondsLeft <= 0) {
-          clearInterval(timerInterval);
-          handleAdminLogout('Inactivity Timeout (Auto-Locked)');
-        }
-      }, 1000);
-    }
-
-    function resetInactivityTimer() {
-      if (sessionStorage.getItem('kds_admin_session_token')) {
-        secondsLeft = INACTIVITY_LIMIT_SECONDS;
-      }
-    }
-
-    function updateTimerUI() {
-      const el = document.getElementById('timerCountdown');
-      if (el) {
-        const m = Math.floor(secondsLeft / 60).toString().padStart(2, '0');
-        const s = (secondsLeft % 60).toString().padStart(2, '0');
-        el.innerText = `${m}:${s}`;
+        p.type = 'password';
+        icon.className = 'fa-solid fa-eye text-sm';
       }
     }
 
@@ -377,264 +304,207 @@
       const u = document.getElementById('adminUser').value.trim();
       const p = document.getElementById('adminPass').value.trim();
       const btn = document.getElementById('btnLogin');
-      const err = document.getElementById('loginError');
 
       btn.disabled = true;
-      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Authorizing...`;
-      err.classList.add('hidden');
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
 
-      const loginUrl = `${GOOGLE_SHEET_API_URL}?action=adminLogin&username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}`;
+      // Zero-exposure authentication (Backend verification)
+      const verifyUrl = GOOGLE_SHEET_API_URL + 
+        "?action=adminLogin" +
+        "&username=" + encodeURIComponent(u) +
+        "&password=" + encodeURIComponent(p);
 
-      fetch(loginUrl)
-      .then(response => response.json())
-      .then(res => {
-        if (res && res.status === "success") {
-          sessionStorage.setItem('kds_admin_session_token', res.token);
-          sessionStorage.setItem('kds_admin_login_time', Date.now());
-          showDashboard();
-        } else {
-          err.innerText = (res && res.message) ? res.message : "Galat Username ya Password!";
-          err.classList.remove('hidden');
-        }
-      })
-      .catch(error => {
-        console.error("Login Error:", error);
-        err.innerText = "Network / Script response error. Kripya check karein script 'Anyone' par deploy hai ya nahi.";
-        err.classList.remove('hidden');
-      })
-      .finally(() => {
-        btn.disabled = false;
-        btn.innerHTML = `<span>Authorize Access</span><i class="fa-solid fa-arrow-right"></i>`;
-      });
-    }
-
-    function showDashboard() {
-      document.getElementById('loginOverlay').classList.add('hidden');
-      document.getElementById('adminApp').classList.remove('hidden');
-      startInactivityCountdown();
-      fetchAllQuotations();
-    }
-
-    function handleAdminLogout(reason) {
-      if (timerInterval) clearInterval(timerInterval);
-      sessionStorage.removeItem('kds_admin_session_token');
-      sessionStorage.removeItem('kds_admin_login_time');
-      localStorage.removeItem('kds_admin_token');
-
-      document.getElementById('adminApp').classList.add('hidden');
-      document.getElementById('loginOverlay').classList.remove('hidden');
-      document.getElementById('adminPass').value = "";
-
-      if (reason && reason !== 'Manual Logout' && reason !== 'Session Not Found') {
-        const err = document.getElementById('loginError');
-        if (err) {
-          err.innerText = reason;
-          err.classList.remove('hidden');
-        }
-      }
-    }
-
-function fetchAllQuotations() {
-      const refIcon = document.getElementById('refreshIcon');
-      if (refIcon) refIcon.classList.add('fa-spin');
-
-      const emptyEl = document.getElementById('tableEmpty');
-      const emptyText = document.getElementById('tableEmptyText');
-      if (emptyEl && emptyText) {
-        emptyText.innerText = "Connecting & Loading data from sheet...";
-        emptyEl.classList.remove('hidden');
-      }
-
-      // POST method with text payload completely avoids Google Apps Script CORS drops
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify({
-          action: "adminGetAllQuotations"
+      fetch(verifyUrl)
+        .then(r => r.json())
+        .then(res => {
+          if (res && res.status === 'success' && res.token) {
+            sessionStorage.setItem('kds_admin_session', res.token);
+            showDashboardView();
+            fetchAdminData();
+          } else {
+            showToast("Galat Username ya Password!");
+          }
         })
-      })
-      .then(response => response.json())
-      .then(res => {
-        if (res && res.status === "success") {
-          rawQuotations = (res.data || []).reverse();
-          updateKpiCounters();
-          applyFilters();
-        } else {
-          console.error("Data error from backend:", res);
-          if (emptyText) emptyText.innerText = "Data error: " + (res.message || res.error || "Unable to read records");
-        }
-      })
-      .catch(err => {
-        console.error("Fetch Network Failure:", err);
-        if (emptyText) emptyText.innerText = "Network block: " + err.message + ". Ek baar browser Console (F12) check karein.";
-      })
-      .finally(() => {
-        if (refIcon) refIcon.classList.remove('fa-spin');
-      });
-    }
-    function isPaymentSuccess(statusStr) {
-      if (!statusStr) return false;
-      const s = statusStr.toString().trim().toUpperCase();
-      return s.includes("SUCCESS") || s.includes("PAID") || s.includes("DONE");
+        .catch(() => {
+          showToast("Server connection error! Dobara prayas karein.");
+        })
+        .finally(() => {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-lock text-brand-gold"></i> <span>Secure Sign In &rarr;</span>';
+        });
     }
 
-    function isPolicyIssued(polStr) {
-      if (!polStr) return false;
-      const s = polStr.toString().trim().toUpperCase();
-      return s !== "" && s !== "UNDER PROCESS" && s !== "-";
-    }
-
-    function updateKpiCounters() {
-      document.getElementById('statTotal').innerText = rawQuotations.length;
-
-      let pending = 0;
-      let success = 0;
-      let issued = 0;
-      let mobPending = 0;
-
-      rawQuotations.forEach(q => {
-        if (isPaymentSuccess(q.paymentStatus)) {
-          success++;
-        } else {
-          pending++;
-        }
-
-        if (isPolicyIssued(q.policyNumber)) {
-          issued++;
-        }
-
-        const req = (q.reqStatus || '').toString().trim().toUpperCase();
-        if (req === 'PENDING') {
-          mobPending++;
-        }
-      });
-
-      document.getElementById('statPending').innerText = pending;
-      document.getElementById('statSuccess').innerText = success;
-      document.getElementById('statIssued').innerText = issued;
-      document.getElementById('statMobPending').innerText = mobPending;
-    }
-
-    function setFilter(type, val) {
-      if (type === 'status') {
-        document.getElementById('filterStatus').value = val;
+    function checkAdminSession() {
+      const token = sessionStorage.getItem('kds_admin_session');
+      if (token && token.startsWith('KDS_SECURE_')) {
+        showDashboardView();
+        fetchAdminData();
       }
-      applyFilters();
+    }
+
+    function showDashboardView() {
+      document.getElementById('loginSection').classList.add('hidden');
+      document.getElementById('dashboardSection').classList.remove('hidden');
+    }
+
+    function adminLogout() {
+      sessionStorage.removeItem('kds_admin_session');
+      location.reload();
+    }
+
+    function fetchAdminData() {
+      const tbody = document.getElementById('adminTableBody');
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" class="text-center py-12 text-slate-400 font-bold">
+            <i class="fa-solid fa-spinner fa-spin text-2xl mb-2 block text-brand-navy"></i>
+            Sheet se live data fetch ho raha hai...
+          </td>
+        </tr>
+      `;
+
+      fetch(GOOGLE_SHEET_API_URL + "?action=adminGetAllQuotations")
+        .then(r => r.json())
+        .then(res => {
+          if (res && res.status === "success" && Array.isArray(res.data)) {
+            adminCachedData = res.data;
+            updateMetrics(adminCachedData);
+            renderAdminTable(adminCachedData);
+          } else {
+            tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-rose-500 font-bold">Data load nahi hua.</td></tr>`;
+          }
+        })
+        .catch(() => {
+          tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-rose-500 font-bold">Network error! Refresh karein.</td></tr>`;
+        });
+    }
+
+    function updateMetrics(list) {
+      document.getElementById('statTotal').innerText = list.length;
+      let paidCount = 0;
+      let pendingCount = 0;
+      let renewalCount = 0;
+
+      list.forEach(item => {
+        const pStatus = (item.paymentStatus || '').toLowerCase();
+        if (pStatus.indexOf('success') > -1 || pStatus.indexOf('paid') > -1 || pStatus.indexOf('done') > -1) {
+          paidCount++;
+        } else {
+          pendingCount++;
+        }
+
+        if (item.renewalRequest && item.renewalRequest.toLowerCase() === 'requested') {
+          renewalCount++;
+        }
+      });
+
+      document.getElementById('statPaid').innerText = paidCount;
+      document.getElementById('statPending').innerText = pendingCount;
+      document.getElementById('statRenewals').innerText = renewalCount;
     }
 
     function applyFilters() {
-      const q = document.getElementById('searchInput').value.toLowerCase().trim();
-      const type = document.getElementById('filterType').value;
-      const status = document.getElementById('filterStatus').value;
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const type = document.getElementById('typeFilter').value;
+      const status = document.getElementById('statusFilter').value;
 
-      const filtered = rawQuotations.filter(item => {
+      const filtered = adminCachedData.filter(item => {
         const matchesQ = !q || 
-          (item.holderName || '').toLowerCase().includes(q) ||
-          (item.holderPhone || '').includes(q) ||
-          (item.quotationNumber || '').toLowerCase().includes(q) ||
-          (item.policyNumber || '').toLowerCase().includes(q) ||
-          (item.planName || '').toLowerCase().includes(q) ||
-          (item.mobile1 || '').includes(q);
+          (item.holderName && item.holderName.toLowerCase().indexOf(q) > -1) ||
+          (item.holderPhone && item.holderPhone.indexOf(q) > -1) ||
+          (item.quotationNumber && item.quotationNumber.toLowerCase().indexOf(q) > -1) ||
+          (item.policyNumber && item.policyNumber.toLowerCase().indexOf(q) > -1);
 
-        const itemType = (item.insuranceType || 'LIC').toString().toUpperCase().trim();
-        const matchesType = (type === 'ALL') || (itemType.includes(type));
+        const matchesType = (type === 'ALL') || (item.insuranceType && item.insuranceType.toUpperCase() === type);
 
         let matchesStatus = true;
-        if (status === 'UNPAID') {
-          matchesStatus = !isPaymentSuccess(item.paymentStatus);
-        } else if (status === 'SUCCESS') {
-          matchesStatus = isPaymentSuccess(item.paymentStatus);
-        } else if (status === 'ISSUED') {
-          matchesStatus = isPolicyIssued(item.policyNumber);
-        } else if (status === 'UNDER_PROCESS') {
-          matchesStatus = !isPolicyIssued(item.policyNumber);
-        } else if (status === 'MOB_PENDING') {
-          matchesStatus = (item.reqStatus || '').toString().trim().toUpperCase() === 'PENDING';
-        }
+        const pStatus = (item.paymentStatus || '').toLowerCase();
+        const isPaid = (pStatus.indexOf('success') > -1 || pStatus.indexOf('paid') > -1 || pStatus.indexOf('done') > -1);
+
+        if (status === 'PAID') matchesStatus = isPaid;
+        if (status === 'UNPAID') matchesStatus = !isPaid;
+        if (status === 'RENEWAL') matchesStatus = (item.renewalRequest && item.renewalRequest.toLowerCase() === 'requested');
 
         return matchesQ && matchesType && matchesStatus;
       });
 
-      renderTable(filtered);
+      renderAdminTable(filtered);
     }
 
-    function renderTable(list) {
-      const tbody = document.getElementById('quotationTableBody');
-      const empty = document.getElementById('tableEmpty');
+    function renderAdminTable(dataList) {
+      const tbody = document.getElementById('adminTableBody');
 
-      if (!list || list.length === 0) {
-        tbody.innerHTML = "";
-        if (empty) {
-          const emptyText = document.getElementById('tableEmptyText');
-          if (emptyText) emptyText.innerText = "Koi quotation record match nahi hua.";
-          empty.classList.remove('hidden');
-        }
+      if (!dataList || dataList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-10 text-slate-400 font-bold">Koi record match nahi hua.</td></tr>`;
         return;
       }
-      if (empty) empty.classList.add('hidden');
 
-      tbody.innerHTML = list.map(item => {
-        const isPaid = isPaymentSuccess(item.paymentStatus);
-        const isIssued = isPolicyIssued(item.policyNumber);
-        const isMobPending = (item.reqStatus || '').toString().trim().toUpperCase() === 'PENDING';
-        
-        let typeBadge = 'bg-blue-500/10 text-blue-400 border-blue-500/20';
-        const t = (item.insuranceType || '').toString().toUpperCase();
-        if (t.includes('MOTOR')) typeBadge = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-        else if (t.includes('HEALTH') || t.includes('HELTH')) typeBadge = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
-        else if (t.includes('CSC')) typeBadge = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+      tbody.innerHTML = dataList.map(item => {
+        const isPaid = (item.paymentStatus || '').toLowerCase().indexOf('success') > -1 || (item.paymentStatus || '').toLowerCase().indexOf('paid') > -1;
+        const badgeColor = isPaid ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800';
+
+        const categoryBadge = item.insuranceType === 'MOTOR' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' :
+                              (item.insuranceType === 'HEALTH' ? 'bg-rose-50 text-rose-800 border-rose-200' : 'bg-blue-50 text-blue-900 border-blue-200');
+
+        const hasOriginalLink = item.downloadLink && item.downloadLink.trim() !== '';
+        const hasRenewedLink = item.renewedDownloadLink && item.renewedDownloadLink.trim() !== '';
 
         return `
-          <tr class="hover:bg-slate-800/40 transition border-b border-slate-800/60">
+          <tr class="hover:bg-slate-50 transition border-b border-slate-100">
             <td class="p-3.5">
-              <span class="font-mono text-amber-400 font-bold bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded text-[11px]">${item.quotationNumber || 'N/A'}</span>
-              <div class="text-[10px] text-slate-400 mt-1"><i class="fa-regular fa-calendar mr-1"></i>${item.date || '-'}</div>
+              <span class="inline-block bg-slate-900 text-amber-400 font-mono font-black text-xs px-2 py-0.5 rounded shadow-xs">${item.quotationNumber || 'N/A'}</span>
+              <div class="text-[10px] text-slate-500 font-bold mt-1"><i class="fa-regular fa-calendar-days mr-1"></i>${item.date || ''}</div>
             </td>
 
             <td class="p-3.5">
-              <div class="font-bold text-white text-xs">${item.holderName || item.userEmail || 'Client'}</div>
-              <div class="text-[11px] text-emerald-400 font-mono mt-0.5 flex items-center gap-1.5">
-                <a href="tel:${item.holderPhone}" class="hover:underline" title="Direct Call"><i class="fa-solid fa-phone text-[10px]"></i> ${item.holderPhone || '-'}</a>
-                ${item.holderPhone && item.holderPhone.length >= 10 ? `<a href="https://wa.me/91${item.holderPhone.replace(/[^0-9]/g,'')}" target="_blank" class="text-emerald-500 hover:text-emerald-400" title="WhatsApp Chat"><i class="fa-brands fa-whatsapp text-xs"></i></a>` : ''}
+              <div class="font-black text-slate-900 text-xs">${item.holderName || 'Client'}</div>
+              <div class="text-[11px] text-slate-500 font-bold mt-0.5 flex items-center gap-2">
+                <span><i class="fa-solid fa-phone text-emerald-600 mr-1"></i>${item.holderPhone || ''}</span>
+                <a href="https://wa.me/91${(item.holderPhone || '').replace(/[^0-9]/g,'')}" target="_blank" class="text-emerald-600 hover:text-emerald-700" title="Chat on WhatsApp">
+                  <i class="fa-brands fa-whatsapp text-sm"></i>
+                </a>
               </div>
-              <div class="text-[10px] text-slate-400 truncate max-w-[140px] mt-0.5">${item.address || ''}</div>
-            </td>
-
-            <td class="p-3.5 max-w-sm">
-              <span class="border px-2 py-0.5 rounded text-[10px] font-black uppercase ${typeBadge}">${item.insuranceType || 'LIC'}</span>
-              <p class="text-slate-300 text-xs mt-1 leading-relaxed break-words">${item.planName || '-'}</p>
-            </td>
-
-            <td class="p-3.5 font-bold text-white font-mono text-xs">
-              ₹${Number(item.premium || 0).toLocaleString('en-IN')}
+              <div class="text-[10px] text-slate-400 truncate max-w-[150px]">${item.address || ''}</div>
             </td>
 
             <td class="p-3.5">
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-black border ${isPaid ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/15 text-amber-400 border-amber-500/30'}">
-                <i class="fa-solid fa-circle-dot mr-1 text-[8px]"></i>${item.paymentStatus || 'UNPAID'}
+              <span class="border px-1.5 py-0.5 rounded font-black text-[10px] ${categoryBadge} mr-1">${item.insuranceType || 'LIC'}</span>
+              <div class="text-slate-800 font-bold mt-1 max-w-[220px] line-clamp-2">${item.planName || ''}</div>
+            </td>
+
+            <td class="p-3.5">
+              <div class="font-black text-slate-900">₹ ${Number(item.premium || 0).toLocaleString('en-IN')}</div>
+              <span class="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-black ${badgeColor}">
+                ${item.paymentStatus || 'UNPAID'}
               </span>
             </td>
 
             <td class="p-3.5">
-              ${isIssued 
-                ? `<span class="font-mono text-sky-300 bg-sky-950/80 px-2 py-0.5 rounded border border-sky-700/80 font-bold">${item.policyNumber}</span>` 
-                : `<span class="text-amber-500/80 bg-amber-500/10 px-2 py-0.5 rounded text-[10px] font-bold">Under Process</span>`}
-              ${item.downloadLink ? `<a href="${item.downloadLink}" target="_blank" class="block text-[11px] text-amber-400 hover:underline mt-1 font-bold"><i class="fa-solid fa-file-pdf mr-1"></i> Drive PDF</a>` : ''}
+              <div class="font-mono font-bold text-xs text-blue-900">${item.policyNumber || 'Under Process'}</div>
+              ${hasOriginalLink ? `
+                <a href="${item.downloadLink}" target="_blank" class="text-[10.5px] font-bold text-emerald-600 hover:underline inline-flex items-center gap-1 mt-1">
+                  <i class="fa-solid fa-file-pdf"></i> View Policy
+                </a>` : '<span class="text-[10px] text-slate-400">No PDF uploaded</span>'}
             </td>
 
             <td class="p-3.5">
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${isMobPending ? 'bg-rose-950/80 text-rose-300 border-rose-800' : 'bg-slate-800 text-slate-400 border-slate-700'}">
-                ${item.reqStatus || 'Pending'}
-              </span>
-              ${item.mobile1 ? `<div class="text-[10px] font-mono text-slate-400 mt-1">${item.mobile1}</div>` : ''}
+              ${item.renewedPolicyNumber ? `
+                <div class="font-mono font-bold text-xs text-emerald-800">${item.renewedPolicyNumber}</div>
+              ` : '<span class="text-[10px] text-slate-400">Not Renewed</span>'}
+
+              ${item.renewalRequest && item.renewalRequest.toLowerCase() === 'requested' ? `
+                <span class="block bg-purple-100 text-purple-800 text-[10px] font-black px-1.5 py-0.5 rounded mt-1">Renewal Requested!</span>
+              ` : ''}
+
+              ${hasRenewedLink ? `
+                <a href="${item.renewedDownloadLink}" target="_blank" class="text-[10.5px] font-bold text-emerald-700 hover:underline inline-flex items-center gap-1 mt-0.5">
+                  <i class="fa-solid fa-file-pdf"></i> View Renewal PDF
+                </a>` : ''}
             </td>
 
             <td class="p-3.5 text-center">
-              <button onclick="openEditModal(${item.rowId})" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3 py-1.5 rounded-xl font-black text-xs transition shadow flex items-center justify-center gap-1 mx-auto">
-                <i class="fa-solid fa-pen-to-square"></i>
-                <span>Edit</span>
+              <button onclick="openEditModal(${item.rowId})" class="bg-brand-navy hover:bg-brand-lightBlue text-white font-black px-3.5 py-2 rounded-xl text-xs transition shadow-sm inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-pen-to-square text-brand-gold"></i> Manage
               </button>
             </td>
           </tr>
@@ -643,66 +513,75 @@ function fetchAllQuotations() {
     }
 
     function openEditModal(rowId) {
-      const item = rawQuotations.find(q => q.rowId === rowId);
+      const item = adminCachedData.find(x => x.rowId === rowId);
       if (!item) return;
 
       document.getElementById('editRowId').value = item.rowId;
-      document.getElementById('modalQuoteNumber').innerText = `${item.quotationNumber} • ${item.insuranceType}`;
-      document.getElementById('editHolderName').value = `${item.holderName || item.userEmail} (Mo: ${item.holderPhone || '-'})`;
-      document.getElementById('editPaymentStatus').value = item.paymentStatus || 'UNPAID';
-      document.getElementById('editReqStatus').value = item.reqStatus || 'Pending';
-      document.getElementById('editMob1').value = item.mobile1 || item.holderPhone || '';
-      document.getElementById('editMob2').value = item.mobile2 || '';
-      document.getElementById('editPolicyNumber').value = isPolicyIssued(item.policyNumber) ? item.policyNumber : '';
-      document.getElementById('editPdfLink').value = item.downloadLink || '';
+      document.getElementById('modalQuoteNumber').innerText = item.quotationNumber || 'KDS-RECORD';
+      document.getElementById('modalClientName').innerText = item.holderName || '-';
+      document.getElementById('modalClientPhone').innerText = item.holderPhone || '-';
+      document.getElementById('modalPlanDetails').innerText = `${item.insuranceType || ''}: ${item.planName || ''}`;
 
-      document.getElementById('editModal').classList.remove('hidden');
+      document.getElementById('editPaymentStatus').value = item.paymentStatus || 'UNPAID';
+      document.getElementById('editPolicyNumber').value = (item.policyNumber === 'Under Process') ? '' : (item.policyNumber || '');
+      document.getElementById('editDownloadLink').value = item.downloadLink || '';
+
+      document.getElementById('editRenewedPolicyNumber').value = item.renewedPolicyNumber || '';
+      document.getElementById('editRenewalRequest').value = item.renewalRequest || 'No';
+      document.getElementById('editRenewedDownloadLink').value = item.renewedDownloadLink || '';
+
+      document.getElementById('editPolicyModal').classList.remove('hidden');
     }
 
     function closeEditModal() {
-      document.getElementById('editModal').classList.add('hidden');
+      document.getElementById('editPolicyModal').classList.add('hidden');
     }
 
-    function handleUpdateSubmit(e) {
+    function handleRecordSubmit(e) {
       e.preventDefault();
       const rowId = document.getElementById('editRowId').value;
-      const payStatus = document.getElementById('editPaymentStatus').value;
-      const reqStatus = document.getElementById('editReqStatus').value;
-      const polNo = document.getElementById('editPolicyNumber').value.trim() || 'Under Process';
-      const pdfLink = document.getElementById('editPdfLink').value.trim();
-      const mob1 = document.getElementById('editMob1').value.trim();
-      const mob2 = document.getElementById('editMob2').value.trim();
+      const btn = document.getElementById('btnSaveRecord');
 
-      const btn = document.getElementById('btnUpdateSubmit');
       btn.disabled = true;
-      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating Sheet...';
 
-      const targetUrl = `${GOOGLE_SHEET_API_URL}?action=adminUpdateQuotation&rowId=${rowId}&paymentStatus=${encodeURIComponent(payStatus)}&reqStatus=${encodeURIComponent(reqStatus)}&policyNumber=${encodeURIComponent(polNo)}&downloadLink=${encodeURIComponent(pdfLink)}&mobile1=${encodeURIComponent(mob1)}&mobile2=${encodeURIComponent(mob2)}`;
+      const formData = new FormData();
+      formData.append('action', 'adminUpdateQuotation');
+      formData.append('rowId', rowId);
+      formData.append('paymentStatus', document.getElementById('editPaymentStatus').value);
+      formData.append('policyNumber', document.getElementById('editPolicyNumber').value || 'Under Process');
+      formData.append('downloadLink', document.getElementById('editDownloadLink').value);
+      formData.append('renewedPolicyNumber', document.getElementById('editRenewedPolicyNumber').value);
+      formData.append('renewalRequest', document.getElementById('editRenewalRequest').value);
+      formData.append('renewedDownloadLink', document.getElementById('editRenewedDownloadLink').value);
 
-      fetch(targetUrl)
-        .then(r => r.json())
-        .then(res => {
-          if (res && res.status === "success") {
-            closeEditModal();
-            showToast("Main Sheet me record update ho gaya!");
-            fetchAllQuotations();
-          } else {
-            alert("Error: " + (res.message || "Update fail hua."));
-          }
-        })
-        .catch(err => alert("Network error! Sheet sync fail."))
-        .finally(() => {
-          btn.disabled = false;
-          btn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i><span>Update Record</span>`;
-        });
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      })
+      .then(() => {
+        showToast('Google Sheet me update safal raha!');
+        closeEditModal();
+        setTimeout(fetchAdminData, 1200);
+      })
+      .catch(() => {
+        showToast('Update error!');
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Google Sheet Me Update Karein</span>';
+      });
     }
 
     function showToast(msg) {
-      const toast = document.getElementById('adminToast');
-      document.getElementById('toastMsg').innerText = msg;
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastMessage').innerText = msg;
       toast.classList.remove('hidden');
-      setTimeout(() => toast.classList.add('hidden'), 3500);
+      setTimeout(() => toast.classList.add('hidden'), 4000);
     }
+
+    window.addEventListener('DOMContentLoaded', checkAdminSession);
   </script>
 </body>
 </html>
