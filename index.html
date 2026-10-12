@@ -2582,6 +2582,7 @@
             <div style="text-align: right;">
               <span style="background: #be123c; color: white; font-weight: 900; font-size: 9px; padding: 3px 6px; border-radius: 4px; display: inline-block;">HEALTH QUOTATION</span>
               <p style="font-size: 9.5px; font-weight: bold; margin: 2px 0 0 0;">Agent: Manoher Singh (8440096343)[cite: 1]</p>
+<p id="healthPrintPdfQuoteNo" style="font-size: 10px; font-weight: 900; color: #002B49; font-family: monospace; margin: 2px 0 0 0; display: ${window.activeSavedQuoteNo ? 'block' : 'none'};">Quote No: ${window.activeSavedQuoteNo || ''}</p>
               <p style="font-size: 8.5px; color: #64748b; margin: 1px 0 0 0;">Date: ${dateStr}</p>
             </div>
           </div>
@@ -3236,7 +3237,50 @@ function triggerQuickHealthSave(companyName, plan, prem, si) {
     function closeSaveQuotationModal() {
       document.getElementById('saveQuotationModal').classList.add('hidden');
     }
+function printFinalSavedQuotation() {
+  closeSaveQuotationModal();
 
+  // Active saved quotation number ko sabhi print headers me set karein
+  const qNo = window.activeSavedQuoteNo || "KDS-RECORD";
+  
+  const hQuote = document.getElementById('healthPrintPdfQuoteNo');
+  if (hQuote) {
+    hQuote.innerText = 'Quote No: ' + qNo;
+    hQuote.style.display = 'block';
+  }
+
+  const lQuote = document.getElementById('licPrintPdfQuoteNo');
+  if (lQuote) {
+    lQuote.innerText = 'Quote No: ' + qNo;
+    lQuote.style.display = 'block';
+  }
+
+  const mQuote = document.getElementById('motorPrintPdfQuoteNo');
+  if (mQuote) {
+    mQuote.innerText = 'Quote No: ' + qNo;
+    mQuote.style.display = 'block';
+  }
+
+  // Active category ke hisab se preview modal open karein
+  const motorPage = document.getElementById('motorInsurancePage');
+  const healthPage = document.getElementById('healthInsurancePage');
+
+  if (motorPage && !motorPage.classList.contains('hidden')) {
+    const gModal = document.getElementById('generalQuotationModal');
+    if (gModal) gModal.classList.remove('hidden');
+  } else if (healthPage && !healthPage.classList.contains('hidden')) {
+    const hModal = document.getElementById('healthQuotationModal');
+    if (hModal) hModal.classList.remove('hidden');
+  } else {
+    const qModal = document.getElementById('quotationModal');
+    if (qModal) qModal.classList.remove('hidden');
+  }
+
+  // Print dialog trigger karein
+  setTimeout(() => {
+    window.print();
+  }, 350);
+}
     function openDashboardModal() {
       if (!currentLoggedInUser) {
         openAuthModal();
