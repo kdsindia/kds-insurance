@@ -3066,55 +3066,6 @@
   document.getElementById('saveQuotationModal').classList.remove('hidden');
 }
 
-  // Current scheme ka identifier check karein
-  const currentPlanIdentifier = activeQuotationData 
-    ? ((activeQuotationData.scheme && activeQuotationData.scheme.name) ? activeQuotationData.scheme.name : activeQuotationData.scheme)
-    : "";
-
-  // AGAR YAHI SCHEME PEHLE HI SAVE HO CHUKI HAI TO DUSRI BAAR SAVE NA HONE DEIN
-  if (window.lastSavedPlanIdentifier && window.lastSavedPlanIdentifier === currentPlanIdentifier && window.activeSavedQuoteNo) {
-    showToast('Ye Quotation (' + window.activeSavedQuoteNo + ') pehle hi save ho chuka hai!');
-    // Result box dikhayein taaki customer direct print kar sake
-    const qBox = document.getElementById('saveQuoteResultBox');
-    const quoteNoElem = document.getElementById('displaySavedQuoteNo');
-    const saveBtn = document.getElementById('btnConfirmSavePolicy');
-    if (quoteNoElem) quoteNoElem.innerText = window.activeSavedQuoteNo;
-    if (qBox) qBox.style.display = 'block';
-    if (saveBtn) saveBtn.style.display = 'none';
-    document.getElementById('saveQuotationModal').classList.remove('hidden');
-    return;
-  }
-
-  // NAYI SCHEME AANE PAR (JAISI 721 KE BAAD 745): Save button ko fresh dikhayein
-  const saveBtn = document.getElementById('btnConfirmSavePolicy');
-  const resBox = document.getElementById('saveQuoteResultBox');
-  if (saveBtn) {
-    saveBtn.style.display = 'flex';
-    saveBtn.disabled = false;
-    saveBtn.innerText = 'Confirm & Save Quotation';
-  }
-  if (resBox) {
-    resBox.style.display = 'none';
-  }
-
-  const vBox = document.getElementById('vehicleDetailBox');
-  if (activeQuotationData && activeQuotationData.insuranceCategory === "MOTOR") {
-    if (vBox) vBox.classList.remove('hidden');
-  } else {
-    if (vBox) vBox.classList.add('hidden');
-  }
-
-  if (activeQuotationData) {
-    const pName = (activeQuotationData.scheme && activeQuotationData.scheme.name) 
-      ? activeQuotationData.scheme.name 
-      : (activeQuotationData.scheme || "Custom Plan");
-    document.getElementById('saveAutoPlanName').innerText = pName;
-    document.getElementById('saveAutoTermPpt').innerText = `${activeQuotationData.term || 1} Yrs / Pay ${activeQuotationData.ppt || 1} Yrs`;
-    document.getElementById('saveAutoPremium').innerText = `₹ ${(activeQuotationData.annualBudget || 0).toLocaleString('en-IN')}/Yr`;
-  }
-  document.getElementById('saveQuotationModal').classList.remove('hidden');
-}
-
 function triggerQuickCardSave(schemeId) {
   const scheme = officialLifeSchemes.find(s => s.id === schemeId);
   if (!scheme) return;
@@ -3255,7 +3206,8 @@ function handleSaveQuotationSubmit(e) {
   if (insCategory === "MOTOR" && vehicleNo) {
     pName = pName + " | RC/Reg: " + vehicleNo.toUpperCase();
   }
-
+const cleanSchemeName = pName.split('|')[0].trim();
+  const savedKey = 'kds_saved_' + (currentLoggedInUser.email || '') + '_' + cleanSchemeName;
   const generatedQuoteNo = "KDS-" + Math.floor(10000000 + Math.random() * 90000000);
   window.activeSavedQuoteNo = generatedQuoteNo;
   // Unique lock lagao is email + scheme ke liye
