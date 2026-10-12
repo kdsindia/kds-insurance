@@ -3008,6 +3008,64 @@
     return;
   }
 
+  // Scheme ka pure core name nikaalein (comparison ke liye)
+  let cleanSchemeName = "";
+  if (activeQuotationData) {
+    if (activeQuotationData.scheme && activeQuotationData.scheme.name) {
+      cleanSchemeName = activeQuotationData.scheme.name.split('|')[0].trim();
+    } else if (typeof activeQuotationData.scheme === 'string') {
+      cleanSchemeName = activeQuotationData.scheme.split('|')[0].trim();
+    }
+  }
+
+  // Check karein kya ye scheme is user ke liye already saved hai
+  const savedKey = 'kds_saved_' + (currentLoggedInUser.email || '') + '_' + cleanSchemeName;
+  const existingQuoteNo = localStorage.getItem(savedKey);
+
+  if (existingQuoteNo) {
+    showToast('Yeh scheme pehle hi save ho chuki hai! (Quote No: ' + existingQuoteNo + ')');
+    
+    // Result box dikhayein taaki customer dubara save na kare balki print kar sake
+    const qBox = document.getElementById('saveQuoteResultBox');
+    const quoteNoElem = document.getElementById('displaySavedQuoteNo');
+    const saveBtn = document.getElementById('btnConfirmSavePolicy');
+    if (quoteNoElem) quoteNoElem.innerText = existingQuoteNo;
+    if (qBox) qBox.style.display = 'block';
+    if (saveBtn) saveBtn.style.display = 'none';
+    document.getElementById('saveQuotationModal').classList.remove('hidden');
+    return;
+  }
+
+  // Nayi scheme aane par: Fresh form aur save button ready karein
+  const saveBtn = document.getElementById('btnConfirmSavePolicy');
+  const resBox = document.getElementById('saveQuoteResultBox');
+  if (saveBtn) {
+    saveBtn.style.display = 'flex';
+    saveBtn.disabled = false;
+    saveBtn.innerText = 'Confirm & Save Quotation';
+  }
+  if (resBox) {
+    resBox.style.display = 'none';
+  }
+
+  const vBox = document.getElementById('vehicleDetailBox');
+  if (activeQuotationData && activeQuotationData.insuranceCategory === "MOTOR") {
+    if (vBox) vBox.classList.remove('hidden');
+  } else {
+    if (vBox) vBox.classList.add('hidden');
+  }
+
+  if (activeQuotationData) {
+    const pName = (activeQuotationData.scheme && activeQuotationData.scheme.name) 
+      ? activeQuotationData.scheme.name 
+      : (activeQuotationData.scheme || "Custom Plan");
+    document.getElementById('saveAutoPlanName').innerText = pName;
+    document.getElementById('saveAutoTermPpt').innerText = `${activeQuotationData.term || 1} Yrs / Pay ${activeQuotationData.ppt || 1} Yrs`;
+    document.getElementById('saveAutoPremium').innerText = `₹ ${(activeQuotationData.annualBudget || 0).toLocaleString('en-IN')}/Yr`;
+  }
+  document.getElementById('saveQuotationModal').classList.remove('hidden');
+}
+
   // Current scheme ka identifier check karein
   const currentPlanIdentifier = activeQuotationData 
     ? ((activeQuotationData.scheme && activeQuotationData.scheme.name) ? activeQuotationData.scheme.name : activeQuotationData.scheme)
@@ -3134,6 +3192,127 @@ function handleSaveQuotationSubmit(e) {
     openAuthModal();
     return;
   }
+
+  let pName = "Insurance Plan";
+  let pPrem = 0;
+  let pTerm = 1;
+  let pPpt = 1;
+  let pSum = 0;
+
+  if (activeQuotationData) {
+    pName = (activeQuotationData.scheme && activeQuotationData.scheme.name) 
+      ? activeQuotationData.scheme.name 
+      : (activeQuotationData.scheme || "Insurance Plan");
+    pPrem = activeQuotationData.annualBudget || 0;
+    pTerm = activeQuotationData.term || 1;
+    pPpt = activeQuotationData.ppt || 1;
+    pSum = activeQuotationData.sumAssured || 0;
+  }
+
+  // Scheme ka pure base name nikaalo
+  const cleanSchemeName = pName.split('|')[0].trim();
+  const savedKey = 'kds_saved_' + (currentLoggedInUser.email || '') + '_' + cleanSchemeName;
+
+  // HARD STOP: Agar pehle se save hai to Sheet me call bilkul na bhejein
+  if (localStorage.getItem(savedKey)) {
+    const alreadySavedNo = localStorage.getItem(savedKey);
+    showToast('Yeh scheme pehle hi save ho chuki hai! (Quote No: ' + alreadySavedNo + ')');
+    const btn = document.getElementById('btnConfirmSavePolicy');
+    if (btn) btn.style.display = 'none';
+    const resBox = document.getElementById('saveQuoteResultBox');
+    const quoteNoElem = document.getElementById('displaySavedQuoteNo');
+    if (quoteNoElem) quoteNoElem.innerText = alreadySavedNo;
+    if (resBox) resBox.style.display = 'block';
+    return;
+  }
+
+  const holderName = document.getElementById('saveHolderName').value.trim();
+  const holderPhone = document.getElementById('saveHolderPhone').value.trim();
+  const holderAddress = document.getElementById('saveHolderAddress').value.trim();
+  const vehicleNo = document.getElementById('saveVehicleNumber') ? document.getElementById('saveVehicleNumber').value.trim() : "";
+  const btn = document.getElementById('btnConfirmSavePolicy');
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerText = 'Sheet me save ho raha hai...';
+  }
+
+  let insCategory = "LIC";
+  if (activeQuotationData && activeQuotationData.insuranceCategory) {
+    insCategory = activeQuotationData.insuranceCategory;
+  } else {
+    const motorDiv = document.getElementById('motorInsurancePage');
+    const healthDiv = document.getElementById('healthInsurancePage');
+    if (motorDiv && !motorDiv.classList.contains('hidden')) {
+      insCategory = "MOTOR";
+    } else if (healthDiv && !healthDiv.classList.contains('hidden')) {
+      insCategory = "HEALTH";
+    } else if (typeof currentLifeTab !== 'undefined' && currentLifeTab === 'csc') {
+      insCategory = "CSC";
+    }
+  }
+
+  if (insCategory === "MOTOR" && vehicleNo) {
+    pName = pName + " | RC/Reg: " + vehicleNo.toUpperCase();
+  }
+
+  const generatedQuoteNo = "KDS-" + Math.floor(10000000 + Math.random() * 90000000);
+  window.activeSavedQuoteNo = generatedQuoteNo;
+  // Unique lock lagao is email + scheme ke liye
+  localStorage.setItem(savedKey, generatedQuoteNo);
+
+  const formData = new FormData();
+  formData.append("action", "saveQuotation");
+  formData.append("userEmail", currentLoggedInUser.email || "");
+  formData.append("userName", currentLoggedInUser.name || "");
+  formData.append("holderName", holderName);
+  formData.append("holderPhone", holderPhone);
+  formData.append("address", holderAddress);
+  formData.append("insuranceType", insCategory);
+  formData.append("planName", pName);
+  formData.append("premium", pPrem);
+  formData.append("term", pTerm);
+  formData.append("ppt", pPpt);
+  formData.append("sumAssured", pSum);
+  formData.append("mobile1", currentLoggedInUser.mobile || holderPhone);
+  formData.append("altMobile", currentLoggedInUser.altMobile || "");
+  formData.append("quotationNumber", generatedQuoteNo);
+
+  fetch(GOOGLE_SHEET_API_URL, {
+    method: "POST",
+    mode: "no-cors",
+    body: formData
+  })
+  .then(() => {
+    if (btn) {
+      btn.style.display = 'none';
+    }
+
+    const resBox = document.getElementById('saveQuoteResultBox');
+    const quoteNoElem = document.getElementById('displaySavedQuoteNo');
+    if (quoteNoElem) {
+      quoteNoElem.innerText = generatedQuoteNo;
+    }
+    if (resBox) {
+      resBox.style.display = 'block';
+    }
+
+    showToast('Quotation No: ' + generatedQuoteNo + ' Safalta se save ho gaya!');
+
+    setTimeout(() => {
+      if (typeof fetchUserQuotationsFromSheet === 'function' && currentLoggedInUser) {
+        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+      }
+    }, 1000);
+  })
+  .catch(err => {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerText = 'Confirm & Save Quotation';
+    }
+    showToast('Error: Sheet sync nahi hui!');
+  });
+}
 
   const holderName = document.getElementById('saveHolderName').value.trim();
   const holderPhone = document.getElementById('saveHolderPhone').value.trim();
