@@ -165,7 +165,7 @@
         font-size: 10px !important;
       }
 
-      body > *:not(#quotationModal:not(.hidden)):not(#generalQuotationModal:not(.hidden)):not(#healthQuotationModal:not(.hidden)) {
+      body > *:not(#quotationModal):not(#generalQuotationModal):not(#healthQuotationModal) {
         display: none !important;
       }
 
@@ -2192,6 +2192,7 @@
               </span>
               <p style="font-size: 10px; font-weight: 800; color: #002B49; margin: 3px 0 0 0;">Agent: MANOHER SINGH[cite: 1]</p>
               <p style="font-size: 10px; font-weight: 800; color: #00558F; margin: 1px 0 0 0;">Mo: 8440096343[cite: 1]</p>
+              <p id="licPrintPdfQuoteNo" style="font-size: 10px; font-weight: 900; color: #002B49; font-family: monospace; margin: 2px 0 0 0; display: ${window.activeSavedQuoteNo ? 'block' : 'none'};">Quote No: ${window.activeSavedQuoteNo || ''}</p>
               <p style="font-size: 8.5px; color: #64748b; margin: 1px 0 0 0;">Date: ${dateStr}</p>
             </div>
           </div>
@@ -3238,48 +3239,59 @@ function triggerQuickHealthSave(companyName, plan, prem, si) {
       document.getElementById('saveQuotationModal').classList.add('hidden');
     }
 function printFinalSavedQuotation() {
+  const qNo = window.activeSavedQuoteNo || "KDS-RECORD";
   closeSaveQuotationModal();
 
-  // Active saved quotation number ko sabhi print headers me set karein
-  const qNo = window.activeSavedQuoteNo || "KDS-RECORD";
-  
-  const hQuote = document.getElementById('healthPrintPdfQuoteNo');
-  if (hQuote) {
-    hQuote.innerText = 'Quote No: ' + qNo;
-    hQuote.style.display = 'block';
-  }
-
-  const lQuote = document.getElementById('licPrintPdfQuoteNo');
-  if (lQuote) {
-    lQuote.innerText = 'Quote No: ' + qNo;
-    lQuote.style.display = 'block';
-  }
-
-  const mQuote = document.getElementById('motorPrintPdfQuoteNo');
-  if (mQuote) {
-    mQuote.innerText = 'Quote No: ' + qNo;
-    mQuote.style.display = 'block';
-  }
-
-  // Active category ke hisab se preview modal open karein
   const motorPage = document.getElementById('motorInsurancePage');
   const healthPage = document.getElementById('healthInsurancePage');
 
   if (motorPage && !motorPage.classList.contains('hidden')) {
+    // 1. Motor Insurance Case
+    const mBox = document.getElementById('generalPrintableTarget');
+    if (mBox && (!mBox.innerHTML || mBox.innerHTML.trim() === '')) {
+      const q = (activeQuotationData && activeQuotationData.scheme) ? activeQuotationData.scheme : null;
+      openMotorQuotationModal("Motor Policy", activeQuotationData ? activeQuotationData.annualBudget : 0, activeQuotationData ? activeQuotationData.sumAssured : 0, 0, 0, 0, 0, 0);
+    }
+    const mQuote = document.getElementById('motorPrintPdfQuoteNo');
+    if (mQuote) {
+      mQuote.innerText = 'Quote No: ' + qNo;
+      mQuote.style.display = 'block';
+    }
     const gModal = document.getElementById('generalQuotationModal');
     if (gModal) gModal.classList.remove('hidden');
+
   } else if (healthPage && !healthPage.classList.contains('hidden')) {
+    // 2. Health Insurance Case
+    const hBox = document.getElementById('healthPrintableTarget');
+    if (hBox && (!hBox.innerHTML || hBox.innerHTML.trim() === '')) {
+      openHealthQuotationModal("Health Policy", "Mediclaim", activeQuotationData ? activeQuotationData.annualBudget : 0, activeQuotationData ? activeQuotationData.sumAssured : 1000000, "Family", 40, 1);
+    }
+    const hQuote = document.getElementById('healthPrintPdfQuoteNo');
+    if (hQuote) {
+      hQuote.innerText = 'Quote No: ' + qNo;
+      hQuote.style.display = 'block';
+    }
     const hModal = document.getElementById('healthQuotationModal');
     if (hModal) hModal.classList.remove('hidden');
+
   } else {
+    // 3. Life (LIC / CSC) Case
+    if (typeof renderQuotationContent === 'function') {
+      renderQuotationContent();
+    }
+    const lQuote = document.getElementById('licPrintPdfQuoteNo');
+    if (lQuote) {
+      lQuote.innerText = 'Quote No: ' + qNo;
+      lQuote.style.display = 'block';
+    }
     const qModal = document.getElementById('quotationModal');
     if (qModal) qModal.classList.remove('hidden');
   }
 
-  // Print dialog trigger karein
+  // Content render hone ke baad print dialogue kholna
   setTimeout(() => {
     window.print();
-  }, 350);
+  }, 500);
 }
     function openDashboardModal() {
       if (!currentLoggedInUser) {
