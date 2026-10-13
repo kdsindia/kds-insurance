@@ -386,10 +386,6 @@
             <i class="fa-solid fa-user-circle text-xs sm:text-base"></i>
             <span id="authBtnLabel" class="max-w-[95px] sm:max-w-none truncate">Login</span>
           </button>
-
-          <button onclick="openSiteLanguageModal()" class="bg-slate-100 hover:bg-slate-200 text-brand-navy font-bold px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl text-xs transition flex items-center gap-1 border border-slate-200 shadow-sm" title="Change Language">
-            <i class="fa-solid fa-language text-brand-lightBlue text-xs sm:text-sm"></i>
-          </button>
         </div>
       </div>
 
@@ -2713,15 +2709,29 @@
     }
 
     function updateAuthNavUI() {
-      const lbl = document.getElementById('authBtnLabel');
-      if (currentLoggedInUser) {
-        lbl.innerText = `${currentLoggedInUser.name} (Dashboard)`;
-        const badge = document.getElementById('dashboardUserBadge');
+    const btn = document.getElementById('authBtn');
+    const lbl = document.getElementById('authBtnLabel');
+    const badge = document.getElementById('dashboardUserBadge');
+    
+    if (currentLoggedInUser) {
         if (badge) badge.innerText = currentLoggedInUser.name;
-      } else {
-        lbl.innerText = 'Login / Sign Up';
-      }
+        
+        // Agar photo hai to photo dikhao, nahi to avatar icon
+        const photo = currentLoggedInUser.picture;
+        if (photo) {
+            btn.innerHTML = `<img src="${photo}" alt="Profile" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover shadow border border-white/40" title="${currentLoggedInUser.name}" />`;
+        } else {
+            btn.innerHTML = `<i class="fa-solid fa-circle-user text-lg sm:text-xl"></i>`;
+        }
+        btn.classList.add('!p-1', '!rounded-full');
+    } else {
+        btn.classList.remove('!p-1', '!rounded-full');
+        btn.innerHTML = `
+            <i class="fa-solid fa-user-circle text-xs sm:text-base"></i>
+            <span id="authBtnLabel" class="max-w-[95px] sm:max-w-none truncate">Login</span>
+        `;
     }
+}
 
     function handleAuthButtonClick() {
       if (currentLoggedInUser) {
