@@ -17,7 +17,7 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- Claim Support Page -->
+  <!-- Claim Support (Life, Motor & Health) -->
   <url>
     <loc>https://www.kdsinsurance.in/claim.html</loc>
     <lastmod>2026-10-13</lastmod>
@@ -25,7 +25,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- About Us -->
+  <!-- About Us (Services, Office & Contact) -->
   <url>
     <loc>https://www.kdsinsurance.in/about.html</loc>
     <lastmod>2026-10-13</lastmod>
@@ -33,9 +33,25 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Privacy Policy (AdSense & Compliance) -->
+  <!-- Privacy Policy -->
   <url>
     <loc>https://www.kdsinsurance.in/privacy.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Terms & Conditions -->
+  <url>
+    <loc>https://www.kdsinsurance.in/terms.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Legal & Regulatory Disclaimer -->
+  <url>
+    <loc>https://www.kdsinsurance.in/disclaimer.html</loc>
     <lastmod>2026-10-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
