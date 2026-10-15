@@ -323,93 +323,99 @@
     </div>
   </div>
 
-  <!-- Main Navbar (Fixed Left-Padding & Mobile Buttons Overflow) -->
+<!-- Main Responsive Navbar (Zero Overflow & Mobile Adaptive) -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+    <div class="max-w-7xl mx-auto px-2 sm:px-4">
       
-      <div class="flex justify-between items-center min-h-[4rem] sm:min-h-[5rem] py-1.5 gap-2">
-        <!-- Logo Section (Extra Left Space Removed) -->
-        <a href="javascript:void(0)" onclick="switchMainTab('lic')" class="flex items-center gap-2 py-1 shrink-0 group">
-          <img src="logo.png" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" class="h-9 sm:h-12 w-auto max-w-[130px] sm:max-w-[170px] object-contain rounded-lg" alt="KDS INSURANCE" />
-          <div id="logoFallback" class="hidden items-center gap-2">
-            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-brand-navy flex items-center justify-center text-brand-gold font-black text-base sm:text-xl">KDS</div>
+      <div class="flex justify-between items-center min-h-[3.75rem] sm:min-h-[4.25rem] py-1 gap-1 sm:gap-2">
+        <!-- Logo Section -->
+        <a href="javascript:void(0)" onclick="switchMainTab('lic')" class="flex items-center gap-1.5 shrink-0">
+          <img src="logo.png" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" class="h-8 sm:h-10 w-auto max-w-[110px] sm:max-w-[140px] object-contain rounded-lg" alt="KDS INSURANCE" />
+          <div id="logoFallback" class="hidden items-center gap-1.5">
+            <div class="w-8 h-8 rounded-xl bg-brand-navy flex items-center justify-center text-brand-gold font-black text-sm">KDS</div>
             <div>
-              <span class="text-sm sm:text-lg font-black text-brand-navy leading-none block">KDS <span class="text-brand-gold">INSURANCE</span></span>
-              <p class="text-[9px] sm:text-[10px] text-slate-500 font-bold mt-0.5">Manoher Singh • Malwara</p>
+              <span class="text-xs sm:text-sm font-black text-brand-navy leading-none block">KDS <span class="text-brand-gold">INSURANCE</span></span>
+              <p class="text-[8px] text-slate-500 font-bold">Manoher Singh</p>
             </div>
           </div>
         </a>
 
-        <!-- Desktop Tab Switcher -->
-        <div class="hidden lg:flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shrink-0">
-          <button id="navTabLic" onclick="switchMainTab('lic')" class="px-3 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm">
-            <i class="fa-solid fa-shield-halved text-brand-gold"></i><span>Life (LIC)</span>
+        <!-- Desktop 5 Services Tab Bar (Compact & Sleek) -->
+        <div class="hidden xl:flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200 shrink-0 text-[11px] font-bold">
+          <button id="navTabLic" onclick="switchMainTab('lic')" class="px-2.5 py-1.5 rounded-xl transition flex items-center gap-1 bg-brand-navy text-white shadow-xs font-black">
+            <i class="fa-solid fa-shield-halved text-brand-gold"></i><span>LIC</span>
           </button>
-          <button id="navTabCsc" onclick="switchMainTab('csc')" class="px-3 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-amber-700 transition flex items-center gap-1.5">
-            <i class="fa-solid fa-building-columns text-amber-600"></i><span>Life (CSC/Other)</span>
+          <button id="navTabCsc" onclick="switchMainTab('csc')" class="px-2.5 py-1.5 rounded-xl text-slate-700 hover:text-amber-700 transition flex items-center gap-1">
+            <i class="fa-solid fa-building-columns text-amber-600"></i><span>CSC Life</span>
           </button>
-          <button id="navTabMotor" onclick="switchMainTab('motor')" class="px-3 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-emerald-700 transition flex items-center gap-1.5">
-            <i class="fa-solid fa-car text-emerald-600"></i> <span>Motor</span>
+          <button id="navTabMotor" onclick="switchMainTab('motor')" class="px-2.5 py-1.5 rounded-xl text-slate-700 hover:text-emerald-700 transition flex items-center gap-1">
+            <i class="fa-solid fa-car-burst text-emerald-600"></i><span>Motor</span>
           </button>
-          <button id="navTabHealth" onclick="switchMainTab('health')" class="px-3 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-rose-700 transition flex items-center gap-1.5">
+          <button id="navTabHealth" onclick="switchMainTab('health')" class="px-2.5 py-1.5 rounded-xl text-slate-700 hover:text-rose-700 transition flex items-center gap-1">
             <i class="fa-solid fa-heart-pulse text-rose-600"></i><span>Health</span>
+          </button>
+          <button id="navTabMisc" onclick="switchMainTab('misc')" class="px-2.5 py-1.5 rounded-xl text-slate-700 hover:text-amber-900 transition flex items-center gap-1">
+            <i class="fa-solid fa-cow text-amber-600"></i><span>Misc. (पशु/दुकान)</span>
           </button>
         </div>
 
-        <!-- Right Side Action Buttons (Mobile-Adaptive, Claim Added) -->
-        <div class="flex items-center gap-1 sm:gap-2 shrink-0 flex-wrap justify-end">
-          
-          <!-- NEW CLAIM BUTTON IN HEADER -->
-          <a href="https://kdsinsurance.in/claim" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl text-[11px] sm:text-sm transition flex items-center gap-1 sm:gap-1.5 shadow-sm">
+        <!-- Right Side Buttons (Never Overflows, Login Always Visible) -->
+        <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
+          <a href="https://kdsinsurance.in/claim" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl text-[10.5px] sm:text-xs transition flex items-center gap-1 shadow-xs">
             <i class="fa-solid fa-shield-halved text-amber-300"></i>
             <span>Claim</span>
           </a>
 
-          <a href="premium-check.html" class="bg-amber-100 hover:bg-amber-200 text-amber-950 font-black px-2 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl text-[11px] sm:text-sm transition flex items-center gap-1 shadow-sm border border-amber-300">
+          <a href="premium-check.html" class="bg-amber-100 hover:bg-amber-200 text-amber-950 font-black px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl text-[10.5px] sm:text-xs transition flex items-center gap-1 border border-amber-300 shadow-xs">
             <i class="fa-solid fa-receipt text-amber-600"></i>
-            <span class="hidden md:inline">Check Premium Due</span>
-            <span class="md:hidden">Pay Premium</span>
+            <span class="hidden sm:inline">Due Check</span>
+            <span class="sm:hidden">Due</span>
           </a>
 
-          <a href="about.html" class="hidden xl:inline-flex bg-white hover:bg-slate-100 text-brand-navy border border-slate-200 font-bold px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm transition items-center gap-1.5 shadow-sm">
+          <a href="about.html" class="hidden 2xl:inline-flex bg-white hover:bg-slate-100 text-brand-navy border border-slate-200 font-bold px-2.5 py-2 rounded-xl text-xs transition items-center gap-1 shadow-xs">
             <i class="fa-solid fa-user-tie text-brand-gold"></i>
-            <span>About Us</span>
+            <span>About</span>
           </a>
 
-          <button onclick="openLeadModal()" class="hidden sm:inline-flex bg-brand-navy hover:bg-brand-lightBlue text-white font-bold px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl text-[11px] sm:text-sm transition items-center gap-1 shadow-sm">
+          <button onclick="openLeadModal()" class="hidden md:inline-flex bg-brand-navy hover:bg-brand-lightBlue text-white font-bold px-2.5 py-2 rounded-xl text-xs transition items-center gap-1 shadow-xs">
             <i class="fa-solid fa-headset text-brand-gold"></i>
             <span>Callback</span>
           </button>
 
-          <!-- Login / Dashboard Button (Never hides on mobile) -->
-          <button id="authBtn" onclick="handleAuthButtonClick()" class="bg-brand-gold hover:bg-amber-400 text-brand-dark font-black px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl text-[11px] sm:text-sm transition flex items-center gap-1 sm:gap-1.5 shadow-sm shrink-0">
-            <i class="fa-solid fa-user-circle text-xs sm:text-base"></i>
-            <span id="authBtnLabel" class="max-w-[95px] sm:max-w-none truncate">Login</span>
+          <!-- Login / Dashboard Button (Always On Screen) -->
+          <button id="authBtn" onclick="handleAuthButtonClick()" class="bg-brand-gold hover:bg-amber-400 text-brand-dark font-black px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-[11px] sm:text-xs transition flex items-center gap-1 shadow-xs shrink-0">
+            <i class="fa-solid fa-user-circle"></i>
+            <span id="authBtnLabel">Login</span>
           </button>
         </div>
       </div>
 
-      <!-- Mobile Dedicated 4-Grid App Bar -->
-      <div class="lg:hidden pb-2 pt-0.5">
-        <div class="grid grid-cols-4 gap-1.5 bg-slate-100 p-1 rounded-2xl border border-slate-200">
-          <button id="mobileNavLic" onclick="switchMainTab('lic')" class="py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-brand-navy text-white shadow-xs">
-            <i class="fa-solid fa-shield-halved text-brand-gold text-xs"></i>
-            <span>Life (LIC)</span>
+      <!-- Dedicated 5-Grid Sub Bar for Laptops & Mobiles (Screen Fit Guarantee) -->
+      <div class="xl:hidden pb-2 pt-0.5">
+        <div class="grid grid-cols-5 gap-1 bg-slate-100 p-1 rounded-2xl border border-slate-200">
+          <button id="mobileNavLic" onclick="switchMainTab('lic')" class="py-1.5 rounded-xl text-[10px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-brand-navy text-white">
+            <i class="fa-solid fa-shield-halved text-brand-gold text-[11px]"></i>
+            <span>LIC</span>
           </button>
-          <button id="mobileNavCsc" onclick="switchMainTab('csc')" class="py-2 rounded-xl text-[11px] font-bold text-slate-700 hover:text-amber-700 transition flex flex-col items-center justify-center gap-0.5">
-            <i class="fa-solid fa-building-columns text-amber-600 text-xs"></i>
-            <span>Life (CSC)</span>
+          <button id="mobileNavCsc" onclick="switchMainTab('csc')" class="py-1.5 rounded-xl text-[10px] font-bold text-slate-700 transition flex flex-col items-center justify-center gap-0.5">
+            <i class="fa-solid fa-building-columns text-amber-600 text-[11px]"></i>
+            <span>CSC</span>
           </button>
-          <button id="mobileNavMotor" onclick="switchMainTab('motor')" class="py-2 rounded-xl text-[11px] font-bold text-slate-700 hover:text-emerald-700 transition flex flex-col items-center justify-center gap-0.5">
-            <i class="fa-solid fa-car-burst text-emerald-600 text-xs"></i>
+          <button id="mobileNavMotor" onclick="switchMainTab('motor')" class="py-1.5 rounded-xl text-[10px] font-bold text-slate-700 transition flex flex-col items-center justify-center gap-0.5">
+            <i class="fa-solid fa-car-burst text-emerald-600 text-[11px]"></i>
             <span>Motor</span>
           </button>
-          <button id="mobileNavHealth" onclick="switchMainTab('health')" class="py-2 rounded-xl text-[11px] font-bold text-slate-700 hover:text-rose-700 transition flex flex-col items-center justify-center gap-0.5">
-            <i class="fa-solid fa-heart-pulse text-rose-600 text-xs"></i>
+          <button id="mobileNavHealth" onclick="switchMainTab('health')" class="py-1.5 rounded-xl text-[10px] font-bold text-slate-700 transition flex flex-col items-center justify-center gap-0.5">
+            <i class="fa-solid fa-heart-pulse text-rose-600 text-[11px]"></i>
             <span>Health</span>
+          </button>
+          <button id="mobileNavMisc" onclick="switchMainTab('misc')" class="py-1.5 rounded-xl text-[10px] font-bold text-slate-700 transition flex flex-col items-center justify-center gap-0.5">
+            <i class="fa-solid fa-cow text-amber-700 text-[11px]"></i>
+            <span>Misc.</span>
           </button>
         </div>
       </div>
+
     </div>
   </header>
 
@@ -523,11 +529,19 @@
             <div id="companySelectContainer" class="hidden">
               <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">बीमा कंपनी / Insurer Company</label>
               <select id="calcCompany" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-bold text-slate-800" onchange="applyPolicyFilters()">
-                <option value="all">🌟 सभी पार्टनर्स / All CSC Partners</option>
+                <option value="all">🌟 सभी पार्टनर्स / All Partners</option>
                 <option value="IndiaFirst">🇮🇳 इंडियाफर्स्ट / IndiaFirst Life</option>
                 <option value="SBI Life">🏦 एसबीआई लाइफ / SBI Life</option>
                 <option value="Shriram Life">🚚 श्रीराम लाइफ / Shriram Life</option>
-              </select>
+                <option value="HDFC Life">🏢 एचडीएफसी लाइफ / HDFC Life</option>
+                <option value="ICICI Pru">🛡️ आईसीआईसीआई प्रू / ICICI Prudential</option>
+                <option value="Max Life">🌟 मैक्स लाइफ / Max Life</option>
+                <option value="Tata AIA">🤝 टाटा एआईए / Tata AIA Life</option>
+                <option value="Bajaj Allianz Life">⚡ बजाज आलियांज / Bajaj Allianz Life</option>
+                <option value="Kotak Life">🏛️ कोटक लाइफ / Kotak Mahindra Life</option>
+                <option value="PNB MetLife">🌲 पीएनबी मेटलाइफ / PNB MetLife</option>
+                <option value="Aditya Birla">☀️ आदित्य बिड़ला सन लाइफ / ABSLI</option>
+</select>
             </div>
 
             <div>
@@ -954,6 +968,213 @@
     </main>
   </div>
 
+<!-- MISC. INSURANCE SECTION WITH LIVE SCHEME CHART & QUOTATIONS -->
+  <div id="miscInsurancePage" class="hidden space-y-8 max-w-7xl mx-auto px-4 py-8">
+    <div class="bg-gradient-to-r from-amber-900 via-amber-950 to-slate-950 text-white p-6 rounded-3xl shadow-lg border border-amber-800">
+      <div class="flex items-center gap-2 text-xs font-black text-amber-300 uppercase tracking-wider">
+        <i class="fa-solid fa-shapes"></i> CSC Non-Motor Property & Livestock Portfolio
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-black mt-1">पशु, दुकान एवं विविध बीमा (Misc. Insurance)</h2>
+      <p class="text-xs text-amber-200 mt-1">Official CSC Govt Tariff Schemes: Fire, Stock, Cattle & Farmer Package</p>
+    </div>
+
+    <!-- Live Schemes Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Scheme 1: Universal Sompo Cattle Insurance -->
+      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-lg font-black font-mono">C</span>
+            <span class="text-[10px] font-black uppercase bg-amber-50 text-amber-900 px-2.5 py-1 rounded-md border border-amber-200">Universal Sompo</span>
+          </div>
+          <h3 class="text-base font-black text-brand-navy">Cattle And Live Stock Insurance</h3>
+          <p class="text-[11px] text-slate-500 font-semibold">Gay, bhains aur dudharu pashuon ki bimari ya durghatna me mrityu par 100% claim cover.</p>
+          
+          <div class="bg-slate-50 p-3 rounded-2xl border space-y-2 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 text-[10px] uppercase">Pashu Ka Moolya / Value (IDV ₹):</label>
+              <input type="number" id="miscCattleVal" value="50000" step="5000" class="w-full bg-white border rounded-lg p-2 font-black mt-0.5" oninput="calculateMiscQuotes()" />
+            </div>
+            <div class="flex justify-between font-bold text-[11px] text-amber-900 pt-1 border-t">
+              <span>Govt Rate: <strong>4.0% + GST</strong></span>
+              <span>Premium: <strong id="miscCattlePrice" class="text-emerald-700 text-sm">₹ 2,360</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t flex flex-col gap-2">
+          <button onclick="openMiscPrint('Universal Sompo', 'Cattle And Live Stock Insurance', 'Cattle Livestock Tag Cover', document.getElementById('miscCattleVal').value, '4.0%', document.getElementById('miscCattlePrice').innerText)" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-print text-brand-gold"></i> Print Quotation
+          </button>
+          <button onclick="saveMiscQuoteFlow('Universal Sompo', 'Cattle And Live Stock Insurance', document.getElementById('miscCattleVal').value, document.getElementById('miscCattlePrice').innerText)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-floppy-disk"></i> Save Quotation
+          </button>
+        </div>
+      </div>
+
+      <!-- Scheme 2: Fire And Allied Perils (United India) -->
+      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-2xl bg-rose-100 text-rose-800 flex items-center justify-center text-lg font-black font-mono">F</span>
+            <span class="text-[10px] font-black uppercase bg-rose-50 text-rose-900 px-2.5 py-1 rounded-md border border-rose-200">United India Insurance</span>
+          </div>
+          <h3 class="text-base font-black text-brand-navy">Fire And Allied Perils (Shop & Stock)</h3>
+          <p class="text-[11px] text-slate-500 font-semibold">Dukan, makan ya godown me aag, short circuit aur natural disaster se stock/building suraksha.</p>
+          
+          <div class="bg-slate-50 p-3 rounded-2xl border space-y-2 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 text-[10px] uppercase">Stock + Building Value (₹):</label>
+              <input type="number" id="miscFireVal" value="500000" step="50000" class="w-full bg-white border rounded-lg p-2 font-black mt-0.5" oninput="calculateMiscQuotes()" />
+            </div>
+            <div class="flex justify-between font-bold text-[11px] text-rose-900 pt-1 border-t">
+              <span>Standard Tariff: <strong>0.15%</strong></span>
+              <span>Premium: <strong id="miscFirePrice" class="text-emerald-700 text-sm">₹ 885</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t flex flex-col gap-2">
+          <button onclick="openMiscPrint('United India Insurance', 'Fire And Allied Perils', 'Shop & Commercial Stock', document.getElementById('miscFireVal').value, '0.15%', document.getElementById('miscFirePrice').innerText)" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-print text-brand-gold"></i> Print Quotation
+          </button>
+          <button onclick="saveMiscQuoteFlow('United India Insurance', 'Fire And Allied Perils', document.getElementById('miscFireVal').value, document.getElementById('miscFirePrice').innerText)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-floppy-disk"></i> Save Quotation
+          </button>
+        </div>
+      </div>
+
+      <!-- Scheme 3: Farmer Package Policy (Universal Sompo) -->
+      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-lg font-black font-mono">F</span>
+            <span class="text-[10px] font-black uppercase bg-emerald-50 text-emerald-900 px-2.5 py-1 rounded-md border border-emerald-200">Universal Sompo</span>
+          </div>
+          <h3 class="text-base font-black text-brand-navy">Farmer Package Policy</h3>
+          <p class="text-[11px] text-slate-500 font-semibold">Kisan parivar ke liye all-in-one bundle: pump set, tractor aujaar aur kisan accidental cover.</p>
+          
+          <div class="bg-slate-50 p-3 rounded-2xl border space-y-2 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 text-[10px] uppercase">Package Sum Insured (₹):</label>
+              <input type="number" id="miscFarmerVal" value="300000" step="25000" class="w-full bg-white border rounded-lg p-2 font-black mt-0.5" oninput="calculateMiscQuotes()" />
+            </div>
+            <div class="flex justify-between font-bold text-[11px] text-emerald-900 pt-1 border-t">
+              <span>Package Slab: <strong>0.25%</strong></span>
+              <span>Premium: <strong id="miscFarmerPrice" class="text-emerald-700 text-sm">₹ 885</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t flex flex-col gap-2">
+          <button onclick="openMiscPrint('Universal Sompo', 'Farmer Package Policy', 'Agriculture Kit & Shield', document.getElementById('miscFarmerVal').value, '0.25%', document.getElementById('miscFarmerPrice').innerText)" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-print text-brand-gold"></i> Print Quotation
+          </button>
+          <button onclick="saveMiscQuoteFlow('Universal Sompo', 'Farmer Package Policy', document.getElementById('miscFarmerVal').value, document.getElementById('miscFarmerPrice').innerText)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-floppy-disk"></i> Save Quotation
+          </button>
+        </div>
+      </div>
+
+      <!-- Scheme 4: Fire And Allied Perils (HDFC ERGO) -->
+      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-2xl bg-rose-100 text-rose-800 flex items-center justify-center text-lg font-black font-mono">F</span>
+            <span class="text-[10px] font-black uppercase bg-rose-50 text-rose-900 px-2.5 py-1 rounded-md border border-rose-200">HDFC ERGO</span>
+          </div>
+          <h3 class="text-base font-black text-brand-navy">Fire And Allied Perils (HDFC ERGO)</h3>
+          <p class="text-[11px] text-slate-500 font-semibold">Industrial, trade aur business godown ke liye digital paperless claim support policy.</p>
+          
+          <div class="bg-slate-50 p-3 rounded-2xl border space-y-2 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 text-[10px] uppercase">Declared Value (₹):</label>
+              <input type="number" id="miscHdfcVal" value="1000000" step="100000" class="w-full bg-white border rounded-lg p-2 font-black mt-0.5" oninput="calculateMiscQuotes()" />
+            </div>
+            <div class="flex justify-between font-bold text-[11px] text-rose-900 pt-1 border-t">
+              <span>Commercial Rate: <strong>0.14%</strong></span>
+              <span>Premium: <strong id="miscHdfcPrice" class="text-emerald-700 text-sm">₹ 1,652</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t flex flex-col gap-2">
+          <button onclick="openMiscPrint('HDFC ERGO General Insurance', 'Fire And Allied Perils', 'Commercial Assets & Stock', document.getElementById('miscHdfcVal').value, '0.14%', document.getElementById('miscHdfcPrice').innerText)" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-print text-brand-gold"></i> Print Quotation
+          </button>
+          <button onclick="saveMiscQuoteFlow('HDFC ERGO General Insurance', 'Fire And Allied Perils', document.getElementById('miscHdfcVal').value, document.getElementById('miscHdfcPrice').innerText)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-floppy-disk"></i> Save Quotation
+          </button>
+        </div>
+      </div>
+
+      <!-- Scheme 5: Fire And Allied Perils - RAP (SBI General) -->
+      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-2xl bg-blue-100 text-blue-800 flex items-center justify-center text-lg font-black font-mono">F</span>
+            <span class="text-[10px] font-black uppercase bg-blue-50 text-blue-900 px-2.5 py-1 rounded-md border border-blue-200">SBI General (RAP)</span>
+          </div>
+          <h3 class="text-base font-black text-brand-navy">Fire And Allied Perils - RAP</h3>
+          <p class="text-[11px] text-slate-500 font-semibold">SBI Bank trust aur CSC RAP rural commercial property suraksha policy.</p>
+          
+          <div class="bg-slate-50 p-3 rounded-2xl border space-y-2 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 text-[10px] uppercase">Property Valuation (₹):</label>
+              <input type="number" id="miscSbiVal" value="600000" step="50000" class="w-full bg-white border rounded-lg p-2 font-black mt-0.5" oninput="calculateMiscQuotes()" />
+            </div>
+            <div class="flex justify-between font-bold text-[11px] text-blue-900 pt-1 border-t">
+              <span>RAP Tariff: <strong>0.15%</strong></span>
+              <span>Premium: <strong id="miscSbiPrice" class="text-emerald-700 text-sm">₹ 1,062</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t flex flex-col gap-2">
+          <button onclick="openMiscPrint('SBI General Insurance', 'Fire And Allied Perils - RAP', 'Rural & Urban Retail Property', document.getElementById('miscSbiVal').value, '0.15%', document.getElementById('miscSbiPrice').innerText)" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-print text-brand-gold"></i> Print Quotation
+          </button>
+          <button onclick="saveMiscQuoteFlow('SBI General Insurance', 'Fire And Allied Perils - RAP', document.getElementById('miscSbiVal').value, document.getElementById('miscSbiPrice').innerText)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-floppy-disk"></i> Save Quotation
+          </button>
+        </div>
+      </div>
+
+      <!-- Scheme 6: HDFC Ergo-C3IP -->
+      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="w-10 h-10 rounded-2xl bg-teal-100 text-teal-800 flex items-center justify-center text-lg font-black font-mono">H</span>
+            <span class="text-[10px] font-black uppercase bg-teal-50 text-teal-900 px-2.5 py-1 rounded-md border border-teal-200">HDFC ERGO</span>
+          </div>
+          <h3 class="text-base font-black text-brand-navy">HDFC Ergo-C3IP Package</h3>
+          <p class="text-[11px] text-slate-500 font-semibold">Commercial Comprehensive & Custom Package Policy (C3IP): Institutional package.</p>
+          
+          <div class="bg-slate-50 p-3 rounded-2xl border space-y-2 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 text-[10px] uppercase">Declared Package Value (₹):</label>
+              <input type="number" id="miscC3ipVal" value="1500000" step="100000" class="w-full bg-white border rounded-lg p-2 font-black mt-0.5" oninput="calculateMiscQuotes()" />
+            </div>
+            <div class="flex justify-between font-bold text-[11px] text-teal-900 pt-1 border-t">
+              <span>Custom Tariff: <strong>0.18%</strong></span>
+              <span>Premium: <strong id="miscC3ipPrice" class="text-emerald-700 text-sm">₹ 3,186</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t flex flex-col gap-2">
+          <button onclick="openMiscPrint('HDFC ERGO General Insurance', 'HDFC Ergo-C3IP', 'Commercial Customized Package', document.getElementById('miscC3ipVal').value, '0.18%', document.getElementById('miscC3ipPrice').innerText)" class="w-full bg-brand-navy hover:bg-brand-lightBlue text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-print text-brand-gold"></i> Print Quotation
+          </button>
+          <button onclick="saveMiscQuoteFlow('HDFC ERGO General Insurance', 'HDFC Ergo-C3IP', document.getElementById('miscC3ipVal').value, document.getElementById('miscC3ipPrice').innerText)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-floppy-disk"></i> Save Quotation
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
   <!-- AGENT CARD -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 w-full">
     <section id="agent-banner" class="relative bg-gradient-to-r from-brand-dark via-brand-navy to-slate-950 rounded-3xl p-6 sm:p-10 text-white shadow-2xl overflow-hidden border-2 border-brand-gold/40">
@@ -1330,6 +1551,9 @@
             <button type="button" onclick="printFinalSavedQuotation()" style="flex: 1; background: #002B49; color: #ffffff; font-weight: 800; padding: 10px; border-radius: 12px; font-size: 12px; border: none; cursor: pointer;">
               <i class="fa-solid fa-print" style="color: #FFAE00;"></i> Print Quotation
             </button>
+	<a id="btnMailForward" href="javascript:void(0)" onclick="forwardQuoteToMail()" style="background:#0284c7; color:#ffffff; font-weight:800; padding:10px 14px; border-radius:12px; font-size:12px; text-decoration:none; display:inline-flex; align-items:center; gap:4px; cursor:pointer;">
+  <i class="fa-solid fa-envelope"></i> Forward Mail
+</a>
             <button type="button" onclick="closeSaveQuotationModal()" style="background: #e2e8f0; color: #334155; font-weight: bold; padding: 10px 14px; border-radius: 12px; font-size: 12px; border: none; cursor: pointer;">
               Band Karein
             </button>
@@ -1525,78 +1749,106 @@
       }
     }
 
-    function switchMainTab(tab) {
+function switchMainTab(tab) {
       const lifeWrapper = document.getElementById('lifeInsuranceWrapper');
       const motorPage = document.getElementById('motorInsurancePage');
       const healthPage = document.getElementById('healthInsurancePage');
+      const miscPage = document.getElementById('miscInsurancePage');
 
       const btnLic = document.getElementById('navTabLic');
       const btnCsc = document.getElementById('navTabCsc');
       const btnMotor = document.getElementById('navTabMotor');
       const btnHealth = document.getElementById('navTabHealth');
+      const btnMisc = document.getElementById('navTabMisc');
 
       const mLic = document.getElementById('mobileNavLic');
       const mCsc = document.getElementById('mobileNavCsc');
       const mMotor = document.getElementById('mobileNavMotor');
       const mHealth = document.getElementById('mobileNavHealth');
+      const mMisc = document.getElementById('mobileNavMisc');
 
-      lifeWrapper.classList.add('hidden');
-      motorPage.classList.add('hidden');
-      healthPage.classList.add('hidden');
+      // Styles variables pehle define kiye taaki ReferenceError na aaye
+      const desktopInactive = 'px-2.5 py-1.5 rounded-xl text-[11px] font-bold text-slate-700 hover:text-brand-navy transition flex items-center gap-1';
+      const mobileInactive = 'py-1.5 rounded-xl text-[10px] font-bold text-slate-700 transition flex flex-col items-center justify-center gap-0.5';
 
-      const desktopInactive = 'px-3 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-brand-navy transition flex items-center gap-1.5';
-      const mobileInactive = 'py-2 rounded-xl text-[11px] font-bold text-slate-700 transition flex flex-col items-center justify-center gap-0.5';
+      if (lifeWrapper) lifeWrapper.classList.add('hidden');
+      if (motorPage) motorPage.classList.add('hidden');
+      if (healthPage) healthPage.classList.add('hidden');
+      if (miscPage) miscPage.classList.add('hidden');
 
-      btnLic.className = desktopInactive;
-      btnCsc.className = desktopInactive;
-      btnMotor.className = desktopInactive;
-      btnHealth.className = desktopInactive;
+      if (btnLic) btnLic.className = desktopInactive;
+      if (btnCsc) btnCsc.className = desktopInactive;
+      if (btnMotor) btnMotor.className = desktopInactive;
+      if (btnHealth) btnHealth.className = desktopInactive;
+      if (btnMisc) btnMisc.className = desktopInactive;
 
-      mLic.className = mobileInactive;
-      mCsc.className = mobileInactive;
-      mMotor.className = mobileInactive;
-      mHealth.className = mobileInactive;
+      if (mLic) mLic.className = mobileInactive;
+      if (mCsc) mCsc.className = mobileInactive;
+      if (mMotor) mMotor.className = mobileInactive;
+      if (mHealth) mHealth.className = mobileInactive;
+      if (mMisc) mMisc.className = mobileInactive;
 
       if (tab === 'lic' || tab === 'csc') {
         currentLifeTab = tab;
-        lifeWrapper.classList.remove('hidden');
+        if (lifeWrapper) lifeWrapper.classList.remove('hidden');
 
         if (tab === 'lic') {
-          btnLic.className = 'px-3 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-brand-navy text-white shadow-sm';
-          mLic.className = 'py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-brand-navy text-white shadow-xs';
+          if (btnLic) btnLic.className = 'px-2.5 py-1.5 rounded-xl transition flex items-center gap-1 bg-brand-navy text-white shadow-xs font-black text-[11px]';
+          if (mLic) mLic.className = 'py-1.5 rounded-xl text-[10px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-brand-navy text-white';
           
-          document.getElementById('heroPortalBadge').innerText = "LIC Official Policy Benefits & Premium Illustration Chart";
-          document.getElementById('heroPortalHeading').innerText = "LIC Policy";
-          document.getElementById('quickPlanTypeBadge').innerText = "LIC Plans";
-          document.getElementById('portalBadgeTitle').innerText = "LIC Illustration Engine";
-          document.getElementById('calcSectionHeading').innerText = "एलआईसी विवरण भरें / LIC Details & Customization";
-          document.getElementById('companySelectContainer').classList.add('hidden');
-          document.getElementById('schemesListHeading').innerText = "Available LIC Plans";
-          document.getElementById('toggleAllBtnLabel').innerText = "Sabhi LIC Plans";
+          const badge = document.getElementById('heroPortalBadge');
+          if (badge) badge.innerText = "LIC Official Policy Benefits & Premium Illustration Chart";
+          const heading = document.getElementById('heroPortalHeading');
+          if (heading) heading.innerText = "LIC Policy";
+          const qBadge = document.getElementById('quickPlanTypeBadge');
+          if (qBadge) qBadge.innerText = "LIC Plans";
+          const pTitle = document.getElementById('portalBadgeTitle');
+          if (pTitle) pTitle.innerText = "LIC Illustration Engine";
+          const cHeading = document.getElementById('calcSectionHeading');
+          if (cHeading) cHeading.innerText = "एलआईसी विवरण भरें / LIC Details & Customization";
+          const compCont = document.getElementById('companySelectContainer');
+          if (compCont) compCont.classList.add('hidden');
+          const sHeading = document.getElementById('schemesListHeading');
+          if (sHeading) sHeading.innerText = "Available LIC Plans";
+          const tLabel = document.getElementById('toggleAllBtnLabel');
+          if (tLabel) tLabel.innerText = "Sabhi LIC Plans";
         } else {
-          btnCsc.className = 'px-3 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-amber-600 text-white shadow-sm';
-          mCsc.className = 'py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-amber-600 text-white shadow-xs';
+          if (btnCsc) btnCsc.className = 'px-2.5 py-1.5 rounded-xl transition flex items-center gap-1 bg-amber-600 text-white shadow-xs font-black text-[11px]';
+          if (mCsc) mCsc.className = 'py-1.5 rounded-xl text-[10px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-amber-600 text-white';
 
-          document.getElementById('heroPortalBadge').innerText = "CSC Portal Life Insurance (SBI Life, IndiaFirst, Shriram)";
-          document.getElementById('heroPortalHeading').innerText = "CSC Life Insurance";
-          document.getElementById('quickPlanTypeBadge').innerText = "CSC Life Plans";
-          document.getElementById('portalBadgeTitle').innerText = "CSC Life Engine (Guaranteed Income + 110% Return)";
-          document.getElementById('calcSectionHeading').innerText = "सीएससी विवरण भरें / CSC Life Details";
-          document.getElementById('companySelectContainer').classList.remove('hidden');
-          document.getElementById('schemesListHeading').innerText = "Available CSC Life Plans";
-          document.getElementById('toggleAllBtnLabel').innerText = "Sabhi CSC Plans";
+          const badge = document.getElementById('heroPortalBadge');
+          if (badge) badge.innerText = "CSC Portal Life Insurance (SBI Life, IndiaFirst, Shriram)";
+          const heading = document.getElementById('heroPortalHeading');
+          if (heading) heading.innerText = "CSC Life Insurance";
+          const qBadge = document.getElementById('quickPlanTypeBadge');
+          if (qBadge) qBadge.innerText = "CSC Life Plans";
+          const pTitle = document.getElementById('portalBadgeTitle');
+          if (pTitle) pTitle.innerText = "CSC Life Engine (Guaranteed Income + 110% Return)";
+          const cHeading = document.getElementById('calcSectionHeading');
+          if (cHeading) cHeading.innerText = "सीएससी विवरण भरें / CSC Life Details";
+          const compCont = document.getElementById('companySelectContainer');
+          if (compCont) compCont.classList.remove('hidden');
+          const sHeading = document.getElementById('schemesListHeading');
+          if (sHeading) sHeading.innerText = "Available CSC Life Plans";
+          const tLabel = document.getElementById('toggleAllBtnLabel');
+          if (tLabel) tLabel.innerText = "Sabhi CSC Plans";
         }
         applyPolicyFilters();
       } else if (tab === 'motor') {
-        motorPage.classList.remove('hidden');
-        btnMotor.className = 'px-3 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-emerald-700 text-white shadow-sm';
-        mMotor.className = 'py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-emerald-700 text-white shadow-xs';
+        if (motorPage) motorPage.classList.remove('hidden');
+        if (btnMotor) btnMotor.className = 'px-2.5 py-1.5 rounded-xl transition flex items-center gap-1 bg-emerald-700 text-white shadow-xs font-black text-[11px]';
+        if (mMotor) mMotor.className = 'py-1.5 rounded-xl text-[10px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-emerald-700 text-white';
         searchMotorPolicies();
       } else if (tab === 'health') {
-        healthPage.classList.remove('hidden');
-        btnHealth.className = 'px-3 py-2 rounded-xl text-sm font-black transition flex items-center gap-1.5 bg-rose-700 text-white shadow-sm';
-        mHealth.className = 'py-2 rounded-xl text-[11px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-rose-700 text-white shadow-xs';
+        if (healthPage) healthPage.classList.remove('hidden');
+        if (btnHealth) btnHealth.className = 'px-2.5 py-1.5 rounded-xl transition flex items-center gap-1 bg-rose-700 text-white shadow-xs font-black text-[11px]';
+        if (mHealth) mHealth.className = 'py-1.5 rounded-xl text-[10px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-rose-700 text-white';
         searchHealthPolicies();
+      } else if (tab === 'misc') {
+        if (miscPage) miscPage.classList.remove('hidden');
+        if (btnMisc) btnMisc.className = 'px-2.5 py-1.5 rounded-xl text-[11px] font-black transition flex items-center gap-1 bg-amber-800 text-white shadow-xs';
+        if (mMisc) mMisc.className = 'py-1.5 rounded-xl text-[10px] font-black transition flex flex-col items-center justify-center gap-0.5 bg-amber-800 text-white';
+        if (typeof calculateMiscQuotes === 'function') calculateMiscQuotes();
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -1616,6 +1868,11 @@
       { id: 'digi_term', company: 'LIC', planNo: '876', name: "LIC's Digi Term (876)", nameHi: "एलआईसी डिजी टर्म (876)", tagline: 'Direct pure term plan, high financial protection at nominal cost.', category: 'term', minSumAssured: 5000000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 40, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(40, term || 30)), ppt: Math.min(term, ppt || term) }) },
       { id: 'jeevan_raksha', company: 'LIC', planNo: '894', name: "LIC's Jeevan Raksha (894)", nameHi: "एलआईसी जीवन रक्षा (894)", tagline: 'Affordable pure term insurance suraksha cover standard terms ke sath.', category: 'term', minSumAssured: 200000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 40, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(40, term || 25)), ppt: Math.min(term, ppt || term) }) },
       { id: 'new_pension_plus', company: 'LIC', planNo: '867', name: "LIC's New Pension Plus (867)", nameHi: "एलआईसी न्यू पेंशन प्लस (867)", tagline: 'Retirement corpus build karne hetu pension product.', category: 'pension', minSumAssured: 100000, isAnnuity: true, isFlexible: true, minTerm: 10, maxTerm: 42, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(42, term || 20)), ppt: Math.min(term, ppt || 15) }) },
+{ id: 'bima_ratna', company: 'LIC', planNo: '864', name: "LIC's Bima Ratna (864)", tagline: 'Guaranteed additions + Guaranteed money back benefits.', category: 'money_back', minSumAssured: 500000, allowedCombinations: [{ term: 15, ppt: 11 }, { term: 20, ppt: 16 }, { term: 25, ppt: 21 }], enforceRules: (t) => (t <= 18 ? { term: 15, ppt: 11 } : (t <= 22 ? { term: 20, ppt: 16 } : { term: 25, ppt: 21 })) },
+      { id: 'dhan_rekha', company: 'LIC', planNo: '863', name: "LIC's Dhan Rekha (863)", tagline: 'Special women rates + Regular survival cashbacks.', category: 'money_back', minSumAssured: 200000, allowedCombinations: [{ term: 20, ppt: 10 }, { term: 30, ppt: 15 }, { term: 40, ppt: 20 }], enforceRules: (t) => (t <= 25 ? { term: 20, ppt: 10 } : (t <= 35 ? { term: 30, ppt: 15 } : { term: 40, ppt: 20 })) },
+      { id: 'dhan_vriddhi', company: 'LIC', planNo: '869', name: "LIC's Dhan Vriddhi (869)", tagline: 'Single premium, guaranteed maturity additions.', category: 'endowment', minSumAssured: 125000, allowedPptOptions: [1], minTerm: 10, maxTerm: 18, enforceRules: (t) => ({ term: Math.max(10, Math.min(18, t || 15)), ppt: 1 }) },
+      { id: 'jeevan_azad', company: 'LIC', planNo: '868', name: "LIC's Jeevan Azad (868)", tagline: 'Limited premium payment: Pay for (Term - 8) years.', category: 'endowment', minSumAssured: 200000, minTerm: 15, maxTerm: 20, enforceRules: (t) => { let term = Math.max(15, Math.min(20, t || 18)); return { term, ppt: term - 8 }; } },
+      { id: 'micro_bachat', company: 'LIC', planNo: '851', name: "LIC's Micro Bachat (851)", tagline: 'Low premium micro-insurance savings for rural families.', category: 'endowment', minSumAssured: 50000, minTerm: 10, maxTerm: 15, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(15, t || 12)), ppt: Math.min(t, p || t) }) },
 
       { id: 'sbi_platina_plus', company: 'SBI Life', planNo: 'SBI-01', name: "SBI Life - Smart Platina Plus", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना प्लस", tagline: 'Guaranteed regular income post PPT + 110% Return of Premium at maturity.', category: 'whole_life', minSumAssured: 250000, isWholeLifeIncome: true, incomePercent: 0.09, allowedPptOptions: [7, 8, 10, 12, 15, 20], enforceRules: (term, ppt) => ({ term: Math.max(15, Math.min(35, term || 25)), ppt: Math.min(20, ppt || 15) }) },
       { id: 'sbi_platina_supreme', company: 'SBI Life', planNo: 'SBI-02', name: "SBI Life - Smart Platina Supreme", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना सुप्रीम", tagline: 'High financial corpus generation with guaranteed maturity additions.', category: 'endowment', minSumAssured: 300000, allowedPptOptions: [7, 8, 10, 12, 15, 20], isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(30, term || 20)), ppt: Math.min(20, ppt || 15) }) },
@@ -1624,7 +1881,33 @@
       { id: 'shriram_assured_saving', company: 'Shriram Life', planNo: 'SH-02', name: "Shriram Life Assured Saving Plan", nameHi: "श्रीराम लाइफ अश्योर्ड सेविंग प्लान", tagline: 'Guaranteed lump sum corpus at maturity with high return safety.', category: 'endowment', minSumAssured: 100000, isFlexible: true, minTerm: 10, maxTerm: 20, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(20, term || 15)), ppt: Math.min(term, ppt || 10) }) },
       { id: 'indiafirst_khata', company: 'IndiaFirst', planNo: 'CSC-01', name: "IndiaFirst CSC Insurance Khata", nameHi: "इंडियाफर्स्ट सीएससी इंश्योरेंस खाता", tagline: 'CSC Portal special micro-savings with flexible premium deposits.', category: 'endowment', minSumAssured: 10000, isFlexible: true, minTerm: 5, maxTerm: 15, enforceRules: (term, ppt) => ({ term: Math.max(5, Math.min(15, term || 10)), ppt: Math.min(term, ppt || term) }) },
       { id: 'sbi_smart_samriddhi', company: 'SBI Life', planNo: 'SBI-05', name: "SBI Life - New Smart Samriddhi", nameHi: "एसबीआई लाइफ - न्यू स्मार्ट समृद्धि", tagline: 'Pay for just 5 years and get uninterrupted financial security for 10 years.', category: 'endowment', minSumAssured: 30000, allowedCombinations: [{ term: 10, ppt: 5 }], enforceRules: () => ({ term: 10, ppt: 5 }) },
-      { id: 'sbi_saral_swadhan_plus', company: 'SBI Life', planNo: 'SBI-03', name: "SBI Life - Saral Swadhan Plus", nameHi: "एसबीआई लाइफ - सरल स्वधन प्लस", tagline: 'Life protection + 100% to 115% return of total premium at maturity.', category: 'term', minSumAssured: 30000, allowedCombinations: [{ term: 10, ppt: 10 }, { term: 15, ppt: 15 }], enforceRules: (term) => (term <= 12 ? { term: 10, ppt: 10 } : { term: 15, ppt: 15 }) }
+      { id: 'sbi_saral_swadhan_plus', company: 'SBI Life', planNo: 'SBI-03', name: "SBI Life - Saral Swadhan Plus", nameHi: "एसबीआई लाइफ - सरल स्वधन प्लस", tagline: 'Life protection + 100% to 115% return of total premium at maturity.', category: 'term', minSumAssured: 30000, allowedCombinations: [{ term: 10, ppt: 10 }, { term: 15, ppt: 15 }], enforceRules: (term) => (term <= 12 ? { term: 10, ppt: 10 } : { term: 15, ppt: 15 }) },
+{ id: 'indiafirst_cashback', company: 'IndiaFirst', planNo: 'IF-CB', name: "IndiaFirst Cash Back Plan", tagline: 'Guaranteed periodic payouts + Life security.', category: 'money_back', minSumAssured: 100000, allowedCombinations: [{ term: 15, ppt: 10 }, { term: 20, ppt: 15 }], enforceRules: () => ({ term: 15, ppt: 10 }) },
+      { id: 'indiafirst_micro_bachat', company: 'IndiaFirst', planNo: 'IF-MB', name: "IndiaFirst Micro Bachat Plan", tagline: 'CSC VLE rural affordable life protection.', category: 'endowment', minSumAssured: 25000, isFlexible: true, minTerm: 5, maxTerm: 15, enforceRules: (t, p) => ({ term: Math.max(5, Math.min(15, t || 10)), ppt: Math.min(t, p || 10) }) },
+      { id: 'indiafirst_vle_khata', company: 'IndiaFirst', planNo: 'IF-VK', name: "IndiaFirst Khata for VLEs", tagline: 'Special insurance account designed for CSC VLEs.', category: 'endowment', minSumAssured: 50000, isFlexible: true, minTerm: 5, maxTerm: 15, enforceRules: (t, p) => ({ term: Math.max(5, Math.min(15, t || 10)), ppt: Math.min(t, p || 10) }) },
+      { id: 'sbi_saral_jeevan_bima', company: 'SBI Life', planNo: 'SBI-SJB', name: "SBI Life - Saral Jeevan Bima", tagline: 'Standard IRDAI pure term insurance plan.', category: 'term', minSumAssured: 500000, isPureTerm: true, minTerm: 5, maxTerm: 40, enforceRules: (t, p) => ({ term: Math.max(5, Math.min(40, t || 25)), ppt: Math.min(t, p || t) }) },
+      { id: 'sbi_smart_swadhan_plus', company: 'SBI Life', planNo: 'SBI-SSP', name: "SBI Life - Smart Swadhan Plus", tagline: '100% Return of Premium (ROP) at maturity.', category: 'term', minSumAssured: 100000, allowedCombinations: [{ term: 10, ppt: 10 }, { term: 15, ppt: 15 }, { term: 20, ppt: 20 }], enforceRules: (t) => ({ term: t || 15, ppt: t || 15 }) },
+      { id: 'shriram_smart_protection', company: 'Shriram Life', planNo: 'SH-SPP', name: "Shriram Life Smart Protection Plan", tagline: 'Pure life protection at minimum investment.', category: 'term', minSumAssured: 100000, isPureTerm: true, minTerm: 10, maxTerm: 25, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(25, t || 20)), ppt: Math.min(t, p || t) }) },
+// HDFC Life
+      { id: 'hdfc_sanchay_plus', company: 'HDFC Life', planNo: 'HDFC-01', name: "HDFC Life Sanchay Plus", tagline: 'Guaranteed income for long term + capital security.', category: 'whole_life', minSumAssured: 300000, isWholeLifeIncome: true, incomePercent: 0.088, allowedPptOptions: [6, 8, 10, 12], enforceRules: (t, p) => ({ term: 25, ppt: p || 10 }) },
+      { id: 'hdfc_click2protect', company: 'HDFC Life', planNo: 'HDFC-02', name: "HDFC Life Click 2 Protect Super", tagline: 'Comprehensive pure term cover with return of premium option.', category: 'term', minSumAssured: 2500000, isPureTerm: true, minTerm: 10, maxTerm: 40, enforceRules: (t, p) => ({ term: t || 30, ppt: p || 30 }) },
+
+      // ICICI Prudential
+      { id: 'icici_gift', company: 'ICICI Pru', planNo: 'ICICI-01', name: "ICICI Pru Guaranteed Income For Tomorrow (GIFT)", tagline: 'Early guaranteed regular income + 100% premium return.', category: 'whole_life', minSumAssured: 250000, isWholeLifeIncome: true, incomePercent: 0.085, allowedPptOptions: [7, 10, 12], enforceRules: (t, p) => ({ term: 20, ppt: p || 10 }) },
+      { id: 'icici_iprotect', company: 'ICICI Pru', planNo: 'ICICI-02', name: "ICICI Pru iProtect Smart", tagline: 'Pure term protection with critical illness cover.', category: 'term', minSumAssured: 2500000, isPureTerm: true, minTerm: 10, maxTerm: 40, enforceRules: (t, p) => ({ term: t || 30, ppt: p || 30 }) },
+
+      // Max Life
+      { id: 'max_smart_wealth', company: 'Max Life', planNo: 'MAX-01', name: "Max Life Smart Wealth Plan", tagline: 'Guaranteed lump sum maturity additions.', category: 'endowment', minSumAssured: 200000, isFlexible: true, minTerm: 10, maxTerm: 25, enforceRules: (t, p) => ({ term: t || 15, ppt: p || 10 }) },
+      { id: 'max_smart_term', company: 'Max Life', planNo: 'MAX-02', name: "Max Life Smart Total Elite Protection (STEP)", tagline: 'Pure protection term cover with instant issuance.', category: 'term', minSumAssured: 2500000, isPureTerm: true, minTerm: 10, maxTerm: 40, enforceRules: (t, p) => ({ term: t || 30, ppt: p || 30 }) },
+
+      // Tata AIA Life
+      { id: 'tata_fortune_guarantee', company: 'Tata AIA', planNo: 'TATA-01', name: "Tata AIA Fortune Guarantee Plus", tagline: 'Guaranteed regular annual income + 105% Return of Premium.', category: 'whole_life', minSumAssured: 250000, isWholeLifeIncome: true, incomePercent: 0.087, allowedPptOptions: [6, 8, 10, 12], enforceRules: (t, p) => ({ term: 25, ppt: p || 10 }) },
+
+      // Bajaj Allianz Life
+      { id: 'bajaj_guaranteed_income', company: 'Bajaj Allianz Life', planNo: 'BAL-01', name: "Bajaj Allianz Life Guaranteed Income Goal", tagline: 'Lifelong guaranteed regular income after PPT.', category: 'whole_life', minSumAssured: 200000, isWholeLifeIncome: true, incomePercent: 0.085, allowedPptOptions: [5, 7, 10, 12], enforceRules: (t, p) => ({ term: 20, ppt: p || 10 }) },
+
+      // Kotak Life
+      { id: 'kotak_assured_savings', company: 'Kotak Life', planNo: 'KOTAK-01', name: "Kotak Assured Savings Plan", tagline: 'Guaranteed yearly additions + high life cover.', category: 'endowment', minSumAssured: 150000, isFlexible: true, minTerm: 10, maxTerm: 20, enforceRules: (t, p) => ({ term: t || 15, ppt: p || 10 }) }
     ];
 
     let currentSchemesList = [];
@@ -2351,12 +2634,19 @@
     }
 
     const generalInsurers = [
-      { name: 'New India Assurance (Govt of India)', rating: '4.9 ★', claimsRatio: '98.5%', badge: 'Govt Trust' },
-      { name: 'ICICI Lombard General Insurance', rating: '4.8 ★', claimsRatio: '97.2%', badge: 'Fastest Cashless' },
-      { name: 'HDFC ERGO General Insurance', rating: '4.8 ★', claimsRatio: '97.8%', badge: 'Overnight Repair' },
-      { name: 'Tata AIG General Insurance', rating: '4.7 ★', claimsRatio: '96.9%', badge: 'Reliable Claims' },
-      { name: 'Bajaj Allianz General Insurance', rating: '4.7 ★', claimsRatio: '97.0%', badge: 'Doorstep Survey' },
-      { name: 'Go Digit General Insurance', rating: '4.6 ★', claimsRatio: '95.8%', badge: 'Instant Paperless' }
+      { name: 'New India Assurance (NIA Govt PSU)', rating: '4.9 ★', claimsRatio: '98.5%', badge: 'Govt Trust' },
+      { name: 'Oriental Insurance Company', rating: '4.8 ★', claimsRatio: '97.6%', badge: 'Govt PSU' },
+      { name: 'United India Insurance (UII)', rating: '4.8 ★', claimsRatio: '97.1%', badge: 'Govt PSU' },
+      { name: 'HDFC ERGO General Insurance (POS/RAP)', rating: '4.9 ★', claimsRatio: '98.0%', badge: 'Fastest Cashless' },
+      { name: 'ICICI Lombard General Insurance (POS/RAP)', rating: '4.8 ★', claimsRatio: '97.4%', badge: 'Instant Survey' },
+      { name: 'SBI General Insurance (POS/RAP)', rating: '4.8 ★', claimsRatio: '96.8%', badge: 'Bank Trust' },
+      { name: 'Bajaj Allianz General Insurance (POS/RAP)', rating: '4.7 ★', claimsRatio: '97.2%', badge: 'Doorstep Help' },
+      { name: 'IFFCO TOKIO General Insurance (POS)', rating: '4.7 ★', claimsRatio: '96.5%', badge: 'Farmer Trusted' },
+      { name: 'Tata AIG General Insurance (POS)', rating: '4.7 ★', claimsRatio: '96.9%', badge: 'Reliable' },
+      { name: 'Chola MS General Insurance (POS/RAP)', rating: '4.7 ★', claimsRatio: '96.2%', badge: 'Quick Settlement' },
+      { name: 'Reliance General Insurance (POS/RAP)', rating: '4.6 ★', claimsRatio: '95.9%', badge: 'Easy Process' },
+      { name: 'Universal Sompo General Insurance (POS)', rating: '4.6 ★', claimsRatio: '95.6%', badge: 'Affordable' },
+      { name: 'Go Digit General Insurance (POS/RAP)', rating: '4.6 ★', claimsRatio: '96.0%', badge: 'Paperless' }
     ];
 
 // Sub-desk click karne par direct switch karne ke liye
@@ -2547,12 +2837,17 @@
     }
 
     const healthInsurers = [
-      { name: 'Star Health & Allied Insurance', plan: 'Star Comprehensive / Young Star', rating: '4.9 ★', hospitals: '14,000+', badge: 'Standalone Leader' },
-      { name: 'Care Health Insurance', plan: 'Care Supreme / Care Advantage', rating: '4.8 ★', hospitals: '11,000+', badge: 'Unlimited Recharges' },
-      { name: 'HDFC ERGO General Insurance', plan: 'Optima Secure (2X Cover from Day 1)', rating: '4.9 ★', hospitals: '12,500+', badge: 'Instant Cashless' },
-      { name: 'Niva Bupa Health Insurance', plan: 'ReAssure 2.0 (Lock-in Age Discount)', rating: '4.7 ★', hospitals: '10,000+', badge: 'No Age Limit' },
-      { name: 'ICICI Lombard Health', plan: 'Complete Health Insurance', rating: '4.7 ★', hospitals: '9,500+', badge: 'Fast Approvals' },
-      { name: 'New India Assurance (Govt PSU)', plan: 'New India Mediclaim Policy', rating: '4.8 ★', hospitals: '8,500+', badge: 'Govt Security' }
+      { name: 'Star Health & Allied Insurance (POS/RAP)', plan: 'Star Comprehensive / Young Star', rating: '4.9 ★', badge: 'Standalone Leader' },
+      { name: 'HDFC ERGO Health Suraksha (POS/C3IP)', plan: 'Optima Secure / Health Suraksha', rating: '4.9 ★', badge: '2X Day-1 Cover' },
+      { name: 'ICICI Lombard (POS/RAP)', plan: 'HOSPIFUND Health / Complete Health', rating: '4.8 ★', badge: 'Fast Approval' },
+      { name: 'SBI General Insurance (POS/RAP)', plan: 'Arogya Premier / Sanjeevani', rating: '4.8 ★', badge: 'Bank Security' },
+      { name: 'Bajaj Allianz Health (POS/RAP)', plan: 'Health Guard / Silver Health', rating: '4.7 ★', badge: 'Cashless Network' },
+      { name: 'New India Assurance (Govt PSU)', plan: 'Health Insurance RAP / Mediclaim', rating: '4.8 ★', badge: 'Govt Trust' },
+      { name: 'United India Insurance (UII)', plan: 'UII Health Insurance Scheme', rating: '4.7 ★', badge: 'Govt Backed' },
+      { name: 'IFFCO TOKIO General Insurance', plan: 'Individual & Family Health Protector Plan', rating: '4.7 ★', badge: 'Family Cover' },
+      { name: 'Universal Sompo General Insurance', plan: 'Hospital Cash / Senior Citizen Health / Individual', rating: '4.6 ★', badge: 'Senior Special' },
+      { name: 'Reliance General Insurance (POS/RAP)', plan: 'Health Infinity / Health Gain', rating: '4.6 ★', badge: 'More Benefits' },
+      { name: 'Niva Bupa Health Insurance', plan: 'Niva Bupa - Aspire / ReAssure 2.0', rating: '4.7 ★', badge: 'Lock Age Discount' }
     ];
 
     function searchHealthPolicies() {
@@ -3344,6 +3639,29 @@ function triggerQuickHealthSave(companyName, plan, prem, si) {
     resBox.style.display = 'none';
   }
 }
+
+function forwardQuoteToMail() {
+  const qNo = window.activeSavedQuoteNo || "KDS-RECORD";
+  const name = document.getElementById('saveHolderName') ? document.getElementById('saveHolderName').value : "Client";
+  const phone = document.getElementById('saveHolderPhone') ? document.getElementById('saveHolderPhone').value : "";
+  const plan = activeQuotationData && activeQuotationData.scheme ? (activeQuotationData.scheme.name || activeQuotationData.scheme) : "Insurance Plan";
+  const prem = activeQuotationData ? (activeQuotationData.annualBudget || 0) : 0;
+
+  const subject = encodeURIComponent("New Quotation Saved: " + qNo + " (" + name + ")");
+  const body = encodeURIComponent(
+    "Namaste Manoher Singh ji,\n\n" +
+    "Ek naya quotation save hua hai:\n" +
+    "• Quotation No: " + qNo + "\n" +
+    "• Client Name: " + name + "\n" +
+    "• Mobile: " + phone + "\n" +
+    "• Plan: " + plan + "\n" +
+    "• Premium: Rs. " + Number(prem).toLocaleString('en-IN') + "\n\n" +
+    "Portal: kdsinsurance.in"
+  );
+
+  window.open("mailto:manoharsingh84400@gmail.com?subject=" + subject + "&body=" + body, "_blank");
+}
+
 function printFinalSavedQuotation() {
   const qNo = window.activeSavedQuoteNo || "KDS-RECORD";
   closeSaveQuotationModal();
@@ -3677,6 +3995,103 @@ function printFinalSavedQuotation() {
         m1Input.disabled = true;
         m2Input.disabled = true;
       }, 1000);
+    }
+
+// MISC. LIVE TARIFF CALCULATION ENGINE
+    function calculateMiscQuotes() {
+      // 1. Cattle: 4% base + 18% GST
+      const cVal = Number(document.getElementById('miscCattleVal').value) || 50000;
+      const cPrem = Math.round((cVal * 0.04) * 1.18);
+      document.getElementById('miscCattlePrice').innerText = "₹ " + cPrem.toLocaleString('en-IN');
+
+      // 2. Fire United: 0.15% base + 18% GST
+      const fVal = Number(document.getElementById('miscFireVal').value) || 500000;
+      const fPrem = Math.round((fVal * 0.0015) * 1.18);
+      document.getElementById('miscFirePrice').innerText = "₹ " + fPrem.toLocaleString('en-IN');
+
+      // 3. Farmer Package: 0.25% base + 18% GST
+      const farmVal = Number(document.getElementById('miscFarmerVal').value) || 300000;
+      const farmPrem = Math.round((farmVal * 0.0025) * 1.18);
+      document.getElementById('miscFarmerPrice').innerText = "₹ " + farmPrem.toLocaleString('en-IN');
+
+      // 4. HDFC Fire: 0.14% base + 18% GST
+      const hdfcVal = Number(document.getElementById('miscHdfcVal').value) || 1000000;
+      const hdfcPrem = Math.round((hdfcVal * 0.0014) * 1.18);
+      document.getElementById('miscHdfcPrice').innerText = "₹ " + hdfcPrem.toLocaleString('en-IN');
+
+      // 5. SBI Fire RAP: 0.15% base + 18% GST
+      const sbiVal = Number(document.getElementById('miscSbiVal').value) || 600000;
+      const sbiPrem = Math.round((sbiVal * 0.0015) * 1.18);
+      document.getElementById('miscSbiPrice').innerText = "₹ " + sbiPrem.toLocaleString('en-IN');
+
+      // 6. HDFC C3IP: 0.18% base + 18% GST
+      const c3ipVal = Number(document.getElementById('miscC3ipVal').value) || 1500000;
+      const c3ipPrem = Math.round((c3ipVal * 0.0018) * 1.18);
+      document.getElementById('miscC3ipPrice').innerText = "₹ " + c3ipPrem.toLocaleString('en-IN');
+    }
+
+    // PRINT TABLE MODAL FOR MISC
+    function openMiscPrint(comp, plan, sub, val, rate, price) {
+      const dateStr = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+      document.getElementById('generalPrintableTarget').innerHTML = `
+        <div style="font-family: 'Inter', sans-serif; color: #0f172a; font-size: 11px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid #002B49; padding-bottom:8px; margin-bottom:10px;">
+            <div>
+              <h2 style="font-size: 15px; font-weight: 900; color: #002B49; margin:0;">KDS INSURANCE SERVICES (MISC. DESK)</h2>
+              <p style="margin:2px 0 0 0; color:#00558F; font-size:9.5px; font-weight:bold;">Authorized Advisor: MANOHER SINGH (Mo: 8440096343)</p>
+              <p style="margin:1px 0 0 0; color:#64748b; font-size:8.5px;">BASEMENT HALL MR COMPLEX, MALWARA, RANIWARA, JALORE (RAJ.) 343039</p>
+            </div>
+            <div style="text-align:right;">
+              <span style="background:#b45309; color:white; font-size:9px; font-weight:bold; padding:2px 6px; border-radius:4px;">MISC. QUOTATION</span>
+              <p style="font-size:8.5px; color:#64748b; margin:2px 0 0 0;">Date: ${dateStr}</p>
+            </div>
+          </div>
+
+          <div style="background:#fef3c7; border:1px solid #fde68a; padding:8px 10px; border-radius:6px; margin-bottom:10px;">
+            <p style="margin:1px 0;"><strong>Proposed Insurer:</strong> ${comp}</p>
+            <p style="margin:1px 0;"><strong>Scheme Name:</strong> ${plan} (${sub})</p>
+            <p style="margin:1px 0;"><strong>Sum Insured / Valuation:</strong> ₹${Number(val).toLocaleString('en-IN')}</p>
+          </div>
+
+          <table style="width:100%; border-collapse:collapse; font-size:10px; border:1px solid #cbd5e1; margin-bottom:10px;">
+            <thead>
+              <tr style="background:#002B49; color:white;">
+                <th style="padding:6px; text-align:left; border:1px solid #cbd5e1;">Coverage Description</th>
+                <th style="padding:6px; text-align:right; border:1px solid #cbd5e1;">Rate / Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:5px 6px; border:1px solid #cbd5e1;">Base CSC Govt Tariff Slab</td><td style="padding:5px 6px; text-align:right; border:1px solid #cbd5e1;">${rate}</td></tr>
+              <tr><td style="padding:5px 6px; border:1px solid #cbd5e1;">Risk Cover / Sum Insured</td><td style="padding:5px 6px; text-align:right; border:1px solid #cbd5e1;">₹${Number(val).toLocaleString('en-IN')}</td></tr>
+              <tr><td style="padding:5px 6px; border:1px solid #cbd5e1;">GST on Commercial Insurance</td><td style="padding:5px 6px; text-align:right; border:1px solid #cbd5e1;">18% Applicable</td></tr>
+              <tr style="background:#ecfdf5; font-weight:900; font-size:11px; color:#065f46;">
+                <td style="padding:7px 6px; border:1px solid #cbd5e1;">TOTAL PAYABLE PREMIUM</td>
+                <td style="padding:7px 6px; text-align:right; border:1px solid #cbd5e1;">${price}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#002B49; color:white; padding:8px 10px; border-radius:6px; font-size:9.5px;">
+            <span>Helpline: <strong>8440096343</strong></span>
+            <span>Tagging / Survey Assistance: <strong>Available</strong></span>
+          </div>
+        </div>
+      `;
+      document.getElementById('generalQuotationModal').classList.remove('hidden');
+    }
+
+    // SAVE QUOTATION & FORWARD EMAIL FLOW
+    function saveMiscQuoteFlow(comp, plan, val, price) {
+      const numPrice = Number(price.replace(/[^0-9]/g, '')) || 0;
+      activeQuotationData = {
+        insuranceCategory: "MISC",
+        scheme: { name: `${comp} - ${plan} | Valuation: ₹${Number(val).toLocaleString('en-IN')}` },
+        annualBudget: numPrice,
+        term: 1,
+        ppt: 1,
+        sumAssured: Number(val)
+      };
+      triggerSaveQuotationFlow();
     }
     
     window.addEventListener('DOMContentLoaded', () => {
