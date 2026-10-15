@@ -728,6 +728,28 @@
     </section>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+<!-- MOTOR KE 4 SUB-PAGES / DESK SWITCHER -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+        <button type="button" onclick="selectMotorSubCategory('car')" class="p-3.5 bg-white rounded-2xl border-2 border-slate-200 hover:border-emerald-600 shadow-sm transition flex items-center gap-3 text-left">
+          <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center text-lg font-black shrink-0"><i class="fa-solid fa-car"></i></div>
+          <div><div class="text-xs font-black text-brand-navy">Car 0-Dep Desk</div><div class="text-[10px] text-slate-500">Private Cars</div></div>
+        </button>
+
+        <button type="button" onclick="selectMotorSubCategory('bike')" class="p-3.5 bg-white rounded-2xl border-2 border-slate-200 hover:border-emerald-600 shadow-sm transition flex items-center gap-3 text-left">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-lg font-black shrink-0"><i class="fa-solid fa-motorcycle"></i></div>
+          <div><div class="text-xs font-black text-brand-navy">Bike Renewal Desk</div><div class="text-[10px] text-slate-500">Two-Wheelers</div></div>
+        </button>
+
+        <button type="button" onclick="selectMotorSubCategory('commercial')" class="p-3.5 bg-white rounded-2xl border-2 border-slate-200 hover:border-emerald-600 shadow-sm transition flex items-center gap-3 text-left">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-lg font-black shrink-0"><i class="fa-solid fa-truck-moving"></i></div>
+          <div><div class="text-xs font-black text-brand-navy">Commercial Desk</div><div class="text-[10px] text-slate-500">Pickup, Trucks</div></div>
+        </button>
+
+        <button type="button" onclick="selectMotorSubCategory('three_wheeler')" class="p-3.5 bg-white rounded-2xl border-2 border-slate-200 hover:border-emerald-600 shadow-sm transition flex items-center gap-3 text-left">
+          <div class="w-10 h-10 rounded-xl bg-yellow-100 text-yellow-800 flex items-center justify-center text-lg font-black shrink-0"><i class="fa-solid fa-bus"></i></div>
+          <div><div class="text-xs font-black text-brand-navy">Auto 3-Wheeler</div><div class="text-[10px] text-slate-500">Passenger & Goods</div></div>
+        </button>
+      </div>
       <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
         <div class="p-6 sm:p-8 border-b border-slate-200 bg-slate-50/70">
           <div class="mb-6">
@@ -742,6 +764,7 @@
                 <option value="car" selected>🚗 कार (चार पहिया) / Private Car</option>
                 <option value="bike">🏍️ बाइक (दो पहिया) / Two Wheeler</option>
                 <option value="commercial">🚚 कमर्शियल वाहन / Commercial Vehicle</option>
+                <option value="three_wheeler">🛺 थ्री व्हीलर / Auto Rickshaw (3W)</option>
               </select>
             </div>
             <div>
@@ -2336,6 +2359,16 @@
       { name: 'Go Digit General Insurance', rating: '4.6 ★', claimsRatio: '95.8%', badge: 'Instant Paperless' }
     ];
 
+// Sub-desk click karne par direct switch karne ke liye
+    function selectMotorSubCategory(type) {
+      const select = document.getElementById('motorVehicleType');
+      if (select) {
+        select.value = type;
+        adjustEngineSlabs();
+      }
+      document.getElementById('motorSearchForm').scrollIntoView({ behavior: 'smooth' });
+    }
+
     function adjustEngineSlabs() {
       const vType = document.getElementById('motorVehicleType').value;
       const ccSelect = document.getElementById('motorCcSlab');
@@ -2354,6 +2387,14 @@
           <option value="above1500">1500 cc से अधिक (Scorpio, Thar)</option>
         `;
         document.getElementById('motorIdv').value = 600000;
+      } else if (vType === 'three_wheeler') {
+        ccSelect.innerHTML = `
+          <option value="passenger_3" selected>सवारी ऑटो (3+1 Passenger)</option>
+          <option value="passenger_6">बड़ा ऑटो / टैम्पो (6+1 Passenger)</option>
+          <option value="goods_3w">लोडिंग 3-Wheeler Auto</option>
+          <option value="erickshaw">ई-रिक्शा / बैटरी ऑटो (Electric)</option>
+        `;
+        document.getElementById('motorIdv').value = 180000;
       } else {
         ccSelect.innerHTML = `
           <option value="light">लाइट गुड्स (Pick-up, Camper, Tata Ace)</option>
