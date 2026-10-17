@@ -1882,7 +1882,8 @@ function switchMainTab(tab) {
       { id: 'health_shield_907', company: 'LIC', planNo: '907', name: "LIC's Health Shield (907)", tagline: 'Comprehensive medical & critical illness health protection.', category: 'health_cancer', minSumAssured: 500000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(30, t || 20)), ppt: Math.max(10, Math.min(30, t || 20)) }) },
       { id: 'jeevan_shanti_858', company: 'LIC', planNo: '858', name: "LIC's New Jeevan Shanti (858)", tagline: 'Single premium deferred annuity - Guaranteed lifetime fixed pension.', category: 'pension', minSumAssured: 150000, allowedPptOptions: [1], minTerm: 5, maxTerm: 12, enforceRules: (t) => ({ term: Math.max(5, Math.min(12, t || 5)), ppt: 1 }) },
       { id: 'jeevan_akshay_857', company: 'LIC', planNo: '857', name: "LIC's Jeevan Akshay VII (857)", tagline: 'Immediate lifetime annuity - Immediate guaranteed monthly pension.', category: 'pension', minSumAssured: 100000, allowedPptOptions: [1], minTerm: 1, maxTerm: 1, enforceRules: () => ({ term: 1, ppt: 1 }) },
-		
+	{ id: 'jeevan_sathi_905', company: 'LIC', planNo: '905', name: "LIC's New Jeevan Sathi Limited Premium (905)", tagline: 'Joint life endowment plan for couples with life protection on both lives.', category: 'endowment', minSumAssured: 200000, allowedCombinations: [{ term: 16, ppt: 10 }, { term: 20, ppt: 12 }, { term: 24, ppt: 15 }], enforceRules: (t) => (t <= 18 ? { term: 16, ppt: 10 } : (t <= 22 ? { term: 20, ppt: 12 } : { term: 24, ppt: 15 })) },	
+	
       { id: 'sbi_platina_plus', company: 'SBI Life', planNo: 'SBI-01', name: "SBI Life - Smart Platina Plus", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना प्लस", tagline: 'Guaranteed regular income post PPT + 110% Return of Premium at maturity.', category: 'whole_life', minSumAssured: 250000, isWholeLifeIncome: true, incomePercent: 0.09, allowedPptOptions: [7, 8, 10, 12, 15, 20], enforceRules: (term, ppt) => ({ term: Math.max(15, Math.min(35, term || 25)), ppt: Math.min(20, ppt || 15) }) },
       { id: 'sbi_platina_supreme', company: 'SBI Life', planNo: 'SBI-02', name: "SBI Life - Smart Platina Supreme", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना सुप्रीम", tagline: 'High financial corpus generation with guaranteed maturity additions.', category: 'endowment', minSumAssured: 300000, allowedPptOptions: [7, 8, 10, 12, 15, 20], isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(30, term || 20)), ppt: Math.min(20, ppt || 15) }) },
       { id: 'indiafirst_gold', company: 'IndiaFirst', planNo: 'CSC-02', name: "IndiaFirst G.O.L.D (Guarantee of Life Dreams)", nameHi: "इंडियाफर्स्ट गोल्ड (लाइफ ड्रीम्स)", tagline: 'Pay for limited years and get guaranteed regular income + 100% premium back.', category: 'whole_life', minSumAssured: 150000, isWholeLifeIncome: true, incomePercent: 0.085, allowedPptOptions: [5, 6, 8, 10, 12, 15, 20], enforceRules: (term, ppt) => ({ term: Math.max(20, Math.min(40, term || 30)), ppt: Math.min(20, ppt || 15) }) },
@@ -2094,6 +2095,12 @@ function switchMainTab(tab) {
           let bonusTotal = sumAssured * annualBonusRate * term;
           let fab = (term >= 25) ? (sumAssured * 0.45) : (term >= 21 ? sumAssured * 0.25 : sumAssured * 0.12);
           estimatedMaturity = Math.round(sumAssured + bonusTotal + fab);
+	} else if (scheme.id === 'cancer_cover_908' || scheme.id === 'health_shield_907') {
+          estimatedMaturity = 0;
+	} else if (scheme.id === 'amritbaal') {
+          // Plan 774: Guaranteed Addition of Rs. 80 per thousand SA per year
+          let guaranteedAdditions = (sumAssured * 0.08) * term;
+          estimatedMaturity = Math.round(sumAssured + guaranteedAdditions);
         } else if (scheme.id === 'index_plus_873' || scheme.id === 'siip_752' || scheme.id === 'nivesh_plus_749') {
           // ULIP (Share Market Linked) Growth Projection (~10-12% Compounding)
           estimatedMaturity = Math.round(totalInvestment * 2.10);
@@ -2148,7 +2155,7 @@ function switchMainTab(tab) {
 
         let loanValue = 0;
         let surrenderValue = 0;
-        if (!scheme.isPureTerm && y >= 2 && cumulativePaid > 0) {
+        if (!scheme.isPureTerm && scheme.id !== 'cancer_cover_908' && scheme.id !== 'health_shield_907' && y >= 2 && cumulativePaid > 0) {
           const surrenderFactor = Math.min(0.85, 0.35 + ((y - 2) * 0.028));
           surrenderValue = Math.round(cumulativePaid * surrenderFactor);
           loanValue = Math.round(surrenderValue * 0.90);
@@ -2283,7 +2290,11 @@ function switchMainTab(tab) {
                             (scheme.company === 'SBI Life' ? 'bg-purple-100 text-purple-900' : 'bg-red-100 text-red-900'));
 
         let displayReturn = '';
-        if (scheme.company !== 'LIC' && calc.regularAnnualIncome > 0) {
+        if (scheme.id === 'cancer_cover_908') {
+          displayReturn = `₹ ${(calc.sumAssured * 2.45).toLocaleString('en-IN')} Max Benefit*`;
+        } else if (scheme.category === 'pension' && calc.regularAnnualIncome > 0) {
+          displayReturn = `₹ ${calc.regularAnnualIncome.toLocaleString('en-IN')}/yr Guaranteed Pension`;
+        } else if (scheme.company !== 'LIC' && calc.regularAnnualIncome > 0) {
           displayReturn = `₹ ${calc.regularAnnualIncome.toLocaleString('en-IN')}/yr + 110% Refund`;
         } else if (calc.regularAnnualIncome > 0) {
           displayReturn = `₹ ${calc.regularAnnualIncome.toLocaleString('en-IN')}/yr* (Lifelong)`;
@@ -2506,6 +2517,103 @@ function switchMainTab(tab) {
       } else {
         returnHeaderSnippet = `₹ ${d.estimatedMaturity.toLocaleString('en-IN')}*`;
       }
+
+	// AGAR CANCER COVER 908 HAI TO BROCHURE KE ANUSAAR SPECIAL TABLE DIKHEGI
+      if (d.scheme.id === 'cancer_cover_908') {
+        const earlyClaim = Math.round(d.sumAssured * 0.25);
+        const majorClaim = d.sumAssured;
+        const monthlyInc = Math.round(d.sumAssured * 0.01);
+        const totalMonthly = monthlyInc * 120;
+
+        document.getElementById('quotationPrintableTarget').innerHTML = `
+          <div style="width: 100%; color: #0f172a; font-family: 'Inter', sans-serif;">
+            <div style="border-bottom: 2px solid #002B49; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h1 style="font-size: 15px; font-weight: 900; color: #002B49; margin: 0;">KDS INSURANCE CONSULTANCY & SERVICES</h1>
+                <p style="font-size: 9.5px; font-weight: bold; color: #00558F; margin: 2px 0 0;">Authorized Advisor: MANOHER SINGH (Mo: 8440096343)</p>
+                <p style="font-size: 8.5px; color: #475569; margin: 1px 0 0;">BASEMENT HALL MR COMPLEX, MALWARA, RANIWARA, JALORE (RAJ.) 343039</p>
+              </div>
+              <div style="text-align: right;">
+                <span style="background: #FFAE00; color: #002B49; font-weight: 900; font-size: 9.5px; padding: 2px 6px; border-radius: 4px; display: inline-block;">
+                  LIC NEW CANCER COVER (PLAN 908)
+                </span>
+                <p style="font-size: 9px; color: #64748b; margin: 2px 0 0;">Date: ${dateStr}</p>
+              </div>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 10px;">
+              <div>
+                <p><strong>Customer:</strong> ${custName}</p>
+                <p><strong>Mobile:</strong> ${custPhone}</p>
+                <p><strong>Entry Age:</strong> ${d.userAge} Years</p>
+              </div>
+              <div>
+                <p><strong>Plan:</strong> LIC's New Cancer Cover (908)</p>
+                <p><strong>Policy Term:</strong> ${d.term} Yrs (Pay: ${d.ppt} Yrs)</p>
+                <p><strong>Annual Premium:</strong> ₹ ${d.annualBudget.toLocaleString('en-IN')}</p>
+              </div>
+              <div>
+                <p><strong>Sum Assured:</strong> ₹ ${d.sumAssured.toLocaleString('en-IN')}</p>
+                <p><strong>Total Premium Payable:</strong> ₹ ${d.totalInvestment.toLocaleString('en-IN')}</p>
+                <p style="color: #047857;"><strong>Maximum Benefit:</strong> 245% of Sum Assured</p>
+              </div>
+            </div>
+
+            <div style="background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 6px; padding: 10px; margin-bottom: 10px; font-size: 10px; line-height: 1.4;">
+              <h4 style="margin: 0 0 4px; color: #b45309; font-size: 10.5px; font-weight: 900;">1. Early Stage Cancer Benefit:</h4>
+              <p style="margin: 0 0 6px;">Lump sum benefit of <strong>25% of Sum Assured (₹ ${earlyClaim.toLocaleString('en-IN')})</strong> + <strong>Next 3 policy years premium waived (PWB)</strong>.</p>
+              
+              <h4 style="margin: 0 0 4px; color: #b45309; font-size: 10.5px; font-weight: 900;">2. Major Stage Cancer Benefit:</h4>
+              <p style="margin: 0 0 6px;">Lump sum benefit of <strong>100% of Sum Assured (₹ ${majorClaim.toLocaleString('en-IN')})</strong> payable immediately + All future premiums waived off.</p>
+
+              <h4 style="margin: 0 0 4px; color: #b45309; font-size: 10.5px; font-weight: 900;">3. Income Benefit for 10 Years:</h4>
+              <p style="margin: 0;">Guaranteed monthly payout of <strong>1% of Sum Assured (₹ ${monthlyInc.toLocaleString('en-IN')}/month)</strong> for full 10 years (120 months) (Total: ₹ ${totalMonthly.toLocaleString('en-IN')}).</p>
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse; font-size: 9px; text-align: center; border: 1px solid #94a3b8; margin-bottom: 10px;">
+              <thead>
+                <tr style="background: #002B49; color: white;">
+                  <th style="padding: 5px; border: 1px solid #94a3b8;">Policy Year</th>
+                  <th style="padding: 5px; border: 1px solid #94a3b8;">Premium Status</th>
+                  <th style="padding: 5px; border: 1px solid #94a3b8;">Lump Sum Benefit</th>
+                  <th style="padding: 5px; border: 1px solid #94a3b8;">Monthly Income Payout</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 4px; border: 1px solid #cbd5e1;">Year 1 to 2</td>
+                  <td style="padding: 4px; border: 1px solid #cbd5e1;">₹ ${d.annualBudget.toLocaleString('en-IN')}/Yr</td>
+                  <td style="padding: 4px; border: 1px solid #cbd5e1;">-</td>
+                  <td style="padding: 4px; border: 1px solid #cbd5e1;">-</td>
+                </tr>
+                <tr style="background: #fef3c7; font-weight: bold;">
+                  <td style="padding: 4px; border: 1px solid #cbd5e1;">On Early Stage Diagnosis</td>
+                  <td style="padding: 4px; border: 1px solid #cbd5e1;">Next 3 Yrs Waived (₹0)</td>
+                  <td style="padding: 4px; border: 1px solid #cbd5e1; color: #b45309;">₹ ${earlyClaim.toLocaleString('en-IN')} (25% SA)</td>
+                  <td style="padding: 4px; border: 1px solid #cbd5e1;">-</td>
+                </tr>
+                <tr style="background: #fee2e2; font-weight: bold;">
+                  <td style="padding: 4px; border: 1px solid #cbd5e1;">On Major Stage Diagnosis</td>
+                  <td style="padding: 4px; border: 1px solid #cbd5e1; color: #b91c1c;">All Future Premiums Waived</td>
+                  <td style="padding: 4px; border: 1px solid #cbd5e1; color: #b91c1c;">₹ ${majorClaim.toLocaleString('en-IN')} (100% SA)</td>
+                  <td style="padding: 4px; border: 1px solid #cbd5e1; color: #047857;">₹ ${monthlyInc.toLocaleString('en-IN')}/mo (10 Yrs)</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="background: #f1f5f9; padding: 8px; border-radius: 6px; font-size: 8.5px; color: #475569; line-height: 1.3;">
+              <p style="margin: 0; font-weight: bold; color: #0f172a;">Statutory & IRDAI Guidelines (UIN: 512N370V01):</p>
+              <p style="margin: 1px 0 0;">1. This is a pure health benefit policy; there is no loan, surrender value, or maturity amount.</p>
+              <p style="margin: 1px 0 0;">2. A waiting period of 180 days applies from the date of issuance or revival.</p>
+              <p style="margin: 1px 0 0;">3. Survival period of 7 days applies from the date of clinical diagnosis.</p>
+              <p style="margin: 1px 0 0;">4. Tax relief under Section 80D of the Income Tax Act is applicable.</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+	
 
       document.getElementById('quotationPrintableTarget').innerHTML = `
         <div style="width: 100%; color: #0f172a; font-family: 'Inter', sans-serif;">
