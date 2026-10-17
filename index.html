@@ -1875,11 +1875,11 @@ function switchMainTab(tab) {
       { id: 'dhan_vriddhi', company: 'LIC', planNo: '869', name: "LIC's Dhan Vriddhi (869)", tagline: 'Single premium, guaranteed maturity additions.', category: 'endowment', minSumAssured: 125000, allowedPptOptions: [1], minTerm: 10, maxTerm: 18, enforceRules: (t) => ({ term: Math.max(10, Math.min(18, t || 15)), ppt: 1 }) },
       { id: 'jeevan_azad', company: 'LIC', planNo: '868', name: "LIC's Jeevan Azad (868)", tagline: 'Limited premium payment: Pay for (Term - 8) years.', category: 'endowment', minSumAssured: 200000, minTerm: 15, maxTerm: 20, enforceRules: (t) => { let term = Math.max(15, Math.min(20, t || 18)); return { term, ppt: term - 8 }; } },
       { id: 'micro_bachat', company: 'LIC', planNo: '851', name: "LIC's Micro Bachat (851)", tagline: 'Low premium micro-insurance savings for rural families.', category: 'endowment', minSumAssured: 50000, minTerm: 10, maxTerm: 15, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(15, t || 12)), ppt: Math.min(t, p || t) }) },
-      { id: 'index_plus_873', company: 'LIC', planNo: '873', name: "LIC's Index Plus (873)", tagline: 'Nifty 50 / 100 Index linked wealth growth with life cover.', category: 'endowment', minSumAssured: 300000, isFlexible: true, minTerm: 10, maxTerm: 25, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(25, t || 15)), ppt: Math.min(t, p || 10) }) },
-      { id: 'siip_752', company: 'LIC', planNo: '752', name: "LIC's SIIP (752)", tagline: 'Monthly SIP style unit linked plan + Guaranteed additions.', category: 'endowment', minSumAssured: 400000, isFlexible: true, minTerm: 10, maxTerm: 25, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(25, t || 20)), ppt: Math.min(t, p || t) }) },
-      { id: 'nivesh_plus_749', company: 'LIC', planNo: '749', name: "LIC's Nivesh Plus (749)", tagline: 'Single premium share market investment + 10x life cover.', category: 'endowment', minSumAssured: 125000, allowedPptOptions: [1], minTerm: 10, maxTerm: 25, enforceRules: (t) => ({ term: Math.max(10, Math.min(25, t || 15)), ppt: 1 }) },
-      { id: 'cancer_cover_908', company: 'LIC', planNo: '908', name: "LIC's New Cancer Cover (908)", tagline: 'Early stage 25% SA & Major stage 100% SA + 10 yrs income benefit.', category: 'term', minSumAssured: 1000000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(30, t || 20)), ppt: Math.max(10, Math.min(30, t || 20)) }) },
-      { id: 'health_shield_907', company: 'LIC', planNo: '907', name: "LIC's Health Shield (907)", tagline: 'Comprehensive medical & critical illness health protection.', category: 'term', minSumAssured: 500000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(30, t || 20)), ppt: Math.max(10, Math.min(30, t || 20)) }) },
+      { id: 'index_plus_873', company: 'LIC', planNo: '873', name: "LIC's Index Plus (873)", tagline: 'Nifty 50 / 100 Index linked wealth growth with life cover.', category: 'ulip', minSumAssured: 300000, isFlexible: true, minTerm: 10, maxTerm: 25, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(25, t || 15)), ppt: Math.min(t, p || 10) }) },
+      { id: 'siip_752', company: 'LIC', planNo: '752', name: "LIC's SIIP (752)", tagline: 'Monthly SIP style unit linked plan + Guaranteed additions.', category: 'ulip', minSumAssured: 400000, isFlexible: true, minTerm: 10, maxTerm: 25, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(25, t || 20)), ppt: Math.min(t, p || t) }) },
+      { id: 'nivesh_plus_749', company: 'LIC', planNo: '749', name: "LIC's Nivesh Plus (749)", tagline: 'Single premium share market investment + 10x life cover.', category: 'ulip', minSumAssured: 125000, allowedPptOptions: [1], minTerm: 10, maxTerm: 25, enforceRules: (t) => ({ term: Math.max(10, Math.min(25, t || 15)), ppt: 1 }) },
+      { id: 'cancer_cover_908', company: 'LIC', planNo: '908', name: "LIC's New Cancer Cover (908)", tagline: 'Early stage 25% SA & Major stage 100% SA + 10 yrs income benefit.', category: 'health_cancer', minSumAssured: 1000000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(30, t || 20)), ppt: Math.max(10, Math.min(30, t || 20)) }) },
+      { id: 'health_shield_907', company: 'LIC', planNo: '907', name: "LIC's Health Shield (907)", tagline: 'Comprehensive medical & critical illness health protection.', category: 'health_cancer', minSumAssured: 500000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(30, t || 20)), ppt: Math.max(10, Math.min(30, t || 20)) }) },
       { id: 'jeevan_shanti_858', company: 'LIC', planNo: '858', name: "LIC's New Jeevan Shanti (858)", tagline: 'Single premium deferred annuity - Guaranteed lifetime fixed pension.', category: 'pension', minSumAssured: 150000, allowedPptOptions: [1], minTerm: 5, maxTerm: 12, enforceRules: (t) => ({ term: Math.max(5, Math.min(12, t || 5)), ppt: 1 }) },
       { id: 'jeevan_akshay_857', company: 'LIC', planNo: '857', name: "LIC's Jeevan Akshay VII (857)", tagline: 'Immediate lifetime annuity - Immediate guaranteed monthly pension.', category: 'pension', minSumAssured: 100000, allowedPptOptions: [1], minTerm: 1, maxTerm: 1, enforceRules: () => ({ term: 1, ppt: 1 }) },
 		
@@ -1986,8 +1986,12 @@ function switchMainTab(tab) {
                                        'px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold';
       });
       window.activeQuickCat = cat;
+	  if (cat !== 'all') {
+        currentViewMode = 'all';
+      }
       applyPolicyFilters();
     }
+
 
     function getAnnualBudget() {
       const raw = Number(document.getElementById('calcBudgetInput').value) || 5000;
