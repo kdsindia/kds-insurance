@@ -2518,7 +2518,7 @@ function switchMainTab(tab) {
         returnHeaderSnippet = `₹ ${d.estimatedMaturity.toLocaleString('en-IN')}*`;
       }
 
-	// AGAR CANCER COVER 908 HAI TO BROCHURE KE ANUSAAR SPECIAL TABLE DIKHEGI
+	// AGAR CANCER COVER 908 HAI TO BROCHURE KE ANUSAAR 15 SAAL KI SAALWAR TABLE DIKHEGI
       if (d.scheme.id === 'cancer_cover_908') {
         const earlyClaim = Math.round(d.sumAssured * 0.25);
         const majorClaim = d.sumAssured;
@@ -2529,84 +2529,93 @@ function switchMainTab(tab) {
           <div style="width: 100%; color: #0f172a; font-family: 'Inter', sans-serif;">
             <div style="border-bottom: 2px solid #002B49; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
               <div>
-                <h1 style="font-size: 15px; font-weight: 900; color: #002B49; margin: 0;">KDS INSURANCE CONSULTANCY & SERVICES</h1>
-                <p style="font-size: 9.5px; font-weight: bold; color: #00558F; margin: 2px 0 0;">Authorized Advisor: MANOHER SINGH (Mo: 8440096343)</p>
-                <p style="font-size: 8.5px; color: #475569; margin: 1px 0 0;">BASEMENT HALL MR COMPLEX, MALWARA, RANIWARA, JALORE (RAJ.) 343039</p>
+                <h1 style="font-size: 14px; font-weight: 900; color: #002B49; margin: 0;">KDS INSURANCE CONSULTANCY & SERVICES</h1>
+                <p style="font-size: 9px; font-weight: bold; color: #00558F; margin: 2px 0 0;">Authorized Advisor: MANOHER SINGH (Mo: 8440096343)</p>
+                <p style="font-size: 8px; color: #475569; margin: 1px 0 0;">BASEMENT HALL MR COMPLEX, MALWARA, RANIWARA, JALORE (RAJ.) 343039</p>
               </div>
               <div style="text-align: right;">
-                <span style="background: #FFAE00; color: #002B49; font-weight: 900; font-size: 9.5px; padding: 2px 6px; border-radius: 4px; display: inline-block;">
+                <span style="background: #FFAE00; color: #002B49; font-weight: 900; font-size: 9px; padding: 2px 6px; border-radius: 4px; display: inline-block;">
                   LIC NEW CANCER COVER (PLAN 908)
                 </span>
-                <p style="font-size: 9px; color: #64748b; margin: 2px 0 0;">Date: ${dateStr}</p>
+                <p style="font-size: 8.5px; color: #64748b; margin: 2px 0 0;">Date: ${dateStr}</p>
               </div>
             </div>
 
-            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 10px;">
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 9.5px;">
               <div>
-                <p><strong>Customer:</strong> ${custName}</p>
-                <p><strong>Mobile:</strong> ${custPhone}</p>
-                <p><strong>Entry Age:</strong> ${d.userAge} Years</p>
+                <p style="margin: 2px 0;"><strong>Customer:</strong> ${custName}</p>
+                <p style="margin: 2px 0;"><strong>Mobile:</strong> ${custPhone}</p>
+                <p style="margin: 2px 0;"><strong>Entry Age:</strong> ${d.userAge} Years</p>
               </div>
               <div>
-                <p><strong>Plan:</strong> LIC's New Cancer Cover (908)</p>
-                <p><strong>Policy Term:</strong> ${d.term} Yrs (Pay: ${d.ppt} Yrs)</p>
-                <p><strong>Annual Premium:</strong> ₹ ${d.annualBudget.toLocaleString('en-IN')}</p>
+                <p style="margin: 2px 0;"><strong>Plan:</strong> LIC's New Cancer Cover (908)</p>
+                <p style="margin: 2px 0;"><strong>Policy Term:</strong> ${d.term} Yrs (Pay: ${d.ppt} Yrs)</p>
+                <p style="margin: 2px 0;"><strong>Annual Premium:</strong> ₹ ${d.annualBudget.toLocaleString('en-IN')}</p>
               </div>
               <div>
-                <p><strong>Sum Assured:</strong> ₹ ${d.sumAssured.toLocaleString('en-IN')}</p>
-                <p><strong>Total Premium Payable:</strong> ₹ ${d.totalInvestment.toLocaleString('en-IN')}</p>
-                <p style="color: #047857;"><strong>Maximum Benefit:</strong> 245% of Sum Assured</p>
+                <p style="margin: 2px 0;"><strong>Sum Assured:</strong> ₹ ${d.sumAssured.toLocaleString('en-IN')}</p>
+                <p style="margin: 2px 0;"><strong>Total Premium:</strong> ₹ ${d.totalInvestment.toLocaleString('en-IN')}</p>
+                <p style="margin: 2px 0; color: #047857;"><strong>Max Benefit:</strong> 245% of SA</p>
               </div>
             </div>
 
-            <div style="background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 6px; padding: 10px; margin-bottom: 10px; font-size: 10px; line-height: 1.4;">
-              <h4 style="margin: 0 0 4px; color: #b45309; font-size: 10.5px; font-weight: 900;">1. Early Stage Cancer Benefit:</h4>
-              <p style="margin: 0 0 6px;">Lump sum benefit of <strong>25% of Sum Assured (₹ ${earlyClaim.toLocaleString('en-IN')})</strong> + <strong>Next 3 policy years premium waived (PWB)</strong>.</p>
-              
-              <h4 style="margin: 0 0 4px; color: #b45309; font-size: 10.5px; font-weight: 900;">2. Major Stage Cancer Benefit:</h4>
-              <p style="margin: 0 0 6px;">Lump sum benefit of <strong>100% of Sum Assured (₹ ${majorClaim.toLocaleString('en-IN')})</strong> payable immediately + All future premiums waived off.</p>
-
-              <h4 style="margin: 0 0 4px; color: #b45309; font-size: 10.5px; font-weight: 900;">3. Income Benefit for 10 Years:</h4>
-              <p style="margin: 0;">Guaranteed monthly payout of <strong>1% of Sum Assured (₹ ${monthlyInc.toLocaleString('en-IN')}/month)</strong> for full 10 years (120 months) (Total: ₹ ${totalMonthly.toLocaleString('en-IN')}).</p>
+            <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 8px; margin-bottom: 10px; font-size: 9.5px; line-height: 1.3;">
+              <p style="margin: 0 0 3px; color: #b45309; font-weight: 900;">1. Early Stage Cancer: 25% SA (₹ ${earlyClaim.toLocaleString('en-IN')}) + Next 3 Yrs Premium Waived.</p>
+              <p style="margin: 0; color: #b91c1c; font-weight: 900;">2. Major Stage Cancer: 100% SA (₹ ${majorClaim.toLocaleString('en-IN')}) + ₹ ${monthlyInc.toLocaleString('en-IN')}/mo for 10 Yrs + Future Premiums Waived.</p>
             </div>
 
-            <table style="width: 100%; border-collapse: collapse; font-size: 9px; text-align: center; border: 1px solid #94a3b8; margin-bottom: 10px;">
+            <h3 style="font-size: 10px; font-weight: 900; color: #002B49; margin: 0 0 4px 0; text-transform: uppercase;">
+              15-Saal Ki Saalwar Vivran Talika (Year-by-Year Schedule)
+            </h3>
+
+            <table style="width: 100%; border-collapse: collapse; font-size: 8.5px; text-align: center; border: 1px solid #94a3b8; margin-bottom: 8px;">
               <thead>
                 <tr style="background: #002B49; color: white;">
-                  <th style="padding: 5px; border: 1px solid #94a3b8;">Policy Year</th>
-                  <th style="padding: 5px; border: 1px solid #94a3b8;">Premium Status</th>
-                  <th style="padding: 5px; border: 1px solid #94a3b8;">Lump Sum Benefit</th>
-                  <th style="padding: 5px; border: 1px solid #94a3b8;">Monthly Income Payout</th>
+                  <th style="padding: 4px; border: 1px solid #94a3b8;">Policy Year / Age</th>
+                  <th style="padding: 4px; border: 1px solid #94a3b8;">Premium / Status</th>
+                  <th style="padding: 4px; border: 1px solid #94a3b8;">Lump Sum Benefit (Ek-Mukht)</th>
+                  <th style="padding: 4px; border: 1px solid #94a3b8;">Monthly Income Payout (Masik Aay)</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td style="padding: 4px; border: 1px solid #cbd5e1;">Year 1 to 2</td>
-                  <td style="padding: 4px; border: 1px solid #cbd5e1;">₹ ${d.annualBudget.toLocaleString('en-IN')}/Yr</td>
-                  <td style="padding: 4px; border: 1px solid #cbd5e1;">-</td>
-                  <td style="padding: 4px; border: 1px solid #cbd5e1;">-</td>
-                </tr>
-                <tr style="background: #fef3c7; font-weight: bold;">
-                  <td style="padding: 4px; border: 1px solid #cbd5e1;">On Early Stage Diagnosis</td>
-                  <td style="padding: 4px; border: 1px solid #cbd5e1;">Next 3 Yrs Waived (₹0)</td>
-                  <td style="padding: 4px; border: 1px solid #cbd5e1; color: #b45309;">₹ ${earlyClaim.toLocaleString('en-IN')} (25% SA)</td>
-                  <td style="padding: 4px; border: 1px solid #cbd5e1;">-</td>
-                </tr>
-                <tr style="background: #fee2e2; font-weight: bold;">
-                  <td style="padding: 4px; border: 1px solid #cbd5e1;">On Major Stage Diagnosis</td>
-                  <td style="padding: 4px; border: 1px solid #cbd5e1; color: #b91c1c;">All Future Premiums Waived</td>
-                  <td style="padding: 4px; border: 1px solid #cbd5e1; color: #b91c1c;">₹ ${majorClaim.toLocaleString('en-IN')} (100% SA)</td>
-                  <td style="padding: 4px; border: 1px solid #cbd5e1; color: #047857;">₹ ${monthlyInc.toLocaleString('en-IN')}/mo (10 Yrs)</td>
-                </tr>
+                ${d.yearRows.map((r, idx) => {
+                  let statusText = `₹ ${d.annualBudget.toLocaleString('en-IN')}`;
+                  let lumpSum = '-';
+                  let monthlyPayout = '-';
+                  let rowBg = (idx % 2 === 1) ? '#f8fafc' : '#ffffff';
+
+                  if (r.year === 3) {
+                    statusText = `₹ ${d.annualBudget.toLocaleString('en-IN')}`;
+                    lumpSum = `₹ ${earlyClaim.toLocaleString('en-IN')} (Early Stage)`;
+                    rowBg = '#fef3c7';
+                  } else if (r.year >= 4 && r.year <= 6) {
+                    statusText = 'Maaf (Waived PWB)';
+                  } else if (r.year === 8) {
+                    statusText = `₹ ${d.annualBudget.toLocaleString('en-IN')}`;
+                    lumpSum = `₹ ${majorClaim.toLocaleString('en-IN')} (Major Stage)`;
+                    monthlyPayout = `₹ ${monthlyInc.toLocaleString('en-IN')} (5 x ₹${monthlyInc})`;
+                    rowBg = '#fee2e2';
+                  } else if (r.year >= 9) {
+                    statusText = 'Dey Nahi (Waived)';
+                    monthlyPayout = `₹ ${totalMonthly.toLocaleString('en-IN')} (12 x ₹${monthlyInc})`;
+                  }
+
+                  return `
+                    <tr style="background: ${rowBg};">
+                      <td style="padding: 3px; border: 1px solid #cbd5e1; font-weight: bold;">${r.year} /${r.age}</td>
+                      <td style="padding: 3px; border: 1px solid #cbd5e1;">${statusText}</td>
+                      <td style="padding: 3px; border: 1px solid #cbd5e1; font-weight: bold; color: ${r.year === 3 ? '#b45309' : (r.year === 8 ? '#b91c1c' : 'inherit')};">${lumpSum}</td>
+                      <td style="padding: 3px; border: 1px solid #cbd5e1; font-weight: bold; color: #047857;">${monthlyPayout}</td>
+                    </tr>
+                  `;
+                }).join('')}
               </tbody>
             </table>
 
-            <div style="background: #f1f5f9; padding: 8px; border-radius: 6px; font-size: 8.5px; color: #475569; line-height: 1.3;">
-              <p style="margin: 0; font-weight: bold; color: #0f172a;">Statutory & IRDAI Guidelines (UIN: 512N370V01):</p>
-              <p style="margin: 1px 0 0;">1. This is a pure health benefit policy; there is no loan, surrender value, or maturity amount.</p>
-              <p style="margin: 1px 0 0;">2. A waiting period of 180 days applies from the date of issuance or revival.</p>
-              <p style="margin: 1px 0 0;">3. Survival period of 7 days applies from the date of clinical diagnosis.</p>
-              <p style="margin: 1px 0 0;">4. Tax relief under Section 80D of the Income Tax Act is applicable.</p>
+            <div style="background: #f1f5f9; padding: 6px; border-radius: 4px; font-size: 8px; color: #475569; line-height: 1.2;">
+              <p style="margin: 0; font-weight: bold; color: #0f172a;">Zaroori Shartein (Statutory Guidelines - UIN: 512N370V01):</p>
+              <p style="margin: 1px 0 0;">1. Policy jari hone ya dobara chalu hone ke 180 dinon ke bhitar cancer ka nidan hone par labh nahi milega.</p>
+              <p style="margin: 1px 0 0;">2. Nidan ke 7 dinon ke bhitar mrityu hone par bhi labh nahi milta. Yeh ek health plan hai (Maturity, Surrender ya Loan ka labh nahi hai).</p>
             </div>
           </div>
         `;
