@@ -681,7 +681,9 @@
           <button id="catFilterBtn_whole_life" onclick="selectQuickCategory('whole_life')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">♾️ आजीवन आय / Whole Life</button>
           <button id="catFilterBtn_term" onclick="selectQuickCategory('term')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">🛡️ टर्म प्लान / Pure Term</button>
           <button id="catFilterBtn_pension" onclick="selectQuickCategory('pension')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">👴 पेंशन प्लान / Pension</button>
-        </div>
+          <button id="catFilterBtn_ulip" onclick="selectQuickCategory('ulip')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">📈 शेयर मार्केट / ULIP</button>
+          <button id="catFilterBtn_health_cancer" onclick="selectQuickCategory('health_cancer')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition border bg-white text-slate-700 border-slate-300 hover:border-brand-gold">🎗️ कैंसर व हेल्थ / Health</button>
+		</div>
 
         <div id="policiesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
       </section>
@@ -1868,12 +1870,19 @@ function switchMainTab(tab) {
       { id: 'digi_term', company: 'LIC', planNo: '876', name: "LIC's Digi Term (876)", nameHi: "एलआईसी डिजी टर्म (876)", tagline: 'Direct pure term plan, high financial protection at nominal cost.', category: 'term', minSumAssured: 5000000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 40, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(40, term || 30)), ppt: Math.min(term, ppt || term) }) },
       { id: 'jeevan_raksha', company: 'LIC', planNo: '894', name: "LIC's Jeevan Raksha (894)", nameHi: "एलआईसी जीवन रक्षा (894)", tagline: 'Affordable pure term insurance suraksha cover standard terms ke sath.', category: 'term', minSumAssured: 200000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 40, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(40, term || 25)), ppt: Math.min(term, ppt || term) }) },
       { id: 'new_pension_plus', company: 'LIC', planNo: '867', name: "LIC's New Pension Plus (867)", nameHi: "एलआईसी न्यू पेंशन प्लस (867)", tagline: 'Retirement corpus build karne hetu pension product.', category: 'pension', minSumAssured: 100000, isAnnuity: true, isFlexible: true, minTerm: 10, maxTerm: 42, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(42, term || 20)), ppt: Math.min(term, ppt || 15) }) },
-{ id: 'bima_ratna', company: 'LIC', planNo: '864', name: "LIC's Bima Ratna (864)", tagline: 'Guaranteed additions + Guaranteed money back benefits.', category: 'money_back', minSumAssured: 500000, allowedCombinations: [{ term: 15, ppt: 11 }, { term: 20, ppt: 16 }, { term: 25, ppt: 21 }], enforceRules: (t) => (t <= 18 ? { term: 15, ppt: 11 } : (t <= 22 ? { term: 20, ppt: 16 } : { term: 25, ppt: 21 })) },
+      { id: 'bima_ratna', company: 'LIC', planNo: '864', name: "LIC's Bima Ratna (864)", tagline: 'Guaranteed additions + Guaranteed money back benefits.', category: 'money_back', minSumAssured: 500000, allowedCombinations: [{ term: 15, ppt: 11 }, { term: 20, ppt: 16 }, { term: 25, ppt: 21 }], enforceRules: (t) => (t <= 18 ? { term: 15, ppt: 11 } : (t <= 22 ? { term: 20, ppt: 16 } : { term: 25, ppt: 21 })) },
       { id: 'dhan_rekha', company: 'LIC', planNo: '863', name: "LIC's Dhan Rekha (863)", tagline: 'Special women rates + Regular survival cashbacks.', category: 'money_back', minSumAssured: 200000, allowedCombinations: [{ term: 20, ppt: 10 }, { term: 30, ppt: 15 }, { term: 40, ppt: 20 }], enforceRules: (t) => (t <= 25 ? { term: 20, ppt: 10 } : (t <= 35 ? { term: 30, ppt: 15 } : { term: 40, ppt: 20 })) },
       { id: 'dhan_vriddhi', company: 'LIC', planNo: '869', name: "LIC's Dhan Vriddhi (869)", tagline: 'Single premium, guaranteed maturity additions.', category: 'endowment', minSumAssured: 125000, allowedPptOptions: [1], minTerm: 10, maxTerm: 18, enforceRules: (t) => ({ term: Math.max(10, Math.min(18, t || 15)), ppt: 1 }) },
       { id: 'jeevan_azad', company: 'LIC', planNo: '868', name: "LIC's Jeevan Azad (868)", tagline: 'Limited premium payment: Pay for (Term - 8) years.', category: 'endowment', minSumAssured: 200000, minTerm: 15, maxTerm: 20, enforceRules: (t) => { let term = Math.max(15, Math.min(20, t || 18)); return { term, ppt: term - 8 }; } },
       { id: 'micro_bachat', company: 'LIC', planNo: '851', name: "LIC's Micro Bachat (851)", tagline: 'Low premium micro-insurance savings for rural families.', category: 'endowment', minSumAssured: 50000, minTerm: 10, maxTerm: 15, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(15, t || 12)), ppt: Math.min(t, p || t) }) },
-
+      { id: 'index_plus_873', company: 'LIC', planNo: '873', name: "LIC's Index Plus (873)", tagline: 'Nifty 50 / 100 Index linked wealth growth with life cover.', category: 'endowment', minSumAssured: 300000, isFlexible: true, minTerm: 10, maxTerm: 25, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(25, t || 15)), ppt: Math.min(t, p || 10) }) },
+      { id: 'siip_752', company: 'LIC', planNo: '752', name: "LIC's SIIP (752)", tagline: 'Monthly SIP style unit linked plan + Guaranteed additions.', category: 'endowment', minSumAssured: 400000, isFlexible: true, minTerm: 10, maxTerm: 25, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(25, t || 20)), ppt: Math.min(t, p || t) }) },
+      { id: 'nivesh_plus_749', company: 'LIC', planNo: '749', name: "LIC's Nivesh Plus (749)", tagline: 'Single premium share market investment + 10x life cover.', category: 'endowment', minSumAssured: 125000, allowedPptOptions: [1], minTerm: 10, maxTerm: 25, enforceRules: (t) => ({ term: Math.max(10, Math.min(25, t || 15)), ppt: 1 }) },
+      { id: 'cancer_cover_908', company: 'LIC', planNo: '908', name: "LIC's New Cancer Cover (908)", tagline: 'Early stage 25% SA & Major stage 100% SA + 10 yrs income benefit.', category: 'term', minSumAssured: 1000000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(30, t || 20)), ppt: Math.max(10, Math.min(30, t || 20)) }) },
+      { id: 'health_shield_907', company: 'LIC', planNo: '907', name: "LIC's Health Shield (907)", tagline: 'Comprehensive medical & critical illness health protection.', category: 'term', minSumAssured: 500000, isPureTerm: true, isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (t, p) => ({ term: Math.max(10, Math.min(30, t || 20)), ppt: Math.max(10, Math.min(30, t || 20)) }) },
+      { id: 'jeevan_shanti_858', company: 'LIC', planNo: '858', name: "LIC's New Jeevan Shanti (858)", tagline: 'Single premium deferred annuity - Guaranteed lifetime fixed pension.', category: 'pension', minSumAssured: 150000, allowedPptOptions: [1], minTerm: 5, maxTerm: 12, enforceRules: (t) => ({ term: Math.max(5, Math.min(12, t || 5)), ppt: 1 }) },
+      { id: 'jeevan_akshay_857', company: 'LIC', planNo: '857', name: "LIC's Jeevan Akshay VII (857)", tagline: 'Immediate lifetime annuity - Immediate guaranteed monthly pension.', category: 'pension', minSumAssured: 100000, allowedPptOptions: [1], minTerm: 1, maxTerm: 1, enforceRules: () => ({ term: 1, ppt: 1 }) },
+		
       { id: 'sbi_platina_plus', company: 'SBI Life', planNo: 'SBI-01', name: "SBI Life - Smart Platina Plus", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना प्लस", tagline: 'Guaranteed regular income post PPT + 110% Return of Premium at maturity.', category: 'whole_life', minSumAssured: 250000, isWholeLifeIncome: true, incomePercent: 0.09, allowedPptOptions: [7, 8, 10, 12, 15, 20], enforceRules: (term, ppt) => ({ term: Math.max(15, Math.min(35, term || 25)), ppt: Math.min(20, ppt || 15) }) },
       { id: 'sbi_platina_supreme', company: 'SBI Life', planNo: 'SBI-02', name: "SBI Life - Smart Platina Supreme", nameHi: "एसबीआई लाइफ - स्मार्ट प्लेटिना सुप्रीम", tagline: 'High financial corpus generation with guaranteed maturity additions.', category: 'endowment', minSumAssured: 300000, allowedPptOptions: [7, 8, 10, 12, 15, 20], isFlexible: true, minTerm: 10, maxTerm: 30, enforceRules: (term, ppt) => ({ term: Math.max(10, Math.min(30, term || 20)), ppt: Math.min(20, ppt || 15) }) },
       { id: 'indiafirst_gold', company: 'IndiaFirst', planNo: 'CSC-02', name: "IndiaFirst G.O.L.D (Guarantee of Life Dreams)", nameHi: "इंडियाफर्स्ट गोल्ड (लाइफ ड्रीम्स)", tagline: 'Pay for limited years and get guaranteed regular income + 100% premium back.', category: 'whole_life', minSumAssured: 150000, isWholeLifeIncome: true, incomePercent: 0.085, allowedPptOptions: [5, 6, 8, 10, 12, 15, 20], enforceRules: (term, ppt) => ({ term: Math.max(20, Math.min(40, term || 30)), ppt: Math.min(20, ppt || 15) }) },
@@ -1969,7 +1978,7 @@ function switchMainTab(tab) {
     }
 
     function selectQuickCategory(cat) {
-      const chipIds = ['all', 'endowment', 'money_back', 'whole_life', 'term', 'pension'];
+      const chipIds = ['all', 'endowment', 'money_back', 'whole_life', 'term', 'pension', 'ulip', 'health_cancer'];
       chipIds.forEach(id => {
         const btn = document.getElementById(`catFilterBtn_${id}`);
         if (!btn) return;
@@ -2081,6 +2090,17 @@ function switchMainTab(tab) {
           let bonusTotal = sumAssured * annualBonusRate * term;
           let fab = (term >= 25) ? (sumAssured * 0.45) : (term >= 21 ? sumAssured * 0.25 : sumAssured * 0.12);
           estimatedMaturity = Math.round(sumAssured + bonusTotal + fab);
+        } else if (scheme.id === 'index_plus_873' || scheme.id === 'siip_752' || scheme.id === 'nivesh_plus_749') {
+          // ULIP (Share Market Linked) Growth Projection (~10-12% Compounding)
+          estimatedMaturity = Math.round(totalInvestment * 2.10);
+        } else if (scheme.id === 'jeevan_shanti_858') {
+          // Guaranteed Lifetime Annuity (Deferred)
+          regularAnnualIncome = Math.round(totalInvestment * 0.082);
+          estimatedMaturity = totalInvestment;
+        } else if (scheme.id === 'jeevan_akshay_857') {
+          // Immediate Guaranteed Annuity
+          regularAnnualIncome = Math.round(totalInvestment * 0.068);
+          estimatedMaturity = totalInvestment;
         } else if (scheme.id === 'jeevan_umang') {
           regularAnnualIncome = Math.round(sumAssured * 0.08);
           estimatedMaturity = Math.round(sumAssured * 2.85);
