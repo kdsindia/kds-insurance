@@ -478,33 +478,31 @@
       btn.disabled = true;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
 
-      const formData = new FormData();
-      formData.append('action', 'adminLogin');
-      formData.append('username', u);
-      formData.append('password', p);
+      // Google Apps Script ke parameter format ke anusaar URL request
+      const verifyUrl = GOOGLE_SHEET_API_URL + 
+        "?action=adminLogin" +
+        "&username=" + encodeURIComponent(u) +
+        "&password=" + encodeURIComponent(p);
 
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: 'POST',
-        body: formData
-      })
-      .then(r => r.json())
-      .then(res => {
-        if (res && res.status === 'success' && res.token) {
-          sessionStorage.setItem('kds_admin_session', res.token);
-          showDashboardView();
-          fetchAdminData();
-          fetchClaimsData();
-        } else {
-          showToast("Galat Username ya Password!");
-        }
-      })
-      .catch(() => {
-        showToast("Server connection error! Dobara prayas karein.");
-      })
-      .finally(() => {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-lock text-brand-gold"></i> <span>Secure Sign In &rarr;</span>';
-      });
+      fetch(verifyUrl)
+        .then(r => r.json())
+        .then(res => {
+          if (res && res.status === 'success' && res.token) {
+            sessionStorage.setItem('kds_admin_session', res.token);
+            showDashboardView();
+            fetchAdminData();
+            fetchClaimsData();
+          } else {
+            showToast("Galat Username ya Password!");
+          }
+        })
+        .catch(() => {
+          showToast("Server connection error! Dobara prayas karein.");
+        })
+        .finally(() => {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-lock text-brand-gold"></i> <span>Secure Sign In &rarr;</span>';
+        });
     }
 
     function checkAdminSession() {
