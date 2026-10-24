@@ -7,6 +7,10 @@
   <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  
   <!-- Tailwind CSS & Font Awesome Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -466,40 +470,42 @@
     }
 
     function handleAdminLogin(e) {
-      e.preventDefault();
-      const u = document.getElementById('adminUser').value.trim();
-      const p = document.getElementById('adminPass').value.trim();
-      const btn = document.getElementById('btnLogin');
+  e.preventDefault();
+  const u = document.getElementById('adminUser').value.trim();
+  const p = document.getElementById('adminPass').value.trim();
+  const btn = document.getElementById('btnLogin');
 
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
 
-      // Zero-exposure authentication (Backend verification)
-      const verifyUrl = GOOGLE_SHEET_API_URL + 
-        "?action=adminLogin" +
-        "&username=" + encodeURIComponent(u) +
-        "&password=" + encodeURIComponent(p);
+  const formData = new FormData();
+  formData.append('action', 'adminLogin');
+  formData.append('username', u);
+  formData.append('password', p);
 
-      fetch(verifyUrl)
-        .then(r => r.json())
-        .then(res => {
-          if (res && res.status === 'success' && res.token) {
-            sessionStorage.setItem('kds_admin_session', res.token);
-            showDashboardView();
-            fetchAdminData();
-            fetchClaimsData();
-          } else {
-            showToast("Galat Username ya Password!");
-          }
-        })
-        .catch(() => {
-          showToast("Server connection error! Dobara prayas karein.");
-        })
-        .finally(() => {
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-lock text-brand-gold"></i> <span>Secure Sign In &rarr;</span>';
-        });
+  fetch(GOOGLE_SHEET_API_URL, {
+    method: 'POST',
+    body: formData
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (res && res.status === 'success' && res.token) {
+      sessionStorage.setItem('kds_admin_session', res.token);
+      showDashboardView();
+      fetchAdminData();
+      fetchClaimsData();
+    } else {
+      showToast("Galat Username ya Password!");
     }
+  })
+  .catch(() => {
+    showToast("Server connection error! Dobara prayas karein.");
+  })
+  .finally(() => {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-lock text-brand-gold"></i> <span>Secure Sign In &rarr;</span>';
+  });
+}
 
     function checkAdminSession() {
       const token = sessionStorage.getItem('kds_admin_session');
@@ -925,37 +931,37 @@
     }
 
     function handleClaimSubmit(e) {
-      e.preventDefault();
-      const rowId = document.getElementById('claimEditRowId').value;
-      const btn = document.getElementById('btnSaveClaim');
+  e.preventDefault();
+  const rowId = document.getElementById('claimEditRowId').value;
+  const btn = document.getElementById('btnSaveClaim');
 
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating Claim...';
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating Claim...';
 
-      const formData = new FormData();
-      formData.append('action', 'adminUpdateClaim');
-      formData.append('rowId', rowId);
-      formData.append('status', document.getElementById('claimEditStatus').value);
-      formData.append('adminRemarks', document.getElementById('claimEditAdminRemarks').value);
+  const formData = new FormData();
+  formData.append('action', 'adminUpdateClaim');
+  formData.append('rowId', rowId);
+  formData.append('status', document.getElementById('claimEditStatus').value);
+  formData.append('adminRemarks', document.getElementById('claimEditAdminRemarks').value);
 
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
-      })
-      .then(() => {
-        showToast('Claim status update ho gaya!');
-        closeEditClaimModal();
-        setTimeout(fetchClaimsData, 1200);
-      })
-      .catch(() => {
-        showToast('Claim update error!');
-      })
-      .finally(() => {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Claim Status Update Karein</span>';
-      });
-    }
+  fetch(GOOGLE_SHEET_API_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: formData
+  })
+  .then(() => {
+    showToast('Claim status update ho gaya!');
+    closeEditClaimModal();
+    setTimeout(fetchClaimsData, 1200);
+  })
+  .catch(() => {
+    showToast('Claim update error!');
+  })
+  .finally(() => {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Claim Status Update Karein</span>';
+  });
+}
     
     function showToast(msg) {
       const toast = document.getElementById('toastNotification');
