@@ -470,42 +470,42 @@
     }
 
     function handleAdminLogin(e) {
-  e.preventDefault();
-  const u = document.getElementById('adminUser').value.trim();
-  const p = document.getElementById('adminPass').value.trim();
-  const btn = document.getElementById('btnLogin');
+      e.preventDefault();
+      const u = document.getElementById('adminUser').value.trim();
+      const p = document.getElementById('adminPass').value.trim();
+      const btn = document.getElementById('btnLogin');
 
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
 
-  const formData = new FormData();
-  formData.append('action', 'adminLogin');
-  formData.append('username', u);
-  formData.append('password', p);
+      const formData = new FormData();
+      formData.append('action', 'adminLogin');
+      formData.append('username', u);
+      formData.append('password', p);
 
-  fetch(GOOGLE_SHEET_API_URL, {
-    method: 'POST',
-    body: formData
-  })
-  .then(r => r.json())
-  .then(res => {
-    if (res && res.status === 'success' && res.token) {
-      sessionStorage.setItem('kds_admin_session', res.token);
-      showDashboardView();
-      fetchAdminData();
-      fetchClaimsData();
-    } else {
-      showToast("Galat Username ya Password!");
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: 'POST',
+        body: formData
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res && res.status === 'success' && res.token) {
+          sessionStorage.setItem('kds_admin_session', res.token);
+          showDashboardView();
+          fetchAdminData();
+          fetchClaimsData();
+        } else {
+          showToast("Galat Username ya Password!");
+        }
+      })
+      .catch(() => {
+        showToast("Server connection error! Dobara prayas karein.");
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-lock text-brand-gold"></i> <span>Secure Sign In &rarr;</span>';
+      });
     }
-  })
-  .catch(() => {
-    showToast("Server connection error! Dobara prayas karein.");
-  })
-  .finally(() => {
-    btn.disabled = false;
-    btn.innerHTML = '<i class="fa-solid fa-lock text-brand-gold"></i> <span>Secure Sign In &rarr;</span>';
-  });
-}
 
     function checkAdminSession() {
       const token = sessionStorage.getItem('kds_admin_session');
@@ -528,6 +528,8 @@
 
     function fetchAdminData() {
       const tbody = document.getElementById('adminTableBody');
+      const adminToken = sessionStorage.getItem('kds_admin_session') || '';
+      
       tbody.innerHTML = `
         <tr>
           <td colspan="7" class="text-center py-12 text-slate-400 font-bold">
@@ -537,7 +539,7 @@
         </tr>
       `;
 
-      fetch(GOOGLE_SHEET_API_URL + "?action=adminGetAllQuotations")
+      fetch(GOOGLE_SHEET_API_URL + "?action=adminGetAllQuotations&token=" + encodeURIComponent(adminToken))
         .then(r => r.json())
         .then(res => {
           if (res && res.status === "success" && Array.isArray(res.data)) {
@@ -728,6 +730,7 @@
       formData.append('renewedPolicyNumber', document.getElementById('editRenewedPolicyNumber').value);
       formData.append('renewalRequest', document.getElementById('editRenewalRequest').value);
       formData.append('renewedDownloadLink', document.getElementById('editRenewedDownloadLink').value);
+      formData.append('token', sessionStorage.getItem('kds_admin_session') || '');
 
       fetch(GOOGLE_SHEET_API_URL, {
         method: 'POST',
@@ -785,6 +788,8 @@
 
     function fetchClaimsData() {
       const tbody = document.getElementById('claimsTableBody');
+      const adminToken = sessionStorage.getItem('kds_admin_session') || '';
+      
       tbody.innerHTML = `
         <tr>
           <td colspan="7" class="text-center py-12 text-slate-400 font-bold">
@@ -794,7 +799,7 @@
         </tr>
       `;
 
-      fetch(GOOGLE_SHEET_API_URL + "?action=adminGetAllClaims")
+      fetch(GOOGLE_SHEET_API_URL + "?action=adminGetAllClaims&token=" + encodeURIComponent(adminToken))
         .then(r => r.json())
         .then(res => {
           if (res && res.status === "success" && Array.isArray(res.data)) {
@@ -931,37 +936,38 @@
     }
 
     function handleClaimSubmit(e) {
-  e.preventDefault();
-  const rowId = document.getElementById('claimEditRowId').value;
-  const btn = document.getElementById('btnSaveClaim');
+      e.preventDefault();
+      const rowId = document.getElementById('claimEditRowId').value;
+      const btn = document.getElementById('btnSaveClaim');
 
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating Claim...';
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating Claim...';
 
-  const formData = new FormData();
-  formData.append('action', 'adminUpdateClaim');
-  formData.append('rowId', rowId);
-  formData.append('status', document.getElementById('claimEditStatus').value);
-  formData.append('adminRemarks', document.getElementById('claimEditAdminRemarks').value);
+      const formData = new FormData();
+      formData.append('action', 'adminUpdateClaim');
+      formData.append('rowId', rowId);
+      formData.append('status', document.getElementById('claimEditStatus').value);
+      formData.append('adminRemarks', document.getElementById('claimEditAdminRemarks').value);
+      formData.append('token', sessionStorage.getItem('kds_admin_session') || '');
 
-  fetch(GOOGLE_SHEET_API_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: formData
-  })
-  .then(() => {
-    showToast('Claim status update ho gaya!');
-    closeEditClaimModal();
-    setTimeout(fetchClaimsData, 1200);
-  })
-  .catch(() => {
-    showToast('Claim update error!');
-  })
-  .finally(() => {
-    btn.disabled = false;
-    btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Claim Status Update Karein</span>';
-  });
-}
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      })
+      .then(() => {
+        showToast('Claim status update ho gaya!');
+        closeEditClaimModal();
+        setTimeout(fetchClaimsData, 1200);
+      })
+      .catch(() => {
+        showToast('Claim update error!');
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Claim Status Update Karein</span>';
+      });
+    }
     
     function showToast(msg) {
       const toast = document.getElementById('toastNotification');
