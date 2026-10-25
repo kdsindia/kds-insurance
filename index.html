@@ -16,7 +16,8 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="X-Frame-Options" content="DENY">
   <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-  	
+  
+
   <!-- Primary SEO Meta Tags & Multi-Search Engine Optimization -->
   <title>KDS Insurance Services | Life (LIC/CSC/Other), Motor & Health Insurance</title>
   <meta name="title" content="KDS Insurance Services | Life (LIC/CSC/Other), Motor & Health Insurance Malwara, Raniwara" />
@@ -105,6 +106,7 @@
   <!-- Firebase App & Authentication SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   
   <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1676,9 +1678,22 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
+<!-- JAVASCRIPT LOGIC -->
   <script>
     const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwMJOgO-FJFf9zOxHrilfkLM5CNqo8cR2HzLZNsozG5QlAN7rDEnv1ZG1AzMj6ig_Nw/exec";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyByZCEr6fYkDh3pBOS8wfqi6bQLXcRYDGU",
+      authDomain: "kds-insurance.firebaseapp.com",
+      projectId: "kds-insurance",
+      storageBucket: "kds-insurance.firebasestorage.app",
+      messagingSenderId: "418446717578",
+      appId: "1:418446717578:web:74c9722a1f23d22522b373"
+    };
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
 
     let currentPdfLang = 'hi';
     let activeQuotationData = null;
@@ -3234,7 +3249,7 @@ const photo = currentLoggedInUser.picture;
       }
     }
 
-    function handleGoogleCredentialResponse(response) {
+function handleGoogleCredentialResponse(response) {
       const payload = parseJwt(response.credential);
       if (!payload) {
         showToast("Login error: Token decode nahi hua.");
@@ -3263,22 +3278,42 @@ const photo = currentLoggedInUser.picture;
       closeAuthModal();
       updateAuthNavUI();
 
-      fetch(GOOGLE_SHEET_API_URL + "?action=checkUserStatus&email=" + encodeURIComponent(currentLoggedInUser.email))
-        .then(r => r.json())
-        .then(res => {
-          if (res && res.status === "success") {
-            if (!res.hasProfile) {
-              openMandatoryProfileModal(currentLoggedInUser.name);
-            } else {
-              currentLoggedInUser.name = res.user.name || currentLoggedInUser.name;
-              currentLoggedInUser.mobile = res.user.mobile || '';
-              currentLoggedInUser.altMobile = res.user.altMobile || '';
-              localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-              updateAuthNavUI();
-              updateMobileInputsUI();
-              showToast('Swagat hai, ' + currentLoggedInUser.name + '!');
-              fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-            }
+      // Pehle Firebase me fast check karega, na milne par Sheet me check karega
+      db.collection("users").doc(currentLoggedInUser.email).get()
+        .then((doc) => {
+          if (doc.exists && doc.data().mobile) {
+            const u = doc.data();
+            currentLoggedInUser.name = u.name || currentLoggedInUser.name;
+            currentLoggedInUser.mobile = u.mobile || '';
+            currentLoggedInUser.altMobile = u.altMobile || '';
+            localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+            updateAuthNavUI();
+            updateMobileInputsUI();
+            showToast('Swagat hai, ' + currentLoggedInUser.name + '!');
+            fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+          } else {
+            return fetch(GOOGLE_SHEET_API_URL + "?action=checkUserStatus&email=" + encodeURIComponent(currentLoggedInUser.email))
+              .then(r => r.json())
+              .then(res => {
+                if (res && res.status === "success" && res.hasProfile) {
+                  currentLoggedInUser.name = res.user.name || currentLoggedInUser.name;
+                  currentLoggedInUser.mobile = res.user.mobile || '';
+                  currentLoggedInUser.altMobile = res.user.altMobile || '';
+                  localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+                  db.collection("users").doc(currentLoggedInUser.email).set({
+                    email: currentLoggedInUser.email,
+                    name: currentLoggedInUser.name,
+                    mobile: currentLoggedInUser.mobile,
+                    altMobile: currentLoggedInUser.altMobile
+                  }, { merge: true });
+                  updateAuthNavUI();
+                  updateMobileInputsUI();
+                  showToast('Swagat hai, ' + currentLoggedInUser.name + '!');
+                  fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+                } else {
+                  openMandatoryProfileModal(currentLoggedInUser.name);
+                }
+              });
           }
         })
         .catch(() => {
@@ -3312,21 +3347,26 @@ const photo = currentLoggedInUser.picture;
 
       if (btn) {
         btn.disabled = true;
-        btn.innerText = "Users Sheet me save ho raha hai...";
+        btn.innerText = "Save ho raha hai...";
       }
 
+      // 1. Google Sheet Backup
       const formData = new FormData();
       formData.append("action", "saveUserProfile");
       formData.append("email", currentLoggedInUser.email);
       formData.append("name", name);
       formData.append("mobile1", m1);
       formData.append("mobile2", m2);
+      fetch(GOOGLE_SHEET_API_URL, { method: "POST", mode: "no-cors", body: formData }).catch(() => {});
 
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-      })
+      // 2. Firebase Save
+      db.collection("users").doc(currentLoggedInUser.email).set({
+        email: currentLoggedInUser.email,
+        name: name,
+        mobile: m1,
+        altMobile: m2,
+        updatedAt: new Date().toLocaleDateString('en-IN')
+      }, { merge: true })
       .then(() => {
         if (btn) {
           btn.disabled = false;
@@ -3340,11 +3380,11 @@ const photo = currentLoggedInUser.picture;
         document.getElementById('mandatoryProfileModal').classList.add('hidden');
         updateAuthNavUI();
         updateMobileInputsUI();
-        showToast("Profile Users tab me save ho gayi!");
+        showToast("Profile Firebase aur Sheet dono me save ho gayi!");
         
         setTimeout(() => {
           fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-        }, 1000);
+        }, 500);
       })
       .catch(() => {
         if (btn) {
@@ -3382,43 +3422,160 @@ const photo = currentLoggedInUser.picture;
       document.getElementById('authModal').classList.add('hidden');
     }
 
-    function fetchUserQuotationsFromSheet(userEmail) {
-      if (!userEmail || typeof GOOGLE_SHEET_API_URL === 'undefined') return;
+async function fetchUserQuotationsFromSheet(userEmail) {
+      if (!userEmail) return;
 
-      const m1 = (currentLoggedInUser && currentLoggedInUser.mobile) ? currentLoggedInUser.mobile : '';
-      const m2 = (currentLoggedInUser && currentLoggedInUser.altMobile) ? currentLoggedInUser.altMobile : '';
-
-      const fetchUrl = GOOGLE_SHEET_API_URL + 
-        "?action=getUserQuotations" +
-        "&email=" + encodeURIComponent(userEmail) +
-        "&mobile1=" + encodeURIComponent(m1) +
-        "&mobile2=" + encodeURIComponent(m2);
-
-      fetch(fetchUrl)
-      .then(r => r.json())
-      .then(res => {
-        if (res && res.status === "success") {
-          if (res.mobileRequestStatus) {
-            localStorage.setItem('kds_mob_status_' + userEmail, res.mobileRequestStatus);
-
-            const st = res.mobileRequestStatus.toLowerCase();
-            if (st.indexOf('approved') > -1 || st.indexOf('accept') > -1) {
-              if (res.approvedMobile1) currentLoggedInUser.mobile = res.approvedMobile1;
-              if (res.approvedMobile2) currentLoggedInUser.altMobile = res.approvedMobile2;
-              localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-            }
-          }
-
-          updateMobileInputsUI();
-
-          if (res.quotations) {
-            window.serverFetchedQuotations = res.quotations;
-            localStorage.setItem('kds_saved_quotations', JSON.stringify(res.quotations));
-            renderUserDashboard();
-          }
+      let fbQuotes = [];
+      try {
+        if (typeof db !== 'undefined') {
+          const snap = await db.collection("quotations").where("userEmail", "==", userEmail).get();
+          snap.forEach(doc => {
+            let d = doc.data();
+            d.rowId = doc.id;
+            fbQuotes.push(d);
+          });
         }
-      })
-      .catch(err => console.log("Sync error:", err));
+      } catch (e) {
+        console.log("Firebase read note:", e);
+      }
+
+      // Agar Firebase me quotations mil gaye toh turant dikha dein
+      if (fbQuotes.length > 0) {
+        window.serverFetchedQuotations = fbQuotes;
+        localStorage.setItem('kds_saved_quotations', JSON.stringify(fbQuotes));
+        updateMobileInputsUI();
+        renderUserDashboard();
+      }
+
+      // Sath hi Google Sheet se bhi purana data check kar lein aur merge kar dein
+      if (typeof GOOGLE_SHEET_API_URL !== 'undefined') {
+        const m1 = (currentLoggedInUser && currentLoggedInUser.mobile) ? currentLoggedInUser.mobile : '';
+        const m2 = (currentLoggedInUser && currentLoggedInUser.altMobile) ? currentLoggedInUser.altMobile : '';
+        const fetchUrl = GOOGLE_SHEET_API_URL + 
+          "?action=getUserQuotations" +
+          "&email=" + encodeURIComponent(userEmail) +
+          "&mobile1=" + encodeURIComponent(m1) +
+          "&mobile2=" + encodeURIComponent(m2);
+
+        fetch(fetchUrl)
+          .then(r => r.json())
+          .then(res => {
+            if (res && res.status === "success") {
+              if (res.mobileRequestStatus) {
+                localStorage.setItem('kds_mob_status_' + userEmail, res.mobileRequestStatus);
+                const st = res.mobileRequestStatus.toLowerCase();
+                if (st.indexOf('approved') > -1 || st.indexOf('accept') > -1) {
+                  if (res.approvedMobile1) currentLoggedInUser.mobile = res.approvedMobile1;
+                  if (res.approvedMobile2) currentLoggedInUser.altMobile = res.approvedMobile2;
+                  localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+                }
+              }
+              updateMobileInputsUI();
+
+              if (res.quotations && Array.isArray(res.quotations)) {
+                const map = new Map();
+                res.quotations.forEach(q => map.set(q.quotationNumber, q));
+                fbQuotes.forEach(q => map.set(q.quotationNumber, q)); // Firebase latest data takes priority
+                const merged = Array.from(map.values());
+                window.serverFetchedQuotations = merged;
+                localStorage.setItem('kds_saved_quotations', JSON.stringify(merged));
+                renderUserDashboard();
+              }
+            }
+          })
+          .catch(err => console.log("Sheet sync note:", err));
+      }
+    }
+
+    function triggerSaveQuotationFlow() {
+      if (!currentLoggedInUser) {
+        showToast('Kripya pehle Google se login karein!');
+        openAuthModal();
+        return;
+      }
+
+      const currentPlanIdentifier = activeQuotationData 
+        ? ((activeQuotationData.scheme && activeQuotationData.scheme.name) ? activeQuotationData.scheme.name : activeQuotationData.scheme)
+        : "";
+
+      if (window.lastSavedPlanIdentifier && window.lastSavedPlanIdentifier === currentPlanIdentifier && window.activeSavedQuoteNo) {
+        showToast('Ye Quotation (' + window.activeSavedQuoteNo + ') pehle hi save ho chuka hai!');
+        const qBox = document.getElementById('saveQuoteResultBox');
+        const quoteNoElem = document.getElementById('displaySavedQuoteNo');
+        const saveBtn = document.getElementById('btnConfirmSavePolicy');
+        if (quoteNoElem) quoteNoElem.innerText = window.activeSavedQuoteNo;
+        if (qBox) qBox.style.display = 'block';
+        if (saveBtn) saveBtn.style.display = 'none';
+        document.getElementById('saveQuotationModal').classList.remove('hidden');
+        return;
+      }
+
+      const saveBtn = document.getElementById('btnConfirmSavePolicy');
+      const resBox = document.getElementById('saveQuoteResultBox');
+      if (saveBtn) {
+        saveBtn.style.display = 'flex';
+        saveBtn.disabled = false;
+        saveBtn.innerText = 'Confirm & Save Quotation';
+      }
+      if (resBox) {
+        resBox.style.display = 'none';
+      }
+
+      const vBox = document.getElementById('vehicleDetailBox');
+      if (activeQuotationData && activeQuotationData.insuranceCategory === "MOTOR") {
+        if (vBox) vBox.classList.remove('hidden');
+      } else {
+        if (vBox) vBox.classList.add('hidden');
+      }
+
+      if (activeQuotationData) {
+        const pName = (activeQuotationData.scheme && activeQuotationData.scheme.name) 
+          ? activeQuotationData.scheme.name 
+          : (activeQuotationData.scheme || "Custom Plan");
+        document.getElementById('saveAutoPlanName').innerText = pName;
+        document.getElementById('saveAutoTermPpt').innerText = `${activeQuotationData.term || 1} Yrs / Pay ${activeQuotationData.ppt || 1} Yrs`;
+        document.getElementById('saveAutoPremium').innerText = `₹ ${(activeQuotationData.annualBudget || 0).toLocaleString('en-IN')}`;
+      }
+      document.getElementById('saveQuotationModal').classList.remove('hidden');
+    }
+
+    function triggerQuickCardSave(schemeId) {
+      const scheme = officialLifeSchemes.find(s => s.id === schemeId);
+      if (!scheme) return;
+
+      const age = Number(document.getElementById('calcAgeInput').value) || 28;
+      const budget = getAnnualBudget();
+      const term = Number(document.getElementById('calcTermInput').value) || 25;
+      const ppt = Number(document.getElementById('calcPptInput').value) || 20;
+
+      activeQuotationData = calculateFullPlanDetails(scheme, age, budget, term, ppt);
+      activeQuotationData.insuranceCategory = (currentLifeTab === 'lic' ? 'LIC' : 'CSC');
+
+      if (typeof renderQuotationContent === 'function') {
+        renderQuotationContent();
+      }
+
+      triggerSaveQuotationFlow();
+    }
+
+    function triggerQuickMotorSave(companyName, prem, idv) {
+      const vType = document.getElementById('motorVehicleType').value.toUpperCase();
+      const coverType = document.getElementById('motorCoverType').value.toUpperCase();
+      const tenure = document.getElementById('motorTenure').value;
+
+      activeQuotationData = {
+        insuranceCategory: "MOTOR",
+        scheme: { 
+          name: `${companyName} | ${vType} (${coverType}) | IDV: ₹${Number(idv).toLocaleString('en-IN')} | Tenure: ${tenure}Yr` 
+        },
+        annualBudget: prem,
+        term: tenure,
+        ppt: tenure,
+        sumAssured: idv,
+        vType: vType,
+        coverType: coverType
+      };
+      triggerSaveQuotationFlow();
     }
 
     function handleSaveQuotationSubmit(e) {
@@ -3433,6 +3590,7 @@ const photo = currentLoggedInUser.picture;
       const holderName = document.getElementById('saveHolderName').value.trim();
       const holderPhone = document.getElementById('saveHolderPhone').value.trim();
       const holderAddress = document.getElementById('saveHolderAddress').value.trim();
+      const vehicleNo = document.getElementById('saveVehicleNumber') ? document.getElementById('saveVehicleNumber').value.trim() : "";
       const btn = document.getElementById('btnConfirmSavePolicy');
 
       if (btn) {
@@ -3441,311 +3599,112 @@ const photo = currentLoggedInUser.picture;
       }
 
       let insCategory = "LIC";
-      const motorDiv = document.getElementById('motorInsurancePage');
-      const healthDiv = document.getElementById('healthInsurancePage');
-      if (motorDiv && !motorDiv.classList.contains('hidden')) {
-        insCategory = "MOTOR";
-      } else if (healthDiv && !healthDiv.classList.contains('hidden')) {
-        insCategory = "HEALTH";
-      } else if (typeof currentLifeTab !== 'undefined' && currentLifeTab === 'csc') {
-        insCategory = "CSC";
+      if (activeQuotationData && activeQuotationData.insuranceCategory) {
+        insCategory = activeQuotationData.insuranceCategory;
+      } else {
+        const motorDiv = document.getElementById('motorInsurancePage');
+        const healthDiv = document.getElementById('healthInsurancePage');
+        if (motorDiv && !motorDiv.classList.contains('hidden')) {
+          insCategory = "MOTOR";
+        } else if (healthDiv && !healthDiv.classList.contains('hidden')) {
+          insCategory = "HEALTH";
+        } else if (typeof currentLifeTab !== 'undefined' && currentLifeTab === 'csc') {
+          insCategory = "CSC";
+        }
       }
 
       let pName = "Insurance Plan";
       let pPrem = 0;
-      let pTerm = 0;
-      let pPpt = 0;
+      let pTerm = 1;
+      let pPpt = 1;
       let pSum = 0;
 
       if (activeQuotationData) {
-        if (activeQuotationData.scheme && activeQuotationData.scheme.name) {
-          pName = activeQuotationData.scheme.name;
-        } else if (typeof activeQuotationData.scheme === 'string') {
-          pName = activeQuotationData.scheme;
-        }
+        pName = (activeQuotationData.scheme && activeQuotationData.scheme.name) 
+          ? activeQuotationData.scheme.name 
+          : activeQuotationData.scheme;
         pPrem = activeQuotationData.annualBudget || 0;
-        pTerm = activeQuotationData.term || 0;
-        pPpt = activeQuotationData.ppt || 0;
+        pTerm = activeQuotationData.term || 1;
+        pPpt = activeQuotationData.ppt || 1;
         pSum = activeQuotationData.sumAssured || 0;
       }
 
-      const sendUrl = GOOGLE_SHEET_API_URL + 
-        "?action=saveQuotation" +
-        "&userEmail=" + encodeURIComponent(currentLoggedInUser.email || "") +
-        "&userName=" + encodeURIComponent(currentLoggedInUser.name || "") +
-        "&holderName=" + encodeURIComponent(holderName) +
-        "&holderPhone=" + encodeURIComponent(holderPhone) +
-        "&address=" + encodeURIComponent(holderAddress) +
-        "&insuranceType=" + encodeURIComponent(insCategory) +
-        "&planName=" + encodeURIComponent(pName) +
-        "&premium=" + encodeURIComponent(pPrem) +
-        "&term=" + encodeURIComponent(pTerm) +
-        "&ppt=" + encodeURIComponent(pPpt) +
-        "&sumAssured=" + encodeURIComponent(pSum);
-
-      const beacon = new Image();
-      beacon.src = sendUrl;
-
-      setTimeout(() => {
-        if (btn) {
-          btn.style.display = 'none'; // Save button chhip jayega
-        }
-        showToast('Quotation save ho gaya!');
-        
-        // Modal ke andar Quotation No aur Print button dikhayein
-        const resBox = document.getElementById('saveQuoteResultBox');
-        if (resBox) {
-          resBox.style.display = 'block';
-        }
-        
-        if (typeof fetchUserQuotationsFromSheet === 'function' && currentLoggedInUser) {
-          fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-        }
-      }, 800);
-    }
-
-    function triggerSaveQuotationFlow() {
-  if (!currentLoggedInUser) {
-    showToast('Kripya pehle Google se login karein!');
-    openAuthModal();
-    return;
-  }
-
-  // Current scheme ka identifier check karein
-  const currentPlanIdentifier = activeQuotationData 
-    ? ((activeQuotationData.scheme && activeQuotationData.scheme.name) ? activeQuotationData.scheme.name : activeQuotationData.scheme)
-    : "";
-
-  // AGAR YAHI SCHEME PEHLE HI SAVE HO CHUKI HAI TO DUSRI BAAR SAVE NA HONE DEIN
-  if (window.lastSavedPlanIdentifier && window.lastSavedPlanIdentifier === currentPlanIdentifier && window.activeSavedQuoteNo) {
-    showToast('Ye Quotation (' + window.activeSavedQuoteNo + ') pehle hi save ho chuka hai!');
-    // Result box dikhayein taaki customer direct print kar sake
-    const qBox = document.getElementById('saveQuoteResultBox');
-    const quoteNoElem = document.getElementById('displaySavedQuoteNo');
-    const saveBtn = document.getElementById('btnConfirmSavePolicy');
-    if (quoteNoElem) quoteNoElem.innerText = window.activeSavedQuoteNo;
-    if (qBox) qBox.style.display = 'block';
-    if (saveBtn) saveBtn.style.display = 'none';
-    document.getElementById('saveQuotationModal').classList.remove('hidden');
-    return;
-  }
-
-  // NAYI SCHEME AANE PAR (JAISI 721 KE BAAD 745): Save button ko fresh dikhayein
-  const saveBtn = document.getElementById('btnConfirmSavePolicy');
-  const resBox = document.getElementById('saveQuoteResultBox');
-  if (saveBtn) {
-    saveBtn.style.display = 'flex';
-    saveBtn.disabled = false;
-    saveBtn.innerText = 'Confirm & Save Quotation';
-  }
-  if (resBox) {
-    resBox.style.display = 'none';
-  }
-
-  const vBox = document.getElementById('vehicleDetailBox');
-  if (activeQuotationData && activeQuotationData.insuranceCategory === "MOTOR") {
-    if (vBox) vBox.classList.remove('hidden');
-  } else {
-    if (vBox) vBox.classList.add('hidden');
-  }
-
-  if (activeQuotationData) {
-    const pName = (activeQuotationData.scheme && activeQuotationData.scheme.name) 
-      ? activeQuotationData.scheme.name 
-      : (activeQuotationData.scheme || "Custom Plan");
-    document.getElementById('saveAutoPlanName').innerText = pName;
-    document.getElementById('saveAutoTermPpt').innerText = `${activeQuotationData.term || 1} Yrs / Pay ${activeQuotationData.ppt || 1} Yrs`;
-    document.getElementById('saveAutoPremium').innerText = `₹ ${(activeQuotationData.annualBudget || 0).toLocaleString('en-IN')}/Yr`;
-  }
-  document.getElementById('saveQuotationModal').classList.remove('hidden');
-}
-
-function triggerQuickCardSave(schemeId) {
-  const scheme = officialLifeSchemes.find(s => s.id === schemeId);
-  if (!scheme) return;
-
-  const age = Number(document.getElementById('calcAgeInput').value) || 28;
-  const budget = getAnnualBudget();
-  const term = Number(document.getElementById('calcTermInput').value) || 25;
-  const ppt = Number(document.getElementById('calcPptInput').value) || 20;
-
-  // Poora calculation data generate karein taaki table aur print khali na aaye
-  activeQuotationData = calculateFullPlanDetails(scheme, age, budget, term, ppt);
-  activeQuotationData.insuranceCategory = (currentLifeTab === 'lic' ? 'LIC' : 'CSC');
-
-  // Background me printable table render kar lein
-  if (typeof renderQuotationContent === 'function') {
-    renderQuotationContent();
-  }
-
-  triggerSaveQuotationFlow();
-}
-// Motor Save Button Click Handler (Proper full vehicle specs capture)
-function triggerQuickMotorSave(companyName, prem, idv) {
-  const vType = document.getElementById('motorVehicleType').value.toUpperCase();
-  const coverType = document.getElementById('motorCoverType').value.toUpperCase();
-  const ccSlab = document.getElementById('motorCcSlab').value;
-  const tenure = document.getElementById('motorTenure').value;
-
-  activeQuotationData = {
-    insuranceCategory: "MOTOR",
-    scheme: { 
-      name: `${companyName} | ${vType} (${coverType}) | IDV: ₹${Number(idv).toLocaleString('en-IN')} | Tenure: ${tenure}Yr` 
-    },
-    annualBudget: prem,
-    term: tenure,
-    ppt: tenure,
-    sumAssured: idv,
-    vType: vType,
-    coverType: coverType
-  };
-  triggerSaveQuotationFlow();
-}
-
-// Modal open hone par Motor box dikhana
-function triggerSaveQuotationFlow() {
-  if (!currentLoggedInUser) {
-    showToast('Kripya pehle Google se login karein!');
-    openAuthModal();
-    return;
-  }
-  
-  const vBox = document.getElementById('vehicleDetailBox');
-  if (activeQuotationData && activeQuotationData.insuranceCategory === "MOTOR") {
-    if (vBox) vBox.classList.remove('hidden');
-  } else {
-    if (vBox) vBox.classList.add('hidden');
-  }
-
-  if (activeQuotationData) {
-    const pName = (activeQuotationData.scheme && activeQuotationData.scheme.name) 
-      ? activeQuotationData.scheme.name 
-      : (activeQuotationData.scheme || "Custom Plan");
-    document.getElementById('saveAutoPlanName').innerText = pName;
-    document.getElementById('saveAutoTermPpt').innerText = `${activeQuotationData.term || 1} Yrs / Pay ${activeQuotationData.ppt || 1} Yrs`;
-    document.getElementById('saveAutoPremium').innerText = `₹ ${(activeQuotationData.annualBudget || 0).toLocaleString('en-IN')}`;
-  }
-  document.getElementById('saveQuotationModal').classList.remove('hidden');
-}
-
-// Save Submit Handler (fetch() with no truncation)
-function handleSaveQuotationSubmit(e) {
-  e.preventDefault();
-
-  if (!currentLoggedInUser) {
-    showToast('Quotation save karne ke liye pehle Google se login karein!');
-    openAuthModal();
-    return;
-  }
-
-  const holderName = document.getElementById('saveHolderName').value.trim();
-  const holderPhone = document.getElementById('saveHolderPhone').value.trim();
-  const holderAddress = document.getElementById('saveHolderAddress').value.trim();
-  const vehicleNo = document.getElementById('saveVehicleNumber') ? document.getElementById('saveVehicleNumber').value.trim() : "";
-  const btn = document.getElementById('btnConfirmSavePolicy');
-
-  if (btn) {
-    btn.disabled = true;
-    btn.innerText = 'Sheet me save ho raha hai...';
-  }
-
-  let insCategory = "LIC";
-  if (activeQuotationData && activeQuotationData.insuranceCategory) {
-    insCategory = activeQuotationData.insuranceCategory;
-  } else {
-    const motorDiv = document.getElementById('motorInsurancePage');
-    const healthDiv = document.getElementById('healthInsurancePage');
-    if (motorDiv && !motorDiv.classList.contains('hidden')) {
-      insCategory = "MOTOR";
-    } else if (healthDiv && !healthDiv.classList.contains('hidden')) {
-      insCategory = "HEALTH";
-    } else if (typeof currentLifeTab !== 'undefined' && currentLifeTab === 'csc') {
-      insCategory = "CSC";
-    }
-  }
-
-  let pName = "Insurance Plan";
-  let pPrem = 0;
-  let pTerm = 1;
-  let pPpt = 1;
-  let pSum = 0;
-
-  if (activeQuotationData) {
-    pName = (activeQuotationData.scheme && activeQuotationData.scheme.name) 
-      ? activeQuotationData.scheme.name 
-      : activeQuotationData.scheme;
-    pPrem = activeQuotationData.annualBudget || 0;
-    pTerm = activeQuotationData.term || 1;
-    pPpt = activeQuotationData.ppt || 1;
-    pSum = activeQuotationData.sumAssured || 0;
-  }
-
-  // Agar Motor insurance hai aur gadi number likha hai to plan name me jod dein
-  if (insCategory === "MOTOR" && vehicleNo) {
-    pName = pName + " | RC/Reg: " + vehicleNo.toUpperCase();
-  }
-
-  // FormData se data bhejna reliable hota hai, truncation nahi hoti
-  const formData = new FormData();
-  formData.append("action", "saveQuotation");
-  formData.append("userEmail", currentLoggedInUser.email || "");
-  formData.append("userName", currentLoggedInUser.name || "");
-  formData.append("holderName", holderName);
-  formData.append("holderPhone", holderPhone);
-  formData.append("address", holderAddress);
-  formData.append("insuranceType", insCategory);
-  formData.append("planName", pName);
-  formData.append("premium", pPrem);
-  formData.append("term", pTerm);
-  formData.append("ppt", pPpt);
-  formData.append("sumAssured", pSum);
-  formData.append("mobile1", currentLoggedInUser.mobile || holderPhone);
-  formData.append("altMobile", currentLoggedInUser.altMobile || "");
-const generatedQuoteNo = "KDS-" + Math.floor(10000000 + Math.random() * 90000000);
-  window.activeSavedQuoteNo = generatedQuoteNo;
-  window.lastSavedPlanIdentifier = pName;
-  formData.append("quotationNumber", generatedQuoteNo);
-  fetch(GOOGLE_SHEET_API_URL, {
-    method: "POST",
-    mode: "no-cors",
-    body: formData
-  })
-  .then(() => {
-   
-
-    // 2. Submit button ko chhipa dein taaki customer dobara click na kare
-    if (btn) {
-      btn.style.display = 'none';
-    }
-
-    // 3. Modal band nahi hoga, balki green box me Quotation Number display hoga
-    const resBox = document.getElementById('saveQuoteResultBox');
-    const quoteNoElem = document.getElementById('displaySavedQuoteNo');
-    if (quoteNoElem) {
-      quoteNoElem.innerText = generatedQuoteNo;
-    }
-    if (resBox) {
-      resBox.style.display = 'block';
-    }
-
-    // 4. Toast me Quotation Number ke sath safalta ka message aayega
-    showToast('Quotation No: ' + generatedQuoteNo + ' Safalta se save ho gaya!');
-
-    // 5. User Dashboard sync karein
-    setTimeout(() => {
-      if (typeof fetchUserQuotationsFromSheet === 'function' && currentLoggedInUser) {
-        fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+      if (insCategory === "MOTOR" && vehicleNo) {
+        pName = pName + " | RC/Reg: " + vehicleNo.toUpperCase();
       }
-    }, 1000);
-  })
-  .catch(err => {
-    if (btn) {
-      btn.disabled = false;
-      btn.innerText = 'Confirm & Save Quotation';
+
+      const generatedQuoteNo = "KDS-" + Math.floor(10000000 + Math.random() * 90000000);
+      window.activeSavedQuoteNo = generatedQuoteNo;
+      window.lastSavedPlanIdentifier = pName;
+
+      // 1. Google Sheet Backup (Background me bhej dein)
+      if (typeof GOOGLE_SHEET_API_URL !== 'undefined') {
+        const formData = new FormData();
+        formData.append("action", "saveQuotation");
+        formData.append("quotationNumber", generatedQuoteNo);
+        formData.append("userEmail", currentLoggedInUser.email || "");
+        formData.append("userName", currentLoggedInUser.name || "");
+        formData.append("holderName", holderName);
+        formData.append("holderPhone", holderPhone);
+        formData.append("address", holderAddress);
+        formData.append("insuranceType", insCategory);
+        formData.append("planName", pName);
+        formData.append("premium", pPrem);
+        formData.append("term", pTerm);
+        formData.append("ppt", pPpt);
+        formData.append("sumAssured", pSum);
+        formData.append("mobile1", currentLoggedInUser.mobile || holderPhone);
+        formData.append("altMobile", currentLoggedInUser.altMobile || "");
+        fetch(GOOGLE_SHEET_API_URL, { method: "POST", mode: "no-cors", body: formData }).catch(() => {});
+      }
+
+      // 2. Firebase Firestore Save (Fast & Instant)
+      db.collection("quotations").add({
+        quotationNumber: generatedQuoteNo,
+        userEmail: currentLoggedInUser.email || "",
+        userName: currentLoggedInUser.name || "",
+        holderName: holderName,
+        holderPhone: holderPhone,
+        address: holderAddress,
+        insuranceType: insCategory,
+        planName: pName,
+        premium: Number(pPrem),
+        term: Number(pTerm),
+        ppt: Number(pPpt),
+        sumAssured: Number(pSum),
+        paymentStatus: "UNPAID",
+        policyNumber: "Under Process",
+        downloadLink: "",
+        renewedPolicyNumber: "",
+        renewalRequest: "No",
+        renewedDownloadLink: "",
+        date: new Date().toLocaleDateString('en-IN'),
+        mobile1: currentLoggedInUser.mobile || holderPhone,
+        altMobile: currentLoggedInUser.altMobile || ""
+      })
+      .then(() => {
+        if (btn) btn.style.display = 'none';
+        const resBox = document.getElementById('saveQuoteResultBox');
+        const quoteNoElem = document.getElementById('displaySavedQuoteNo');
+        if (quoteNoElem) quoteNoElem.innerText = generatedQuoteNo;
+        if (resBox) resBox.style.display = 'block';
+
+        showToast('Quotation No: ' + generatedQuoteNo + ' Safalta se save ho gaya!');
+
+        setTimeout(() => {
+          if (typeof fetchUserQuotationsFromSheet === 'function' && currentLoggedInUser) {
+            fetchUserQuotationsFromSheet(currentLoggedInUser.email);
+          }
+        }, 500);
+      })
+      .catch(err => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = 'Confirm & Save Quotation';
+        }
+        showToast('Error: Save nahi ho paya!');
+      });
     }
-    showToast('Error: Sheet sync nahi hui!');
-  });
-}
 
 // Health Save Button Click Handler
 function triggerQuickHealthSave(companyName, plan, prem, si) {
@@ -3926,21 +3885,29 @@ function printFinalSavedQuotation() {
       }
     }
 
-    function requestPolicyRenewal(quotationNo) {
+   function requestPolicyRenewal(quotationNo) {
       if (!confirm("Kya aap is policy ke renewal ke liye request submit karna chahte hain?")) return;
 
-      const targetUrl = GOOGLE_SHEET_API_URL + 
-        "?action=requestRenewal" +
-        "&quotationNumber=" + encodeURIComponent(quotationNo) +
-        "&userEmail=" + encodeURIComponent(currentLoggedInUser.email || "");
+      if (typeof GOOGLE_SHEET_API_URL !== 'undefined') {
+        const targetUrl = GOOGLE_SHEET_API_URL + 
+          "?action=requestRenewal" +
+          "&quotationNumber=" + encodeURIComponent(quotationNo) +
+          "&userEmail=" + encodeURIComponent(currentLoggedInUser.email || "");
+        const sender = new Image();
+        sender.src = targetUrl;
+      }
 
-      const sender = new Image();
-      sender.src = targetUrl;
+      if (typeof db !== 'undefined') {
+        db.collection("quotations").where("quotationNumber", "==", quotationNo).get()
+          .then(snap => {
+            snap.forEach(doc => doc.ref.update({ renewalRequest: "Requested" }));
+          });
+      }
 
       showToast("Renewal Request submit ho gayi! Hum aapse sampark karenge.");
       setTimeout(() => {
         fetchUserQuotationsFromSheet(currentLoggedInUser.email);
-      }, 1200);
+      }, 800);
     }
 
     function renderDashboardRows(dataList, tbodyElement) {
@@ -4073,25 +4040,28 @@ function printFinalSavedQuotation() {
         btn.innerText = "Verifying...";
       }
 
-      const targetUrl = GOOGLE_SHEET_API_URL + 
-        "?action=updateUserMobiles" +
-        "&email=" + encodeURIComponent(currentLoggedInUser.email) +
-        "&name=" + encodeURIComponent(currentLoggedInUser.name) +
-        "&mobile1=" + encodeURIComponent(m1) +
-        "&mobile2=" + encodeURIComponent(m2);
+      if (typeof GOOGLE_SHEET_API_URL !== 'undefined') {
+        const targetUrl = GOOGLE_SHEET_API_URL + 
+          "?action=updateUserMobiles" +
+          "&email=" + encodeURIComponent(currentLoggedInUser.email) +
+          "&name=" + encodeURIComponent(currentLoggedInUser.name) +
+          "&mobile1=" + encodeURIComponent(m1) +
+          "&mobile2=" + encodeURIComponent(m2);
+        const sender = new Image();
+        sender.src = targetUrl;
+      }
 
-      const sender = new Image();
-      sender.src = targetUrl;
-
-      setTimeout(() => {
+      db.collection("users").doc(currentLoggedInUser.email).set({
+        mobile: m1,
+        altMobile: m2
+      }, { merge: true }).then(() => {
         currentLoggedInUser.mobile = m1;
         currentLoggedInUser.altMobile = m2;
         localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
         localStorage.setItem('kds_verified_' + currentLoggedInUser.email, 'true');
-
         updateMobileInputsUI();
-        showToast("Verified & Sheet me Save ho gaya!");
-      }, 1000);
+        showToast("Verified & Save ho gaya!");
+      });
     }
 
     function handleSaveUserMobiles() {
@@ -4121,25 +4091,30 @@ function printFinalSavedQuotation() {
         btn.innerText = "Submitting...";
       }
 
-      const targetUrl = GOOGLE_SHEET_API_URL + 
-        "?action=updateUserMobiles" +
-        "&email=" + encodeURIComponent(currentLoggedInUser.email) +
-        "&name=" + encodeURIComponent(currentLoggedInUser.name) +
-        "&mobile1=" + encodeURIComponent(m1) +
-        "&mobile2=" + encodeURIComponent(m2);
+      if (typeof GOOGLE_SHEET_API_URL !== 'undefined') {
+        const targetUrl = GOOGLE_SHEET_API_URL + 
+          "?action=updateUserMobiles" +
+          "&email=" + encodeURIComponent(currentLoggedInUser.email) +
+          "&name=" + encodeURIComponent(currentLoggedInUser.name) +
+          "&mobile1=" + encodeURIComponent(m1) +
+          "&mobile2=" + encodeURIComponent(m2);
+        const sender = new Image();
+        sender.src = targetUrl;
+      }
 
-      const sender = new Image();
-      sender.src = targetUrl;
-
-      setTimeout(() => {
+      db.collection("users").doc(currentLoggedInUser.email).set({
+        mobile: m1,
+        altMobile: m2,
+        mobileRequestStatus: "Pending"
+      }, { merge: true }).then(() => {
         if (btn) {
           btn.disabled = false;
           btn.innerText = "Request Change";
         }
-        showToast("Number change request Sheet me Pending add ho gayi!");
+        showToast("Number change request save ho gayi!");
         m1Input.disabled = true;
         m2Input.disabled = true;
-      }, 1000);
+      });
     }
 
 // MISC. LIVE TARIFF CALCULATION ENGINE
