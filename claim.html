@@ -1,48 +1,37 @@
 <!DOCTYPE html>
-<html lang="hi" class="scroll-smooth">
+<html lang="hi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Claim Assistance Portal | KDS Insurance Services</title>
+  <title>KDS Insurance Admin Workspace</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
   
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=2" />
-  <link rel="shortcut icon" href="favicon.ico?v=2" type="image/x-icon" />
-
-  <!-- Tailwind CSS -->
+  <!-- Tailwind CSS & Font Awesome Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <!-- Official Google Identity Services SDK -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-  <!-- Firebase App, Auth & Firestore SDKs -->
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
-  <!-- Google Fonts & Font Awesome Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4128683084720874" crossorigin="anonymous"></script>
 
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Inter', 'Noto Sans Devanagari', 'sans-serif'],
-          },
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
           colors: {
             brand: {
               dark: '#001A33',
               navy: '#002B49',
               lightBlue: '#00558F',
-              accent: '#0284c7',
-              gold: '#FFAE00',
-              deepGold: '#E69500',
-              cream: '#FFF9E6',
-              bgLight: '#F4F7FB'
+              gold: '#FFAE00'
             }
           }
         }
@@ -51,370 +40,456 @@
   </script>
 </head>
 
-<body class="bg-brand-bgLight text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brand-gold selection:text-brand-dark">
+<body class="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen">
 
-  <!-- ================= TOP ADVISOR BAR ================= -->
-  <div class="bg-brand-dark text-white text-xs py-2 px-4 border-b border-brand-lightBlue">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-      <div class="flex items-center gap-2">
-        <span class="bg-brand-gold text-brand-dark font-black px-2 py-0.5 rounded text-[10px] tracking-wider uppercase">24x7 Claim Support</span>
-        <span class="text-slate-200"><i class="fa-solid fa-user-tie text-brand-gold mr-1"></i> <strong>MANOHER SINGH</strong> | Insurance Advisory Point</span>
-      </div>
-      <div class="flex items-center gap-3 text-slate-200">
-        <a href="tel:8440096343" class="hover:text-brand-gold font-bold transition flex items-center gap-1.5">
-          <i class="fa-solid fa-phone text-brand-gold"></i> 8440096343
-        </a>
-        <span class="text-slate-600">|</span>
-        <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20mujhe%20Insurance%20Claim%20ki%20jaankari%20chahiye" target="_blank" class="hover:text-emerald-300 text-emerald-400 font-bold flex items-center gap-1">
-          <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
-        </a>
-        <span class="text-slate-600 hidden md:inline">|</span>
-        <span class="text-slate-400 text-[11px] hidden md:inline"><i class="fa-solid fa-location-dot text-rose-400"></i> Malwara, Raniwara (Raj.)</span>
-      </div>
-    </div>
-  </div>
+  <!-- ================= 1. SECURE LOGIN SCREEN ================= -->
+  <div id="loginSection" class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-900 via-brand-dark to-slate-900 relative overflow-hidden">
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-brand-lightBlue/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-brand-gold/15 rounded-full blur-3xl pointer-events-none"></div>
 
-  <!-- ================= MAIN NAVBAR ================= -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16 sm:h-20 gap-3">
-        
-        <a href="index.html" class="flex items-center gap-2.5 py-1 shrink-0 group">
-          <img src="logo.png" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" class="h-10 sm:h-12 w-auto max-w-[140px] sm:max-w-[170px] object-contain rounded-lg" alt="KDS INSURANCE" />
-          <div id="logoFallback" class="hidden items-center gap-2">
-            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-navy flex items-center justify-center text-brand-gold font-black text-lg sm:text-xl">KDS</div>
-            <div>
-              <span class="text-base sm:text-lg font-black text-brand-navy leading-none block">KDS <span class="text-brand-gold">INSURANCE</span></span>
-              <p class="text-[9px] sm:text-[10px] text-slate-500 font-bold mt-0.5">Manoher Singh • Malwara</p>
-            </div>
+    <div class="bg-white/95 backdrop-blur-xl rounded-3xl max-w-md w-full shadow-2xl border border-white/20 p-8 sm:p-9 space-y-6 relative z-10">
+      <div class="text-center space-y-3">
+        <div class="inline-flex items-center justify-center p-2 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm mx-auto">
+          <img src="logo.png" onerror="this.onerror=null; this.src='kds-logo.png'; this.classList.add('hidden'); document.getElementById('loginShieldLogo').classList.remove('hidden');" alt="KDS Logo" class="h-14 w-auto object-contain mx-auto" />
+          <div id="loginShieldLogo" class="hidden w-14 h-14 rounded-xl bg-brand-navy text-brand-gold flex items-center justify-center text-2xl font-black shadow-lg">
+            <i class="fa-solid fa-shield-halved"></i>
           </div>
-        </a>
+        </div>
+        <div>
+          <span class="inline-block px-3 py-1 bg-amber-50 border border-amber-200 text-amber-800 text-[10px] font-black rounded-full uppercase tracking-wider mb-1">
+            <i class="fa-solid fa-lock text-brand-gold mr-1"></i> Authorized Workspace
+          </span>
+          <h2 class="text-2xl font-black text-brand-navy tracking-tight">KDS Operations Panel</h2>
+          <p class="text-xs text-slate-500 font-medium">Digital Services & Claim Management</p>
+        </div>
+      </div>
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="space-y-4 text-xs font-bold">
+        <div>
+          <label class="block text-slate-700 mb-1.5 uppercase tracking-wider text-[11px]">Admin Username</label>
+          <div class="relative">
+            <i class="fa-solid fa-user text-slate-400 absolute left-3.5 top-3.5 text-sm"></i>
+            <input type="text" id="adminUser" required placeholder="Enter Username" class="w-full bg-slate-50 border border-slate-300 rounded-xl py-3 pl-10 pr-3 text-sm focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" />
+          </div>
+        </div>
 
-        <div class="flex items-center gap-2 sm:gap-3">
-          <a href="index.html" class="bg-slate-100 hover:bg-slate-200 text-brand-navy font-bold px-3.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 border border-slate-200 shadow-sm">
-            <i class="fa-solid fa-house text-brand-lightBlue"></i>
-            <span>Home</span>
-          </a>
-
-          <button type="button" onclick="openClaimStatusModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-3.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-            <span>Claim Status</span>
-          </button>
-
-          <a href="premium-check.html" class="bg-amber-100 hover:bg-amber-200 text-amber-950 font-black px-3 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm border border-amber-300">
-            <i class="fa-solid fa-receipt text-amber-600"></i>
-            <span class="hidden sm:inline">Check Premium Due</span>
-            <span class="sm:hidden">Due</span>
-          </a>
-
-          <div id="authContainer">
-            <button id="authBtn" type="button" onclick="handleAuthButtonClick()" class="bg-brand-gold hover:bg-amber-400 text-brand-dark font-black px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm">
-              <i class="fa-solid fa-user-circle text-base"></i>
-              <span id="authBtnLabel">Google Login</span>
+        <div>
+          <label class="block text-slate-700 mb-1.5 uppercase tracking-wider text-[11px]">Secure Password</label>
+          <div class="relative">
+            <i class="fa-solid fa-key text-slate-400 absolute left-3.5 top-3.5 text-sm"></i>
+            <input type="password" id="adminPass" required placeholder="••••••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-xl py-3 pl-10 pr-10 text-sm focus:ring-2 focus:ring-brand-lightBlue focus:outline-none" />
+            <button type="button" onclick="togglePassVisibility()" class="absolute right-3.5 top-3 text-slate-400 hover:text-slate-600">
+              <i id="eyeIcon" class="fa-solid fa-eye text-sm"></i>
             </button>
           </div>
         </div>
 
-      </div>
-    </div>
-  </header>
-
-  <!-- ================= GOOGLE LOGIN MODAL ================= -->
-  <div id="authModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full shadow-2xl border border-slate-200 p-6 sm:p-7 text-center space-y-4">
-      <div class="flex justify-end">
-        <button type="button" onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600">
-          <i class="fa-solid fa-xmark text-lg"></i>
+        <button type="submit" id="btnLogin" class="w-full bg-gradient-to-r from-brand-navy to-brand-lightBlue hover:from-brand-lightBlue hover:to-brand-navy text-white font-black py-3.5 rounded-xl text-sm transition-all shadow-lg hover:shadow-brand-navy/30 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-unlock-keyhole text-brand-gold"></i>
+          <span>Secure Sign In &rarr;</span>
         </button>
-      </div>
+      </form>
 
-      <div class="w-16 h-16 rounded-2xl bg-brand-navy text-brand-gold mx-auto flex items-center justify-center text-3xl font-black shadow-md">
-        <i class="fa-brands fa-google"></i>
+      <div class="text-center pt-2 border-t border-slate-100">
+        <a href="index.html" class="text-xs font-bold text-slate-400 hover:text-brand-navy transition">
+          &larr; Wapas Main Website Par Jaayein
+        </a>
       </div>
-      <div>
-        <h3 class="font-black text-xl text-brand-navy">Client Verification Login</h3>
-        <p class="text-xs text-slate-500 mt-1">Claim portal access karne ke liye apne Google Account se sign in karein!</p>
-      </div>
-
-      <div id="googleSignInButtonDiv" class="flex justify-center pt-2"></div>
-
-      <button type="button" onclick="closeAuthModal()" class="text-xs text-slate-400 hover:text-slate-600 block mx-auto pt-2">
-        Band karein / Close
-      </button>
     </div>
   </div>
 
-  <!-- ================= CLAIM STATUS TRACKER MODAL ================= -->
-  <div id="statusTrackerModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
-      <div class="bg-brand-navy text-white p-5 flex justify-between items-center border-b border-brand-lightBlue">
-        <div class="flex items-center gap-2.5">
-          <div class="w-10 h-10 rounded-xl bg-brand-gold text-brand-dark flex items-center justify-center text-lg font-black shadow-sm">
-            <i class="fa-solid fa-clock-rotate-left"></i>
+  <!-- ================= 2. ADVANCED ADMIN DASHBOARD ================= -->
+  <div id="dashboardSection" class="hidden min-h-screen flex flex-col">
+    <!-- Top Navbar -->
+    <header class="bg-brand-navy text-white sticky top-0 z-40 border-b border-brand-lightBlue shadow-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center gap-3">
+        <div class="flex items-center gap-3">
+          <div class="bg-white px-2.5 py-1.5 rounded-xl shadow-md border border-white/30 flex items-center justify-center">
+            <img src="logo.png" onerror="this.onerror=null; this.src='kds-logo.png'; this.classList.add('hidden'); document.getElementById('dashShieldLogo').classList.remove('hidden');" alt="KDS Insurance" class="h-10 sm:h-12 w-auto max-w-[140px] sm:max-w-[180px] object-contain" />
+            <div id="dashShieldLogo" class="hidden w-11 h-11 rounded-lg bg-brand-navy text-brand-gold flex items-center justify-center text-xl font-black">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
           </div>
           <div>
-            <h3 class="text-base font-black text-white">Live Claim Status Tracker</h3>
-            <p class="text-[11px] text-slate-300">Firebase & Sheet se live claim record dekhein</p>
+            <div class="flex items-center gap-2">
+              <h1 class="text-base sm:text-lg font-black leading-tight">KDS Insurance Operations Panel</h1>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Firebase Secure Sync
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-300">Live Database Connected • Quotations, Claims & User Requests</p>
           </div>
         </div>
-        <button type="button" onclick="closeClaimStatusModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+
+        <div class="flex items-center gap-2.5">
+          <button onclick="refreshCurrentTab()" class="bg-white/10 hover:bg-white/20 text-white font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-rotate text-brand-gold"></i> <span class="hidden sm:inline">Refresh Data</span>
+          </button>
+          <button onclick="adminLogout()" class="bg-rose-600 hover:bg-rose-700 text-white font-black px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 transition shadow">
+            <i class="fa-solid fa-power-off"></i> <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 py-6 w-full flex-grow space-y-6">
+      
+      <!-- Navigation Tabs -->
+      <div class="flex gap-2 border-b border-slate-200 pb-2 overflow-x-auto">
+        <button id="tabLeadsBtn" onclick="switchDashboardTab('leads')" class="px-5 py-2.5 rounded-xl font-black text-xs transition bg-brand-navy text-white shadow flex items-center gap-2 shrink-0">
+          <i class="fa-solid fa-file-invoice"></i> Quotations & Leads
+        </button>
+        <button id="tabClaimsBtn" onclick="switchDashboardTab('claims')" class="px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200 shrink-0">
+          <i class="fa-solid fa-triangle-exclamation text-amber-500"></i> Claims Management
+        </button>
+        <button id="tabUsersBtn" onclick="switchDashboardTab('users')" class="px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200 shrink-0">
+          <i class="fa-solid fa-users text-blue-600"></i> User Mobile Requests
+        </button>
+      </div>
+
+      <!-- Quotations / Leads View -->
+      <div id="leadsTabView" class="space-y-6">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-blue-50 text-brand-lightBlue flex items-center justify-center text-lg"><i class="fa-solid fa-folder-open"></i></div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Total Records</p>
+              <h3 id="statTotal" class="text-xl font-black text-slate-800">0</h3>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-circle-check"></i></div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Paid / Done</p>
+              <h3 id="statPaid" class="text-xl font-black text-emerald-700">0</h3>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Under Process</p>
+              <h3 id="statPending" class="text-xl font-black text-amber-600">0</h3>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-lg"><i class="fa-solid fa-arrows-rotate"></i></div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Renewal Requests</p>
+              <h3 id="statRenewals" class="text-xl font-black text-purple-700">0</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-3 justify-between items-center">
+          <div class="relative w-full md:w-96">
+            <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3.5 top-3 text-xs"></i>
+            <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Naam, Mobile, Policy No ya Quote No se khojein..." class="w-full bg-slate-50 border border-slate-300 rounded-xl py-2 pl-9 pr-3 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-lightBlue" />
+          </div>
+
+          <div class="flex items-center gap-2 w-full md:w-auto flex-wrap justify-end">
+            <select id="typeFilter" onchange="applyFilters()" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 focus:outline-none">
+              <option value="ALL">All Categories</option>
+              <option value="LIC">LIC Life</option>
+              <option value="MOTOR">Motor Insurance</option>
+              <option value="HEALTH">Health Mediclaim</option>
+              <option value="CSC">CSC Life</option>
+            </select>
+
+            <select id="statusFilter" onchange="applyFilters()" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 focus:outline-none">
+              <option value="ALL">All Status</option>
+              <option value="PAID">Paid / Success</option>
+              <option value="UNPAID">Unpaid / Pending</option>
+              <option value="RENEWAL">Renewal Requested</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse min-w-[950px]">
+              <thead class="bg-slate-50 text-slate-700 border-b border-slate-200 font-black uppercase text-[11px] tracking-wider">
+                <tr>
+                  <th class="p-3.5">Quotation No / Date</th>
+                  <th class="p-3.5">Customer & Contact</th>
+                  <th class="p-3.5">Category & Scheme</th>
+                  <th class="p-3.5">Payment</th>
+                  <th class="p-3.5">Original Policy</th>
+                  <th class="p-3.5">Renewal / New Policy</th>
+                  <th class="p-3.5 text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody id="adminTableBody" class="divide-y divide-slate-100">
+                <tr>
+                  <td colspan="7" class="text-center py-12 text-slate-400 font-bold">
+                    <i class="fa-solid fa-spinner fa-spin text-2xl mb-2 block text-brand-navy"></i>
+                    Data load ho raha hai...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Claims View -->
+      <div id="claimsTabView" class="hidden space-y-6">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg"><i class="fa-solid fa-file-shield"></i></div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Total Claims</p>
+              <h3 id="statTotalClaims" class="text-xl font-black text-slate-800">0</h3>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-lg"><i class="fa-solid fa-clock"></i></div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Pending Verification</p>
+              <h3 id="statPendingClaims" class="text-xl font-black text-orange-600">0</h3>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-spinner"></i></div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">In Process / Approved</p>
+              <h3 id="statProcessingClaims" class="text-xl font-black text-blue-600">0</h3>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-circle-check"></i></div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Settled</p>
+              <h3 id="statSettledClaims" class="text-xl font-black text-emerald-700">0</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-3 justify-between items-center">
+          <div class="relative w-full md:w-96">
+            <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3.5 top-3 text-xs"></i>
+            <input type="text" id="claimSearchInput" oninput="applyClaimFilters()" placeholder="Claim ID, Policy No, Naam ya Mobile..." class="w-full bg-slate-50 border border-slate-300 rounded-xl py-2 pl-9 pr-3 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-lightBlue" />
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse min-w-[950px]">
+              <thead class="bg-slate-50 text-slate-700 border-b border-slate-200 font-black uppercase text-[11px] tracking-wider">
+                <tr>
+                  <th class="p-3.5">Claim ID / Date</th>
+                  <th class="p-3.5">Claimant & Contact</th>
+                  <th class="p-3.5">Policy & Product</th>
+                  <th class="p-3.5">Category & Claim Type</th>
+                  <th class="p-3.5">Description</th>
+                  <th class="p-3.5">Status</th>
+                  <th class="p-3.5 text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody id="claimsTableBody" class="divide-y divide-slate-100">
+                <tr>
+                  <td colspan="7" class="text-center py-12 text-slate-400 font-bold">
+                    <i class="fa-solid fa-spinner fa-spin text-2xl mb-2 block text-brand-navy"></i>
+                    Claims load ho rahe hain...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users Mobile Requests View -->
+      <div id="usersTabView" class="hidden space-y-6">
+        <div class="grid grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-4 max-w-xl">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-users"></i></div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Total Registered Users</p>
+              <h3 id="statTotalUsers" class="text-xl font-black text-slate-800">0</h3>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg"><i class="fa-solid fa-phone-volume"></i></div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Pending Mobile Requests</p>
+              <h3 id="statPendingMobReqs" class="text-xl font-black text-amber-600">0</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse min-w-[750px]">
+              <thead class="bg-slate-50 text-slate-700 border-b border-slate-200 font-black uppercase text-[11px] tracking-wider">
+                <tr>
+                  <th class="p-3.5">User Name & Email</th>
+                  <th class="p-3.5">Mobile Numbers</th>
+                  <th class="p-3.5">Request Status</th>
+                  <th class="p-3.5">Updated Date</th>
+                  <th class="p-3.5 text-center">Action / Approve</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody" class="divide-y divide-slate-100">
+                <tr>
+                  <td colspan="5" class="text-center py-12 text-slate-400 font-bold">
+                    <i class="fa-solid fa-spinner fa-spin text-2xl mb-2 block text-brand-navy"></i>
+                    Users data load ho raha hai...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- EDIT POLICY & RENEWAL MODAL -->
+  <div id="editPolicyModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="bg-brand-navy text-white p-5 flex justify-between items-center border-b border-brand-lightBlue">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-gold text-brand-dark flex items-center justify-center font-black text-lg">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-black">Manage & Update Record</h3>
+            <p id="modalQuoteNumber" class="text-xs text-slate-300 font-mono">KDS-XXXXX</p>
+          </div>
+        </div>
+        <button onclick="closeEditModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
-      <div class="p-5 overflow-y-auto space-y-4">
-        <div>
-          <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
-            Claim ID, Mobile Number ya Policy Number Dalein:
-          </label>
-          <div class="flex gap-2">
-            <input type="text" id="trackInput" placeholder="eg. CLM-1001 ya Mobile Number" 
-              class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-navy uppercase" />
-            <button type="button" onclick="executeTrackClaim()" id="btnTrackNow" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-5 py-2.5 rounded-xl text-xs uppercase tracking-wider transition flex items-center gap-1.5 shadow">
-              <i class="fa-solid fa-magnifying-glass"></i> Check
-            </button>
+      <form id="editRecordForm" onsubmit="handleRecordSubmit(event)" class="p-5 sm:p-6 overflow-y-auto space-y-4 text-xs font-bold">
+        <input type="hidden" id="editRowId" />
+
+        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 grid grid-cols-2 gap-3 text-slate-700">
+          <div>Client: <span id="modalClientName" class="font-black text-brand-navy">-</span></div>
+          <div>Mobile: <span id="modalClientPhone" class="font-black text-slate-900">-</span></div>
+          <div class="col-span-2">Plan: <span id="modalPlanDetails" class="font-black text-slate-900">-</span></div>
+        </div>
+
+        <!-- Section 1: Payment & Primary Policy Details -->
+        <div class="space-y-3 pt-1">
+          <h4 class="text-[11px] font-black uppercase text-brand-lightBlue tracking-wider border-b pb-1">1. Payment & Primary Policy Details</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-slate-700 mb-1">Payment Status</label>
+              <select id="editPaymentStatus" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5">
+                <option value="UNPAID">UNPAID (Pending Verification)</option>
+                <option value="Success">Success / Paid</option>
+                <option value="Done">Done</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-700 mb-1">Primary Policy Number</label>
+              <input type="text" id="editPolicyNumber" placeholder="उदा. 16725419" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-mono" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-slate-700 mb-1">Primary Policy PDF Link (Google Drive)</label>
+              <input type="url" id="editDownloadLink" placeholder="https://drive.google.com/file/d/..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-normal" />
+            </div>
           </div>
         </div>
 
-        <div id="trackResultBox" class="hidden space-y-3 pt-2"></div>
-      </div>
+        <!-- Section 2: Renewal Management -->
+        <div class="space-y-3 pt-2">
+          <h4 class="text-[11px] font-black uppercase text-purple-700 tracking-wider border-b pb-1">2. Renewal Management (Motor / Health / LIC)</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-slate-700 mb-1">Renewed Policy Number</label>
+              <input type="text" id="editRenewedPolicyNumber" placeholder="Naya Policy Number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-mono" />
+            </div>
+            <div>
+              <label class="block text-slate-700 mb-1">Renewal Request Status</label>
+              <select id="editRenewalRequest" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5">
+                <option value="No">No Request</option>
+                <option value="Requested">Requested</option>
+                <option value="Done">Done / Renewed</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-slate-700 mb-1">Renewed Policy PDF Link (Google Drive)</label>
+              <input type="url" id="editRenewedDownloadLink" placeholder="https://drive.google.com/file/d/... (Nayi Policy Link)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-normal" />
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 flex justify-end gap-2.5">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 transition">Radd Karein</button>
+          <button type="submit" id="btnSaveRecord" class="px-6 py-2.5 rounded-xl bg-brand-navy hover:bg-brand-lightBlue text-white font-black transition shadow flex items-center gap-1.5">
+            <i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Firebase Me Update Karein</span>
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
-  <!-- ================= MAIN CONTENT ================= -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
-    
-    <div class="text-center mb-10">
-      <div class="inline-flex items-center gap-2 bg-amber-100 text-amber-900 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider mb-2 border border-amber-300">
-        <i class="fa-solid fa-shield-halved text-amber-600"></i> Authorized Client Claim Desk
-      </div>
-      <h2 class="text-3xl sm:text-4xl font-black text-brand-navy">Insurance Claim Sahayata Kendra</h2>
-      <p class="text-xs sm:text-sm text-slate-500 mt-1.5 max-w-xl mx-auto">
-        LIC, CSC Life, Motor ya Health Bima claim file karein. Verified clients ke liye tatkaal paperless settlement assistance.
-      </p>
-    </div>
-
-    <!-- 4 SERVICES QUICK TABS -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-8">
-      <button type="button" onclick="switchCategory('lic')" id="tab-lic" class="service-tab bg-brand-navy text-white p-4 rounded-2xl border-2 border-brand-navy text-left transition shadow-md flex flex-col justify-between">
-        <i class="fa-solid fa-shield-halved text-brand-gold text-2xl mb-3"></i>
-        <div>
-          <div class="font-black text-sm">Life (LIC)</div>
-          <div class="text-[11px] text-slate-200">Maturity, SB & Death Claim</div>
-        </div>
-      </button>
-
-      <button type="button" onclick="switchCategory('csc')" id="tab-csc" class="service-tab bg-white text-slate-800 p-4 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-400 flex flex-col justify-between shadow-xs">
-        <i class="fa-solid fa-landmark text-amber-600 text-2xl mb-3"></i>
-        <div>
-          <div class="font-black text-sm">Life (CSC/Other)</div>
-          <div class="text-[11px] text-slate-500">SBI Life, IndiaFirst, PMJJBY</div>
-        </div>
-      </button>
-
-      <button type="button" onclick="switchCategory('motor')" id="tab-motor" class="service-tab bg-white text-slate-800 p-4 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-400 flex flex-col justify-between shadow-xs">
-        <i class="fa-solid fa-car text-emerald-600 text-2xl mb-3"></i>
-        <div>
-          <div class="font-black text-sm">Motor Insurance</div>
-          <div class="text-[11px] text-slate-500">Accident, Theft & Glass Damage</div>
-        </div>
-      </button>
-
-      <button type="button" onclick="switchCategory('health')" id="tab-health" class="service-tab bg-white text-slate-800 p-4 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-400 flex flex-col justify-between shadow-xs">
-        <i class="fa-solid fa-heart-pulse text-rose-600 text-2xl mb-3"></i>
-        <div>
-          <div class="font-black text-sm">Health Insurance</div>
-          <div class="text-[11px] text-slate-500">Cashless & Hospital Bills</div>
-        </div>
-      </button>
-    </div>
-
-    <!-- MAIN TWO COLUMN GRID -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      
-      <!-- LEFT COLUMN: Guidelines & Required Docs -->
-      <div class="lg:col-span-1 bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-sm flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-4">
-            <span id="serviceBadge" class="bg-amber-100 text-amber-900 text-xs font-black uppercase px-2.5 py-1 rounded-md">LIC OF INDIA</span>
-            <span class="text-xs text-slate-400 font-bold"><i class="fa-solid fa-file-shield text-brand-gold"></i> Checklist</span>
+  <!-- EDIT CLAIM MODAL -->
+  <div id="editClaimModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="bg-brand-navy text-white p-5 flex justify-between items-center border-b border-brand-lightBlue">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-black text-lg">
+            <i class="fa-solid fa-shield-halved"></i>
           </div>
-
-          <h3 id="serviceTitle" class="text-xl font-black text-brand-navy mb-2">Life (LIC) Claim Checklist</h3>
-          <p id="serviceDesc" class="text-xs text-slate-500 mb-6 leading-relaxed">
-            Maturity claim, money back returns, death claim aur bond loan ki aasan suvidha.
-          </p>
-
-          <h4 class="text-xs font-black text-slate-700 uppercase tracking-wider mb-3">Zaroori Dastawej (Documents):</h4>
-          <ul id="serviceDocs" class="space-y-3 text-xs text-slate-600"></ul>
-        </div>
-
-        <div class="mt-8 pt-5 border-t border-slate-100 bg-slate-50 -mx-6 sm:-mx-7 -mb-6 sm:-mb-7 p-6 rounded-b-3xl">
-          <div class="text-xs font-bold text-brand-navy flex items-center gap-2 mb-1.5">
-            <i class="fa-solid fa-headset text-brand-gold text-base"></i>
-            <span>Doorstep Document Verification</span>
-          </div>
-          <p class="text-[11px] text-slate-500 leading-normal">
-            Dastawej samajh na aaye toh form submit karein, hum WhatsApp par documents mangwa lenge.
-          </p>
-        </div>
-      </div>
-
-      <!-- RIGHT COLUMN: Verification Card, Multi-Policies List & Form -->
-      <div class="lg:col-span-2 space-y-6">
-        
-        <!-- STEP 1: SHEET RECORD VERIFICATION CARD -->
-        <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-sm">
-          <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center gap-2 text-brand-navy font-black text-sm uppercase tracking-wide">
-              <span class="w-6 h-6 rounded-full bg-brand-navy text-brand-gold text-xs flex items-center justify-center font-black">1</span>
-              Client Database Record Verification
-            </div>
-            <button type="button" onclick="openClaimStatusModal()" class="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 bg-emerald-50 px-3 py-1 rounded-xl border border-emerald-300 flex items-center gap-1.5 transition">
-              <i class="fa-solid fa-clock-rotate-left"></i> Claim Status
-            </button>
-          </div>
-
-          <p class="text-xs text-slate-600 mb-4 font-medium">
-            Apna <strong>Policy Number</strong> ya database me darj <strong>Mobile Number</strong> dalkar verify karein:
-          </p>
-
-          <div class="flex flex-col sm:flex-row gap-2.5">
-            <div class="relative flex-1">
-              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
-              <input type="text" id="verifyInput" placeholder="eg. Mobile Number ya Policy Number" 
-                class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-4 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-brand-navy uppercase" />
-            </div>
-            <button type="button" onclick="verifyClientFromDatabase()" id="btnVerify" 
-              class="bg-brand-navy hover:bg-brand-lightBlue text-white font-black px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shadow shrink-0">
-              <i class="fa-solid fa-shield-check text-brand-gold"></i>
-              <span>Verify Karein</span>
-            </button>
-          </div>
-
-          <div id="verifyAlert" class="hidden mt-4 p-4 rounded-2xl text-xs font-bold"></div>
-        </div>
-
-        <!-- POLICIES FOUND LIST -->
-        <div id="policiesListSection" class="hidden space-y-3">
-          <div class="flex items-center justify-between">
-            <h4 class="text-xs font-black text-brand-navy uppercase tracking-wider">
-              <i class="fa-solid fa-folder-open text-brand-gold mr-1.5"></i> Aapke Number Par Mili Policies (<span id="policiesCount">0</span>)
-            </h4>
-            <span class="text-[11px] text-slate-500 font-bold">Claim karne ke liye policy chunein</span>
-          </div>
-          <div id="policiesCardContainer" class="grid grid-cols-1 gap-3"></div>
-        </div>
-
-        <!-- STEP 2: CLAIM REGISTRATION FORM -->
-        <form id="claimActualForm" onsubmit="handleClaimSubmission(event)" class="hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-sm space-y-5">
-          
-          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-            <div class="flex items-center gap-2 text-brand-navy font-black text-sm uppercase tracking-wide">
-              <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs flex items-center justify-center font-black">2</span>
-              Claim Registration Form
-            </div>
-            <span class="text-xs bg-emerald-50 text-emerald-800 font-black px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
-              <i class="fa-solid fa-circle-check text-emerald-600"></i> Selected Policy
-            </span>
-          </div>
-
-          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4">
-            <div class="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2.5">Auto-Retrieved Client Details (Read-only)</div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-              <div>
-                <label class="block text-[10px] font-bold text-slate-500 uppercase">Holder Name</label>
-                <input type="text" id="custName" readonly class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black text-brand-navy cursor-not-allowed" />
-              </div>
-              <div>
-                <label class="block text-[10px] font-bold text-slate-500 uppercase">Policy / Reg No</label>
-                <input type="text" id="custPolicy" readonly class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black text-brand-navy cursor-not-allowed" />
-              </div>
-              <div>
-                <label class="block text-[10px] font-bold text-slate-500 uppercase">Mobile Number</label>
-                <input type="text" id="custPhone" readonly class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 cursor-not-allowed" />
-              </div>
-              <div>
-                <label class="block text-[10px] font-bold text-slate-500 uppercase">Address / Gaon</label>
-                <input type="text" id="custAddress" readonly class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 cursor-not-allowed" />
-              </div>
-              <div class="sm:col-span-2">
-                <label class="block text-[10px] font-bold text-slate-500 uppercase">Current Product / Plan</label>
-                <input type="text" id="custProduct" readonly class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 cursor-not-allowed" />
-              </div>
-            </div>
-          </div>
-
-          <input type="hidden" id="selectedCategoryVal" value="Life (LIC)" />
-
           <div>
-            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Claim Type / Prakar *</label>
-            <select id="claimSubType" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-navy"></select>
+            <h3 class="text-base font-black">Manage Claim Request</h3>
+            <p id="claimModalClaimId" class="text-xs text-amber-300 font-mono">CLM-XXXX</p>
+          </div>
+        </div>
+        <button onclick="closeEditClaimModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="editClaimForm" onsubmit="handleClaimSubmit(event)" class="p-5 sm:p-6 overflow-y-auto space-y-4 text-xs font-bold">
+        <input type="hidden" id="claimEditRowId" />
+        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1.5 text-slate-700">
+          <div>Claimant: <span id="claimModalName" class="font-black text-brand-navy">-</span> (<span id="claimModalPhone" class="font-mono text-slate-800">-</span>)</div>
+          <div>Policy No: <span id="claimModalPolicyNo" class="font-mono font-black text-slate-900">-</span></div>
+          <div>Type: <span id="claimModalType" class="font-black text-slate-800">-</span></div>
+          <div class="text-[11px] text-slate-500">Customer Description: <span id="claimModalRemarks" class="font-normal italic">-</span></div>
+        </div>
+
+        <div class="space-y-3 pt-1">
+          <div>
+            <label class="block text-slate-700 mb-1">Claim Status</label>
+            <select id="claimEditStatus" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 font-bold focus:ring-2 focus:ring-brand-lightBlue">
+              <option value="Pending Verification">Pending Verification</option>
+              <option value="In Process">In Process</option>
+              <option value="Approved">Approved</option>
+              <option value="Settled">Settled</option>
+              <option value="Rejected">Rejected</option>
+            </select>
           </div>
 
           <div>
-            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Claim Vivaran / Ghatna (Description) *</label>
-            <textarea id="claimRemarks" rows="3" required placeholder="Ghatna ka samay, sthan, ya claim ke baare me thoda vivaran likhein..."
-              class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-brand-navy"></textarea>
+            <label class="block text-slate-700 mb-1">Admin Action Note / Remarks</label>
+            <textarea id="claimEditAdminRemarks" rows="3" placeholder="Surveyor assigned, Documents verified, etc..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-normal"></textarea>
           </div>
-
-          <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 text-xs text-amber-900 flex items-start gap-2.5">
-            <i class="fa-solid fa-circle-info text-amber-600 mt-0.5 text-sm shrink-0"></i>
-            <span>Submit karne par aapko Unique Claim Reference ID milegi jisse aap status track kar sakte hain.</span>
-          </div>
-
-          <div class="flex gap-2">
-            <button type="button" onclick="cancelPolicySelection()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 px-4 rounded-xl text-xs transition">
-              Radd Karein
-            </button>
-            <button type="submit" id="btnSubmitClaim" 
-              class="flex-1 bg-brand-navy hover:bg-brand-lightBlue text-white font-black py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2">
-              <i class="fa-solid fa-paper-plane text-brand-gold"></i>
-              <span>Claim Submit Kare</span>
-            </button>
-          </div>
-        </form>
-
-      </div>
-
-    </div>
-
-  </main>
-
-  <!-- ================= FOOTER ================= -->
-  <footer class="bg-brand-dark text-slate-400 text-xs border-t border-brand-lightBlue/40 py-8 px-4 sm:px-6 lg:px-8 mt-12">
-    <div class="max-w-7xl mx-auto space-y-4">
-      <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-        <div>
-          <span class="text-lg font-black text-white">KDS <span class="text-brand-gold">INSURANCE</span> SERVICES</span>
-          <p class="text-slate-300 text-xs mt-0.5">Authorized Insurance Agent: <strong>MANOHER SINGH</strong> (Malwara, Raniwara)</p>
         </div>
-        <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-300 font-bold">
-          <a href="index.html" class="hover:text-brand-gold transition">Life (LIC)</a>
-          <a href="index.html" class="hover:text-brand-gold transition">Life (CSC/Other)</a>
-          <a href="index.html" class="hover:text-brand-gold transition">Motor Insurance</a>
-          <a href="index.html" class="hover:text-brand-gold transition">Health Insurance</a>
-          <a href="about.html" class="hover:text-brand-gold transition">About Us</a>
+
+        <div class="pt-3 border-t border-slate-200 flex justify-end gap-2.5">
+          <button type="button" onclick="closeEditClaimModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 transition">Radd Karein</button>
+          <button type="submit" id="btnSaveClaim" class="px-6 py-2.5 rounded-xl bg-brand-navy hover:bg-brand-lightBlue text-white font-black transition shadow flex items-center gap-1.5">
+            <i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Claim Status Update Karein</span>
+          </button>
         </div>
-      </div>
-
-      <div class="text-center text-slate-500 text-[11px] pt-2">
-        &copy; 2026 Manoher Singh (Authorized Insurance Agent) • All Rights Reserved.
-      </div>
+      </form>
     </div>
-  </footer>
+  </div>
 
-  <!-- ================= TOAST NOTIFICATION ================= -->
   <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 text-xs font-bold hidden flex items-center gap-3">
     <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
     <span id="toastMessage">Success</span>
   </div>
 
-  <!-- ================= JAVASCRIPT ENGINE ================= -->
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzSh9jQ_VuFtn3daHDIFetGRjtwbxnIZe_CqwL_S-0b3e5IqD3MUZL9KPzj13RJBfTq/exec";
-    const GOOGLE_CLIENT_ID = "418446717578-9241s3h4pc44agohfkc8t2ift9jtpfau.apps.googleusercontent.com";
-
     // Firebase Initialization
     const firebaseConfig = {
       apiKey: "AIzaSyByZCEr6fYkDh3pBOS8wfqi6bQLXcRYDGU",
@@ -429,85 +504,580 @@
     }
     const db = firebase.firestore();
 
-    let currentLoggedInUser = null;
-    let loadedPolicies = [];
-    let selectedPolicyData = null;
-    let activeCategory = 'lic';
+    let adminCachedData = [];
+    let claimsCachedData = [];
+    let usersCachedData = [];
+    let activeDashboardTab = 'leads';
 
-    const servicesData = {
-      lic: {
-        badge: "LIC OF INDIA",
-        title: "Life (LIC) Claim Checklist",
-        desc: "LIC policy maturity, money back returns, death claim aur bond loan ki suvidha.",
-        categoryName: "Life (LIC)",
-        subTypes: [
-          "Maturity Claim (अवधि पूर्ण होने पर)",
-          "Survival Benefit (Money Back)",
-          "Death Claim (मृत्यु दावा)",
-          "Policy Loan / Surrender Sahayata"
-        ],
-        docs: [
-          "Mool Policy Bond (Original Bond)",
-          "Bank Passbook / Cancelled Cheque (NEFT ke liye)",
-          "Policyholder ka Aadhar Card & PAN Card",
-          "Death Claim mamle me: Death Certificate & Form 3783"
-        ]
-      },
-      csc: {
-        badge: "CSC & PRIVATE LIFE",
-        title: "Life (CSC / Private) Claims",
-        desc: "SBI Life, IndiaFirst, Shriram Life ya PMJJBY/PMSBY ke tahat claims.",
-        categoryName: "Life (CSC/Other)",
-        subTypes: [
-          "PMJJBY Death Claim (₹2 Lakh)",
-          "PMSBY Accidental Claim",
-          "Private Life Maturity Settlement",
-          "Nominee Update / KYC Change"
-        ],
-        docs: [
-          "Bank Passbook (Jisme se auto-debit premium kata tha)",
-          "Aadhar Card (Bimadharak & Nominee)",
-          "Company Claim Application Form",
-          "Death Certificate (Mamle anusaar)"
-        ]
-      },
-      motor: {
-        badge: "VEHICLE INSURANCE",
-        title: "Motor (Gadi) Bima Claims",
-        desc: "Car, Bike, Tractor aur Commercial gadiyo ke accident, kanch tootne ya chori ke daave.",
-        categoryName: "Motor Insurance",
-        subTypes: [
-          "Accident / Own Damage Claim",
-          "Windshield / Kanch Tootna Damage",
-          "Gadi Chori (Theft Claim)",
-          "Third Party Nuksan Sahayata"
-        ],
-        docs: [
-          "R.C. Copy (Registration Certificate)",
-          "Chalak ka Driving Licence (D.L.)",
-          "Bima Policy Copy",
-          "Accident spot ki photo ya video",
-          "Chori ya police mamlo me: FIR Copy"
-        ]
-      },
-      health: {
-        badge: "MEDICLAIM & HEALTH",
-        title: "Health (Swasthya) Bima Claims",
-        desc: "Hospital me bharti hone par cashless ilaj aur reimbursement claim sahayata.",
-        categoryName: "Health Insurance",
-        subTypes: [
-          "Cashless Hospitalization Assistance",
-          "Hospital Bill Reimbursement (पैसा वापस)",
-          "Pre & Post Hospitalization Dawayi Bill"
-        ],
-        docs: [
-          "Health Card / Policy Copy",
-          "Hospital Discharge Summary Report",
-          "Hospital ke Final Bills & Payment Receipts",
-          "Doctor Prescription & Test Reports"
-        ]
+    function togglePassVisibility() {
+      const p = document.getElementById('adminPass');
+      const icon = document.getElementById('eyeIcon');
+      if (p.type === 'password') {
+        p.type = 'text';
+        icon.className = 'fa-solid fa-eye-slash text-sm';
+      } else {
+        p.type = 'password';
+        icon.className = 'fa-solid fa-eye text-sm';
       }
-    };
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('adminUser').value.trim();
+      const p = document.getElementById('adminPass').value.trim();
+      const btn = document.getElementById('btnLogin');
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying Securely...';
+
+      db.collection("admins").where("username", "==", u).where("password", "==", p).get()
+        .then((querySnapshot) => {
+          if (!querySnapshot.empty) {
+            const secureToken = "KDS_SECURE_" + Math.random().toString(36).substring(2) + Date.now();
+            sessionStorage.setItem('kds_admin_session', secureToken);
+            showDashboardView();
+            fetchAdminData();
+            fetchClaimsData();
+            fetchUsersData();
+            showToast("Admin login successful!");
+          } else {
+            showToast("Galat Username ya Password!");
+          }
+        })
+        .catch(() => {
+          showToast("Database connection error!");
+        })
+        .finally(() => {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-unlock-keyhole text-brand-gold"></i> <span>Secure Sign In &rarr;</span>';
+        });
+    }
+
+    function checkAdminSession() {
+      const token = sessionStorage.getItem('kds_admin_session');
+      if (token && token.startsWith('KDS_SECURE_')) {
+        showDashboardView();
+        fetchAdminData();
+        fetchClaimsData();
+        fetchUsersData();
+      }
+    }
+
+    function showDashboardView() {
+      document.getElementById('loginSection').classList.add('hidden');
+      document.getElementById('dashboardSection').classList.remove('hidden');
+    }
+
+    function adminLogout() {
+      sessionStorage.removeItem('kds_admin_session');
+      location.reload();
+    }
+
+    function switchDashboardTab(tab) {
+      activeDashboardTab = tab;
+      const leadsTab = document.getElementById('leadsTabView');
+      const claimsTab = document.getElementById('claimsTabView');
+      const usersTab = document.getElementById('usersTabView');
+      
+      const tabLeadsBtn = document.getElementById('tabLeadsBtn');
+      const tabClaimsBtn = document.getElementById('tabClaimsBtn');
+      const tabUsersBtn = document.getElementById('tabUsersBtn');
+
+      leadsTab.classList.add('hidden');
+      claimsTab.classList.add('hidden');
+      usersTab.classList.add('hidden');
+
+      tabLeadsBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200 shrink-0";
+      tabClaimsBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200 shrink-0";
+      tabUsersBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200 shrink-0";
+
+      if (tab === 'leads') {
+        leadsTab.classList.remove('hidden');
+        tabLeadsBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-brand-navy text-white shadow flex items-center gap-2 shrink-0";
+      } else if (tab === 'claims') {
+        claimsTab.classList.remove('hidden');
+        tabClaimsBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-brand-navy text-white shadow flex items-center gap-2 shrink-0";
+        if (claimsCachedData.length === 0) fetchClaimsData();
+      } else if (tab === 'users') {
+        usersTab.classList.remove('hidden');
+        tabUsersBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-brand-navy text-white shadow flex items-center gap-2 shrink-0";
+        fetchUsersData();
+      }
+    }
+
+    function refreshCurrentTab() {
+      if (activeDashboardTab === 'leads') {
+        fetchAdminData();
+      } else if (activeDashboardTab === 'claims') {
+        fetchClaimsData();
+      } else {
+        fetchUsersData();
+      }
+    }
+
+    // --- QUOTATIONS & LEADS ---
+    function fetchAdminData() {
+      const tbody = document.getElementById('adminTableBody');
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" class="text-center py-12 text-slate-400 font-bold">
+            <i class="fa-solid fa-spinner fa-spin text-2xl mb-2 block text-brand-navy"></i>
+            Firebase se live data fetch ho raha hai...
+          </td>
+        </tr>
+      `;
+
+      db.collection("quotations").get()
+        .then((querySnapshot) => {
+          let list = [];
+          querySnapshot.forEach((doc) => {
+            let d = doc.data();
+            d.rowId = doc.id;
+            list.push(d);
+          });
+          adminCachedData = list;
+          updateMetrics(adminCachedData);
+          renderAdminTable(adminCachedData);
+        })
+        .catch(() => {
+          tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-rose-500 font-bold">Data load nahi hua.</td></tr>`;
+        });
+    }
+
+    function updateMetrics(list) {
+      document.getElementById('statTotal').innerText = list.length;
+      let paidCount = 0;
+      let pendingCount = 0;
+      let renewalCount = 0;
+
+      list.forEach(item => {
+        const pStatus = (item.paymentStatus || '').toLowerCase();
+        if (pStatus.indexOf('success') > -1 || pStatus.indexOf('paid') > -1 || pStatus.indexOf('done') > -1) {
+          paidCount++;
+        } else {
+          pendingCount++;
+        }
+        if (item.renewalRequest && item.renewalRequest.toLowerCase() === 'requested') {
+          renewalCount++;
+        }
+      });
+
+      document.getElementById('statPaid').innerText = paidCount;
+      document.getElementById('statPending').innerText = pendingCount;
+      document.getElementById('statRenewals').innerText = renewalCount;
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const type = document.getElementById('typeFilter').value;
+      const status = document.getElementById('statusFilter').value;
+
+      const filtered = adminCachedData.filter(item => {
+        const matchesQ = !q || 
+          (item.holderName && item.holderName.toLowerCase().indexOf(q) > -1) ||
+          (item.holderPhone && item.holderPhone.indexOf(q) > -1) ||
+          (item.quotationNumber && item.quotationNumber.toLowerCase().indexOf(q) > -1) ||
+          (item.policyNumber && item.policyNumber.toLowerCase().indexOf(q) > -1);
+
+        const matchesType = (type === 'ALL') || (item.insuranceType && item.insuranceType.toUpperCase() === type);
+
+        let matchesStatus = true;
+        const pStatus = (item.paymentStatus || '').toLowerCase();
+        const isPaid = (pStatus.indexOf('success') > -1 || pStatus.indexOf('paid') > -1 || pStatus.indexOf('done') > -1);
+
+        if (status === 'PAID') matchesStatus = isPaid;
+        if (status === 'UNPAID') matchesStatus = !isPaid;
+        if (status === 'RENEWAL') matchesStatus = (item.renewalRequest && item.renewalRequest.toLowerCase() === 'requested');
+
+        return matchesQ && matchesType && matchesStatus;
+      });
+
+      renderAdminTable(filtered);
+    }
+
+    function renderAdminTable(dataList) {
+      const tbody = document.getElementById('adminTableBody');
+
+      if (!dataList || dataList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-10 text-slate-400 font-bold">Koi record match nahi hua.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = dataList.map(item => {
+        const isPaid = (item.paymentStatus || '').toLowerCase().indexOf('success') > -1 || (item.paymentStatus || '').toLowerCase().indexOf('paid') > -1 || (item.paymentStatus || '').toLowerCase().indexOf('done') > -1;
+        const badgeColor = isPaid ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800';
+        const categoryBadge = item.insuranceType === 'MOTOR' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' :
+                              (item.insuranceType === 'HEALTH' ? 'bg-rose-50 text-rose-800 border-rose-200' : 'bg-blue-50 text-blue-900 border-blue-200');
+
+        const hasOriginalLink = item.downloadLink && item.downloadLink.trim() !== '';
+        const hasRenewedLink = item.renewedDownloadLink && item.renewedDownloadLink.trim() !== '';
+
+        return `
+          <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+            <td class="p-3.5">
+              <span class="inline-block bg-slate-900 text-amber-400 font-mono font-black text-xs px-2 py-0.5 rounded shadow-xs">${item.quotationNumber || 'N/A'}</span>
+              <div class="text-[10px] text-slate-500 font-bold mt-1"><i class="fa-regular fa-calendar-days mr-1"></i>${item.date || ''}</div>
+            </td>
+
+            <td class="p-3.5">
+              <div class="font-black text-slate-900 text-xs">${item.holderName || 'Client'}</div>
+              <div class="text-[11px] text-slate-500 font-bold mt-0.5 flex items-center gap-2">
+                <span><i class="fa-solid fa-phone text-emerald-600 mr-1"></i>${item.holderPhone || ''}</span>
+                <a href="https://wa.me/91${(item.holderPhone || '').replace(/[^0-9]/g,'')}" target="_blank" class="text-emerald-600 hover:text-emerald-700" title="Chat on WhatsApp">
+                  <i class="fa-brands fa-whatsapp text-sm"></i>
+                </a>
+              </div>
+              <div class="text-[10px] text-slate-400 truncate max-w-[150px]">${item.address || ''}</div>
+            </td>
+
+            <td class="p-3.5">
+              <span class="border px-1.5 py-0.5 rounded font-black text-[10px] ${categoryBadge} mr-1">${item.insuranceType || 'LIC'}</span>
+              <div class="text-slate-800 font-bold mt-1 max-w-[220px] line-clamp-2">${item.planName || ''}</div>
+            </td>
+
+            <td class="p-3.5">
+              <div class="font-black text-slate-900">₹ ${Number(item.premium || 0).toLocaleString('en-IN')}</div>
+              <span class="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-black ${badgeColor}">
+                ${item.paymentStatus || 'UNPAID'}
+              </span>
+            </td>
+
+            <td class="p-3.5">
+              <div class="font-mono font-bold text-xs text-blue-900">${item.policyNumber || 'Under Process'}</div>
+              ${hasOriginalLink ? `
+                <a href="${item.downloadLink}" target="_blank" class="text-[10.5px] font-bold text-emerald-600 hover:underline inline-flex items-center gap-1 mt-1">
+                  <i class="fa-solid fa-file-pdf"></i> View Policy
+                </a>` : '<span class="text-[10px] text-slate-400">No PDF uploaded</span>'}
+            </td>
+
+            <td class="p-3.5">
+              ${item.renewedPolicyNumber ? `<div class="font-mono font-bold text-xs text-emerald-800">${item.renewedPolicyNumber}</div>` : '<span class="text-[10px] text-slate-400">Not Renewed</span>'}
+              
+              ${item.renewalRequest && item.renewalRequest.toLowerCase() === 'requested' ? `
+                <span class="block bg-purple-100 text-purple-800 text-[10px] font-black px-1.5 py-0.5 rounded mt-1">Renewal Requested!</span>
+              ` : ''}
+
+              ${hasRenewedLink ? `
+                <a href="${item.renewedDownloadLink}" target="_blank" class="text-[10.5px] font-bold text-emerald-700 hover:underline inline-flex items-center gap-1 mt-0.5">
+                  <i class="fa-solid fa-file-pdf"></i> View Renewal PDF
+                </a>` : ''}
+            </td>
+
+            <td class="p-3.5 text-center">
+              <button onclick="openEditModal('${item.rowId}')" class="bg-brand-navy hover:bg-brand-lightBlue text-white font-black px-3.5 py-2 rounded-xl text-xs transition shadow-sm inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-pen-to-square text-brand-gold"></i> Manage
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openEditModal(rowId) {
+      const item = adminCachedData.find(x => x.rowId === rowId);
+      if (!item) return;
+
+      document.getElementById('editRowId').value = item.rowId;
+      document.getElementById('modalQuoteNumber').innerText = item.quotationNumber || 'KDS-RECORD';
+      document.getElementById('modalClientName').innerText = item.holderName || '-';
+      document.getElementById('modalClientPhone').innerText = item.holderPhone || '-';
+      document.getElementById('modalPlanDetails').innerText = `${item.insuranceType || ''}: ${item.planName || ''}`;
+
+      document.getElementById('editPaymentStatus').value = item.paymentStatus || 'UNPAID';
+      document.getElementById('editPolicyNumber').value = (item.policyNumber === 'Under Process') ? '' : (item.policyNumber || '');
+      document.getElementById('editDownloadLink').value = item.downloadLink || '';
+
+      document.getElementById('editRenewedPolicyNumber').value = item.renewedPolicyNumber || '';
+      document.getElementById('editRenewalRequest').value = item.renewalRequest || 'No';
+      document.getElementById('editRenewedDownloadLink').value = item.renewedDownloadLink || '';
+
+      document.getElementById('editPolicyModal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      document.getElementById('editPolicyModal').classList.add('hidden');
+    }
+
+    function handleRecordSubmit(e) {
+      e.preventDefault();
+      const rowId = document.getElementById('editRowId').value;
+      const btn = document.getElementById('btnSaveRecord');
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating Firebase...';
+
+      const paymentStatus = document.getElementById('editPaymentStatus').value;
+      const policyNumber = document.getElementById('editPolicyNumber').value || 'Under Process';
+      const downloadLink = document.getElementById('editDownloadLink').value;
+      const renewedPolicyNumber = document.getElementById('editRenewedPolicyNumber').value;
+      const renewalRequest = document.getElementById('editRenewalRequest').value;
+      const renewedDownloadLink = document.getElementById('editRenewedDownloadLink').value;
+
+      db.collection("quotations").doc(rowId).update({
+        paymentStatus: paymentStatus,
+        policyNumber: policyNumber,
+        downloadLink: downloadLink,
+        renewedPolicyNumber: renewedPolicyNumber,
+        renewalRequest: renewalRequest,
+        renewedDownloadLink: renewedDownloadLink
+      })
+      .then(() => {
+        showToast('Firebase me policy aur renewal update ho gaya!');
+        closeEditModal();
+        setTimeout(fetchAdminData, 800);
+      })
+      .catch(() => {
+        showToast('Update error!');
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Firebase Me Update Karein</span>';
+      });
+    }
+
+    // --- CLAIMS MANAGEMENT ---
+    function fetchClaimsData() {
+      const tbody = document.getElementById('claimsTableBody');
+      db.collection("claims").get()
+        .then((querySnapshot) => {
+          let list = [];
+          querySnapshot.forEach((doc) => {
+            let d = doc.data();
+            d.rowId = doc.id;
+            list.push(d);
+          });
+          claimsCachedData = list;
+          updateClaimMetrics(claimsCachedData);
+          renderClaimsTable(claimsCachedData);
+        })
+        .catch(() => {
+          tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-rose-500 font-bold">Claims load nahi hue.</td></tr>`;
+        });
+    }
+
+    function updateClaimMetrics(list) {
+      document.getElementById('statTotalClaims').innerText = list.length;
+      let pending = 0;
+      let inProcess = 0;
+      let settled = 0;
+
+      list.forEach(c => {
+        const s = (c.status || '').toLowerCase();
+        if (s.indexOf('pending') > -1) pending++;
+        else if (s.indexOf('settled') > -1 || s.indexOf('approved') > -1) settled++;
+        else inProcess++;
+      });
+
+      document.getElementById('statPendingClaims').innerText = pending;
+      document.getElementById('statProcessingClaims').innerText = inProcess;
+      document.getElementById('statSettledClaims').innerText = settled;
+    }
+
+    function applyClaimFilters() {
+      const q = document.getElementById('claimSearchInput').value.trim().toLowerCase();
+      const filtered = claimsCachedData.filter(item => {
+        return !q ||
+          (item.claimId && item.claimId.toLowerCase().indexOf(q) > -1) ||
+          (item.name && item.name.toLowerCase().indexOf(q) > -1) ||
+          (item.phone && item.phone.indexOf(q) > -1) ||
+          (item.policyNo && item.policyNo.toLowerCase().indexOf(q) > -1);
+      });
+      renderClaimsTable(filtered);
+    }
+
+    function renderClaimsTable(dataList) {
+      const tbody = document.getElementById('claimsTableBody');
+      if (!dataList || dataList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-10 text-slate-400 font-bold">Koi claim record nahi mila.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = dataList.map(item => {
+        let badgeColor = 'bg-amber-100 text-amber-800';
+        const st = (item.status || '').toLowerCase();
+        if (st.indexOf('settled') > -1 || st.indexOf('approved') > -1) {
+          badgeColor = 'bg-emerald-100 text-emerald-800';
+        } else if (st.indexOf('process') > -1) {
+          badgeColor = 'bg-blue-100 text-blue-800';
+        } else if (st.indexOf('reject') > -1) {
+          badgeColor = 'bg-rose-100 text-rose-800';
+        }
+
+        return `
+          <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+            <td class="p-3.5">
+              <span class="inline-block bg-slate-900 text-amber-400 font-mono font-black text-xs px-2 py-0.5 rounded shadow-xs">${item.claimId || 'N/A'}</span>
+              <div class="text-[10px] text-slate-500 font-bold mt-1"><i class="fa-regular fa-calendar-days mr-1"></i>${item.date || ''}</div>
+            </td>
+            <td class="p-3.5">
+              <div class="font-black text-slate-900 text-xs">${item.name || 'Claimant'}</div>
+              <div class="text-[11px] text-slate-500 font-bold mt-0.5">
+                <span><i class="fa-solid fa-phone text-emerald-600 mr-1"></i>${item.phone || ''}</span>
+              </div>
+              <div class="text-[10px] text-slate-400 truncate max-w-[150px]">${item.address || ''}</div>
+            </td>
+            <td class="p-3.5">
+              <div class="font-mono font-bold text-xs text-blue-900">${item.policyNo || 'N/A'}</div>
+              <div class="text-slate-700 font-bold text-[11px] mt-0.5">${item.product || ''}</div>
+            </td>
+            <td class="p-3.5">
+              <span class="bg-slate-100 text-slate-700 font-bold text-[10px] px-2 py-0.5 rounded border border-slate-200">${item.category || 'General'}</span>
+              <div class="text-slate-800 font-black text-[11px] mt-1">${item.claimType || 'Claim'}</div>
+            </td>
+            <td class="p-3.5 max-w-[200px]">
+              <p class="text-slate-600 text-[11px] font-normal truncate">${item.remarks || '-'}</p>
+              ${item.adminRemarks ? `<p class="text-brand-lightBlue text-[10px] font-bold mt-1"><i class="fa-solid fa-user-pen mr-1"></i>Note: ${item.adminRemarks}</p>` : ''}
+            </td>
+            <td class="p-3.5">
+              <span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-black ${badgeColor}">
+                ${item.status || 'Pending Verification'}
+              </span>
+            </td>
+            <td class="p-3.5 text-center">
+              <button onclick="openEditClaimModal('${item.rowId}')" class="bg-amber-500 hover:bg-amber-600 text-white font-black px-3.5 py-2 rounded-xl text-xs transition shadow-sm inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-pen-to-square"></i> Update
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openEditClaimModal(rowId) {
+      const item = claimsCachedData.find(x => x.rowId === rowId);
+      if (!item) return;
+
+      document.getElementById('claimEditRowId').value = item.rowId;
+      document.getElementById('claimModalClaimId').innerText = item.claimId || 'CLM-RECORD';
+      document.getElementById('claimModalName').innerText = item.name || '-';
+      document.getElementById('claimModalPhone').innerText = item.phone || '-';
+      document.getElementById('claimModalPolicyNo').innerText = item.policyNo || '-';
+      document.getElementById('claimModalType').innerText = `${item.category || ''} / ${item.claimType || ''}`;
+      document.getElementById('claimModalRemarks').innerText = item.remarks || 'None';
+
+      document.getElementById('claimEditStatus').value = item.status || 'Pending Verification';
+      document.getElementById('claimEditAdminRemarks').value = item.adminRemarks || '';
+
+      document.getElementById('editClaimModal').classList.remove('hidden');
+    }
+
+    function closeEditClaimModal() {
+      document.getElementById('editClaimModal').classList.add('hidden');
+    }
+
+    function handleClaimSubmit(e) {
+      e.preventDefault();
+      const rowId = document.getElementById('claimEditRowId').value;
+      const btn = document.getElementById('btnSaveClaim');
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating Firebase...';
+
+      const newStatus = document.getElementById('claimEditStatus').value;
+      const adminRemarks = document.getElementById('claimEditAdminRemarks').value;
+
+      db.collection("claims").doc(rowId).update({
+        status: newStatus,
+        adminRemarks: adminRemarks
+      })
+      .then(() => {
+        showToast('Claim status Firebase me update ho gaya!');
+        closeEditClaimModal();
+        setTimeout(fetchClaimsData, 800);
+      })
+      .catch(() => {
+        showToast('Claim update error!');
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Claim Status Update Karein</span>';
+      });
+    }
+
+    // --- USER MOBILE REQUESTS MANAGEMENT ---
+    function fetchUsersData() {
+      const tbody = document.getElementById('usersTableBody');
+      db.collection("users").get()
+        .then((querySnapshot) => {
+          let list = [];
+          querySnapshot.forEach((doc) => {
+            let d = doc.data();
+            d.rowId = doc.id;
+            list.push(d);
+          });
+          usersCachedData = list;
+          updateUserMetrics(usersCachedData);
+          renderUsersTable(usersCachedData);
+        })
+        .catch(() => {
+          tbody.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-rose-500 font-bold">Users load nahi hue.</td></tr>`;
+        });
+    }
+
+    function updateUserMetrics(list) {
+      const pendingReqs = list.filter(u => (u.mobileRequestStatus || '').toLowerCase() === 'pending');
+      document.getElementById('statTotalUsers').innerText = list.length;
+      document.getElementById('statPendingMobReqs').innerText = pendingReqs.length;
+    }
+
+    function renderUsersTable(dataList) {
+      const tbody = document.getElementById('usersTableBody');
+      if (!dataList || dataList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-10 text-slate-400 font-bold">Koi user record nahi mila.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = dataList.map(item => {
+        const status = item.mobileRequestStatus || 'No Request';
+        const badgeColor = status.toLowerCase() === 'pending' ? 'bg-amber-100 text-amber-800' :
+                           status.toLowerCase() === 'approved' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-700';
+
+        return `
+          <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+            <td class="p-3.5">
+              <div class="font-black text-slate-900 text-xs">${item.name || 'User'}</div>
+              <div class="text-[11px] text-slate-500 font-mono">${item.email || ''}</div>
+            </td>
+            <td class="p-3.5">
+              <div class="font-mono font-bold text-xs text-brand-navy"><i class="fa-solid fa-phone text-emerald-600 mr-1"></i>${item.mobile || item.mobile1 || 'N/A'}</div>
+              <div class="text-[10px] text-slate-400">Alt: ${item.altMobile || item.mobile2 || 'None'}</div>
+            </td>
+            <td class="p-3.5">
+              <span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-black ${badgeColor}">
+                ${status}
+              </span>
+            </td>
+            <td class="p-3.5 text-xs text-slate-500">
+              ${item.updatedAt || 'N/A'}
+            </td>
+            <td class="p-3.5 text-center">
+              ${status.toLowerCase() === 'pending' ? `
+                <button onclick="approveMobileRequest('${item.rowId}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-3.5 py-2 rounded-xl text-xs transition shadow-sm inline-flex items-center gap-1.5">
+                  <i class="fa-solid fa-check"></i> Approve
+                </button>
+              ` : `
+                <span class="text-emerald-700 font-bold text-xs"><i class="fa-solid fa-circle-check"></i> Approved</span>
+              `}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function approveMobileRequest(rowId) {
+      if (!confirm("Kya aap is mobile number update request ko approve karna chahte hain?")) return;
+
+      db.collection("users").doc(rowId).update({
+        mobileRequestStatus: "Approved"
+      })
+      .then(() => {
+        showToast("Mobile update request successfully approved!");
+        fetchUsersData();
+      })
+      .catch(() => {
+        showToast("Approval error!");
+      });
+    }
 
     function showToast(msg) {
       const toast = document.getElementById('toastNotification');
@@ -516,557 +1086,7 @@
       setTimeout(() => toast.classList.add('hidden'), 4000);
     }
 
-    function switchCategory(key) {
-      activeCategory = key;
-      const data = servicesData[key];
-
-      document.querySelectorAll('.service-tab').forEach(b => {
-        b.className = "service-tab bg-white text-slate-800 p-4 rounded-2xl border-2 border-slate-200 text-left transition hover:border-slate-400 flex flex-col justify-between shadow-xs";
-      });
-      const activeBtn = document.getElementById(`tab-${key}`);
-      if (activeBtn) {
-        activeBtn.className = "service-tab bg-brand-navy text-white p-4 rounded-2xl border-2 border-brand-navy text-left transition shadow-md flex flex-col justify-between";
-      }
-
-      document.getElementById('serviceBadge').innerText = data.badge;
-      document.getElementById('serviceTitle').innerText = data.title;
-      document.getElementById('serviceDesc').innerText = data.desc;
-
-      const docsUl = document.getElementById('serviceDocs');
-      docsUl.innerHTML = data.docs.map(doc => `
-        <li class="flex items-start gap-2.5">
-          <i class="fa-solid fa-file-lines text-brand-gold mt-0.5 text-xs shrink-0"></i>
-          <span>${doc}</span>
-        </li>
-      `).join('');
-
-      document.getElementById('selectedCategoryVal').value = data.categoryName;
-      const select = document.getElementById('claimSubType');
-      select.innerHTML = data.subTypes.map(st => `<option value="${st}">${st}</option>`).join('');
-    }
-
-    function parseJwt(token) {
-      try {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-        return JSON.parse(jsonPayload);
-      } catch (e) {
-        return null;
-      }
-    }
-
-    function handleGoogleCredentialResponse(response) {
-      const payload = parseJwt(response.credential);
-      if (!payload) return;
-
-      currentLoggedInUser = {
-        name: payload.name || 'Client',
-        email: payload.email,
-        photo: payload.picture || '',
-        id: payload.sub
-      };
-
-      localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
-      closeAuthModal();
-      updateAuthNavUI();
-      showToast("Swagat hai, " + currentLoggedInUser.name + "!");
-    }
-
-    function openAuthModal() {
-      document.getElementById('authModal').classList.remove('hidden');
-      if (window.google && google.accounts && google.accounts.id) {
-        google.accounts.id.initialize({
-          client_id: GOOGLE_CLIENT_ID,
-          callback: handleGoogleCredentialResponse
-        });
-        const targetDiv = document.getElementById("googleSignInButtonDiv");
-        if (targetDiv) {
-          targetDiv.innerHTML = "";
-          google.accounts.id.renderButton(targetDiv, {
-            theme: "outline",
-            size: "large",
-            width: "280",
-            text: "signin_with",
-            shape: "pill"
-          });
-        }
-      }
-    }
-
-    function closeAuthModal() {
-      document.getElementById('authModal').classList.add('hidden');
-    }
-
-    function handleAuthButtonClick() {
-      if (currentLoggedInUser) {
-        window.location.href = "index.html";
-      } else {
-        openAuthModal();
-      }
-    }
-
-    function checkAuthStatus() {
-      const savedUser = localStorage.getItem('kds_logged_user');
-      if (savedUser) {
-        try {
-          currentLoggedInUser = JSON.parse(savedUser);
-          updateAuthNavUI();
-        } catch (e) {
-          localStorage.removeItem('kds_logged_user');
-        }
-      }
-    }
-
-    function updateAuthNavUI() {
-      const container = document.getElementById('authContainer');
-      if (currentLoggedInUser) {
-        container.innerHTML = `
-          <div class="flex items-center gap-2 bg-amber-50 border border-brand-gold/50 px-3 py-1.5 rounded-xl">
-            <img src="${currentLoggedInUser.photo || 'favicon.png'}" class="w-6 h-6 rounded-full border border-brand-gold" />
-            <span class="text-xs font-black text-brand-navy">${currentLoggedInUser.name}</span>
-            <button onclick="handleLogout()" title="Logout" class="text-slate-400 hover:text-rose-600 text-xs ml-1">
-              <i class="fa-solid fa-right-from-bracket"></i>
-            </button>
-          </div>
-        `;
-      } else {
-        container.innerHTML = `
-          <button id="authBtn" type="button" onclick="handleAuthButtonClick()" class="bg-brand-gold hover:bg-amber-400 text-brand-dark font-black px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm">
-            <i class="fa-solid fa-user-circle text-base"></i>
-            <span>Google Login</span>
-          </button>
-        `;
-      }
-    }
-
-    function handleLogout() {
-      localStorage.removeItem('kds_logged_user');
-      currentLoggedInUser = null;
-      updateAuthNavUI();
-      showToast("Aap logout ho gaye hain.");
-    }
-
-    // ==========================================
-    // FIREBASE VERIFY & SEARCH
-    // ==========================================
-    async function verifyClientFromDatabase() {
-      const key = document.getElementById('verifyInput').value.trim().toUpperCase();
-      const alertBox = document.getElementById('verifyAlert');
-      const listSection = document.getElementById('policiesListSection');
-      const cardContainer = document.getElementById('policiesCardContainer');
-      const form = document.getElementById('claimActualForm');
-      const btn = document.getElementById('btnVerify');
-
-      if (!key) {
-        alertBox.className = "mt-4 p-3.5 rounded-2xl text-xs bg-amber-50 text-amber-900 border border-amber-300 block";
-        alertBox.innerText = "Kripya apna Policy Number ya Mobile Number dalein!";
-        return;
-      }
-
-      btn.disabled = true;
-      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Checking...`;
-      alertBox.className = "hidden";
-      form.classList.add('hidden');
-      listSection.classList.add('hidden');
-
-      try {
-        let policiesMap = new Map();
-
-        // 1. Firebase se search karein
-        const qSnap = await db.collection("quotations").get();
-        qSnap.forEach(doc => {
-          let d = doc.data();
-          let pNo = String(d.policyNumber || '').trim().toUpperCase();
-          let phone = String(d.holderPhone || d.mobile1 || '').trim();
-          let qNo = String(d.quotationNumber || '').trim().toUpperCase();
-
-          if (pNo === key || phone === key || qNo === key || (pNo && pNo.includes(key)) || (phone && phone.includes(key))) {
-            let keyId = pNo || qNo || doc.id;
-            if (!policiesMap.has(keyId)) {
-              policiesMap.set(keyId, {
-                name: d.holderName || 'Client',
-                policyNo: d.policyNumber || d.quotationNumber || 'N/A',
-                phone: d.holderPhone || d.mobile1 || '',
-                address: d.address || '',
-                product: d.planName || d.insuranceType || 'Insurance',
-                hasClaim: false,
-                claimDetails: null
-              });
-            }
-          }
-        });
-
-        // 2. Claims check karein
-        const cSnap = await db.collection("claims").get();
-        let claimsMap = new Map();
-        cSnap.forEach(doc => {
-          let c = doc.data();
-          let pNo = String(c.policyNo || '').trim().toUpperCase();
-          if (pNo) {
-            claimsMap.set(pNo, {
-              claimId: c.claimId || 'CLM-X',
-              status: c.status || 'Pending Verification',
-              date: c.date || ''
-            });
-          }
-        });
-
-        let results = [];
-        policiesMap.forEach((pol, k) => {
-          if (claimsMap.has(k)) {
-            pol.hasClaim = true;
-            pol.claimDetails = claimsMap.get(k);
-          }
-          results.push(pol);
-        });
-
-        // Agar Firebase me na mile toh fallback Google Sheet API check
-        if (results.length === 0) {
-          const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=verify&key=${encodeURIComponent(key)}`);
-          const result = await response.json();
-          if (result.found && result.policies) {
-            results = result.policies;
-          }
-        }
-
-        if (results.length > 0) {
-          loadedPolicies = results;
-          document.getElementById('policiesCount').innerText = loadedPolicies.length;
-
-          alertBox.className = "mt-4 p-4 rounded-2xl text-xs sm:text-sm bg-emerald-50 text-emerald-900 border border-emerald-300 block";
-          alertBox.innerHTML = `<strong>Kamyab!</strong> Is number par <b>${loadedPolicies.length} Policy Records</b> mile hain. Niche apni policy chunein।`;
-
-          cardContainer.innerHTML = loadedPolicies.map((pol, idx) => {
-            const hasClaim = pol.hasClaim;
-            const claimStatus = hasClaim ? pol.claimDetails.status : 'No Claim Filed';
-            const claimId = hasClaim ? pol.claimDetails.claimId : '';
-            
-            return `
-              <div class="bg-white border-2 ${hasClaim ? 'border-amber-300 bg-amber-50/20' : 'border-slate-200'} rounded-2xl p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition hover:border-brand-navy">
-                <div class="space-y-1.5 flex-1">
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-xs font-black text-brand-navy uppercase">${pol.name}</span>
-                    <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md border">Policy: ${pol.policyNo}</span>
-                    ${hasClaim 
-                      ? `<span class="text-[10px] font-black bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-full flex items-center gap-1">
-                           <i class="fa-solid fa-clock-rotate-left text-amber-600"></i> Claim Active (${claimId} • ${claimStatus})
-                         </span>`
-                      : `<span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full">
-                           <i class="fa-solid fa-circle-check text-emerald-600"></i> Ready for Claim
-                         </span>`
-                    }
-                  </div>
-                  <div class="text-xs font-semibold text-slate-700">Plan: ${pol.product || 'Insurance Plan'}</div>
-                  <div class="text-[11px] text-slate-400"><i class="fa-solid fa-location-dot mr-1"></i>${pol.address} • Mo: ${pol.phone}</div>
-                </div>
-
-                <div class="shrink-0 w-full sm:w-auto">
-                  ${hasClaim 
-                    ? `<button type="button" onclick="showExistingClaimDetails(${idx})" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
-                         <i class="fa-solid fa-receipt"></i> Claim Details Dekhein
-                       </button>`
-                    : `<button type="button" onclick="selectPolicyForClaim(${idx})" class="w-full sm:w-auto bg-brand-navy hover:bg-brand-lightBlue text-white font-black px-4 py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
-                         <i class="fa-solid fa-file-pen text-brand-gold"></i> Claim Darj Karein
-                       </button>`
-                  }
-                </div>
-              </div>
-            `;
-          }).join('');
-
-          listSection.classList.remove('hidden');
-
-        } else {
-          loadedPolicies = [];
-          listSection.classList.add('hidden');
-          form.classList.add('hidden');
-          alertBox.className = "mt-4 p-4 rounded-2xl text-xs sm:text-sm bg-rose-50 text-rose-900 border border-rose-300 block";
-          alertBox.innerHTML = `<strong>Sorry!</strong> Yeh Policy / Mobile Number database me nahi mila.`;
-        }
-      } catch (err) {
-        alertBox.className = "mt-4 p-4 rounded-2xl text-xs bg-rose-50 text-rose-900 border border-rose-200 block";
-        alertBox.innerText = "Error: Database se sampark nahi ho saka. Kripya punah koshish karein.";
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = `<i class="fa-solid fa-shield-check text-brand-gold"></i> <span>Verify Karein</span>`;
-      }
-    }
-
-    function selectPolicyForClaim(index) {
-      selectedPolicyData = loadedPolicies[index];
-      if (!selectedPolicyData) return;
-
-      document.getElementById('custName').value = selectedPolicyData.name || '-';
-      document.getElementById('custPolicy').value = selectedPolicyData.policyNo || '-';
-      document.getElementById('custPhone').value = selectedPolicyData.phone || '-';
-      document.getElementById('custAddress').value = selectedPolicyData.address || '-';
-      document.getElementById('custProduct').value = selectedPolicyData.product || '-';
-
-      const form = document.getElementById('claimActualForm');
-      form.classList.remove('hidden');
-      form.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function cancelPolicySelection() {
-      selectedPolicyData = null;
-      document.getElementById('claimActualForm').classList.add('hidden');
-    }
-
-    function showExistingClaimDetails(index) {
-      const pol = loadedPolicies[index];
-      const cl = pol.claimDetails;
-      
-      const modalHtml = `
-        <div id="claimInfoModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border-2 border-amber-400">
-            <div class="w-14 h-14 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl font-black">
-              <i class="fa-solid fa-clock-rotate-left"></i>
-            </div>
-            <h3 class="text-lg font-black text-brand-navy">Claim Pehle Se Active Hai</h3>
-            <p class="text-xs text-slate-500 mb-4">${pol.name} (${pol.policyNo})</p>
-
-            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-left text-xs space-y-2 mb-4">
-              <div class="flex justify-between">
-                <span class="text-slate-400 font-bold">Claim ID:</span>
-                <span class="font-mono font-black text-brand-navy">${cl.claimId}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-slate-400 font-bold">Status:</span>
-                <span class="font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">${cl.status}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-slate-400 font-bold">Claim Date:</span>
-                <span class="font-bold text-slate-700">${cl.date}</span>
-              </div>
-            </div>
-
-            <button type="button" onclick="document.getElementById('claimInfoModal').remove()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition">
-              Band Karein / OK
-            </button>
-          </div>
-        </div>
-      `;
-      document.body.insertAdjacentHTML('beforeend', modalHtml);
-    }
-
-    // ==========================================
-    // CLAIM STATUS MODAL FUNCTIONS (FIREBASE SYNC)
-    // ==========================================
-    function openClaimStatusModal() {
-      document.getElementById('statusTrackerModal').classList.remove('hidden');
-      const vVal = document.getElementById('verifyInput').value.trim();
-      if (vVal) {
-        document.getElementById('trackInput').value = vVal;
-        executeTrackClaim();
-      }
-    }
-
-    function closeClaimStatusModal() {
-      document.getElementById('statusTrackerModal').classList.add('hidden');
-    }
-
-    async function executeTrackClaim() {
-      const trackVal = document.getElementById('trackInput').value.trim().toUpperCase();
-      const resBox = document.getElementById('trackResultBox');
-      const btn = document.getElementById('btnTrackNow');
-
-      if (!trackVal) {
-        alert("Kripya Claim ID, Mobile Number ya Policy Number dalein!");
-        return;
-      }
-
-      btn.disabled = true;
-      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Checking...`;
-      resBox.classList.remove('hidden');
-      resBox.innerHTML = `<div class="text-center py-4 text-xs font-bold text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Database se live claim record dhoonda ja raha hai...</div>`;
-
-      try {
-        let matchedClaims = [];
-
-        // 1. Firebase Firestore se search
-        const cSnap = await db.collection("claims").get();
-        cSnap.forEach(doc => {
-          let c = doc.data();
-          let cId = String(c.claimId || '').trim().toUpperCase();
-          let pNo = String(c.policyNo || '').trim().toUpperCase();
-          let phone = String(c.phone || '').trim();
-
-          if (cId === trackVal || pNo === trackVal || phone === trackVal || cId.includes(trackVal) || pNo.includes(trackVal) || phone.includes(trackVal)) {
-            matchedClaims.push({
-              claimId: c.claimId || 'CLM-X',
-              status: c.status || 'Pending Verification',
-              date: c.date || '',
-              policyNo: c.policyNo || 'N/A',
-              name: c.name || 'Client',
-              product: c.product || '-',
-              claimType: c.claimType || '-',
-              phone: c.phone || ''
-            });
-          }
-        });
-
-        // Agar Firebase me na mile toh Sheet fallback
-        if (matchedClaims.length === 0) {
-          const resp = await fetch(`${GOOGLE_SHEET_API_URL}?action=trackClaim&key=${encodeURIComponent(trackVal)}`);
-          const result = await resp.json();
-          if (result.found && result.claims) {
-            matchedClaims = result.claims;
-          }
-        }
-
-        if (matchedClaims.length > 0) {
-          resBox.innerHTML = matchedClaims.map(c => `
-            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs space-y-2">
-              <div class="flex justify-between items-center pb-2 border-b border-slate-200">
-                <span class="font-mono font-black text-sm text-brand-navy">${c.claimId}</span>
-                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black border ${
-                  c.status.toLowerCase().includes('approved') || c.status.toLowerCase().includes('settled') ? 'bg-emerald-100 text-emerald-800 border-emerald-300' :
-                  c.status.toLowerCase().includes('reject') ? 'bg-rose-100 text-rose-800 border-rose-300' :
-                  'bg-amber-100 text-amber-900 border-amber-300'
-                }">${c.status}</span>
-              </div>
-              <div class="grid grid-cols-2 gap-1 text-[11px] pt-1">
-                <div><span class="text-slate-400 font-bold">Policy / Veh:</span> <b class="text-slate-800">${c.policyNo}</b></div>
-                <div><span class="text-slate-400 font-bold">Holder:</span> <b class="text-slate-800">${c.name}</b></div>
-                <div><span class="text-slate-400 font-bold">Plan:</span> <b class="text-slate-800">${c.product || '-'}</b></div>
-                <div><span class="text-slate-400 font-bold">Claim Type:</span> <b class="text-slate-800">${c.claimType || '-'}</b></div>
-              </div>
-              <div class="text-[10px] text-slate-400 pt-1 border-t border-slate-200 flex justify-between">
-                <span><i class="fa-regular fa-calendar-days mr-1"></i>${c.date}</span>
-                <span>Mo: ${c.phone}</span>
-              </div>
-            </div>
-          `).join('');
-        } else {
-          resBox.innerHTML = `
-            <div class="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 text-center font-bold">
-              Koi claim record nahi mila.
-            </div>
-          `;
-        }
-      } catch (err) {
-        resBox.innerHTML = `
-          <div class="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 text-center font-bold">
-            Database se data load karne me error aaya. Kripya punah koshish karein.
-          </div>
-        `;
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i> Check`;
-      }
-    }
-
-    // ==========================================
-    // CLAIM FORM SUBMISSION (FIREBASE + SHEET)
-    // ==========================================
-    async function handleClaimSubmission(e) {
-      e.preventDefault();
-      if (!selectedPolicyData) return;
-
-      const submitBtn = document.getElementById('btnSubmitClaim');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Firebase Me Save Ho Raha Hai...`;
-
-      const generatedClaimId = "CLM-" + Math.floor(1000 + Math.random() * 9000);
-      const currentDate = new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-
-      const payload = {
-        claimId: generatedClaimId,
-        policyNo: document.getElementById('custPolicy').value,
-        name: document.getElementById('custName').value,
-        phone: document.getElementById('custPhone').value,
-        address: document.getElementById('custAddress').value,
-        product: document.getElementById('custProduct').value,
-        category: document.getElementById('selectedCategoryVal').value,
-        claimType: document.getElementById('claimSubType').value,
-        remarks: document.getElementById('claimRemarks').value,
-        status: "Pending Verification",
-        date: currentDate
-      };
-
-      try {
-        // 1. Firebase Firestore me save karein
-        await db.collection("claims").add(payload);
-
-        // 2. Google Sheet Backup ke liye bhi bhej dein
-        fetch(GOOGLE_SHEET_API_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        }).catch(() => {});
-
-        document.getElementById('claimActualForm').reset();
-        document.getElementById('claimActualForm').classList.add('hidden');
-        document.getElementById('policiesListSection').classList.add('hidden');
-        document.getElementById('verifyInput').value = '';
-        document.getElementById('verifyAlert').className = "hidden";
-        selectedPolicyData = null;
-
-        showClaimSuccessModal(generatedClaimId, payload.name, payload.policyNo);
-
-      } catch (err) {
-        showToast("Claim darj karte waqt samasya aayi.");
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane text-brand-gold"></i> <span>Claim Submit Kare</span>`;
-      }
-    }
-
-    function showClaimSuccessModal(claimId, clientName, policyNo) {
-      const modalHtml = `
-        <div id="claimSuccessModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border-2 border-emerald-500">
-            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner">
-              <i class="fa-solid fa-circle-check"></i>
-            </div>
-            <h3 class="text-xl font-black text-slate-900 mb-1">Claim Darj Ho Gaya!</h3>
-            <p class="text-xs text-slate-500 mb-4">Sh. <b>${clientName}</b> (${policyNo})</p>
-            
-            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4">
-              <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Aapki Claim Reference ID</div>
-              <div class="text-3xl font-black text-emerald-700 tracking-wider font-mono">${claimId}</div>
-            </div>
-
-            <p class="text-[11px] text-slate-500 mb-5 leading-normal">
-              Kripya is Claim ID ko note ya screenshot kar lein. KDS Team jald aapse documents lene hetu sampark karegi.
-            </p>
-
-            <button type="button" onclick="document.getElementById('claimSuccessModal').remove()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow">
-              Theek Hai / OK
-            </button>
-          </div>
-        </div>
-      `;
-      document.body.insertAdjacentHTML('beforeend', modalHtml);
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      switchCategory('lic');
-      checkAuthStatus();
-
-      const vInput = document.getElementById('verifyInput');
-      if (vInput) {
-        vInput.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            verifyClientFromDatabase();
-          }
-        });
-      }
-
-      const tInput = document.getElementById('trackInput');
-      if (tInput) {
-        tInput.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            executeTrackClaim();
-          }
-        });
-      }
-    });
+    window.addEventListener('DOMContentLoaded', checkAdminSession);
   </script>
-
 </body>
 </html>
