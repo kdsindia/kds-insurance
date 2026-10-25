@@ -14,13 +14,18 @@
   <!-- Official Google Identity Services SDK -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
+  <!-- Firebase App, Auth & Firestore SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
   <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4128683084720874"
-     crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4128683084720874" crossorigin="anonymous"></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -74,7 +79,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16 sm:h-20 gap-3">
         
-        <a href="/" class="flex items-center gap-2.5 py-1 shrink-0 group">
+        <a href="index.html" class="flex items-center gap-2.5 py-1 shrink-0 group">
           <img src="logo.png" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" class="h-10 sm:h-12 w-auto max-w-[140px] sm:max-w-[170px] object-contain rounded-lg" alt="KDS INSURANCE" />
           <div id="logoFallback" class="hidden items-center gap-2">
             <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-navy flex items-center justify-center text-brand-gold font-black text-lg sm:text-xl">KDS</div>
@@ -86,12 +91,11 @@
         </a>
 
         <div class="flex items-center gap-2 sm:gap-3">
-          <a href="/" class="bg-slate-100 hover:bg-slate-200 text-brand-navy font-bold px-3.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 border border-slate-200 shadow-sm">
+          <a href="index.html" class="bg-slate-100 hover:bg-slate-200 text-brand-navy font-bold px-3.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 border border-slate-200 shadow-sm">
             <i class="fa-solid fa-house text-brand-lightBlue"></i>
             <span>Home</span>
           </a>
 
-          <!-- NAVBAR CLAIM STATUS BUTTON -->
           <button type="button" onclick="openClaimStatusModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-3.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-clock-rotate-left"></i>
             <span>Claim Status</span>
@@ -150,7 +154,7 @@
           </div>
           <div>
             <h3 class="text-base font-black text-white">Live Claim Status Tracker</h3>
-            <p class="text-[11px] text-slate-300">Sheet se direct live claim record dekhein</p>
+            <p class="text-[11px] text-slate-300">Firebase & Sheet se live claim record dekhein</p>
           </div>
         </div>
         <button type="button" onclick="closeClaimStatusModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
@@ -264,16 +268,15 @@
           <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2 text-brand-navy font-black text-sm uppercase tracking-wide">
               <span class="w-6 h-6 rounded-full bg-brand-navy text-brand-gold text-xs flex items-center justify-center font-black">1</span>
-              Client Sheet Record Verification
+              Client Database Record Verification
             </div>
-            <!-- CLAIM STATUS BUTTON IN CARD -->
             <button type="button" onclick="openClaimStatusModal()" class="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 bg-emerald-50 px-3 py-1 rounded-xl border border-emerald-300 flex items-center gap-1.5 transition">
               <i class="fa-solid fa-clock-rotate-left"></i> Claim Status
             </button>
           </div>
 
           <p class="text-xs text-slate-600 mb-4 font-medium">
-            Apna <strong>Policy Number</strong> ya sheet me darj <strong>Mobile Number</strong> dalkar verify karein:
+            Apna <strong>Policy Number</strong> ya database me darj <strong>Mobile Number</strong> dalkar verify karein:
           </p>
 
           <div class="flex flex-col sm:flex-row gap-2.5">
@@ -282,7 +285,7 @@
               <input type="text" id="verifyInput" placeholder="eg. Mobile Number ya Policy Number" 
                 class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-4 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-brand-navy uppercase" />
             </div>
-            <button type="button" onclick="verifyClientFromSheet()" id="btnVerify" 
+            <button type="button" onclick="verifyClientFromDatabase()" id="btnVerify" 
               class="bg-brand-navy hover:bg-brand-lightBlue text-white font-black px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shadow shrink-0">
               <i class="fa-solid fa-shield-check text-brand-gold"></i>
               <span>Verify Karein</span>
@@ -292,7 +295,7 @@
           <div id="verifyAlert" class="hidden mt-4 p-4 rounded-2xl text-xs font-bold"></div>
         </div>
 
-        <!-- POLICIES FOUND LIST (Multiple Policies Support) -->
+        <!-- POLICIES FOUND LIST -->
         <div id="policiesListSection" class="hidden space-y-3">
           <div class="flex items-center justify-between">
             <h4 class="text-xs font-black text-brand-navy uppercase tracking-wider">
@@ -316,7 +319,6 @@
             </span>
           </div>
 
-          <!-- Master Data Auto-Populated Inputs -->
           <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4">
             <div class="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2.5">Auto-Retrieved Client Details (Read-only)</div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -345,13 +347,11 @@
 
           <input type="hidden" id="selectedCategoryVal" value="Life (LIC)" />
 
-          <!-- Dynamic Claim Subtype Dropdown -->
           <div>
             <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Claim Type / Prakar *</label>
             <select id="claimSubType" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-navy"></select>
           </div>
 
-          <!-- Description Note -->
           <div>
             <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Claim Vivaran / Ghatna (Description) *</label>
             <textarea id="claimRemarks" rows="3" required placeholder="Ghatna ka samay, sthan, ya claim ke baare me thoda vivaran likhein..."
@@ -390,10 +390,10 @@
           <p class="text-slate-300 text-xs mt-0.5">Authorized Insurance Agent: <strong>MANOHER SINGH</strong> (Malwara, Raniwara)</p>
         </div>
         <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-300 font-bold">
-          <a href="/" class="hover:text-brand-gold transition">Life (LIC)</a>
-          <a href="/" class="hover:text-brand-gold transition">Life (CSC/Other)</a>
-          <a href="/" class="hover:text-brand-gold transition">Motor Insurance</a>
-          <a href="/" class="hover:text-brand-gold transition">Health Insurance</a>
+          <a href="index.html" class="hover:text-brand-gold transition">Life (LIC)</a>
+          <a href="index.html" class="hover:text-brand-gold transition">Life (CSC/Other)</a>
+          <a href="index.html" class="hover:text-brand-gold transition">Motor Insurance</a>
+          <a href="index.html" class="hover:text-brand-gold transition">Health Insurance</a>
           <a href="about.html" class="hover:text-brand-gold transition">About Us</a>
         </div>
       </div>
@@ -414,6 +414,20 @@
   <script>
     const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzSh9jQ_VuFtn3daHDIFetGRjtwbxnIZe_CqwL_S-0b3e5IqD3MUZL9KPzj13RJBfTq/exec";
     const GOOGLE_CLIENT_ID = "418446717578-9241s3h4pc44agohfkc8t2ift9jtpfau.apps.googleusercontent.com";
+
+    // Firebase Initialization
+    const firebaseConfig = {
+      apiKey: "AIzaSyByZCEr6fYkDh3pBOS8wfqi6bQLXcRYDGU",
+      authDomain: "kds-insurance.firebaseapp.com",
+      projectId: "kds-insurance",
+      storageBucket: "kds-insurance.firebasestorage.app",
+      messagingSenderId: "418446717578",
+      appId: "1:418446717578:web:74c9722a1f23d22522b373"
+    };
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
 
     let currentLoggedInUser = null;
     let loadedPolicies = [];
@@ -586,7 +600,7 @@
 
     function handleAuthButtonClick() {
       if (currentLoggedInUser) {
-        window.location.href = "/";
+        window.location.href = "index.html";
       } else {
         openAuthModal();
       }
@@ -634,10 +648,10 @@
     }
 
     // ==========================================
-    // MULTI POLICY VERIFY & SEARCH
+    // FIREBASE VERIFY & SEARCH
     // ==========================================
-    async function verifyClientFromSheet() {
-      const key = document.getElementById('verifyInput').value.trim();
+    async function verifyClientFromDatabase() {
+      const key = document.getElementById('verifyInput').value.trim().toUpperCase();
       const alertBox = document.getElementById('verifyAlert');
       const listSection = document.getElementById('policiesListSection');
       const cardContainer = document.getElementById('policiesCardContainer');
@@ -657,11 +671,67 @@
       listSection.classList.add('hidden');
 
       try {
-        const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=verify&key=${encodeURIComponent(key)}`);
-        const result = await response.json();
+        let policiesMap = new Map();
 
-        if (result.found && result.policies && result.policies.length > 0) {
-          loadedPolicies = result.policies;
+        // 1. Firebase se search karein
+        const qSnap = await db.collection("quotations").get();
+        qSnap.forEach(doc => {
+          let d = doc.data();
+          let pNo = String(d.policyNumber || '').trim().toUpperCase();
+          let phone = String(d.holderPhone || d.mobile1 || '').trim();
+          let qNo = String(d.quotationNumber || '').trim().toUpperCase();
+
+          if (pNo === key || phone === key || qNo === key || (pNo && pNo.includes(key)) || (phone && phone.includes(key))) {
+            let keyId = pNo || qNo || doc.id;
+            if (!policiesMap.has(keyId)) {
+              policiesMap.set(keyId, {
+                name: d.holderName || 'Client',
+                policyNo: d.policyNumber || d.quotationNumber || 'N/A',
+                phone: d.holderPhone || d.mobile1 || '',
+                address: d.address || '',
+                product: d.planName || d.insuranceType || 'Insurance',
+                hasClaim: false,
+                claimDetails: null
+              });
+            }
+          }
+        });
+
+        // 2. Claims check karein
+        const cSnap = await db.collection("claims").get();
+        let claimsMap = new Map();
+        cSnap.forEach(doc => {
+          let c = doc.data();
+          let pNo = String(c.policyNo || '').trim().toUpperCase();
+          if (pNo) {
+            claimsMap.set(pNo, {
+              claimId: c.claimId || 'CLM-X',
+              status: c.status || 'Pending Verification',
+              date: c.date || ''
+            });
+          }
+        });
+
+        let results = [];
+        policiesMap.forEach((pol, k) => {
+          if (claimsMap.has(k)) {
+            pol.hasClaim = true;
+            pol.claimDetails = claimsMap.get(k);
+          }
+          results.push(pol);
+        });
+
+        // Agar Firebase me na mile toh fallback Google Sheet API check
+        if (results.length === 0) {
+          const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=verify&key=${encodeURIComponent(key)}`);
+          const result = await response.json();
+          if (result.found && result.policies) {
+            results = result.policies;
+          }
+        }
+
+        if (results.length > 0) {
+          loadedPolicies = results;
           document.getElementById('policiesCount').innerText = loadedPolicies.length;
 
           alertBox.className = "mt-4 p-4 rounded-2xl text-xs sm:text-sm bg-emerald-50 text-emerald-900 border border-emerald-300 block";
@@ -680,7 +750,7 @@
                     <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md border">Policy: ${pol.policyNo}</span>
                     ${hasClaim 
                       ? `<span class="text-[10px] font-black bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-full flex items-center gap-1">
-                           <i class="fa-solid fa-clock-rotate-left text-amber-600"></i> Claim Active (${claimId} •${claimStatus})
+                           <i class="fa-solid fa-clock-rotate-left text-amber-600"></i> Claim Active (${claimId} • ${claimStatus})
                          </span>`
                       : `<span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full">
                            <i class="fa-solid fa-circle-check text-emerald-600"></i> Ready for Claim
@@ -712,7 +782,7 @@
           listSection.classList.add('hidden');
           form.classList.add('hidden');
           alertBox.className = "mt-4 p-4 rounded-2xl text-xs sm:text-sm bg-rose-50 text-rose-900 border border-rose-300 block";
-          alertBox.innerHTML = `<strong>Sorry!</strong> Yeh Policy / Mobile Number client database me nahi mila.`;
+          alertBox.innerHTML = `<strong>Sorry!</strong> Yeh Policy / Mobile Number database me nahi mila.`;
         }
       } catch (err) {
         alertBox.className = "mt-4 p-4 rounded-2xl text-xs bg-rose-50 text-rose-900 border border-rose-200 block";
@@ -781,7 +851,7 @@
     }
 
     // ==========================================
-    // CLAIM STATUS MODAL FUNCTIONS
+    // CLAIM STATUS MODAL FUNCTIONS (FIREBASE SYNC)
     // ==========================================
     function openClaimStatusModal() {
       document.getElementById('statusTrackerModal').classList.remove('hidden');
@@ -797,7 +867,7 @@
     }
 
     async function executeTrackClaim() {
-      const trackVal = document.getElementById('trackInput').value.trim();
+      const trackVal = document.getElementById('trackInput').value.trim().toUpperCase();
       const resBox = document.getElementById('trackResultBox');
       const btn = document.getElementById('btnTrackNow');
 
@@ -809,19 +879,49 @@
       btn.disabled = true;
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Checking...`;
       resBox.classList.remove('hidden');
-      resBox.innerHTML = `<div class="text-center py-4 text-xs font-bold text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Claim sheet se live record dhoonda ja raha hai...</div>`;
+      resBox.innerHTML = `<div class="text-center py-4 text-xs font-bold text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Database se live claim record dhoonda ja raha hai...</div>`;
 
       try {
-        const resp = await fetch(`${GOOGLE_SHEET_API_URL}?action=trackClaim&key=${encodeURIComponent(trackVal)}`);
-        const result = await resp.json();
+        let matchedClaims = [];
 
-        if (result.found && result.claims && result.claims.length > 0) {
-          resBox.innerHTML = result.claims.map(c => `
+        // 1. Firebase Firestore se search
+        const cSnap = await db.collection("claims").get();
+        cSnap.forEach(doc => {
+          let c = doc.data();
+          let cId = String(c.claimId || '').trim().toUpperCase();
+          let pNo = String(c.policyNo || '').trim().toUpperCase();
+          let phone = String(c.phone || '').trim();
+
+          if (cId === trackVal || pNo === trackVal || phone === trackVal || cId.includes(trackVal) || pNo.includes(trackVal) || phone.includes(trackVal)) {
+            matchedClaims.push({
+              claimId: c.claimId || 'CLM-X',
+              status: c.status || 'Pending Verification',
+              date: c.date || '',
+              policyNo: c.policyNo || 'N/A',
+              name: c.name || 'Client',
+              product: c.product || '-',
+              claimType: c.claimType || '-',
+              phone: c.phone || ''
+            });
+          }
+        });
+
+        // Agar Firebase me na mile toh Sheet fallback
+        if (matchedClaims.length === 0) {
+          const resp = await fetch(`${GOOGLE_SHEET_API_URL}?action=trackClaim&key=${encodeURIComponent(trackVal)}`);
+          const result = await resp.json();
+          if (result.found && result.claims) {
+            matchedClaims = result.claims;
+          }
+        }
+
+        if (matchedClaims.length > 0) {
+          resBox.innerHTML = matchedClaims.map(c => `
             <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs space-y-2">
               <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                 <span class="font-mono font-black text-sm text-brand-navy">${c.claimId}</span>
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black border ${
-                  c.status.toLowerCase().includes('approved') ? 'bg-emerald-100 text-emerald-800 border-emerald-300' :
+                  c.status.toLowerCase().includes('approved') || c.status.toLowerCase().includes('settled') ? 'bg-emerald-100 text-emerald-800 border-emerald-300' :
                   c.status.toLowerCase().includes('reject') ? 'bg-rose-100 text-rose-800 border-rose-300' :
                   'bg-amber-100 text-amber-900 border-amber-300'
                 }">${c.status}</span>
@@ -841,7 +941,7 @@
         } else {
           resBox.innerHTML = `
             <div class="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 text-center font-bold">
-              ${result.message || 'Koi claim record nahi mila.'}
+              Koi claim record nahi mila.
             </div>
           `;
         }
@@ -858,7 +958,7 @@
     }
 
     // ==========================================
-    // CLAIM FORM SUBMISSION & SUCCESS POPUP
+    // CLAIM FORM SUBMISSION (FIREBASE + SHEET)
     // ==========================================
     async function handleClaimSubmission(e) {
       e.preventDefault();
@@ -866,9 +966,10 @@
 
       const submitBtn = document.getElementById('btnSubmitClaim');
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Claim Sheet Me Save Ho Raha Hai...`;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Firebase Me Save Ho Raha Hai...`;
 
       const generatedClaimId = "CLM-" + Math.floor(1000 + Math.random() * 9000);
+      const currentDate = new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
       const payload = {
         claimId: generatedClaimId,
@@ -877,18 +978,24 @@
         phone: document.getElementById('custPhone').value,
         address: document.getElementById('custAddress').value,
         product: document.getElementById('custProduct').value,
-        serviceCategory: document.getElementById('selectedCategoryVal').value,
-        claimSubType: document.getElementById('claimSubType').value,
-        remarks: document.getElementById('claimRemarks').value
+        category: document.getElementById('selectedCategoryVal').value,
+        claimType: document.getElementById('claimSubType').value,
+        remarks: document.getElementById('claimRemarks').value,
+        status: "Pending Verification",
+        date: currentDate
       };
 
       try {
-        await fetch(GOOGLE_SHEET_API_URL, {
+        // 1. Firebase Firestore me save karein
+        await db.collection("claims").add(payload);
+
+        // 2. Google Sheet Backup ke liye bhi bhej dein
+        fetch(GOOGLE_SHEET_API_URL, {
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
-        });
+        }).catch(() => {});
 
         document.getElementById('claimActualForm').reset();
         document.getElementById('claimActualForm').classList.add('hidden');
@@ -944,7 +1051,7 @@
         vInput.addEventListener("keydown", (e) => {
           if (e.key === "Enter") {
             e.preventDefault();
-            verifyClientFromSheet();
+            verifyClientFromDatabase();
           }
         });
       }
