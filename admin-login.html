@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <!-- Firebase App & Firestore SDKs -->
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -44,7 +44,6 @@
 
   <!-- ================= 1. SECURE LOGIN SCREEN ================= -->
   <div id="loginSection" class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-900 via-brand-dark to-slate-900 relative overflow-hidden">
-    <!-- Glow Background Accents -->
     <div class="absolute -top-32 -left-32 w-96 h-96 bg-brand-lightBlue/20 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-brand-gold/15 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -58,13 +57,12 @@
         </div>
         <div>
           <span class="inline-block px-3 py-1 bg-amber-50 border border-amber-200 text-amber-800 text-[10px] font-black rounded-full uppercase tracking-wider mb-1">
-            <i class="fa-solid fa-lock text-brand-gold mr-1"></i> 100% Secure Firebase Workspace
+            <i class="fa-solid fa-lock text-brand-gold mr-1"></i> Authorized Workspace
           </span>
           <h2 class="text-2xl font-black text-brand-navy tracking-tight">KDS Operations Panel</h2>
           <p class="text-xs text-slate-500 font-medium">Digital Services & Claim Management</p>
         </div>
       </div>
-
       <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="space-y-4 text-xs font-bold">
         <div>
           <label class="block text-slate-700 mb-1.5 uppercase tracking-wider text-[11px]">Admin Username</label>
@@ -118,7 +116,7 @@
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Firebase Secure Sync
               </span>
             </div>
-            <p class="text-[11px] text-slate-300">Live Firestore Connected • Quotations & Claims Management</p>
+            <p class="text-[11px] text-slate-300">Live Database Connected • Quotations, Claims & User Requests</p>
           </div>
         </div>
 
@@ -135,13 +133,17 @@
 
     <!-- Main Workspace -->
     <main class="max-w-7xl mx-auto px-3 sm:px-6 py-6 w-full flex-grow space-y-6">
+      
       <!-- Navigation Tabs -->
-      <div class="flex gap-2 border-b border-slate-200 pb-2">
-        <button id="tabLeadsBtn" onclick="switchDashboardTab('leads')" class="px-5 py-2.5 rounded-xl font-black text-xs transition bg-brand-navy text-white shadow flex items-center gap-2">
+      <div class="flex gap-2 border-b border-slate-200 pb-2 overflow-x-auto">
+        <button id="tabLeadsBtn" onclick="switchDashboardTab('leads')" class="px-5 py-2.5 rounded-xl font-black text-xs transition bg-brand-navy text-white shadow flex items-center gap-2 shrink-0">
           <i class="fa-solid fa-file-invoice"></i> Quotations & Leads
         </button>
-        <button id="tabClaimsBtn" onclick="switchDashboardTab('claims')" class="px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200">
+        <button id="tabClaimsBtn" onclick="switchDashboardTab('claims')" class="px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200 shrink-0">
           <i class="fa-solid fa-triangle-exclamation text-amber-500"></i> Claims Management
+        </button>
+        <button id="tabUsersBtn" onclick="switchDashboardTab('users')" class="px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200 shrink-0">
+          <i class="fa-solid fa-users text-blue-600"></i> User Mobile Requests
         </button>
       </div>
 
@@ -295,10 +297,55 @@
           </div>
         </div>
       </div>
+
+      <!-- Users Mobile Requests View -->
+      <div id="usersTabView" class="hidden space-y-6">
+        <div class="grid grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-4 max-w-xl">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg"><i class="fa-solid fa-users"></i></div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Total Registered Users</p>
+              <h3 id="statTotalUsers" class="text-xl font-black text-slate-800">0</h3>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg"><i class="fa-solid fa-phone-volume"></i></div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Pending Mobile Requests</p>
+              <h3 id="statPendingMobReqs" class="text-xl font-black text-amber-600">0</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse min-w-[750px]">
+              <thead class="bg-slate-50 text-slate-700 border-b border-slate-200 font-black uppercase text-[11px] tracking-wider">
+                <tr>
+                  <th class="p-3.5">User Name & Email</th>
+                  <th class="p-3.5">Mobile Numbers</th>
+                  <th class="p-3.5">Request Status</th>
+                  <th class="p-3.5">Updated Date</th>
+                  <th class="p-3.5 text-center">Action / Approve</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody" class="divide-y divide-slate-100">
+                <tr>
+                  <td colspan="5" class="text-center py-12 text-slate-400 font-bold">
+                    <i class="fa-solid fa-spinner fa-spin text-2xl mb-2 block text-brand-navy"></i>
+                    Users data load ho raha hai...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 
-  <!-- EDIT POLICY MODAL -->
+  <!-- EDIT POLICY & RENEWAL MODAL -->
   <div id="editPolicyModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
       <div class="bg-brand-navy text-white p-5 flex justify-between items-center border-b border-brand-lightBlue">
@@ -325,6 +372,7 @@
           <div class="col-span-2">Plan: <span id="modalPlanDetails" class="font-black text-slate-900">-</span></div>
         </div>
 
+        <!-- Section 1: Payment & Primary Policy Details -->
         <div class="space-y-3 pt-1">
           <h4 class="text-[11px] font-black uppercase text-brand-lightBlue tracking-wider border-b pb-1">1. Payment & Primary Policy Details</h4>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -333,6 +381,7 @@
               <select id="editPaymentStatus" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5">
                 <option value="UNPAID">UNPAID (Pending Verification)</option>
                 <option value="Success">Success / Paid</option>
+                <option value="Done">Done</option>
               </select>
             </div>
             <div>
@@ -346,10 +395,88 @@
           </div>
         </div>
 
+        <!-- Section 2: Renewal Management -->
+        <div class="space-y-3 pt-2">
+          <h4 class="text-[11px] font-black uppercase text-purple-700 tracking-wider border-b pb-1">2. Renewal Management (Motor / Health / LIC)</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-slate-700 mb-1">Renewed Policy Number</label>
+              <input type="text" id="editRenewedPolicyNumber" placeholder="Naya Policy Number" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-mono" />
+            </div>
+            <div>
+              <label class="block text-slate-700 mb-1">Renewal Request Status</label>
+              <select id="editRenewalRequest" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5">
+                <option value="No">No Request</option>
+                <option value="Requested">Requested</option>
+                <option value="Done">Done / Renewed</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-slate-700 mb-1">Renewed Policy PDF Link (Google Drive)</label>
+              <input type="url" id="editRenewedDownloadLink" placeholder="https://drive.google.com/file/d/... (Nayi Policy Link)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-normal" />
+            </div>
+          </div>
+        </div>
+
         <div class="pt-3 border-t border-slate-200 flex justify-end gap-2.5">
           <button type="button" onclick="closeEditModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 transition">Radd Karein</button>
           <button type="submit" id="btnSaveRecord" class="px-6 py-2.5 rounded-xl bg-brand-navy hover:bg-brand-lightBlue text-white font-black transition shadow flex items-center gap-1.5">
             <i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Firebase Me Update Karein</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- EDIT CLAIM MODAL -->
+  <div id="editClaimModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="bg-brand-navy text-white p-5 flex justify-between items-center border-b border-brand-lightBlue">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-black text-lg">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-black">Manage Claim Request</h3>
+            <p id="claimModalClaimId" class="text-xs text-amber-300 font-mono">CLM-XXXX</p>
+          </div>
+        </div>
+        <button onclick="closeEditClaimModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="editClaimForm" onsubmit="handleClaimSubmit(event)" class="p-5 sm:p-6 overflow-y-auto space-y-4 text-xs font-bold">
+        <input type="hidden" id="claimEditRowId" />
+        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1.5 text-slate-700">
+          <div>Claimant: <span id="claimModalName" class="font-black text-brand-navy">-</span> (<span id="claimModalPhone" class="font-mono text-slate-800">-</span>)</div>
+          <div>Policy No: <span id="claimModalPolicyNo" class="font-mono font-black text-slate-900">-</span></div>
+          <div>Type: <span id="claimModalType" class="font-black text-slate-800">-</span></div>
+          <div class="text-[11px] text-slate-500">Customer Description: <span id="claimModalRemarks" class="font-normal italic">-</span></div>
+        </div>
+
+        <div class="space-y-3 pt-1">
+          <div>
+            <label class="block text-slate-700 mb-1">Claim Status</label>
+            <select id="claimEditStatus" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 font-bold focus:ring-2 focus:ring-brand-lightBlue">
+              <option value="Pending Verification">Pending Verification</option>
+              <option value="In Process">In Process</option>
+              <option value="Approved">Approved</option>
+              <option value="Settled">Settled</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-slate-700 mb-1">Admin Action Note / Remarks</label>
+            <textarea id="claimEditAdminRemarks" rows="3" placeholder="Surveyor assigned, Documents verified, etc..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-normal"></textarea>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 flex justify-end gap-2.5">
+          <button type="button" onclick="closeEditClaimModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 transition">Radd Karein</button>
+          <button type="submit" id="btnSaveClaim" class="px-6 py-2.5 rounded-xl bg-brand-navy hover:bg-brand-lightBlue text-white font-black transition shadow flex items-center gap-1.5">
+            <i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Claim Status Update Karein</span>
           </button>
         </div>
       </form>
@@ -379,6 +506,7 @@
 
     let adminCachedData = [];
     let claimsCachedData = [];
+    let usersCachedData = [];
     let activeDashboardTab = 'leads';
 
     function togglePassVisibility() {
@@ -393,7 +521,6 @@
       }
     }
 
-    // 100% Secure Admin Login via Firebase Firestore 'admins' Collection
     function handleAdminLogin(e) {
       e.preventDefault();
       const u = document.getElementById('adminUser').value.trim();
@@ -411,6 +538,7 @@
             showDashboardView();
             fetchAdminData();
             fetchClaimsData();
+            fetchUsersData();
             showToast("Admin login successful!");
           } else {
             showToast("Galat Username ya Password!");
@@ -431,6 +559,7 @@
         showDashboardView();
         fetchAdminData();
         fetchClaimsData();
+        fetchUsersData();
       }
     }
 
@@ -448,31 +577,45 @@
       activeDashboardTab = tab;
       const leadsTab = document.getElementById('leadsTabView');
       const claimsTab = document.getElementById('claimsTabView');
+      const usersTab = document.getElementById('usersTabView');
+      
       const tabLeadsBtn = document.getElementById('tabLeadsBtn');
       const tabClaimsBtn = document.getElementById('tabClaimsBtn');
+      const tabUsersBtn = document.getElementById('tabUsersBtn');
+
+      leadsTab.classList.add('hidden');
+      claimsTab.classList.add('hidden');
+      usersTab.classList.add('hidden');
+
+      tabLeadsBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200 shrink-0";
+      tabClaimsBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200 shrink-0";
+      tabUsersBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200 shrink-0";
 
       if (tab === 'leads') {
         leadsTab.classList.remove('hidden');
-        claimsTab.classList.add('hidden');
-        tabLeadsBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-brand-navy text-white shadow flex items-center gap-2";
-        tabClaimsBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200";
-      } else {
-        leadsTab.classList.add('hidden');
+        tabLeadsBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-brand-navy text-white shadow flex items-center gap-2 shrink-0";
+      } else if (tab === 'claims') {
         claimsTab.classList.remove('hidden');
-        tabClaimsBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-brand-navy text-white shadow flex items-center gap-2";
-        tabLeadsBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-white text-slate-700 hover:bg-slate-200 flex items-center gap-2 border border-slate-200";
+        tabClaimsBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-brand-navy text-white shadow flex items-center gap-2 shrink-0";
+        if (claimsCachedData.length === 0) fetchClaimsData();
+      } else if (tab === 'users') {
+        usersTab.classList.remove('hidden');
+        tabUsersBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs transition bg-brand-navy text-white shadow flex items-center gap-2 shrink-0";
+        fetchUsersData();
       }
     }
 
     function refreshCurrentTab() {
       if (activeDashboardTab === 'leads') {
         fetchAdminData();
-      } else {
+      } else if (activeDashboardTab === 'claims') {
         fetchClaimsData();
+      } else {
+        fetchUsersData();
       }
     }
 
-    // Fetch Quotations directly from Firebase Firestore
+    // --- QUOTATIONS & LEADS ---
     function fetchAdminData() {
       const tbody = document.getElementById('adminTableBody');
       tbody.innerHTML = `
@@ -489,7 +632,7 @@
           let list = [];
           querySnapshot.forEach((doc) => {
             let d = doc.data();
-            d.rowId = doc.id; // Firestore Document ID
+            d.rowId = doc.id;
             list.push(d);
           });
           adminCachedData = list;
@@ -561,12 +704,13 @@
       }
 
       tbody.innerHTML = dataList.map(item => {
-        const isPaid = (item.paymentStatus || '').toLowerCase().indexOf('success') > -1 || (item.paymentStatus || '').toLowerCase().indexOf('paid') > -1;
+        const isPaid = (item.paymentStatus || '').toLowerCase().indexOf('success') > -1 || (item.paymentStatus || '').toLowerCase().indexOf('paid') > -1 || (item.paymentStatus || '').toLowerCase().indexOf('done') > -1;
         const badgeColor = isPaid ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800';
         const categoryBadge = item.insuranceType === 'MOTOR' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' :
                               (item.insuranceType === 'HEALTH' ? 'bg-rose-50 text-rose-800 border-rose-200' : 'bg-blue-50 text-blue-900 border-blue-200');
 
         const hasOriginalLink = item.downloadLink && item.downloadLink.trim() !== '';
+        const hasRenewedLink = item.renewedDownloadLink && item.renewedDownloadLink.trim() !== '';
 
         return `
           <tr class="hover:bg-slate-50 transition border-b border-slate-100">
@@ -603,11 +747,20 @@
               ${hasOriginalLink ? `
                 <a href="${item.downloadLink}" target="_blank" class="text-[10.5px] font-bold text-emerald-600 hover:underline inline-flex items-center gap-1 mt-1">
                   <i class="fa-solid fa-file-pdf"></i> View Policy
-                ` : '<span class="text-[10px] text-slate-400">No PDF uploaded</span>'}
+                </a>` : '<span class="text-[10px] text-slate-400">No PDF uploaded</span>'}
             </td>
 
             <td class="p-3.5">
               ${item.renewedPolicyNumber ? `<div class="font-mono font-bold text-xs text-emerald-800">${item.renewedPolicyNumber}</div>` : '<span class="text-[10px] text-slate-400">Not Renewed</span>'}
+              
+              ${item.renewalRequest && item.renewalRequest.toLowerCase() === 'requested' ? `
+                <span class="block bg-purple-100 text-purple-800 text-[10px] font-black px-1.5 py-0.5 rounded mt-1">Renewal Requested!</span>
+              ` : ''}
+
+              ${hasRenewedLink ? `
+                <a href="${item.renewedDownloadLink}" target="_blank" class="text-[10.5px] font-bold text-emerald-700 hover:underline inline-flex items-center gap-1 mt-0.5">
+                  <i class="fa-solid fa-file-pdf"></i> View Renewal PDF
+                </a>` : ''}
             </td>
 
             <td class="p-3.5 text-center">
@@ -634,6 +787,10 @@
       document.getElementById('editPolicyNumber').value = (item.policyNumber === 'Under Process') ? '' : (item.policyNumber || '');
       document.getElementById('editDownloadLink').value = item.downloadLink || '';
 
+      document.getElementById('editRenewedPolicyNumber').value = item.renewedPolicyNumber || '';
+      document.getElementById('editRenewalRequest').value = item.renewalRequest || 'No';
+      document.getElementById('editRenewedDownloadLink').value = item.renewedDownloadLink || '';
+
       document.getElementById('editPolicyModal').classList.remove('hidden');
     }
 
@@ -641,7 +798,6 @@
       document.getElementById('editPolicyModal').classList.add('hidden');
     }
 
-    // Update Quotation / Policy details directly in Firebase Firestore
     function handleRecordSubmit(e) {
       e.preventDefault();
       const rowId = document.getElementById('editRowId').value;
@@ -653,14 +809,20 @@
       const paymentStatus = document.getElementById('editPaymentStatus').value;
       const policyNumber = document.getElementById('editPolicyNumber').value || 'Under Process';
       const downloadLink = document.getElementById('editDownloadLink').value;
+      const renewedPolicyNumber = document.getElementById('editRenewedPolicyNumber').value;
+      const renewalRequest = document.getElementById('editRenewalRequest').value;
+      const renewedDownloadLink = document.getElementById('editRenewedDownloadLink').value;
 
       db.collection("quotations").doc(rowId).update({
         paymentStatus: paymentStatus,
         policyNumber: policyNumber,
-        downloadLink: downloadLink
+        downloadLink: downloadLink,
+        renewedPolicyNumber: renewedPolicyNumber,
+        renewalRequest: renewalRequest,
+        renewedDownloadLink: renewedDownloadLink
       })
       .then(() => {
-        showToast('Firebase me policy number aur status update ho gaya!');
+        showToast('Firebase me policy aur renewal update ho gaya!');
         closeEditModal();
         setTimeout(fetchAdminData, 800);
       })
@@ -673,7 +835,7 @@
       });
     }
 
-    // Fetch Claims from Firebase Firestore
+    // --- CLAIMS MANAGEMENT ---
     function fetchClaimsData() {
       const tbody = document.getElementById('claimsTableBody');
       db.collection("claims").get()
@@ -685,12 +847,42 @@
             list.push(d);
           });
           claimsCachedData = list;
-          document.getElementById('statTotalClaims').innerText = list.length;
+          updateClaimMetrics(claimsCachedData);
           renderClaimsTable(claimsCachedData);
         })
         .catch(() => {
           tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-rose-500 font-bold">Claims load nahi hue.</td></tr>`;
         });
+    }
+
+    function updateClaimMetrics(list) {
+      document.getElementById('statTotalClaims').innerText = list.length;
+      let pending = 0;
+      let inProcess = 0;
+      let settled = 0;
+
+      list.forEach(c => {
+        const s = (c.status || '').toLowerCase();
+        if (s.indexOf('pending') > -1) pending++;
+        else if (s.indexOf('settled') > -1 || s.indexOf('approved') > -1) settled++;
+        else inProcess++;
+      });
+
+      document.getElementById('statPendingClaims').innerText = pending;
+      document.getElementById('statProcessingClaims').innerText = inProcess;
+      document.getElementById('statSettledClaims').innerText = settled;
+    }
+
+    function applyClaimFilters() {
+      const q = document.getElementById('claimSearchInput').value.trim().toLowerCase();
+      const filtered = claimsCachedData.filter(item => {
+        return !q ||
+          (item.claimId && item.claimId.toLowerCase().indexOf(q) > -1) ||
+          (item.name && item.name.toLowerCase().indexOf(q) > -1) ||
+          (item.phone && item.phone.indexOf(q) > -1) ||
+          (item.policyNo && item.policyNo.toLowerCase().indexOf(q) > -1);
+      });
+      renderClaimsTable(filtered);
     }
 
     function renderClaimsTable(dataList) {
@@ -701,25 +893,196 @@
       }
 
       tbody.innerHTML = dataList.map(item => {
+        let badgeColor = 'bg-amber-100 text-amber-800';
+        const st = (item.status || '').toLowerCase();
+        if (st.indexOf('settled') > -1 || st.indexOf('approved') > -1) {
+          badgeColor = 'bg-emerald-100 text-emerald-800';
+        } else if (st.indexOf('process') > -1) {
+          badgeColor = 'bg-blue-100 text-blue-800';
+        } else if (st.indexOf('reject') > -1) {
+          badgeColor = 'bg-rose-100 text-rose-800';
+        }
+
         return `
           <tr class="hover:bg-slate-50 transition border-b border-slate-100">
-            <td class="p-3.5"><span class="bg-slate-900 text-amber-400 font-mono text-xs px-2 py-0.5 rounded">${item.claimId || 'N/A'}</span></td>
-            <td class="p-3.5 font-bold">${item.name || 'Claimant'}<br><span class="text-slate-500 text-[11px]">${item.phone || ''}</span></td>
-            <td class="p-3.5 font-mono text-blue-900">${item.policyNo || 'N/A'}</td>
-            <td class="p-3.5">${item.claimType || 'Claim'}</td>
-            <td class="p-3.5 text-slate-600">${item.remarks || '-'}</td>
-            <td class="p-3.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-800">${item.status || 'Pending'}</span></td>
-            <td class="p-3.5 text-center">-</td>
+            <td class="p-3.5">
+              <span class="inline-block bg-slate-900 text-amber-400 font-mono font-black text-xs px-2 py-0.5 rounded shadow-xs">${item.claimId || 'N/A'}</span>
+              <div class="text-[10px] text-slate-500 font-bold mt-1"><i class="fa-regular fa-calendar-days mr-1"></i>${item.date || ''}</div>
+            </td>
+            <td class="p-3.5">
+              <div class="font-black text-slate-900 text-xs">${item.name || 'Claimant'}</div>
+              <div class="text-[11px] text-slate-500 font-bold mt-0.5">
+                <span><i class="fa-solid fa-phone text-emerald-600 mr-1"></i>${item.phone || ''}</span>
+              </div>
+              <div class="text-[10px] text-slate-400 truncate max-w-[150px]">${item.address || ''}</div>
+            </td>
+            <td class="p-3.5">
+              <div class="font-mono font-bold text-xs text-blue-900">${item.policyNo || 'N/A'}</div>
+              <div class="text-slate-700 font-bold text-[11px] mt-0.5">${item.product || ''}</div>
+            </td>
+            <td class="p-3.5">
+              <span class="bg-slate-100 text-slate-700 font-bold text-[10px] px-2 py-0.5 rounded border border-slate-200">${item.category || 'General'}</span>
+              <div class="text-slate-800 font-black text-[11px] mt-1">${item.claimType || 'Claim'}</div>
+            </td>
+            <td class="p-3.5 max-w-[200px]">
+              <p class="text-slate-600 text-[11px] font-normal truncate">${item.remarks || '-'}</p>
+              ${item.adminRemarks ? `<p class="text-brand-lightBlue text-[10px] font-bold mt-1"><i class="fa-solid fa-user-pen mr-1"></i>Note: ${item.adminRemarks}</p>` : ''}
+            </td>
+            <td class="p-3.5">
+              <span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-black ${badgeColor}">
+                ${item.status || 'Pending Verification'}
+              </span>
+            </td>
+            <td class="p-3.5 text-center">
+              <button onclick="openEditClaimModal('${item.rowId}')" class="bg-amber-500 hover:bg-amber-600 text-white font-black px-3.5 py-2 rounded-xl text-xs transition shadow-sm inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-pen-to-square"></i> Update
+              </button>
+            </td>
           </tr>
         `;
       }).join('');
     }
-    
+
+    function openEditClaimModal(rowId) {
+      const item = claimsCachedData.find(x => x.rowId === rowId);
+      if (!item) return;
+
+      document.getElementById('claimEditRowId').value = item.rowId;
+      document.getElementById('claimModalClaimId').innerText = item.claimId || 'CLM-RECORD';
+      document.getElementById('claimModalName').innerText = item.name || '-';
+      document.getElementById('claimModalPhone').innerText = item.phone || '-';
+      document.getElementById('claimModalPolicyNo').innerText = item.policyNo || '-';
+      document.getElementById('claimModalType').innerText = `${item.category || ''} / ${item.claimType || ''}`;
+      document.getElementById('claimModalRemarks').innerText = item.remarks || 'None';
+
+      document.getElementById('claimEditStatus').value = item.status || 'Pending Verification';
+      document.getElementById('claimEditAdminRemarks').value = item.adminRemarks || '';
+
+      document.getElementById('editClaimModal').classList.remove('hidden');
+    }
+
+    function closeEditClaimModal() {
+      document.getElementById('editClaimModal').classList.add('hidden');
+    }
+
+    function handleClaimSubmit(e) {
+      e.preventDefault();
+      const rowId = document.getElementById('claimEditRowId').value;
+      const btn = document.getElementById('btnSaveClaim');
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating Firebase...';
+
+      const newStatus = document.getElementById('claimEditStatus').value;
+      const adminRemarks = document.getElementById('claimEditAdminRemarks').value;
+
+      db.collection("claims").doc(rowId).update({
+        status: newStatus,
+        adminRemarks: adminRemarks
+      })
+      .then(() => {
+        showToast('Claim status Firebase me update ho gaya!');
+        closeEditClaimModal();
+        setTimeout(fetchClaimsData, 800);
+      })
+      .catch(() => {
+        showToast('Claim update error!');
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-gold"></i> <span>Claim Status Update Karein</span>';
+      });
+    }
+
+    // --- USER MOBILE REQUESTS MANAGEMENT ---
+    function fetchUsersData() {
+      const tbody = document.getElementById('usersTableBody');
+      db.collection("users").get()
+        .then((querySnapshot) => {
+          let list = [];
+          querySnapshot.forEach((doc) => {
+            let d = doc.data();
+            d.rowId = doc.id;
+            list.push(d);
+          });
+          usersCachedData = list;
+          updateUserMetrics(usersCachedData);
+          renderUsersTable(usersCachedData);
+        })
+        .catch(() => {
+          tbody.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-rose-500 font-bold">Users load nahi hue.</td></tr>`;
+        });
+    }
+
+    function updateUserMetrics(list) {
+      const pendingReqs = list.filter(u => (u.mobileRequestStatus || '').toLowerCase() === 'pending');
+      document.getElementById('statTotalUsers').innerText = list.length;
+      document.getElementById('statPendingMobReqs').innerText = pendingReqs.length;
+    }
+
+    function renderUsersTable(dataList) {
+      const tbody = document.getElementById('usersTableBody');
+      if (!dataList || dataList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-10 text-slate-400 font-bold">Koi user record nahi mila.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = dataList.map(item => {
+        const status = item.mobileRequestStatus || 'No Request';
+        const badgeColor = status.toLowerCase() === 'pending' ? 'bg-amber-100 text-amber-800' :
+                           status.toLowerCase() === 'approved' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-700';
+
+        return `
+          <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+            <td class="p-3.5">
+              <div class="font-black text-slate-900 text-xs">${item.name || 'User'}</div>
+              <div class="text-[11px] text-slate-500 font-mono">${item.email || ''}</div>
+            </td>
+            <td class="p-3.5">
+              <div class="font-mono font-bold text-xs text-brand-navy"><i class="fa-solid fa-phone text-emerald-600 mr-1"></i>${item.mobile || item.mobile1 || 'N/A'}</div>
+              <div class="text-[10px] text-slate-400">Alt: ${item.altMobile || item.mobile2 || 'None'}</div>
+            </td>
+            <td class="p-3.5">
+              <span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-black ${badgeColor}">
+                ${status}
+              </span>
+            </td>
+            <td class="p-3.5 text-xs text-slate-500">
+              ${item.updatedAt || 'N/A'}
+            </td>
+            <td class="p-3.5 text-center">
+              ${status.toLowerCase() === 'pending' ? `
+                <button onclick="approveMobileRequest('${item.rowId}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-3.5 py-2 rounded-xl text-xs transition shadow-sm inline-flex items-center gap-1.5">
+                  <i class="fa-solid fa-check"></i> Approve
+                </button>
+              ` : `
+                <span class="text-emerald-700 font-bold text-xs"><i class="fa-solid fa-circle-check"></i> Approved</span>
+              `}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function approveMobileRequest(rowId) {
+      if (!confirm("Kya aap is mobile number update request ko approve karna chahte hain?")) return;
+
+      db.collection("users").doc(rowId).update({
+        mobileRequestStatus: "Approved"
+      })
+      .then(() => {
+        showToast("Mobile update request successfully approved!");
+        fetchUsersData();
+      })
+      .catch(() => {
+        showToast("Approval error!");
+      });
+    }
+
     function showToast(msg) {
       const toast = document.getElementById('toastNotification');
       document.getElementById('toastMessage').innerText = msg;
-      toast.classList.add('hidden');
-      setTimeout(() => toast.classList.remove('hidden'), 100);
+      toast.classList.remove('hidden');
       setTimeout(() => toast.classList.add('hidden'), 4000);
     }
 
