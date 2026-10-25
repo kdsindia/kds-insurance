@@ -520,22 +520,22 @@
       }
     }
 
-// 1. Secure Firebase Auth Login (Clean & Direct)
+// 1. Secure Firebase Auth Login with Detailed Error Debugging
     function handleAdminLogin(e) {
       e.preventDefault();
-      const emailInput = document.getElementById('adminUser').value.trim();
+      let inputVal = document.getElementById('adminUser').value.trim();
       const password = document.getElementById('adminPass').value.trim();
       const btn = document.getElementById('btnLogin');
 
-      if (!emailInput || !password) {
-        showToast("Kripya email aur password bharein!");
-        return;
+      let loginEmail = inputVal;
+      if (!loginEmail.includes('@')) {
+        loginEmail = inputVal + '@kdsinsurance.in';
       }
 
       btn.disabled = true;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating Securely...';
 
-      auth.signInWithEmailAndPassword(emailInput, password)
+      auth.signInWithEmailAndPassword(loginEmail, password)
         .then((userCredential) => {
           showDashboardView();
           fetchAdminData();
@@ -544,15 +544,17 @@
           showToast("Admin login successful!");
         })
         .catch((error) => {
-          console.error("Login Error:", error.code, error.message);
-          showToast("Galat Email ya Password! (Firebase Auth Error)");
+          console.error("Firebase Auth Error Code:", error.code);
+          console.error("Firebase Auth Error Message:", error.message);
+          
+          // Screen par exact error dikhayenge taaki pata chale
+          showToast("Login Error: " + error.code);
         })
         .finally(() => {
           btn.disabled = false;
           btn.innerHTML = '<i class="fa-solid fa-unlock-keyhole text-brand-gold"></i> <span>Secure Sign In &rarr;</span>';
         });
     }
-
     // 2. Firebase Auth State Check
     function checkAdminSession() {
       auth.onAuthStateChanged((user) => {
