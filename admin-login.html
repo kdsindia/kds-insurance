@@ -520,22 +520,22 @@
       }
     }
 
-    // 1. Secure Firebase Auth Login
+// 1. Secure Firebase Auth Login (Clean & Direct)
     function handleAdminLogin(e) {
       e.preventDefault();
-      let inputVal = document.getElementById('adminUser').value.trim();
+      const emailInput = document.getElementById('adminUser').value.trim();
       const password = document.getElementById('adminPass').value.trim();
       const btn = document.getElementById('btnLogin');
 
-      let loginEmail = inputVal;
-      if (!loginEmail.includes('@')) {
-        loginEmail = inputVal + '@kdsinsurance.in';
+      if (!emailInput || !password) {
+        showToast("Kripya email aur password bharein!");
+        return;
       }
 
       btn.disabled = true;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating Securely...';
 
-      auth.signInWithEmailAndPassword(loginEmail, password)
+      auth.signInWithEmailAndPassword(emailInput, password)
         .then((userCredential) => {
           showDashboardView();
           fetchAdminData();
@@ -544,7 +544,8 @@
           showToast("Admin login successful!");
         })
         .catch((error) => {
-          showToast("Galat Email ya Password!");
+          console.error("Login Error:", error.code, error.message);
+          showToast("Galat Email ya Password! (Firebase Auth Error)");
         })
         .finally(() => {
           btn.disabled = false;
