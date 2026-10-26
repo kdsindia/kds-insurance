@@ -4210,7 +4210,30 @@ function printFinalSavedQuotation() {
       switchMainTab('lic');
       checkInitialLanguagePrompt();
       checkAuthStatus();
+
+// 15 Minute inactivity limit
+let inactivityTimer;
+const logoutTimeLimit = 15 * 60 * 1000; 
+
+function performAutoLogout() {
+  if (typeof currentLoggedInUser !== 'undefined' && currentLoggedInUser) {
+    handleLogout();
+    showToast("Kafi der tak koi activity na hone ke karan aapko auto-logout kar diya gaya hai.");
+  }
+}
+
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(performAutoLogout, logoutTimeLimit);
+}
+
+window.onload = resetInactivityTimer;
+window.onmousemove = resetInactivityTimer;
+window.onkeypress = resetInactivityTimer;
+window.onclick = resetInactivityTimer;
+window.onscroll = resetInactivityTimer;
     });
+
   </script>
 </body>
 </html>
