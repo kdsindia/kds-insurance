@@ -567,7 +567,7 @@
         id: payload.sub
       };
 
-      localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+      sessionStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser)); // Yahan badlein
       closeAuthModal();
       updateAuthNavUI();
       showToast("Swagat hai, " + currentLoggedInUser.name + "!");
@@ -607,16 +607,15 @@
     }
 
     function checkAuthStatus() {
-      const savedUser = localStorage.getItem('kds_logged_user');
-      if (savedUser) {
-        try {
-          currentLoggedInUser = JSON.parse(savedUser);
-          updateAuthNavUI();
-        } catch (e) {
-          localStorage.removeItem('kds_logged_user');
-        }
-      }
+  const savedUser = sessionStorage.getItem('kds_logged_user'); // Yahan badlein
+  if (savedUser) {
+    currentLoggedInUser = JSON.parse(savedUser);
+    updateAuthNavUI();
+    if (!currentLoggedInUser.mobile || currentLoggedInUser.mobile.trim() === "") {
+      openMandatoryProfileModal(currentLoggedInUser.name);
     }
+  }
+}
 
     function updateAuthNavUI() {
       const container = document.getElementById('authContainer');
@@ -641,11 +640,13 @@
     }
 
     function handleLogout() {
-      localStorage.removeItem('kds_logged_user');
-      currentLoggedInUser = null;
-      updateAuthNavUI();
-      showToast("Aap logout ho gaye hain.");
-    }
+  sessionStorage.removeItem('kds_logged_user'); // Yahan badlein
+  window.serverFetchedQuotations = null;
+  currentLoggedInUser = null;
+  updateAuthNavUI();
+  closeDashboardModal();
+  showToast('Aap logout ho chuke hain.');
+}
 
     // ==========================================
     // FIREBASE VERIFY & SEARCH
