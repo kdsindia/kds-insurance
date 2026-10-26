@@ -3192,16 +3192,16 @@ function switchMainTab(tab) {
     let currentLoggedInUser = null;
     const GOOGLE_CLIENT_ID = "418446717578-9241s3h4pc44agohfkc8t2ift9jtpfau.apps.googleusercontent.com";
 
-    function checkAuthStatus() {
-      const savedUser = localStorage.getItem('kds_logged_user');
-      if (savedUser) {
-        currentLoggedInUser = JSON.parse(savedUser);
-        updateAuthNavUI();
-        if (!currentLoggedInUser.mobile || currentLoggedInUser.mobile.trim() === "") {
-          openMandatoryProfileModal(currentLoggedInUser.name);
-        }
-      }
+function checkAuthStatus() {
+  const savedUser = sessionStorage.getItem('kds_logged_user'); // Yahan badlein
+  if (savedUser) {
+    currentLoggedInUser = JSON.parse(savedUser);
+    updateAuthNavUI();
+    if (!currentLoggedInUser.mobile || currentLoggedInUser.mobile.trim() === "") {
+      openMandatoryProfileModal(currentLoggedInUser.name);
     }
+  }
+}
 
     function updateAuthNavUI() {
     const btn = document.getElementById('authBtn');
@@ -3264,7 +3264,7 @@ function handleGoogleCredentialResponse(response) {
         altMobile: ''
       };
 
-      localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+      sessionStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
       closeAuthModal();
       updateAuthNavUI();
 
@@ -3365,7 +3365,7 @@ function handleGoogleCredentialResponse(response) {
         currentLoggedInUser.name = name;
         currentLoggedInUser.mobile = m1;
         currentLoggedInUser.altMobile = m2;
-        localStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
+        sessionStorage.setItem('kds_logged_user', JSON.stringify(currentLoggedInUser));
 
         document.getElementById('mandatoryProfileModal').classList.add('hidden');
         updateAuthNavUI();
@@ -3827,13 +3827,13 @@ function printFinalSavedQuotation() {
     }
 
     function handleLogout() {
-      localStorage.removeItem('kds_logged_user');
-      window.serverFetchedQuotations = null;
-      currentLoggedInUser = null;
-      updateAuthNavUI();
-      closeDashboardModal();
-      showToast('Aap logout ho chuke hain.');
-    }
+  sessionStorage.removeItem('kds_logged_user'); // Yahan badlein
+  window.serverFetchedQuotations = null;
+  currentLoggedInUser = null;
+  updateAuthNavUI();
+  closeDashboardModal();
+  showToast('Aap logout ho chuke hain.');
+}
 
     function renderUserDashboard() {
       try {
