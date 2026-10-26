@@ -105,7 +105,6 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <!-- Firebase App & Authentication SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   
   <!-- Google Fonts & Font Awesome Icons -->
@@ -3254,15 +3253,6 @@ function handleGoogleCredentialResponse(response) {
       if (!payload) {
         showToast("Login error: Token decode nahi hua.");
         return;
-      }
-
-      try {
-        if (typeof firebase !== 'undefined' && firebase.auth) {
-          const cred = firebase.auth.GoogleAuthProvider.credential(response.credential);
-          firebase.auth().signInWithCredential(cred).catch(err => console.log("Firebase sync note:", err));
-        }
-      } catch (fbErr) {
-        console.log("Firebase Auth:", fbErr);
       }
 
       currentLoggedInUser = {
