@@ -168,7 +168,17 @@
   </footer>
 
   <script>
-    if (!query) return;
+    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwMJOgO-FJFf9zOxHrilfkLM5CNqo8cR2HzLZNsozG5QlAN7rDEnv1ZG1AzMj6ig_Nw/exec";
+    const OFFICIAL_LIC_PAY_LINK = "https://ebiz.licindia.in/D2CPM/?_ga=2.109876677.1538151736.1791531060-1854929625.1773065359#DirectPay";
+
+    async function handleDueSearch(e) {
+      e.preventDefault();
+      const query = document.getElementById('dueSearchInput').value.trim();
+      const loader = document.getElementById('dueSearchLoader');
+      const resultBox = document.getElementById('dueResultBox');
+      const btn = document.getElementById('btnSearchDue');
+
+      if (!query) return;
 
       loader.classList.remove('hidden');
       resultBox.classList.add('hidden');
@@ -191,8 +201,8 @@
               <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 mx-auto flex items-center justify-center text-lg">
                 <i class="fa-solid fa-circle-exclamation"></i>
               </div>
-              <h4 class="font-black text-sm">Is Policy / Mobile Number Par Koi Due ya Revival Record Nahi Mila!</h4>
-              <p class="text-slate-500 text-[11px]">Kripya Manoher Singh ji (8440096343) se WhatsApp par confirm karein.</p>
+              <h4 class="font-black text-sm">Is Policy / Mobile Number Par Koi Record Nahi Mila!</h4>
+              <p class="text-slate-500 text-[11px]">Kripya Manoher Singh ji (8440096343) se WhatsApp par sampark karein.</p>
             </div>
           `;
           resultBox.classList.remove('hidden');
@@ -201,7 +211,7 @@
 
         let htmlOutput = '';
 
-        // 1. Regular Monthly Due Box
+        // 1. Regular Due Box
         dueData.forEach(item => {
           const totAmount = Number(item.totPrem || 0);
           htmlOutput += `
@@ -228,7 +238,7 @@
           `;
         });
 
-        // 2. Special Revival Campaign Box (Alag se Orange/Yellow Box)
+        // 2. Special Revival Campaign Box
         revData.forEach(item => {
           htmlOutput += `
             <div class="border-2 border-amber-500 bg-gradient-to-br from-amber-50 via-white to-orange-50 rounded-3xl p-5 sm:p-6 space-y-4 shadow-lg mb-4 relative overflow-hidden">
