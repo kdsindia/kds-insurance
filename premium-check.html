@@ -168,19 +168,7 @@
   </footer>
 
   <script>
-    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwMJOgO-FJFf9zOxHrilfkLM5CNqo8cR2HzLZNsozG5QlAN7rDEnv1ZG1AzMj6ig_Nw/exec";
-    
-    // OFFICIAL LIC DIRECT PAY EXACT PORTAL LINK
-    const OFFICIAL_LIC_PAY_LINK = "https://ebiz.licindia.in/D2CPM/?_ga=2.109876677.1538151736.1791531060-1854929625.1773065359#DirectPay";
-
-    async function handleDueSearch(e) {
-      e.preventDefault();
-      const query = document.getElementById('dueSearchInput').value.trim();
-      const loader = document.getElementById('dueSearchLoader');
-      const resultBox = document.getElementById('dueResultBox');
-      const btn = document.getElementById('btnSearchDue');
-
-      if (!query) return;
+    if (!query) return;
 
       loader.classList.remove('hidden');
       resultBox.classList.add('hidden');
@@ -189,85 +177,94 @@
       try {
         const fetchUrl = GOOGLE_SHEET_API_URL + "?action=checkDue&query=" + encodeURIComponent(query);
         const response = await fetch(fetchUrl);
-        const data = await response.json();
+        const resData = await response.json();
 
         loader.classList.add('hidden');
         btn.disabled = false;
 
-        if (!data || !Array.isArray(data) || data.length === 0) {
+        const dueData = resData.regularDue || [];
+        const revData = resData.revivalDue || [];
+
+        if (dueData.length === 0 && revData.length === 0) {
           resultBox.innerHTML = `
-            <div class="bg-rose-50 border border-rose-200 rounded-2xl p-5 text-center text-xs text-rose-950 space-y-2 animate-fadeIn">
+            <div class="bg-rose-50 border border-rose-200 rounded-2xl p-5 text-center text-xs text-rose-950 space-y-2">
               <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 mx-auto flex items-center justify-center text-lg">
                 <i class="fa-solid fa-circle-exclamation"></i>
               </div>
-              <h4 class="font-black text-sm">Is Policy / Mobile Number Par Koi Due Premium Nahi Mila!</h4>
-              <p class="text-slate-500 text-[11px] max-w-md mx-auto">
-                Agar aapki policy chalu hai aur yahan show nahi ho rahi, to kripya seedha Manoher Singh ji (8440096343) se WhatsApp par confirm karein.
-              </p>
-              <div class="pt-2">
-                <a href="${OFFICIAL_LIC_PAY_LINK}" target="_blank" class="inline-flex items-center gap-1.5 bg-brand-navy text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-brand-lightBlue transition">
-                  <i class="fa-solid fa-arrow-up-right-from-square text-brand-gold"></i> LIC Direct Pay Portal Kholein
-                </a>
-              </div>
+              <h4 class="font-black text-sm">Is Policy / Mobile Number Par Koi Due ya Revival Record Nahi Mila!</h4>
+              <p class="text-slate-500 text-[11px]">Kripya Manoher Singh ji (8440096343) se WhatsApp par confirm karein.</p>
             </div>
           `;
           resultBox.classList.remove('hidden');
           return;
         }
 
-        resultBox.innerHTML = data.map(item => {
-          const totAmount = Number(item.totPrem || 0);
+        let htmlOutput = '';
 
-          return `
-            <div class="border-2 border-emerald-500/80 bg-gradient-to-br from-emerald-50/50 via-white to-emerald-50/30 rounded-3xl p-5 sm:p-6 space-y-4 shadow-sm hover:shadow-md transition">
-              <div class="flex flex-col sm:flex-row justify-between sm:items-start gap-2 border-b border-emerald-200 pb-3">
+        // 1. Regular Monthly Due Box
+        dueData.forEach(item => {
+          const totAmount = Number(item.totPrem || 0);
+          htmlOutput += `
+            <div class="border-2 border-emerald-500/80 bg-gradient-to-br from-emerald-50/50 via-white to-emerald-50/30 rounded-3xl p-5 sm:p-6 space-y-4 shadow-sm mb-4">
+              <div class="flex justify-between items-start border-b border-emerald-200 pb-3">
                 <div>
-                  <span class="text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-900 border border-emerald-300 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
-                    <i class="fa-solid fa-circle-check text-emerald-600"></i> Active Policy Due Found
-                  </span>
+                  <span class="text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-900 px-2.5 py-0.5 rounded-full">Active Policy Due Found</span>
                   <h3 class="text-lg font-black text-brand-navy mt-1.5">${item.name}</h3>
                   <p class="text-xs font-mono font-black text-blue-900">Policy No: <strong>${item.policyNo}</strong></p>
                 </div>
-                <div class="sm:text-right bg-white p-2.5 rounded-2xl border border-emerald-100 shadow-2xs">
-                  <span class="text-[11px] text-slate-500 font-bold block">Kul Due Premium Rashi:</span>
-                  <div class="text-2xl font-black text-emerald-700 leading-tight">₹ ${totAmount.toLocaleString('en-IN')}</div>
+                <div class="text-right bg-white p-2.5 rounded-2xl border border-emerald-100">
+                  <span class="text-[11px] text-slate-500 font-bold block">Kul Due Premium:</span>
+                  <div class="text-2xl font-black text-emerald-700">₹ ${totAmount.toLocaleString('en-IN')}</div>
                 </div>
               </div>
-
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
-                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
-                  <span class="text-slate-500 text-[10.5px] block font-bold">Plan / Term:</span>
-                  <span class="font-black text-brand-navy text-sm">${item.planTerm || 'N/A'}</span>
-                </div>
-                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
-                  <span class="text-slate-500 text-[10.5px] block font-bold">Kisht Mode:</span>
-                  <span class="font-black text-slate-800 text-sm">${item.mode || 'Mly'}</span>
-                </div>
-                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
-                  <span class="text-slate-500 text-[10.5px] block font-bold">Due Kisht / Mahina:</span>
-                  <span class="font-black text-rose-600 text-sm">${item.dueCount} Kisht (Due)</span>
-                </div>
-                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
-                  <span class="text-slate-500 text-[10.5px] block font-bold">FUP Date (Due Date):</span>
-                  <span class="font-black text-slate-800 text-sm">${item.fup || '-'}</span>
-                </div>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                <div class="bg-white p-3 rounded-2xl border border-slate-200"><span>Plan/Term:</span><br><strong>${item.planTerm}</strong></div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200"><span>Mode:</span><br><strong>${item.mode}</strong></div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200"><span>Due Kisht:</span><br><strong class="text-rose-600">${item.dueCount} Kisht</strong></div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200"><span>FUP Date:</span><br><strong>${item.fup}</strong></div>
               </div>
-
-              <!-- Pay Now Button With Exact User Link -->
-              <div class="pt-2 flex flex-col sm:flex-row gap-2.5">
-                <a href="${OFFICIAL_LIC_PAY_LINK}" target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3.5 px-4 rounded-2xl text-center text-xs sm:text-sm transition shadow-md flex items-center justify-center gap-2">
-                  <i class="fa-solid fa-credit-card text-base"></i>
-                  <span>Pay Due Premium (LIC Direct Pay)</span>
-                </a>
-                <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji%2C%20meri%20Policy%20No%20${item.policyNo}%20ka%20Premium%20₹${totAmount}%20due%20hai%2C%20ise%20online%20jama%20karwana%20hai" target="_blank" class="bg-brand-navy hover:bg-brand-lightBlue text-brand-gold font-bold py-3.5 px-4 rounded-2xl text-center text-xs transition flex items-center justify-center gap-1.5 shadow-md">
-                  <i class="fa-brands fa-whatsapp text-emerald-400 text-base"></i>
-                  <span>WhatsApp se Jama Karwayein</span>
-                </a>
-              </div>
+              <a href="${OFFICIAL_LIC_PAY_LINK}" target="_blank" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-2xl text-center text-xs sm:text-sm transition">Pay Due Premium (LIC Direct Pay)</a>
             </div>
           `;
-        }).join('');
+        });
 
+        // 2. Special Revival Campaign Box (Alag se Orange/Yellow Box)
+        revData.forEach(item => {
+          htmlOutput += `
+            <div class="border-2 border-amber-500 bg-gradient-to-br from-amber-50 via-white to-orange-50 rounded-3xl p-5 sm:p-6 space-y-4 shadow-lg mb-4 relative overflow-hidden">
+              <div class="absolute top-0 right-0 bg-amber-500 text-white text-[10px] font-black px-3.5 py-1 rounded-bl-xl uppercase tracking-wider">
+                <i class="fa-solid fa-bullhorn"></i> Special Revival Campaign (16 Oct - 15 Dec 2026)
+              </div>
+              <div class="border-b border-amber-200 pb-3 pr-24">
+                <span class="text-[10px] font-black uppercase tracking-wider bg-amber-200 text-amber-950 px-2.5 py-0.5 rounded-full">Lapsed / Revival Eligible</span>
+                <h3 class="text-lg font-black text-brand-navy mt-1.5">${item.name}</h3>
+                <p class="text-xs font-mono font-black text-blue-900">Policy No: <strong>${item.policyNo}</strong> | Plan/Term: <strong>${item.planTerm}</strong></p>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-700 block mb-2">Campaign Period ke anusar Total Revival Amount:</span>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs bg-white p-3 rounded-2xl border border-amber-300">
+                  <div class="p-2 border-b sm:border-b-0 sm:border-r border-slate-100">
+                    <span class="text-slate-500 text-[10px]">Upto 31st Oct 2026:</span><br>
+                    <strong class="text-brand-navy text-sm">₹ ${Number(item.amtOct).toLocaleString('en-IN')}</strong>[cite: 3]
+                  </div>
+                  <div class="p-2 border-b sm:border-b-0 sm:border-r border-slate-100">
+                    <span class="text-slate-500 text-[10px]">1st - 30th Nov 2026:</span><br>
+                    <strong class="text-brand-navy text-sm">₹ ${Number(item.amtNov).toLocaleString('en-IN')}</strong>[cite: 3]
+                  </div>
+                  <div class="p-2">
+                    <span class="text-slate-500 text-[10px]">1st - 15th Dec 2026:</span><br>
+                    <strong class="text-rose-600 text-sm">₹ ${Number(item.amtDec).toLocaleString('en-IN')}</strong>[cite: 3]
+                  </div>
+                </div>
+              </div>
+              <a href="https://wa.me/918440096343?text=Namaste%20Manoher%20Singh%20ji,%20meri%20Policy%20No%20${item.policyNo}%20ko%20Special%20Revival%20Campaign%20mein%20chalu%20karwana%20hai." target="_blank" class="block w-full bg-amber-600 hover:bg-amber-700 text-white font-black py-3 rounded-2xl text-center text-xs sm:text-sm transition shadow-md">
+                <i class="fa-brands fa-whatsapp text-emerald-300"></i> Special Revival ke liye WhatsApp par Sampark Karein
+              </a>
+            </div>
+          `;
+        });
+
+        resultBox.innerHTML = htmlOutput;
         resultBox.classList.remove('hidden');
 
       } catch (err) {
